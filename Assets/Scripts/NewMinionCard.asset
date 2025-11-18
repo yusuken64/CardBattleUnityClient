@@ -24,7 +24,7 @@ MonoBehaviour:
   TriggeredEffects:
   - EffectTrigger: 0
     EffectTiming: 0
-    TargetType: 0
+    TargetType: 5
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:

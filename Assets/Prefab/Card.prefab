@@ -660,6 +660,8 @@ MonoBehaviour:
   RequiresTarget: 0
   CardType: 0
   VisualParent: {fileID: 4728465195448024071}
+  moveSpeed: 10
+  rotateSpeed: 100
 --- !u!61 &8010682437845266216
 BoxCollider2D:
   m_ObjectHideFlags: 0

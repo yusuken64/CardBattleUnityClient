@@ -21,7 +21,7 @@ public class CardInteractionController : MonoBehaviour
     public delegate void CardPlayedHandler(Player player, Card card, int index);
     public delegate void SpellPlayedHandler(Player player, Card card);
     public delegate void MinionPlayedPreviewdHandler(Player player, Card card, int index);
-    public delegate void TargetSelectedHandler(ITargetSource source, ITargetable target);
+    public delegate void TargetSelectedHandler(ITargetOrigin source, ITargetable target);
     public delegate void TargetingCanceledHandler();
 
     // --- Events ---
@@ -44,11 +44,13 @@ public class CardInteractionController : MonoBehaviour
                 activeThing = hit.transform;
 
                 // Determine mode: draggable or aimable
-                if (activeThing.TryGetComponent<Card>(out _)) //TODO replace with get draggable
+                if (activeThing.TryGetComponent<IDraggable>(out var draggable) &&
+                    draggable.CanStartDrag()) //TODO replace with get draggable
 				{
 					StartDragging(activeThing);
 				}
-				else
+				else if (activeThing.TryGetComponent<ITargetOrigin>(out var targetOrigin) &&
+                    targetOrigin.CanStartAiming())
 				{
 					StartAiming(activeThing);
 				}
@@ -93,6 +95,7 @@ public class CardInteractionController : MonoBehaviour
                 ReleaseDraggedThing(mousePos);
             }
         }
+
         // --- Aiming ---
         else if (isAiming && activeThing != null)
         {
@@ -106,10 +109,13 @@ public class CardInteractionController : MonoBehaviour
                 if (targetHit.collider != null)
                 {
                     Debug.Log($"Target selected: {activeThing.name} -> {targetHit.transform.name}");
-                    TargetSelected?.Invoke(null, null);
+                    TargetSelected?.Invoke(
+                        activeThing.GetComponent<ITargetOrigin>(),
+                        targetHit.collider.GetComponent<ITargetable>());
 				}
 				else
 				{
+                    //TODO check it itargetable.cantarget here
                     TargetingCanceled?.Invoke();
 				}
                 EndLine();
@@ -129,6 +135,8 @@ public class CardInteractionController : MonoBehaviour
 
     public void StartDragging(Transform activeThing)
 	{
+        var dragggable = activeThing.GetComponent<IDraggable>();
+        dragggable.Dragging = true;
 		dragging = true;
 		originalPosition = activeThing.position;
 	}
@@ -137,7 +145,9 @@ public class CardInteractionController : MonoBehaviour
 	{
 		RaycastHit2D hit = MouseOverBoard();
 
-		if (hit.collider != null)
+        var dragggable = activeThing.GetComponent<IDraggable>();
+        dragggable.Dragging = false;
+        if (hit.collider != null)
 		{
 			Debug.Log($"Played {activeThing.name}");
             var player = FindFirstObjectByType<Player>();

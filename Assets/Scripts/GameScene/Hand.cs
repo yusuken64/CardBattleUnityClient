@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
-	public List<GameObject> Cards;
+	public List<Card> Cards;
 	public RectTransform CardArea;
 
     public float radius = 500f; // how large the arc is (bigger radius = flatter fan)
@@ -45,10 +46,21 @@ public class Hand : MonoBehaviour
             //float y = -Mathf.Cos(rad) * radius + radius;
             float y = 0;
 
-            RectTransform rt = Cards[i].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(x, y);
-            rt.localRotation = Quaternion.Euler(0, 0, -angle);
+			Card card = Cards[i];
+            card.TargetPosition = new Vector2(x, y);
+            card.TargetAngle = Quaternion.Euler(0, 0, -angle);
+            card.Moving = true;
+
+            //RectTransform rt = card.GetComponent<RectTransform>();
+            //rt.anchoredPosition = new Vector2(x, y);
+            //rt.localRotation = Quaternion.Euler(0, 0, -angle);
         }
     }
 
+	internal void AddCard(Card newCard)
+	{
+        newCard.Dragging = false;
+        Cards.Add(newCard);
+        UpdateCardPositions();
+    }
 }

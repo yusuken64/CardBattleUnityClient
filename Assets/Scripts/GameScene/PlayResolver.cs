@@ -38,7 +38,7 @@ public class PlayResolver : MonoBehaviour
 		CardInteractionController.TargetingCanceled -= CardInteractionController_TargetingCanceled;
 	}
 
-	private void CardInteractionController_TargetSelected(ITargetSource source, ITargetable target)
+	private void CardInteractionController_TargetSelected(ITargetOrigin source, ITargetable target)
 	{
 		if (pendingSpellCard != null)
 		{
@@ -55,8 +55,8 @@ public class PlayResolver : MonoBehaviour
 		var animator = card.GetComponent<Animator>();
 		animator.Play("CardCast", 0, 0f);
 
-		var cardIndex = player.Hand.Cards.IndexOf(card.gameObject);
-		player.Hand.Cards.Remove(card.gameObject);
+		var cardIndex = player.Hand.Cards.IndexOf(card);
+		player.Hand.Cards.Remove(card);
 		player.Hand.UpdateCardPositions();
 
 		if (card.CardType == CardBattleEngine.CardType.Minion)
@@ -104,11 +104,11 @@ public class PlayResolver : MonoBehaviour
 	{
 		pendingSpellCard = card;
 		pendingSpellPlayer = player;
-		pendingCardIndex = player.Hand.Cards.IndexOf(card.gameObject);
+		pendingCardIndex = player.Hand.Cards.IndexOf(card);
 
 		var animator = card.GetComponent<Animator>();
 		animator.Play("CardCast", 0, 0f);
-		player.Hand.Cards.Remove(card.gameObject);
+		player.Hand.Cards.Remove(card);
 
 		//Destroy(card.gameObject, 2f);
 		player.Hand.UpdateCardPositions();
@@ -127,7 +127,7 @@ public class PlayResolver : MonoBehaviour
 		if (player != null && card != null)
 		{
 			// Return card to hand list
-			player.Hand.Cards.Insert(pendingCardIndex, card.gameObject);
+			player.Hand.Cards.Insert(pendingCardIndex, card);
 
 			// Move card back near hand before layout snap
 			card.transform.position = player.Hand.transform.position;
@@ -170,10 +170,18 @@ public class PlayResolver : MonoBehaviour
 	}
 }
 
-public interface ITargetSource
+public interface ITargetOrigin
 {
+	bool CanStartAiming();
 }
 
 public interface ITargetable
 {
+}
+
+public interface IDraggable
+{
+	bool Dragging { get; set; }
+
+	bool CanStartDrag();
 }
