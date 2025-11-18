@@ -7,4 +7,12 @@ public class Card : MonoBehaviour
 
     public bool RequiresTarget;
     public CardType CardType;
+
+    public GameObject VisualParent;
+
+    public void ResetVisuals()
+	{
+        VisualParent.transform.localScale = Vector3.one;
+
+    }
 }

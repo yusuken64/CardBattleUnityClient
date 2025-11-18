@@ -588,7 +588,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7135902908472773700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,7 +617,6 @@ GameObject:
   - component: {fileID: 5938115691348185652}
   - component: {fileID: 5146108261924859069}
   - component: {fileID: 8010682437845266216}
-  - component: {fileID: 1725586438893148926}
   - component: {fileID: 5203427595017620702}
   m_Layer: 0
   m_Name: Card
@@ -659,6 +658,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandCard
   RequiresTarget: 0
+  CardType: 0
+  VisualParent: {fileID: 4728465195448024071}
 --- !u!61 &8010682437845266216
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -705,25 +706,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.26, y: 1.95}
   m_EdgeRadius: 0
---- !u!320 &1725586438893148926
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4728465195448024071}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: df6297d17721e7040bade4aaff51f06f, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -8233354687965243694, guid: df6297d17721e7040bade4aaff51f06f, type: 2}
-    value: {fileID: 5203427595017620702}
-  m_ExposedReferences:
-    m_References: []
 --- !u!95 &5203427595017620702
 Animator:
   serializedVersion: 7
@@ -734,7 +716,7 @@ Animator:
   m_GameObject: {fileID: 4728465195448024071}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4514cbbbe2fff064ea8768fe1fe4ce2f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -811,7 +793,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c13f8e4d8bc5d9e4cb3a4cffe9fb725c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

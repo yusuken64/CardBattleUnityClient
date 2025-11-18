@@ -613,7 +613,6 @@ GameObject:
   - component: {fileID: 7309668802988807467}
   - component: {fileID: 977917630181780660}
   - component: {fileID: 5510742083154282500}
-  - component: {fileID: 6823352726703220443}
   - component: {fileID: 2727595389402303180}
   m_Layer: 0
   m_Name: Minion
@@ -632,7 +631,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6286483420612860636}
   m_Father: {fileID: 0}
@@ -700,25 +699,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.17, y: 1.59}
   m_EdgeRadius: 0
---- !u!320 &6823352726703220443
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3384742813937556654}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 736787525e7ee604b826ca300ee614b3, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -9124740971028450570, guid: 736787525e7ee604b826ca300ee614b3, type: 2}
-    value: {fileID: 2727595389402303180}
-  m_ExposedReferences:
-    m_References: []
 --- !u!95 &2727595389402303180
 Animator:
   serializedVersion: 7
@@ -729,7 +709,7 @@ Animator:
   m_GameObject: {fileID: 3384742813937556654}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a746233c51f97e94b9fdcde81e4dd1b0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
