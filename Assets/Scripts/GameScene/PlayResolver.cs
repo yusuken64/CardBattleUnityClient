@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Playables;
 
 public class PlayResolver : MonoBehaviour
 {
@@ -52,6 +51,28 @@ public class PlayResolver : MonoBehaviour
 	private void CardInteractionController_CardPlayed(Player player, Card card, int index)
 	{
 		MinionPlayPreview.gameObject.SetActive(false);
+
+		//Should this happen before this method is even called?
+		var gameManager = FindFirstObjectByType<GameManager>();
+		var valid = gameManager.ChecksValid(
+			new CardBattleEngine.PlayCardAction()
+			{
+				Card = card.Data
+			},
+			new CardBattleEngine.ActionContext()
+			{
+				SourcePlayer = player.Data
+			});
+
+		if (!valid)
+		{
+			pendingSpellPlayer = player;
+			pendingSpellCard = card;
+			FindFirstObjectByType<UI>().ShowMessage("Invalid Play");
+			CardInteractionController_TargetingCanceled();
+			return;
+		}
+
 		var animator = card.GetComponent<Animator>();
 		animator.Play("CardCast", 0, 0f);
 
@@ -62,6 +83,7 @@ public class PlayResolver : MonoBehaviour
 		if (card.CardType == CardBattleEngine.CardType.Minion)
 		{
 			var newMinion = Instantiate(MinionPrefab, player.Board.transform);
+			newMinion.Setup(card);
 			player.Board.Minions.Insert(index, newMinion);
 			player.Board.UpdateMinionPositions();
 
@@ -75,6 +97,18 @@ public class PlayResolver : MonoBehaviour
 				pendingCardIndex = cardIndex;
 				pendingTargetingMinion = newMinion;
 				CardInteractionController.StartAiming(newMinion.transform);
+			}
+			else
+			{
+				gameManager.ResolveAction(
+					new CardBattleEngine.PlayCardAction()
+					{
+						Card = card.Data
+					},
+					new CardBattleEngine.ActionContext()
+					{
+						SourcePlayer = player.Data
+					});
 			}
 		}
 		else
@@ -126,23 +160,23 @@ public class PlayResolver : MonoBehaviour
 
 		if (player != null && card != null)
 		{
-			// Return card to hand list
-			player.Hand.Cards.Insert(pendingCardIndex, card);
+			if (!player.Hand.Cards.Contains(card))
+			{
+				// Return card to hand list
+				player.Hand.Cards.Insert(pendingCardIndex, card);
 
-			// Move card back near hand before layout snap
-			card.transform.position = player.Hand.transform.position;
+				// Move card back near hand before layout snap
+				card.transform.position = player.Hand.transform.position;
 
-			// Reactivate if disabled
-			card.gameObject.SetActive(true);
+				// Reactivate if disabled
+				card.gameObject.SetActive(true);
 
-			// Remove any aiming graphics
-			//CardInteractionController.CancelAimingImmediate();
+				var director = card.GetComponent<Animator>();
+				director.Play("CardAppear");
+			}
 
 			// Restore card's visuals and sorting
 			player.Hand.UpdateCardPositions();
-			
-			var director = card.GetComponent<Animator>();
-			director.Play("CardAppear");
 		}
 
 		// Reverse pending minion if there is one
@@ -153,13 +187,13 @@ public class PlayResolver : MonoBehaviour
 
 			// Remove it from the board list so layout updates properly
 			player.Board.Minions.Remove(pendingTargetingMinion);
-			player.Board.UpdateMinionPositions();
 
 			// Destroy after reversed animation finishes
 			Destroy(pendingTargetingMinion.gameObject, 2f);
 
 			pendingTargetingMinion = null;
 		}
+		player?.Board.UpdateMinionPositions();
 
 		// Cleanup
 		pendingSpellCard = null;

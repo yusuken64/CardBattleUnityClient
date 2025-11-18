@@ -33,17 +33,19 @@ public class GameManager : MonoBehaviour
 	{
 		_engine = new GameEngine(new UnityRNG());
 
-		CardBattleEngine.Player p1 = new("Alice");
-		CardBattleEngine.Player p2 = new("Bob");
-		Player.Data = p1;
-		Opponent.Data = p2;
-
-		_opponentAgent = new RandomAI(p2, new UnityRNG());
 		_gameState = GameFactory.CreateTestGame();
+		Player.Data = _gameState.Players[0];
+		Opponent.Data = _gameState.Players[0];
+		_opponentAgent = new RandomAI(Opponent.Data, new UnityRNG());
 
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
 		_engine.StartGame(_gameState);
+	}
+
+	public bool ChecksValid(IGameAction action, ActionContext context)
+	{
+		return action.IsValid(_gameState, context);
 	}
 
 	public void ResolveAction(IGameAction action, ActionContext context)
@@ -59,18 +61,21 @@ public class GameManager : MonoBehaviour
 		return Player.Data.Name == sourcePlayer.Name ? Player : Opponent;
 	}
 
+	internal CardBattleEngine.Player GetDataFor(GameState state, Player player)
+	{
+		return Player.Data.Name == state.Players[0].Name ? state.Players[0] : state.Players[1];
+	}
+
 	private void ActionPlaybackCallback(GameState state, (IGameAction action, ActionContext context) current)
 	{
 		Debug.Log(current);
 		AnimationQueue.EnqueueAnimation(this, state, current);
-
 	}
 
 	private void ActionResolvedCallback(GameState state)
 	{
 		if (state.CurrentPlayer.Name == Opponent.Data.Name)
 		{
-			//state.GetValidActions(state.CurrentPlayer);
 			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(state);
 			ResolveAction(nextAction.Item1, nextAction.Item2);
 		}

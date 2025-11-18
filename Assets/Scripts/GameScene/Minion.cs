@@ -1,14 +1,25 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class Minion : MonoBehaviour
-{    public Vector2 TargetPosition { get; internal set; }
-    public bool Moving { get; internal set; }
-    public float moveSpeed;
-    public float rotateSpeed;
+{
+    public CardBattleEngine.Card Data { get; private set; }
+    public int Attack;
+    public int Health;
+    public TextMeshProUGUI AttackText;
+    public TextMeshProUGUI HealthText;
 
-    // Update is called once per frame
-    void Update()
+	#region Animation
+	public Vector2 TargetPosition { get; internal set; }
+	public bool Moving { get; internal set; }
+
+	public float moveSpeed;
+	public float rotateSpeed; 
+	#endregion
+
+	// Update is called once per frame
+	void Update()
     {
         if (Moving)
         {
@@ -40,4 +51,17 @@ public class Minion : MonoBehaviour
         TargetPosition = vector2;
         Moving = true;
     }
+
+	internal void Setup(Card card)
+	{
+        this.Data = card.Data;
+        UpdateUI();
+	}
+
+	private void UpdateUI()
+	{
+        var minionData = Data as CardBattleEngine.MinionCard;
+        AttackText.text = minionData.Attack.ToString();
+        HealthText.text = minionData.Health.ToString();
+	}
 }

@@ -653,6 +653,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a49c3c38faf984e9e2f0f87be7a70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  Attack: 0
+  Health: 0
+  AttackText: {fileID: 816266993974170674}
+  HealthText: {fileID: 4873924205948383607}
   moveSpeed: 10
   rotateSpeed: 0
 --- !u!61 &5510742083154282500

@@ -1,22 +1,34 @@
 using CardBattleEngine;
+using System;
+using TMPro;
 using UnityEngine;
 
 public class Card : MonoBehaviour, IDraggable
 {
     public string CardName => this.name;
+    public CardBattleEngine.Card Data { get; private set; }
 
+    #region Display
+    public TextMeshProUGUI CostText;
+    public TextMeshProUGUI AttackText;
+    public TextMeshProUGUI HealthText;
+
+	#endregion
+
+	#region Animation
 	public Vector2 TargetPosition { get; internal set; }
 	public Quaternion TargetAngle { get; internal set; }
 	public bool Moving { get; internal set; }
 	public bool RequiresTarget;
-    public CardType CardType;
+	public CardType CardType;
 
-    public GameObject VisualParent;
+	public GameObject VisualParent;
 
-    public float moveSpeed;
-    public float rotateSpeed;
+	public float moveSpeed;
+	public float rotateSpeed; 
+	#endregion
 
-    public void ResetVisuals()
+	public void ResetVisuals()
 	{
         VisualParent.transform.localScale = Vector3.one;
     }
@@ -47,7 +59,24 @@ public class Card : MonoBehaviour, IDraggable
         }
     }
 
-    public bool Dragging { get; set; }
+	internal void Setup(CardBattleEngine.Card cardData)
+	{
+        this.Data = cardData;
+        UpdateUI();
+	}
 
-    public bool CanStartDrag() => true;
+	private void UpdateUI()
+	{
+        CostText.text = this.Data.ManaCost.ToString();
+
+        if (this.Data is MinionCard minionCard)
+        {
+            AttackText.text = minionCard.Attack.ToString();
+            HealthText.text = minionCard.Health.ToString();
+        }
+	}
+
+	public bool Dragging { get; set; }
+
+	public bool CanStartDrag() => true;
 }

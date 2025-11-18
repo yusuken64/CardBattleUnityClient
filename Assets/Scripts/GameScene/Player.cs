@@ -1,4 +1,4 @@
-using System;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 	public Board Board;
 	public GameObject DrawPile;
 	public CardBattleEngine.Player Data { get; internal set; }
+
+	public TextMeshProUGUI ManaText;
 
 	internal void Clear()
 	{
