@@ -1,0 +1,16 @@
+using System;
+using UnityEngine;
+using CardBattleEngine;
+
+[Serializable]
+public class CancelEffectActionWrapper : IGameActionWrapperBase
+{
+    public System.Boolean Canceled;
+
+    public override CardBattleEngine.IGameAction Create()
+    {
+        var instance = new CardBattleEngine.CancelEffectAction();
+        instance.Canceled = this.Canceled;
+        return instance;
+    }
+}
