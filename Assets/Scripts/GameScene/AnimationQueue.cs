@@ -26,6 +26,7 @@ public class AnimationQueue : MonoBehaviour
     {
         return current.action switch
         {
+            StartTurnAction => new StartTurnAnimation(gameManager, state, current),
             DrawCardFromDeckAction => new DrawCardAnimation(gameManager, state, current),
             _ => null
         };

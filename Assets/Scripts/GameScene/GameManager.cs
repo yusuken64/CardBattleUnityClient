@@ -10,7 +10,14 @@ public class GameManager : MonoBehaviour
 	public PlayResolver PlayResolver;
 	public AnimationQueue AnimationQueue;
 
-    void Start()
+	public GameEngine _engine { get; private set; }
+
+	private RandomAI _opponentAgent;
+
+	public GameState _gameState { get; private set; }
+
+
+	void Start()
     {
 		ClearBoard();
         InitializeGame();
@@ -24,17 +31,27 @@ public class GameManager : MonoBehaviour
 
 	private void InitializeGame()
 	{
-		GameEngine _engine = new(new UnityRNG());
+		_engine = new GameEngine(new UnityRNG());
 
 		CardBattleEngine.Player p1 = new("Alice");
 		CardBattleEngine.Player p2 = new("Bob");
 		Player.Data = p1;
 		Opponent.Data = p2;
-		//GameState _state = new GameState(p1, p2);
-		var gameState = GameFactory.CreateTestGame();
+
+		_opponentAgent = new RandomAI(p2, new UnityRNG());
+		_gameState = GameFactory.CreateTestGame();
 
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
-		_engine.StartGame(gameState);
+		_engine.ActionResolvedCallback = ActionResolvedCallback;
+		_engine.StartGame(_gameState);
+	}
+
+	public void ResolveAction(IGameAction action, ActionContext context)
+	{
+		if (action.IsValid(_gameState, context))
+		{
+			_engine.Resolve(_gameState, context, action);
+		}
 	}
 
 	internal Player GetPlayerFor(CardBattleEngine.Player sourcePlayer)
@@ -46,6 +63,17 @@ public class GameManager : MonoBehaviour
 	{
 		Debug.Log(current);
 		AnimationQueue.EnqueueAnimation(this, state, current);
+
+	}
+
+	private void ActionResolvedCallback(GameState state)
+	{
+		if (state.CurrentPlayer.Name == Opponent.Data.Name)
+		{
+			//state.GetValidActions(state.CurrentPlayer);
+			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(state);
+			ResolveAction(nextAction.Item1, nextAction.Item2);
+		}
 	}
 }
 

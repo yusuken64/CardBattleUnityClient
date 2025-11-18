@@ -69,13 +69,13 @@ public class CardInteractionController : MonoBehaviour
                 {
                     dragging = false;
                     activeThing = null;
-                    var player = FindFirstObjectByType<Player>();
+                    var player = FindFirstObjectByType<GameManager>().Player;
                     SpellPlayedPreview?.Invoke(player, card);
                 }
 
                 if (card.CardType == CardBattleEngine.CardType.Minion)
                 {
-                    var player = FindFirstObjectByType<Player>();
+                    var player = FindFirstObjectByType<GameManager>().Player;
                     var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
                     MinionPlayedPreview?.Invoke(player, card, index);
                 }
@@ -85,7 +85,7 @@ public class CardInteractionController : MonoBehaviour
                 var card = activeThing.GetComponent<Card>();
                 if (card.CardType == CardBattleEngine.CardType.Minion)
                 {
-                    var player = FindFirstObjectByType<Player>();
+                    var player = FindFirstObjectByType<GameManager>().Player;
                     MinionPlayedPreview?.Invoke(player, card, -1);
                 }
             }
@@ -150,7 +150,7 @@ public class CardInteractionController : MonoBehaviour
         if (hit.collider != null)
 		{
 			Debug.Log($"Played {activeThing.name}");
-            var player = FindFirstObjectByType<Player>();
+            var player = FindFirstObjectByType<GameManager>().Player;
             var card = activeThing.GetComponent<Card>();
             dragging = false;
             activeThing = null;
@@ -160,7 +160,10 @@ public class CardInteractionController : MonoBehaviour
         }
 		else
 		{
-			activeThing.position = originalPosition;
+            //activeThing.position = originalPosition;
+            var card = activeThing.GetComponent<Card>();
+            card.Dragging = false;
+            card.Moving = true;
             dragging = false;
             activeThing = null;
             TargetingCanceled?.Invoke();
