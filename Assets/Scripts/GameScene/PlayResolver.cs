@@ -39,6 +39,19 @@ public class PlayResolver : MonoBehaviour
 
 	private void CardInteractionController_TargetSelected(ITargetOrigin source, ITargetable target)
 	{
+		if (source.AimIntent ==  AimIntent.Attack)
+		{
+			var gameManager = FindFirstObjectByType<GameManager>();
+			gameManager.ResolveAction(
+				new CardBattleEngine.AttackAction(),
+				new CardBattleEngine.ActionContext()
+				{
+					Source = source.GetData(),
+					Target = target.GetData(),
+					SourcePlayer = source.GetPlayer()
+				});
+		}
+
 		if (pendingSpellCard != null)
 		{
 			Destroy(pendingSpellCard.gameObject, 2f);
@@ -208,11 +221,20 @@ public class PlayResolver : MonoBehaviour
 
 public interface ITargetOrigin
 {
+	public AimIntent AimIntent { get; set; }
 	bool CanStartAiming();
+	CardBattleEngine.IGameEntity GetData();
+	CardBattleEngine.Player GetPlayer();
+}
+
+public enum AimIntent
+{
+	Attack
 }
 
 public interface ITargetable
 {
+	CardBattleEngine.IGameEntity GetData();
 }
 
 public interface IDraggable

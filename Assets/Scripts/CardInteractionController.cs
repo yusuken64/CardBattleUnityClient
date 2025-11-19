@@ -111,7 +111,7 @@ public class CardInteractionController : MonoBehaviour
                     Debug.Log($"Target selected: {activeThing.name} -> {targetHit.transform.name}");
                     TargetSelected?.Invoke(
                         activeThing.GetComponent<ITargetOrigin>(),
-                        targetHit.collider.GetComponent<ITargetable>());
+                        targetHit.collider.GetComponentInParent<ITargetable>());
 				}
 				else
 				{

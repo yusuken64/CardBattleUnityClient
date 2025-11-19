@@ -1,5 +1,7 @@
 using CardBattleEngine;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,7 +15,6 @@ public class GameManager : MonoBehaviour
 	public GameEngine _engine { get; private set; }
 
 	private RandomAI _opponentAgent;
-
 	public GameState _gameState { get; private set; }
 
 
@@ -41,6 +42,29 @@ public class GameManager : MonoBehaviour
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
 		_engine.StartGame(_gameState);
+	}
+
+	internal GameObject GetObjectFor(IGameEntity source)
+	{
+#pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
+		if (source == Player.Data) { return Player.HeroPortrait.gameObject; }
+		if (source == Opponent.Data) { return Opponent.HeroPortrait.gameObject; }
+#pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
+
+		if (source is CardBattleEngine.Minion minion)
+		{
+			var allMinions = new List<Minion>();
+			allMinions.AddRange(Player.Board.Minions);
+			allMinions.AddRange(Opponent.Board.Minions);
+
+			var first = allMinions.FirstOrDefault(x => x.Data == minion);
+			if (first != null)
+			{
+				return first.gameObject;
+			}
+		}
+
+		return null;
 	}
 
 	public bool ChecksValid(IGameAction action, ActionContext context)

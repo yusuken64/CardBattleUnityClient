@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ITargetable
 {
 	public GameObject HeroPortrait;
 	public Hand Hand;
@@ -10,10 +10,10 @@ public class Player : MonoBehaviour
 	public GameObject DrawPile;
 	public CardBattleEngine.Player Data { get; internal set; }
 
-	public int Health { get => health; set => health = value; }
+	public int Health;
 
 	public TextMeshProUGUI ManaText;
-	private int health;
+	public TextMeshProUGUI HealthText;
 
 	internal void Clear()
 	{
@@ -44,5 +44,19 @@ public class Player : MonoBehaviour
 		{
 			card.RefreshData(activePlayerTurn);
 		}
+
+		UpdateUI();
 	}
+
+	private void UpdateUI()
+	{
+		HealthText.text = Health.ToString();
+	}
+
+	public CardBattleEngine.IGameEntity GetData()
+	{
+		return this.Data;
+	}
+
+	public AimIntent AimIntent { get; set; } = AimIntent.Attack; 
 }

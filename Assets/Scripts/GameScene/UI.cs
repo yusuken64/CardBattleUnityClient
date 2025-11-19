@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -9,6 +11,8 @@ public class UI : MonoBehaviour
 
 	public TextMeshProUGUI Message;
     private Coroutine messageCoroutine;
+
+    public DamageNumber DamageNumberPrefab;
 
 	private void Start()
 	{
@@ -37,5 +41,29 @@ public class UI : MonoBehaviour
 
         Message.gameObject.SetActive(false);
         messageCoroutine = null;
+    }
+
+	internal void ShowDamage(int damage, Transform target)
+	{
+        var damageNumber = Instantiate(DamageNumberPrefab);
+        damageNumber.DamageText.text= $"{damage}";
+        damageNumber.transform.position = target.transform.position;
+
+        Transform t = damageNumber.transform;
+
+        // starting scale (small pop)
+        t.localScale = Vector3.zero;
+
+        // Build the sequence
+        var seq = DOTween.Sequence();
+
+        seq.Append(t.DOScale(1f, 0.15f))               // pop in
+           .Join(t.DOMoveY(t.position.y + 0.5f, 0.6f)) // float upward
+           .Join(damageNumber.Background.DOFade(0f, 0.6f)) // fade out
+           .SetEase(Ease.OutQuad)
+           .OnComplete(() =>
+           {
+               Destroy(damageNumber.gameObject);
+           });
     }
 }

@@ -3,7 +3,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class Minion : MonoBehaviour
+public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
 {
     public CardBattleEngine.Minion Data { get; private set; }
 	public MinionCard SummonedCard { get; private set; }
@@ -88,4 +88,21 @@ public class Minion : MonoBehaviour
         Attack = data.Attack;
         Health = data.Health;
 	}
+
+	public bool CanStartAiming()
+	{
+        return CanAttack;
+	}
+
+	public IGameEntity GetData()
+	{
+        return this.Data;
+	}
+
+	public CardBattleEngine.Player GetPlayer()
+	{
+        return this.Data.Owner;
+	}
+
+	public AimIntent AimIntent { get; set; } = AimIntent.Attack;
 }

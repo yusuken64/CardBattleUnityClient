@@ -31,6 +31,9 @@ public class AnimationQueue : MonoBehaviour
             RefillManaAction => new RefillManaAnimation(gameManager, state, current),
             PlayCardAction => new PlayCardAnimation(gameManager, state, current),
             SummonMinionAction => new SummonMinionAnimation(gameManager, state, current),
+            AttackAction => new AttackAnimation(gameManager, state, current),
+            DamageAction => new TakeDamageAnimation(gameManager, state, current),
+            DeathAction => new DeathAnimation(gameManager, state, current),
             _ => null
         };
     }

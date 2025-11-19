@@ -2140,6 +2140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 750899696}
+  - component: {fileID: 750899697}
   m_Layer: 0
   m_Name: HeroPortrait (1)
   m_TagString: Untagged
@@ -2163,6 +2164,52 @@ Transform:
   - {fileID: 728053250}
   m_Father: {fileID: 1130596049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &750899697
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750899695}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.45, y: 2.09}
+  m_EdgeRadius: 0
 --- !u!1 &823369528
 GameObject:
   m_ObjectHideFlags: 0
@@ -3455,7 +3502,9 @@ MonoBehaviour:
   Hand: {fileID: 263172363}
   Board: {fileID: 532190406}
   DrawPile: {fileID: 1489854942}
+  Health: 0
   ManaText: {fileID: 719156766}
+  HealthText: {fileID: 1835882949}
 --- !u!1 &1132939049
 GameObject:
   m_ObjectHideFlags: 0
@@ -3554,6 +3603,7 @@ MonoBehaviour:
   TurnStartObject: {fileID: 285472883}
   EndTurnButton: {fileID: 892486615}
   Message: {fileID: 303076845}
+  DamageNumberPrefab: {fileID: 3723504351424086593, guid: d796c6cd5d539b844b07260e2946787e, type: 3}
 --- !u!224 &1132939054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3688,6 +3738,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1175831328}
+  - component: {fileID: 1175831329}
   m_Layer: 0
   m_Name: HeroPortrait
   m_TagString: Untagged
@@ -3711,6 +3762,52 @@ Transform:
   - {fileID: 1225051857}
   m_Father: {fileID: 1280333540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1175831329
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175831327}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.45, y: 2.09}
+  m_EdgeRadius: 0
 --- !u!1 &1181023196
 GameObject:
   m_ObjectHideFlags: 0
@@ -3952,7 +4049,9 @@ MonoBehaviour:
   Hand: {fileID: 1251754029}
   Board: {fileID: 1159428874}
   DrawPile: {fileID: 912244336}
+  Health: 0
   ManaText: {fileID: 578094867}
+  HealthText: {fileID: 880909812}
 --- !u!1 &1286550811
 GameObject:
   m_ObjectHideFlags: 0
