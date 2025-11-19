@@ -9,9 +9,8 @@ public class StartGameActionWrapper : IGameActionWrapperBase
 
     public override CardBattleEngine.IGameAction Create()
     {
-        return null;
-        //var instance = new CardBattleEngine.StartGameAction();
-        //instance.Canceled = this.Canceled;
-        //return instance;
+        var instance = new CardBattleEngine.StartGameAction();
+        instance.Canceled = this.Canceled;
+        return instance;
     }
 }

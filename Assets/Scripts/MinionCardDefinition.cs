@@ -53,6 +53,7 @@ public class TriggeredEffectWrapper
     public EffectTiming EffectTiming;
     public TargetingType TargetType;
 
+    [SerializeReference]
     public List<IGameActionWrapperBase> GameActions = new List<IGameActionWrapperBase>();
 
     [SerializeReference]

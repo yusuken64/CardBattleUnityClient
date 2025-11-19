@@ -24,16 +24,25 @@ MonoBehaviour:
   TriggeredEffects:
   - EffectTrigger: 0
     EffectTiming: 0
-    TargetType: 5
+    TargetType: 0
+    GameActions:
+    - rid: 6533011571298009152
     Condition:
-      rid: -2
+      rid: 6533011571298009153
     AffectedEntitySelectorWrapper:
-      rid: 6533011488239780746
+      rid: 6533011571298009154
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 6533011488239780746
+    - rid: 6533011571298009152
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage: 0
+        Canceled: 0
+    - rid: 6533011571298009153
+      type: {class: SpellOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TargetSide: 0
+    - rid: 6533011571298009154
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data: 

@@ -12,7 +12,8 @@ public static class WrapperGenerator
     {
         typeof(CardBattleEngine.ITriggerCondition),
         typeof(CardBattleEngine.IGameAction),
-        typeof(CardBattleEngine.IAffectedEntitySelector)
+        typeof(CardBattleEngine.IAffectedEntitySelector),
+        typeof(CardBattleEngine.ITargetOperation) // recursion target
     };
 
     [MenuItem("Data/GenerateWrappers")]
@@ -29,6 +30,10 @@ public static class WrapperGenerator
 
     private static void GenerateWrappersForInterface(Type interfaceType)
     {
+        // ignore generic interfaces like IEnumerable<T>
+        if (interfaceType.IsGenericType || interfaceType.IsGenericTypeDefinition)
+            return;
+
         // Find all concrete implementations
         var concreteTypes = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(a => a.GetTypes())
@@ -58,7 +63,6 @@ public static class WrapperGenerator
 
         foreach (var type in concreteTypes)
         {
-            // Ensure interface subfolder exists
             string interfaceFolder = Path.Combine(interfacePath, interfaceType.Name);
             if (!Directory.Exists(interfaceFolder))
             {
@@ -66,11 +70,9 @@ public static class WrapperGenerator
                 AssetDatabase.Refresh();
             }
 
-            // Generate wrapper file path
             string wrapperName = type.Name + "Wrapper";
             string filePath = Path.Combine(interfaceFolder, wrapperName + ".cs");
 
-            // Overwrite if exists
             string code = GenerateWrapperCode(type, wrapperName, interfaceType);
             File.WriteAllText(filePath, code);
             Debug.Log("Generated wrapper: " + filePath);
@@ -79,20 +81,18 @@ public static class WrapperGenerator
 
     private static string GenerateWrapperCode(Type concreteType, string wrapperName, Type interfaceType)
     {
-        // Grab all public read/write properties
         var props = concreteType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
             .Where(p => p.CanRead && p.CanWrite)
             .ToArray();
 
+        // Convert interface properties into wrapper properties
         string propertyLines = string.Join(Environment.NewLine,
-            props.Select(p => $"    public {GetCSharpTypeName(p.PropertyType)} {p.Name};"));
-
+            props.Select(p => GeneratePropertyLine(p)));
 
         string assignments = string.Join(Environment.NewLine,
-            props.Select(p => $"        instance.{p.Name} = this.{p.Name};"));
+            props.Select(p => GenerateAssignmentLine(p)));
 
-        // Generate base class depending on the interface type
-        string baseClass = interfaceType.Name + "WrapperBase"; // e.g., ITriggerConditionWrapperBase
+        string baseClass = interfaceType.Name + "WrapperBase";
 
         return $@"using System;
 using UnityEngine;
@@ -111,12 +111,62 @@ public class {wrapperName} : {baseClass}
     }}
 }}";
     }
+
+    private static string GeneratePropertyLine(PropertyInfo p)
+    {
+        var type = p.PropertyType;
+
+        // If property is an interface, use wrapper instead
+        if (type.IsInterface)
+        {
+            return $"    public {type.Name}WrapperBase {p.Name};";
+        }
+
+        // If property is List<T> of interface -> List<WrapperBase>
+        if (typeof(System.Collections.IEnumerable).IsAssignableFrom(type) &&
+            type.IsGenericType)
+        {
+            var arg = type.GetGenericArguments()[0];
+            if (arg.IsInterface)
+            {
+                return $"    public System.Collections.Generic.List<{arg.Name}WrapperBase> {p.Name};";
+            }
+        }
+
+        return $"    public {GetCSharpTypeName(type)} {p.Name};";
+    }
+
+    private static string GenerateAssignmentLine(PropertyInfo p)
+    {
+        var type = p.PropertyType;
+
+        if (type.IsInterface)
+        {
+            return $"        instance.{p.Name} = this.{p.Name}?.Create();";
+        }
+
+        if (typeof(System.Collections.IEnumerable).IsAssignableFrom(type) &&
+            type.IsGenericType)
+        {
+            var arg = type.GetGenericArguments()[0];
+            if (arg.IsInterface)
+            {
+                return
+$@"        instance.{p.Name} = this.{p.Name}?
+            .Select(w => w?.Create())
+            .ToList();";
+            }
+        }
+
+        return $"        instance.{p.Name} = this.{p.Name};";
+    }
+
     private static string GetCSharpTypeName(Type type)
     {
         if (type.IsGenericType)
         {
             string genericType = type.GetGenericTypeDefinition().FullName;
-            genericType = genericType.Substring(0, genericType.IndexOf('`')); // Remove `1
+            genericType = genericType.Substring(0, genericType.IndexOf('`'));
             string genericArgs = string.Join(", ", type.GetGenericArguments().Select(GetCSharpTypeName));
             return $"{genericType}<{genericArgs}>";
         }

@@ -5,13 +5,13 @@ using CardBattleEngine;
 [Serializable]
 public class RequestChoiceActionWrapper : IGameActionWrapperBase
 {
-    public CardBattleEngine.IPendingChoice PendingChoice;
+    public IPendingChoiceWrapperBase PendingChoice;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()
     {
         var instance = new CardBattleEngine.RequestChoiceAction();
-        instance.PendingChoice = this.PendingChoice;
+        instance.PendingChoice = this.PendingChoice?.Create();
         instance.Canceled = this.Canceled;
         return instance;
     }

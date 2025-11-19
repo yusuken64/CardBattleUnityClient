@@ -10,11 +10,9 @@ public class GainManaActionWrapper : IGameActionWrapperBase
 
     public override CardBattleEngine.IGameAction Create()
     {
-        //var instance = new CardBattleEngine.Actions.GainManaAction();
-        //instance.Amount = this.Amount;
-        //instance.Canceled = this.Canceled;
-        //return instance;
-
-        return null;
+        var instance = new CardBattleEngine.Actions.GainManaAction();
+        instance.Amount = this.Amount;
+        instance.Canceled = this.Canceled;
+        return instance;
     }
 }
