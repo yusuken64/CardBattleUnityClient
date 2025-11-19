@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
 		_gameState = GameFactory.CreateTestGame();
 		Player.Data = _gameState.Players[0];
-		Opponent.Data = _gameState.Players[0];
+		Opponent.Data = _gameState.Players[1];
 		_opponentAgent = new RandomAI(Opponent.Data, new UnityRNG());
 
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
@@ -70,6 +70,16 @@ public class GameManager : MonoBehaviour
 	{
 		Debug.Log(current);
 		AnimationQueue.EnqueueAnimation(this, state, current);
+
+		UpdateAllEntities();
+	}
+
+	private void UpdateAllEntities()
+	{
+		var activePlayer = GetPlayerFor(_gameState.CurrentPlayer);
+
+		Player.RefreshData(Player == activePlayer);
+		Opponent.RefreshData(Opponent == activePlayer);
 	}
 
 	private void ActionResolvedCallback(GameState state)

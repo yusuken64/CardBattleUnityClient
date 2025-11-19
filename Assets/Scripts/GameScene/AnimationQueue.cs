@@ -30,6 +30,7 @@ public class AnimationQueue : MonoBehaviour
             GainCardAction => new GainCardAnimation(gameManager, state, current),
             RefillManaAction => new RefillManaAnimation(gameManager, state, current),
             PlayCardAction => new PlayCardAnimation(gameManager, state, current),
+            SummonMinionAction => new SummonMinionAnimation(gameManager, state, current),
             _ => null
         };
     }

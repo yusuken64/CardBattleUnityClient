@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -9,11 +10,14 @@ public class Player : MonoBehaviour
 	public GameObject DrawPile;
 	public CardBattleEngine.Player Data { get; internal set; }
 
+	public int Health { get => health; set => health = value; }
+
 	public TextMeshProUGUI ManaText;
+	private int health;
 
 	internal void Clear()
 	{
-		foreach(var card in Hand.Cards)
+		foreach (var card in Hand.Cards)
 		{
 			Destroy(card.gameObject);
 		}
@@ -25,5 +29,20 @@ public class Player : MonoBehaviour
 
 		Hand.Cards.Clear();
 		Board.Minions.Clear();
+	}
+
+	internal void RefreshData(bool activePlayerTurn)
+	{
+		Health = Data.Health;
+
+		foreach(var minion in Board.Minions)
+		{
+			minion.RefreshData(activePlayerTurn);
+		}
+
+		foreach (var card in Hand.Cards)
+		{
+			card.RefreshData(activePlayerTurn);
+		}
 	}
 }

@@ -1,14 +1,19 @@
+using CardBattleEngine;
 using System;
 using TMPro;
 using UnityEngine;
 
 public class Minion : MonoBehaviour
 {
-    public CardBattleEngine.Card Data { get; private set; }
-    public int Attack;
+    public CardBattleEngine.Minion Data { get; private set; }
+	public MinionCard SummonedCard { get; private set; }
+
+	public int Attack;
     public int Health;
+    public bool CanAttack;
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
+    public GameObject AttackReadyIndicator;
 
 	#region Animation
 	public Vector2 TargetPosition { get; internal set; }
@@ -52,16 +57,35 @@ public class Minion : MonoBehaviour
         Moving = true;
     }
 
-	internal void Setup(Card card)
-	{
-        this.Data = card.Data;
-        UpdateUI();
+
+    internal void Setup(CardBattleEngine.Minion minionData)
+    {
+        this.Data = minionData;
+        RefreshData(false);
 	}
 
 	private void UpdateUI()
 	{
-        var minionData = Data as CardBattleEngine.MinionCard;
-        AttackText.text = minionData.Attack.ToString();
-        HealthText.text = minionData.Health.ToString();
+        AttackText.text = Attack.ToString();
+        HealthText.text = Health.ToString();
+        AttackReadyIndicator.gameObject.SetActive(CanAttack);
+    }
+
+    internal void RefreshData(bool activePlayerTurn)
+    {
+        if (Data == null) { return; }
+
+        Attack = Data.Attack;
+        Health = Data.Health;
+        CanAttack = Data.CanAttack() && activePlayerTurn;
+
+        UpdateUI();
+    }
+
+	internal void SetupWithCard(CardBattleEngine.MinionCard data)
+	{
+        this.SummonedCard = data;
+        Attack = data.Attack;
+        Health = data.Health;
 	}
 }

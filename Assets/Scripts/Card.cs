@@ -9,9 +9,14 @@ public class Card : MonoBehaviour, IDraggable
     public CardBattleEngine.Card Data { get; private set; }
 
     #region Display
+    public int Cost;
+    public int Attack;
+    public int Health;
+    public bool CanPlay;
     public TextMeshProUGUI CostText;
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
+    public GameObject CanPlayIndicator;
 
 	#endregion
 
@@ -33,7 +38,7 @@ public class Card : MonoBehaviour, IDraggable
         VisualParent.transform.localScale = Vector3.one;
     }
 
-    private void Update()
+	private void Update()
     {
         if (Moving && !Dragging)
         {
@@ -62,21 +67,32 @@ public class Card : MonoBehaviour, IDraggable
 	internal void Setup(CardBattleEngine.Card cardData)
 	{
         this.Data = cardData;
-        UpdateUI();
-	}
+        RefreshData(false);
+    }
 
-	private void UpdateUI()
-	{
-        CostText.text = this.Data.ManaCost.ToString();
+    private void UpdateUI()
+    {
+        CostText.text = Cost.ToString();
+        CanPlayIndicator.gameObject.SetActive(CanPlay);
+        if (AttackText != null) AttackText.text = Attack.ToString();
+        if (HealthText != null) HealthText.text = Health.ToString();
+    }
+
+    internal void RefreshData(bool activePlayerTurn)
+    {
+        Cost = this.Data.ManaCost;
+        CanPlay = this.Data.Owner.Mana >= Cost && activePlayerTurn;
 
         if (this.Data is MinionCard minionCard)
         {
-            AttackText.text = minionCard.Attack.ToString();
-            HealthText.text = minionCard.Health.ToString();
+            Attack = minionCard.Attack;
+            Health = minionCard.Health;
         }
-	}
+        UpdateUI();
+    }
 
-	public bool Dragging { get; set; }
+
+    public bool Dragging { get; set; }
 
 	public bool CanStartDrag() => true;
 }

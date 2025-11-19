@@ -83,7 +83,8 @@ public class PlayResolver : MonoBehaviour
 		if (card.CardType == CardBattleEngine.CardType.Minion)
 		{
 			var newMinion = Instantiate(MinionPrefab, player.Board.transform);
-			newMinion.Setup(card);
+			//var minionData = new CardBattleEngine.Minion(card.Data as CardBattleEngine.MinionCard, player.Data);
+			newMinion.SetupWithCard(card.Data as CardBattleEngine.MinionCard);
 			player.Board.Minions.Insert(index, newMinion);
 			player.Board.UpdateMinionPositions();
 
@@ -103,11 +104,12 @@ public class PlayResolver : MonoBehaviour
 				gameManager.ResolveAction(
 					new CardBattleEngine.PlayCardAction()
 					{
-						Card = card.Data
+						Card = card.Data,
 					},
 					new CardBattleEngine.ActionContext()
 					{
-						SourcePlayer = player.Data
+						SourcePlayer = player.Data,
+						PlayIndex = index
 					});
 			}
 		}
