@@ -66,7 +66,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			// Wait for the punch to finish
 			yield return punch.WaitForCompletion();
 
-			yield return new WaitForSecondsRealtime(2f);
+			yield return new WaitForSecondsRealtime(0.5f);
 
 			// 2. Fast fadeout
 			Tween fade = cg.DOFade(0f, 0.2f).SetEase(Ease.InSine);
