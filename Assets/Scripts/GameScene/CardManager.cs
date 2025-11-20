@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-	public List<MinionCardDefinition> MinionCards;
+	public List<CardDefinition> Cards;
 
-	internal MinionCardDefinition GetCardByName(string name)
+	internal CardDefinition GetCardByName(string name)
 	{
-		return MinionCards.FirstOrDefault(x => x.CardName == name);
+		return Cards.FirstOrDefault(x => x.CardName == name);
 	}
 }

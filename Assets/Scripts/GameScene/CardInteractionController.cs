@@ -64,12 +64,11 @@ public class CardInteractionController : MonoBehaviour
 
             if (MouseOverBoard().collider != null) {
                 var card = activeThing.GetComponent<Card>();
-                if (card.CardType == CardBattleEngine.CardType.Spell &&
-					card.RequiresTarget)
+                if (card.RequiresTarget())
                 {
                     dragging = false;
                     activeThing = null;
-                    var player = FindFirstObjectByType<GameManager>().Player;
+                    var player = FindFirstObjectByType<GameManager>().GetPlayerFor(card.Data.Owner);
                     SpellPlayedPreview?.Invoke(player, card);
                 }
 

@@ -20,13 +20,13 @@ public class Card : MonoBehaviour, IDraggable
     public TextMeshProUGUI HealthText;
     public GameObject CanPlayIndicator;
 
-	#endregion
+    #endregion
 
-	#region Animation
-	public Vector2 TargetPosition { get; internal set; }
-	public Quaternion TargetAngle { get; internal set; }
-	public bool Moving { get; internal set; }
-	public bool RequiresTarget;
+    #region Animation
+    public Vector2 TargetPosition { get; internal set; }
+    public Quaternion TargetAngle { get; internal set; }
+    public bool Moving { get; internal set; }
+
 	public CardType CardType;
 
 	public GameObject VisualParent;
@@ -97,8 +97,19 @@ public class Card : MonoBehaviour, IDraggable
         UpdateUI();
     }
 
-
     public bool Dragging { get; set; }
 
 	public bool CanStartDrag() => true;
+    public bool RequiresTarget()
+    {
+        if (this.Data is MinionCard minionCard)
+        {
+        }
+        else if (this.Data is SpellCard spellCard)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -7,5 +7,5 @@ using UnityEngine;
 )]
 public class DeckDefinition : ScriptableObject
 {
-    public List<MinionCardDefinition> Cards;
+    public List<CardDefinition> Cards;
 }

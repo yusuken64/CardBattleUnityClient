@@ -17,6 +17,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
     public bool HasTaunt;
     public bool HasPoisonous;
     public bool HasSummoningSickness;
+    public bool IsFrozen;
 
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
@@ -26,6 +27,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
     public GameObject PoisonIndicator;
     public GameObject DeathRattleIndicator;
     public GameObject SleepIndicator;
+    public GameObject FreezeIndicator;
 
 	#region Animation
 	public Vector2 TargetPosition { get; internal set; }
@@ -88,6 +90,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         ShieldIndicator.gameObject.SetActive(HasDivineShield);
         PoisonIndicator.gameObject.SetActive(HasPoisonous);
         SleepIndicator.gameObject.SetActive(HasSummoningSickness && !CanAttack);
+        FreezeIndicator.gameObject.SetActive(IsFrozen);
     }
 
 internal void RefreshData(bool activePlayerTurn)
@@ -101,6 +104,7 @@ internal void RefreshData(bool activePlayerTurn)
         HasTaunt = Data.Taunt;
         HasPoisonous = Data.HasPoisonous;
         HasSummoningSickness = Data.HasSummoningSickness;
+        IsFrozen = Data.IsFrozen;
 
         UpdateUI();
     }

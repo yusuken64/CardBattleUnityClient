@@ -80,6 +80,6 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			cg.alpha = 1f;
 		}
 
-		yield return null;
+		yield return new WaitForSecondsRealtime(2f);
 	}
 }

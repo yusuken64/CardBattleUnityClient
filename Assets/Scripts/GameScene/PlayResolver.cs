@@ -39,7 +39,33 @@ public class PlayResolver : MonoBehaviour
 
 	private void CardInteractionController_TargetSelected(ITargetOrigin source, ITargetable target)
 	{
-		if (source.AimIntent ==  AimIntent.Attack)
+		if (source.AimIntent == AimIntent.CastSpell)
+		{
+			var gameManager = FindFirstObjectByType<GameManager>();
+			CardBattleEngine.PlayCardAction action = new CardBattleEngine.PlayCardAction()
+			{
+				Card = pendingSpellCard.Data
+			};
+			CardBattleEngine.ActionContext context = new CardBattleEngine.ActionContext()
+			{
+				Source = source.GetData(),
+				Target = target.GetData(),
+				SourcePlayer = source.GetPlayer()
+			};
+			var isValid = gameManager.ChecksValid(action, context);
+			if (isValid)
+			{
+				gameManager.ResolveAction(
+					action,
+					context);
+			}
+			else
+			{
+				CardInteractionController_TargetingCanceled();
+				return;
+			}
+		}
+		else if (source.AimIntent ==  AimIntent.Attack)
 		{
 			var gameManager = FindFirstObjectByType<GameManager>();
 			gameManager.ResolveAction(
@@ -104,7 +130,7 @@ public class PlayResolver : MonoBehaviour
 			animator.Play("MinionAppear");
 			card.transform.position = newMinion.transform.position;
 
-			if (card.RequiresTarget)
+			if (card.RequiresTarget())
 			{
 				pendingSpellPlayer = player;
 				pendingSpellCard = card;
@@ -162,9 +188,9 @@ public class PlayResolver : MonoBehaviour
 		//Destroy(card.gameObject, 2f);
 		player.Hand.UpdateCardPositions();
 
-		if (card.RequiresTarget)
+		if (card.RequiresTarget())
 		{
-			CardInteractionController.StartAiming(player.HeroPortrait.transform);
+			CardInteractionController.StartAiming(player.HeroSpellOrigin.transform);
 		}
 	}
 
@@ -229,7 +255,8 @@ public interface ITargetOrigin
 
 public enum AimIntent
 {
-	Attack
+	Attack,
+	CastSpell
 }
 
 public interface ITargetable

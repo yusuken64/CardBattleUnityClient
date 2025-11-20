@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour, ITargetable
 {
 	public GameObject HeroPortrait;
+	public HeroSpellOrigin HeroSpellOrigin;
 	public Image HeroImage;
 	public GameObject ExplodeParticlePrefab;
 
