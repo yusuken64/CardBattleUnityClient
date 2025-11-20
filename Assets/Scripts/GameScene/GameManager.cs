@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
 	public PlayResolver PlayResolver;
 	public AnimationQueue AnimationQueue;
+	public DeckDefinition TestDeck;
 
 	public GameEngine _engine { get; private set; }
 
@@ -47,10 +48,8 @@ public class GameManager : MonoBehaviour
 	private GameState CreateTestGame()
 	{
 		var cardManager = FindFirstObjectByType<CardManager>();
-		var list = cardManager.MinionCards.ToList();
-		UnityRNG rng = new UnityRNG();
-		list.OrderBy(x => rng.NextInt(int.MaxValue)).Take(20).ToList();
-
+		var list = TestDeck.Cards.ToList();
+		
 		var testDeck = list.Select(x => x.CreateCard());
 
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");

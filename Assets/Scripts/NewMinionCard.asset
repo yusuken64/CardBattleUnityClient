@@ -12,36 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: NewMinionCard
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  CardName: 
+  CardName: test
+  ID: test
+  Sprite: {fileID: 21300000, guid: 2c8fb92718ac38d49930bf882cb885d0, type: 3}
   Cost: 0
-  Attack: 0
-  Health: 0
+  Attack: 1
+  Health: 3
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
-  HasDivineShield: 0
-  HasPoisonous: 0
-  TriggeredEffects:
-  - EffectTrigger: 0
-    EffectTiming: 0
-    TargetType: 0
-    GameActions:
-    - rid: 6533011571298009152
-    Condition:
-      rid: -2
-    AffectedEntitySelectorWrapper:
-      rid: 6533011571298009163
+  HasDivineShield: 1
+  HasTaunt: 1
+  HasPoisonous: 1
+  TriggeredEffects: []
   references:
     version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 6533011571298009152
-      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Damage: 0
-        Canceled: 0
-    - rid: 6533011571298009163
-      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Operations: []
+    RefIds: []

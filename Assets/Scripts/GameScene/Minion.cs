@@ -13,9 +13,19 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
 	public int Attack;
     public int Health;
     public bool CanAttack;
+    public bool HasDivineShield;
+    public bool HasTaunt;
+    public bool HasPoisonous;
+    public bool HasSummoningSickness;
+
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
     public GameObject AttackReadyIndicator;
+    public GameObject ShieldIndicator;
+    public GameObject TauntIndicator;
+    public GameObject PoisonIndicator;
+    public GameObject DeathRattleIndicator;
+    public GameObject SleepIndicator;
 
 	#region Animation
 	public Vector2 TargetPosition { get; internal set; }
@@ -59,7 +69,6 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         Moving = true;
     }
 
-
     internal void Setup(CardBattleEngine.Minion minionData)
     {
         var cardDefinition = FindFirstObjectByType<CardManager>().GetCardByName(minionData.Name);
@@ -74,15 +83,24 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         AttackText.text = Attack.ToString();
         HealthText.text = Health.ToString();
         AttackReadyIndicator.gameObject.SetActive(CanAttack);
+
+        TauntIndicator.gameObject.SetActive(HasTaunt);
+        ShieldIndicator.gameObject.SetActive(HasDivineShield);
+        PoisonIndicator.gameObject.SetActive(HasPoisonous);
+        SleepIndicator.gameObject.SetActive(HasSummoningSickness && !CanAttack);
     }
 
-    internal void RefreshData(bool activePlayerTurn)
+internal void RefreshData(bool activePlayerTurn)
     {
         if (Data == null) { return; }
 
         Attack = Data.Attack;
         Health = Data.Health;
         CanAttack = Data.CanAttack() && activePlayerTurn;
+        HasDivineShield = Data.HasDivineShield;
+        HasTaunt = Data.Taunt;
+        HasPoisonous = Data.HasPoisonous;
+        HasSummoningSickness = Data.HasSummoningSickness;
 
         UpdateUI();
     }

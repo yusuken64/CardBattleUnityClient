@@ -21,6 +21,7 @@ public class MinionCardDefinition : ScriptableObject
     public bool IsStealth;
     public bool HasCharge;
     public bool HasDivineShield;
+    public bool HasTaunt;
     public bool HasPoisonous;
 
     [Header("Triggered Effects")]
@@ -35,7 +36,8 @@ public class MinionCardDefinition : ScriptableObject
             IsStealth = this.IsStealth,
             HasCharge = this.HasCharge,
             HasDivineShield = this.HasDivineShield,
-            HasPoisonous = this.HasPoisonous
+            HasPoisonous = this.HasPoisonous,
+            HasTaunt = this.HasTaunt
         };
 
         return card;

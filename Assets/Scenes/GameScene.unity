@@ -440,6 +440,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dd7c043e4d8fe734c857f37cab7e11d2, type: 2}
   - {fileID: 11400000, guid: 1f8c37c1ef1032045b33cd2eabe6bd13, type: 2}
   - {fileID: 11400000, guid: bfb5008dd25c447489abd4d34cfedea2, type: 2}
+  - {fileID: 11400000, guid: 2b331ebbab5ce7b4ea6b4c789ea8d6ac, type: 2}
 --- !u!4 &18950029
 Transform:
   m_ObjectHideFlags: 0
@@ -679,6 +680,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 949306898830505738, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626210468406127831, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3136851329758813286, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -767,11 +776,35 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 5317925607464676977, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658766739567287747, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054660926763371249, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849918326243098479, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6917662075331712483, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
       propertyPath: m_Name
       value: Minion_PlayPreview
       objectReference: {fileID: 0}
     - target: {fileID: 6917662075331712483, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019320336005946992, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
+      propertyPath: m_Color.a
+      value: 0.77254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 7824612468117915262, guid: 51281f37708c2284f8d9b713d364b1f0, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -3955,7 +3988,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 567
 --- !u!114 &1132939051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4091,6 +4124,7 @@ MonoBehaviour:
   Opponent: {fileID: 1130596050}
   PlayResolver: {fileID: 1840445511}
   AnimationQueue: {fileID: 984708922}
+  TestDeck: {fileID: 11400000, guid: b81bae1c68bc30d4c9c2ee5ca93b100b, type: 2}
 --- !u!1 &1159428872
 GameObject:
   m_ObjectHideFlags: 0
