@@ -1,4 +1,5 @@
 ﻿using CardBattleEngine;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +11,13 @@ using UnityEngine;
 )]
 public class MinionCardDefinition : ScriptableObject
 {
-    [Header("Basic Info")]
     public string CardName;
-    public int Cost;
-
-    [Header("Stats")]
-    public int Attack;
-    public int Health;
-
-    [Header("Tribes")]
+    public string ID;
+    public Sprite Sprite;
+    public int Cost = 1;
+    public int Attack = 1;
+    public int Health = 1;
     public List<MinionTribe> MinionTribes = new List<MinionTribe>();
-
-    [Header("Abilities")]
     public bool IsStealth;
     public bool HasCharge;
     public bool HasDivineShield;
@@ -30,8 +26,8 @@ public class MinionCardDefinition : ScriptableObject
     [Header("Triggered Effects")]
     public List<TriggeredEffectWrapper> TriggeredEffects = new List<TriggeredEffectWrapper>();
 
-    // Creates a runtime MinionCard from this definition
-    public MinionCard CreateCard()
+	// Creates a runtime MinionCard from this definition
+	public MinionCard CreateCard()
     {
         MinionCard card = new MinionCard(CardName, Cost, Attack, Health)
         {

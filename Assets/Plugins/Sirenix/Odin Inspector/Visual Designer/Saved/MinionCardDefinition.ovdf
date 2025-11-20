@@ -1,0 +1,52 @@
+OVDF v1.0
+MinionCardDefinition, Assembly-CSharp
+
+# $YTgoJejBh7uaWZBzfcgn97
+Position: $root:2
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# $85xZi2y1YJnyaBSJDK6UZT
+Position: $Hf4BhEa2Y1yu4dAEekPPnd:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+
+# $Hf4BhEa2Y1yu4dAEekPPnd
+Position: $root:0
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# Sprite
+Position: $Hf4BhEa2Y1yu4dAEekPPnd:1
++ [Sirenix.OdinInspector.PreviewFieldAttribute]
+	Height = 189.33
+
+# ID
+Position: $85xZi2y1YJnyaBSJDK6UZT:0
+
+# Cost
+Position: $85xZi2y1YJnyaBSJDK6UZT:2
+
+# Attack
+Position: $85xZi2y1YJnyaBSJDK6UZT:3
+
+# Health
+Position: $85xZi2y1YJnyaBSJDK6UZT:4
+
+# MinionTribes
+Position: $85xZi2y1YJnyaBSJDK6UZT:5
+
+# IsStealth
+Position: $YTgoJejBh7uaWZBzfcgn97:1
+
+# HasCharge
+Position: $YTgoJejBh7uaWZBzfcgn97:0
+
+# HasDivineShield
+Position: $YTgoJejBh7uaWZBzfcgn97:2
+
+# HasPoisonous
+Position: $YTgoJejBh7uaWZBzfcgn97:3
+
+# CardName
+Position: $85xZi2y1YJnyaBSJDK6UZT:1
+
+# TriggeredEffects
+Position: $root:3
