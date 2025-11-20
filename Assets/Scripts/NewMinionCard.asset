@@ -28,21 +28,20 @@ MonoBehaviour:
     GameActions:
     - rid: 6533011571298009152
     Condition:
-      rid: 6533011571298009153
+      rid: -2
     AffectedEntitySelectorWrapper:
-      rid: 6533011571298009154
+      rid: 6533011571298009163
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 6533011571298009152
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Damage: 0
         Canceled: 0
-    - rid: 6533011571298009153
-      type: {class: SpellOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        TargetSide: 0
-    - rid: 6533011571298009154
+    - rid: 6533011571298009163
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        Operations: []
