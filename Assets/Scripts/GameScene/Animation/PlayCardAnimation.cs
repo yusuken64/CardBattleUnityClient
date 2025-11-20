@@ -1,5 +1,8 @@
 ﻿using CardBattleEngine;
+using DG.Tweening;
 using System.Collections;
+using System.Linq;
+using UnityEngine;
 
 public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 {
@@ -16,7 +19,21 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 
 	public override IEnumerator Play()
 	{
-		var player = this.gameManager.GetPlayerFor((current.action as PlayCardAction).Card.Owner);
+		var playCardAction = (current.action as PlayCardAction);
+		var player = this.gameManager.GetPlayerFor(playCardAction.Card.Owner);
+
+		var playedCard = player.Hand.Cards.FirstOrDefault(x => x.Data == playCardAction.Card);
+		if (playedCard != null)
+		{
+			//This is always the opponent playing a card
+			var animator = playedCard.GetComponent<Animator>();
+			animator.Play("CardCast", 0, 0f);
+			player.Hand.Cards.Remove(playedCard);
+			player.Hand.UpdateCardPositions();
+
+			yield return playedCard.transform.DOMove(Vector3.zero, 0.4f).WaitForCompletion();
+		}
+
 		player.ManaText.text = $"{player.Data.Mana}/{player.Data.MaxMana}";
 		yield return null;
 	}

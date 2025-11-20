@@ -2,12 +2,14 @@ using CardBattleEngine;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
 {
     public CardBattleEngine.Minion Data { get; private set; }
 	public MinionCard SummonedCard { get; private set; }
 
+    public Image CardImage;
 	public int Attack;
     public int Health;
     public bool CanAttack;
@@ -60,6 +62,9 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
 
     internal void Setup(CardBattleEngine.Minion minionData)
     {
+        var cardDefinition = FindFirstObjectByType<CardManager>().GetCardByName(minionData.Name);
+        CardImage.sprite = cardDefinition.Sprite;
+
         this.Data = minionData;
         RefreshData(false);
 	}

@@ -654,6 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a49c3c38faf984e9e2f0f87be7a70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  CardImage: {fileID: 1848721986921405775}
   Attack: 0
   Health: 0
   CanAttack: 0

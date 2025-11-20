@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 	{
 		_engine = new GameEngine(new UnityRNG());
 
-		_gameState = GameFactory.CreateTestGame();
+		_gameState = CreateTestGame();
 		Player.Data = _gameState.Players[0];
 		Opponent.Data = _gameState.Players[1];
 		_opponentAgent = new RandomAI(Opponent.Data, new UnityRNG());
@@ -42,6 +42,25 @@ public class GameManager : MonoBehaviour
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
 		_engine.StartGame(_gameState);
+	}
+
+	private GameState CreateTestGame()
+	{
+		var cardManager = FindFirstObjectByType<CardManager>();
+		var list = cardManager.MinionCards.ToList();
+		UnityRNG rng = new UnityRNG();
+		list.OrderBy(x => rng.NextInt(int.MaxValue)).Take(20).ToList();
+
+		var testDeck = list.Select(x => x.CreateCard());
+
+		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
+		p1.Deck.AddRange(testDeck.ToList());
+		p1.Deck.ForEach(x => x.Owner = p1);
+		CardBattleEngine.Player p2 = new CardBattleEngine.Player("Bob");
+		p2.Deck.AddRange(testDeck.ToList());
+		p2.Deck.ForEach(x => x.Owner = p2);
+
+		return new GameState(p1, p2);
 	}
 
 	internal GameObject GetObjectFor(IGameEntity source)

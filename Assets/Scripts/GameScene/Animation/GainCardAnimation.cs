@@ -22,6 +22,7 @@ public class GainCardAnimation : GameActionAnimation<GainCardAction>
 		var cardPrefab = gameManager.PlayResolver.CardPrefab;
 		var newCard = Object.Instantiate(cardPrefab, player.Hand.transform);
 		var cardData = (current.action as GainCardAction).Card;
+		cardData.Owner = current.context.SourcePlayer;
 		newCard.Setup(cardData);
 		player.Hand.AddCard(newCard);
 

@@ -2,10 +2,12 @@ using CardBattleEngine;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour, IDraggable
 {
     public string CardName => this.name;
+    public Image CardImage;
     public CardBattleEngine.Card Data { get; private set; }
 
     #region Display
@@ -66,6 +68,10 @@ public class Card : MonoBehaviour, IDraggable
 
 	internal void Setup(CardBattleEngine.Card cardData)
 	{
+        var cardManager = FindFirstObjectByType<CardManager>();
+        var cardDefinition = cardManager.GetCardByName(cardData.Name);
+        this.CardImage.sprite = cardDefinition.Sprite;
+
         this.Data = cardData;
         RefreshData(false);
     }
