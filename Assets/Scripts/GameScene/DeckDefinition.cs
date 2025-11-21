@@ -7,5 +7,6 @@ using UnityEngine;
 )]
 public class DeckDefinition : ScriptableObject
 {
+    public HeroPowerDefinition HeroPower;
     public List<CardDefinition> Cards;
 }

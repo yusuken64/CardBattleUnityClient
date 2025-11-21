@@ -11,11 +11,14 @@ public class Player : MonoBehaviour, ITargetable
 	public HeroSpellOrigin HeroSpellOrigin;
 	public Image HeroImage;
 	public GameObject ExplodeParticlePrefab;
+	public GameObject CanAttackIndicator;
 
 	public Hand Hand;
 	public Board Board;
 	public Weapon Weapon;
 	public GameObject DrawPile;
+	public HeroPower HeroPower;
+	public bool CanAttack;
 
 	public CardBattleEngine.Player Data { get; internal set; }
 
@@ -43,6 +46,18 @@ public class Player : MonoBehaviour, ITargetable
 	internal void RefreshData(bool activePlayerTurn)
 	{
 		Health = Data.Health;
+		CanAttack = Data.CanAttack();
+
+		if (HeroPower != null)
+		{
+			HeroPower.Data = Data.HeroPower;
+			HeroPower.RefreshData();
+		}
+
+		if (Data.EquippedWeapon == null)
+		{
+			Weapon.gameObject.SetActive(false);
+		}
 
 		foreach(var minion in Board.Minions)
 		{
@@ -60,6 +75,7 @@ public class Player : MonoBehaviour, ITargetable
 	private void UpdateUI()
 	{
 		HealthText.text = Health.ToString();
+		CanAttackIndicator.SetActive(CanAttack);
 	}
 
 	public CardBattleEngine.IGameEntity GetData()

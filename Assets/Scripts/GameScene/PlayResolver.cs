@@ -43,7 +43,30 @@ public class PlayResolver : MonoBehaviour
 
 	private void CardInteractionController_TargetSelected(ITargetOrigin source, ITargetable target)
 	{
-		if (source.AimIntent == AimIntent.CastSpell)
+		if (source.AimIntent == AimIntent.HeroPower)
+		{
+			var gameManager = FindFirstObjectByType<GameManager>();
+			CardBattleEngine.HeroPowerAction action = new CardBattleEngine.HeroPowerAction();
+			CardBattleEngine.ActionContext context = new CardBattleEngine.ActionContext()
+			{
+				Source = source.GetData(),
+				Target = target.GetData(),
+				SourcePlayer = source.GetPlayer()
+			};
+			var isValid = gameManager.ChecksValid(action, context);
+			if (isValid)
+			{
+				gameManager.ResolveAction(
+					action,
+					context);
+			}
+			else
+			{
+				CardInteractionController_TargetingCanceled();
+				return;
+			}
+		}
+		else if (source.AimIntent == AimIntent.CastSpell)
 		{
 			var gameManager = FindFirstObjectByType<GameManager>();
 			CardBattleEngine.PlayCardAction action = new CardBattleEngine.PlayCardAction()
@@ -296,7 +319,8 @@ public interface ITargetOrigin
 public enum AimIntent
 {
 	Attack,
-	CastSpell
+	CastSpell,
+	HeroPower
 }
 
 public interface ITargetable

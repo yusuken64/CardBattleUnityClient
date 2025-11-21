@@ -23,3 +23,4 @@ public class WeaponCardDefinition : CardDefinition
 		return weapon;
 	}
 }
+

@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
 		p1.Deck.AddRange(testDeck.ToList());
 		p1.Deck.ForEach(x => x.Owner = p1);
+		p1.HeroPower = TestDeck.HeroPower.CreateHeroPower();
 		CardBattleEngine.Player p2 = new CardBattleEngine.Player("Bob");
 		p2.Deck.AddRange(testDeck.ToList());
 		p2.Deck.ForEach(x => x.Owner = p2);
