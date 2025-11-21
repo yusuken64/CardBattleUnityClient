@@ -26,6 +26,8 @@ public class PlayResolver : MonoBehaviour
 		CardInteractionController.MinionPlayedPreview += CardInteractionController_MinionPlayedPreview;
 		CardInteractionController.TargetSelected += CardInteractionController_TargetSelected;
 		CardInteractionController.TargetingCanceled += CardInteractionController_TargetingCanceled;
+		CardInteractionController.CardDragPreviewStarts += CardInteractionController_CardDragPreviewStarts;
+		CardInteractionController.CardDragPreviewEnd += CardInteractionController_CardDragPreviewEnd;
 	}
 
 	private void OnDisable()
@@ -35,6 +37,8 @@ public class PlayResolver : MonoBehaviour
 		CardInteractionController.MinionPlayedPreview -= CardInteractionController_MinionPlayedPreview;
 		CardInteractionController.TargetSelected -= CardInteractionController_TargetSelected;
 		CardInteractionController.TargetingCanceled -= CardInteractionController_TargetingCanceled;
+		CardInteractionController.CardDragPreviewStarts -= CardInteractionController_CardDragPreviewStarts;
+		CardInteractionController.CardDragPreviewEnd -= CardInteractionController_CardDragPreviewEnd;
 	}
 
 	private void CardInteractionController_TargetSelected(ITargetOrigin source, ITargetable target)
@@ -221,6 +225,7 @@ public class PlayResolver : MonoBehaviour
 
 	private void CardInteractionController_TargetingCanceled()
 	{
+		FindFirstObjectByType<UI>().PreviewEnd(null);
 		var player = pendingSpellPlayer;
 		var card = pendingSpellCard;
 
@@ -267,6 +272,16 @@ public class PlayResolver : MonoBehaviour
 
 		// Also restore minion preview etc.
 		MinionPlayPreview.gameObject.SetActive(false);
+	}
+
+	private void CardInteractionController_CardDragPreviewEnd(IDraggable draggable)
+	{
+		FindFirstObjectByType<UI>().PreviewEnd(draggable);
+	}
+
+	private void CardInteractionController_CardDragPreviewStarts(IDraggable draggable)
+	{
+		FindFirstObjectByType<UI>().PreviewStart(draggable);
 	}
 }
 

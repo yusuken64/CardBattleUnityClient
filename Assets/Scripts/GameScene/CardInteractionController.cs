@@ -11,11 +11,13 @@ public class CardInteractionController : MonoBehaviour
     public int CurveResolution = 20;
     public float CurveStrength = 2f;
     public RectTransform BoardArea;
+    public float PreviewMouseDistance;
 
     private Transform activeThing = null; // the clicked object
     private Vector3 originalPosition;
     private bool dragging = false;
     private bool isAiming = false;
+    public bool previewing = false;
 
     // --- Delegates ---
     public delegate void CardPlayedHandler(Player player, Card card, int index);
@@ -23,6 +25,7 @@ public class CardInteractionController : MonoBehaviour
     public delegate void MinionPlayedPreviewdHandler(Player player, Card card, int index);
     public delegate void TargetSelectedHandler(ITargetOrigin source, ITargetable target);
     public delegate void TargetingCanceledHandler();
+    public delegate void CardDragPreview(IDraggable draggable);
 
     // --- Events ---
     public event CardPlayedHandler CardPlayed;
@@ -30,6 +33,9 @@ public class CardInteractionController : MonoBehaviour
     public event MinionPlayedPreviewdHandler MinionPlayedPreview;
     public event TargetSelectedHandler TargetSelected;
     public event TargetingCanceledHandler TargetingCanceled;
+
+    public event CardDragPreview CardDragPreviewStarts;
+    public event CardDragPreview CardDragPreviewEnd;
 
     void Update()
     {
@@ -47,7 +53,7 @@ public class CardInteractionController : MonoBehaviour
                 if (activeThing.TryGetComponent<IDraggable>(out var draggable) &&
                     draggable.CanStartDrag()) //TODO replace with get draggable
 				{
-					StartDragging(activeThing);
+					StartDragging(activeThing, mousePos);
 				}
 				else if (activeThing.TryGetComponent<ITargetOrigin>(out var targetOrigin) &&
                     targetOrigin.CanStartAiming())
@@ -60,6 +66,14 @@ public class CardInteractionController : MonoBehaviour
         // --- Dragging ---
         if (dragging && activeThing != null)
         {
+            var distance = Vector2.Distance(mousePos, originalPosition);
+            if (previewing &&
+                distance > PreviewMouseDistance)
+			{
+                CardDragPreviewEnd?.Invoke(activeThing.GetComponent<IDraggable>());
+                previewing = false;
+            }
+
             activeThing.position = mousePos;
 
             if (MouseOverBoard().collider != null) {
@@ -132,13 +146,15 @@ public class CardInteractionController : MonoBehaviour
 		StartLine(activeThing.position);
 	}
 
-    public void StartDragging(Transform activeThing)
+    public void StartDragging(Transform activeThing, Vector3 mousePosition)
 	{
         var dragggable = activeThing.GetComponent<IDraggable>();
         dragggable.Dragging = true;
 		dragging = true;
-		originalPosition = activeThing.position;
-	}
+		originalPosition = mousePosition;
+        previewing = true;
+        CardDragPreviewStarts?.Invoke(dragggable);
+    }
 
 	private void ReleaseDraggedThing(Vector3 mousePos)
 	{

@@ -1,4 +1,6 @@
 using CardBattleEngine;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +9,7 @@ public class Card : MonoBehaviour, IDraggable
 {
     public string CardName => this.name;
     public Image CardImage;
+
     public CardBattleEngine.Card Data { get; private set; }
 
     #region Display
@@ -18,6 +21,11 @@ public class Card : MonoBehaviour, IDraggable
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
     public GameObject CanPlayIndicator;
+
+    public TextMeshProUGUI NameText;
+    public TextMeshProUGUI DescriptionText;
+    public GameObject TribeObject;
+    public TextMeshProUGUI TribeText;
 
     #endregion
 
@@ -77,6 +85,29 @@ public class Card : MonoBehaviour, IDraggable
 
     private void UpdateUI()
     {
+        NameText.text = Data.Name;
+        string description = "";
+        if (this.Data is MinionCard minionCard)
+        {
+            TribeObject.gameObject.SetActive(false);
+            //TribeObject.gameObject.SetActive(minionCard.MinionTribes.Any(x => x != MinionTribe.None));
+            //TribeText.text = minionCard.MinionTribes[0].ToString();
+
+            var keyWords = new List<string>();
+            if (minionCard.HasCharge) { keyWords.Add("Charge"); }
+            if (minionCard.HasTaunt) { keyWords.Add("Taunt"); }
+            if (minionCard.HasDivineShield) { keyWords.Add("Divine Shield"); }
+            if (minionCard.HasPoisonous) { keyWords.Add("Poison"); }
+            if (minionCard.IsStealth) { keyWords.Add("Stealth"); }
+            description = string.Join(",", keyWords);
+        }
+		else
+		{
+            TribeObject.gameObject.SetActive(false);
+        }
+        //description = Data.CardText;
+        DescriptionText.text = description;
+
         CostText.text = Cost.ToString();
         CanPlayIndicator.gameObject.SetActive(CanPlay);
         if (AttackText != null) AttackText.text = Attack.ToString();
@@ -118,4 +149,9 @@ public class Card : MonoBehaviour, IDraggable
 
         return false;
     }
+
+	public IGameEntity GetData()
+	{
+        return this.Data as IGameEntity;
+	}
 }

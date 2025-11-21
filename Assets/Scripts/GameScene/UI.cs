@@ -1,3 +1,4 @@
+using CardBattleEngine;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -13,6 +14,7 @@ public class UI : MonoBehaviour
     private Coroutine messageCoroutine;
 
     public DamageNumber DamageNumberPrefab;
+    public Card CardPreview;
 
 	private void Start()
 	{
@@ -65,5 +67,16 @@ public class UI : MonoBehaviour
            {
                Destroy(damageNumber.gameObject);
            });
+    }
+
+	internal void PreviewStart(IDraggable gameEntity)
+	{
+        CardPreview.Setup((gameEntity as Card).Data);
+        CardPreview.gameObject.SetActive(true);
+    }
+
+	internal void PreviewEnd(IDraggable gameEntity)
+    {
+        CardPreview.gameObject.SetActive(false);
     }
 }

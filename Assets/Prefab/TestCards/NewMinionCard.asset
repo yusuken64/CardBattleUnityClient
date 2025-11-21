@@ -24,7 +24,33 @@ MonoBehaviour:
   HasDivineShield: 1
   HasTaunt: 1
   HasPoisonous: 1
-  TriggeredEffects: []
+  TriggeredEffects:
+  - EffectTrigger: 2
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 6533011596573933568
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 6533011596573933631
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6533011596573933568
+      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Card: {fileID: 11400000, guid: 1399d3dc822b563489a26052750c92a0, type: 2}
+        Canceled: 0
+    - rid: 6533011596573933631
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 6533011596573933632
+    - rid: 6533011596573933632
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 1
+        Group: 1
