@@ -1,0 +1,33 @@
+OVDF v1.0
+WeaponCardDefinition, Assembly-CSharp
+
+# $7G1xguxRs9DojDxxnCqhaH
+Position: $root:0
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# $UexUGt9njEiZ4aTfMRhtb8
+Position: $7G1xguxRs9DojDxxnCqhaH:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+
+# WeaponName
+Position: $UexUGt9njEiZ4aTfMRhtb8:3
+
+# Sprite
+Position: $7G1xguxRs9DojDxxnCqhaH:1
++ [Sirenix.OdinInspector.PreviewFieldAttribute]
+	Height = 200
+
+# CardName
+Position: $UexUGt9njEiZ4aTfMRhtb8:0
+
+# ID
+Position: $UexUGt9njEiZ4aTfMRhtb8:1
+
+# Cost
+Position: $UexUGt9njEiZ4aTfMRhtb8:2
+
+# Attack
+Position: $UexUGt9njEiZ4aTfMRhtb8:4
+
+# Durability
+Position: $UexUGt9njEiZ4aTfMRhtb8:5

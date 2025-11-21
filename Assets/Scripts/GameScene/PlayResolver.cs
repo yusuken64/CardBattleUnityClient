@@ -152,8 +152,33 @@ public class PlayResolver : MonoBehaviour
 					});
 			}
 		}
+		else if (card.CardType == CardBattleEngine.CardType.Weapon)
+		{
+			gameManager.ResolveAction(
+				new CardBattleEngine.PlayCardAction()
+				{
+					Card = card.Data,
+				},
+				new CardBattleEngine.ActionContext()
+				{
+					SourcePlayer = player.Data,
+					PlayIndex = index,
+					Target = player.Data
+				});
+			Destroy(card.gameObject, 2f);
+		}
 		else
 		{
+			gameManager.ResolveAction(
+				new CardBattleEngine.PlayCardAction()
+				{
+					Card = card.Data,
+				},
+				new CardBattleEngine.ActionContext()
+				{
+					SourcePlayer = player.Data,
+					PlayIndex = index
+				});
 			Destroy(card.gameObject, 2f);
 		}
 	}

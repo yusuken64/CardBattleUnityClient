@@ -31,6 +31,14 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 		// wait
 		yield return forward.WaitForCompletion();
 
+		if (current.context.Source is CardBattleEngine.Player player &&
+			player.EquippedWeapon != null)
+		{
+			var gamePlayer = gameManager.GetObjectFor(current.context.Source).GetComponentInParent<Player>();
+			gamePlayer.Weapon.Durablity--;
+			gamePlayer.Weapon.UpdateUI();
+		}
+
 		// backward bump
 		Tween back = attacker.DOMove(startPos, 0.15f).SetEase(Ease.Linear);
 

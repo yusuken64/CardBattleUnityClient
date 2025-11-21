@@ -25,6 +25,8 @@ public class EndTurnButton : MonoBehaviour
 
 	public void SetToReady()
 	{
+		ButtonImage.color = ReadyColor;
+		this.Button.interactable = true;
 		ButtonText.text = "End Turn";
 	}
 
@@ -35,6 +37,7 @@ public class EndTurnButton : MonoBehaviour
 
 	public void SetToEnemyTurn()
 	{
+		ButtonImage.color = EnemyColor;
 		ButtonText.text = "Enemy Turn";
 	}
 
@@ -43,6 +46,7 @@ public class EndTurnButton : MonoBehaviour
 		ValidateState();
 		if (_gameManager._gameState.CurrentPlayer.Name == _gameManager.Player.Data.Name)
 		{
+			SetToUnclickable();
 			_gameManager.ResolveAction(
 				new EndTurnAction(),
 				new ActionContext() { SourcePlayer = _gameManager.Player.Data }
@@ -52,6 +56,12 @@ public class EndTurnButton : MonoBehaviour
 		{
 			_ui.ShowMessage("Not your turn");
 		}
+	}
+
+	private void SetToUnclickable()
+	{
+		SetToEnemyTurn();
+		this.Button.interactable = false;
 	}
 
 	public void ValidateState()

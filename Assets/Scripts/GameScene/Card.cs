@@ -1,5 +1,4 @@
 using CardBattleEngine;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +26,7 @@ public class Card : MonoBehaviour, IDraggable
     public Quaternion TargetAngle { get; internal set; }
     public bool Moving { get; internal set; }
 
-	public CardType CardType;
+    public CardType CardType => this.Data.Type;
 
 	public GameObject VisualParent;
 
@@ -107,7 +106,14 @@ public class Card : MonoBehaviour, IDraggable
         }
         else if (this.Data is SpellCard spellCard)
         {
-            return true;
+            if (spellCard.TargetingType == TargetingType.None)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         return false;

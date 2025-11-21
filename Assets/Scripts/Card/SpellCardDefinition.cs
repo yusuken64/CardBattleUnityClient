@@ -18,6 +18,7 @@ public class SpellCardDefinition : CardDefinition
 	internal override CardBattleEngine.Card CreateCard()
 	{
         var spellCard = new SpellCard(CardName, Cost);
+        spellCard.TargetingType = TargetingType;
         spellCard.SpellCastEffects.AddRange(SpellCastEffects.Select(x => x.Create()));
 
         return spellCard;

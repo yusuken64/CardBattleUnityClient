@@ -14,6 +14,7 @@ public class Player : MonoBehaviour, ITargetable
 
 	public Hand Hand;
 	public Board Board;
+	public Weapon Weapon;
 	public GameObject DrawPile;
 
 	public CardBattleEngine.Player Data { get; internal set; }
