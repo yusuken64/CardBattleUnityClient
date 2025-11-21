@@ -16,6 +16,26 @@ public static class WrapperGenerator
         typeof(CardBattleEngine.ITargetOperation)
     };
 
+    private static readonly List<PropertyReplacement> PropertyReplacements = new()
+    {
+        // Example: Card -> CardWrapper
+        new PropertyReplacement
+        {
+            OriginalType = typeof(CardBattleEngine.MinionCard),
+            //ReplacementType = typeof(MinionCardDefinition),
+            GenerateField = p => $"    public {typeof(MinionCardDefinition).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateCard() as MinionCard;"
+        },
+
+        // Add more replacements here...
+    };
+    
+    private static PropertyReplacement GetReplacement(PropertyInfo property)
+    {
+        return PropertyReplacements
+            .FirstOrDefault(r => r.OriginalType == property.PropertyType);
+    }
+
     [MenuItem("Data/Wrappers/GenerateWrappers")]
     public static void GenerateWrappers()
     {
@@ -166,6 +186,12 @@ public class {wrapperName} : {baseClass}
     {
         string propName = p.Name;
         var propType = p.PropertyType;
+        
+        var repl = GetReplacement(p);
+        if (repl != null)
+        {
+            return repl.GenerateAssignment(p);
+        }
 
         // List<WrapperBase>
         if (IsWrapperList(p))
@@ -218,6 +244,12 @@ public class {wrapperName} : {baseClass}
     {
         var type = p.PropertyType;
 
+        var repl = GetReplacement(p);
+        if (repl != null)
+        {
+            return repl.GenerateField(p);
+        }
+
         bool isList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
 
         if (isList)
@@ -263,4 +295,16 @@ public class {wrapperName} : {baseClass}
                t.GetGenericTypeDefinition() == typeof(List<>) &&
                t.GetGenericArguments()[0].IsInterface;
     }
+}
+
+public class PropertyReplacement
+{
+    public Type OriginalType;
+    public Type ReplacementType;
+
+    // Generates the field/property declaration line
+    public Func<PropertyInfo, string> GenerateField;
+
+    // Generates the assignment line inside Create()
+    public Func<PropertyInfo, string> GenerateAssignment;
 }

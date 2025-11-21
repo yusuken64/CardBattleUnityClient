@@ -34,6 +34,7 @@ public class MinionCardDefinition : CardDefinition
             HasPoisonous = this.HasPoisonous,
             HasTaunt = this.HasTaunt
         };
+        card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
 
         return card;
     }
@@ -64,8 +65,8 @@ public class TriggeredEffectWrapper
             EffectTiming = this.EffectTiming,
             TargetType = this.TargetType,
             GameActions = GameActions.Select(x => x.Create()).ToList(),
-            Condition = Condition.Create(),
-            AffectedEntitySelector = AffectedEntitySelectorWrapper.Create()
+            Condition = Condition?.Create(),
+            AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create()
         };
 
         return effect;

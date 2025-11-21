@@ -5,15 +5,15 @@ using System.Linq;
 using CardBattleEngine;
 
 [Serializable]
-public class SummonMinionActionWrapper : IGameActionWrapperBase
+public class EquipWeaponActionWrapper : IGameActionWrapperBase
 {
-    public MinionCardDefinition Card;
+    public CardBattleEngine.Weapon Weapon;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()
     {
-        var instance = new CardBattleEngine.SummonMinionAction();
-        instance.Card = Card?.CreateCard() as MinionCard;
+        var instance = new CardBattleEngine.EquipWeaponAction();
+        instance.Weapon = this.Weapon;
         instance.Canceled = this.Canceled;
         return instance;
     }
