@@ -131,5 +131,31 @@ internal void RefreshData(bool activePlayerTurn)
         return this.Data.Owner;
 	}
 
+    //doesn't know if it's resolving an attack or battlecry target
+    public void ResolveAim((IGameAction action, ActionContext context) current)
+    {
+        var gameManager = FindFirstObjectByType<GameManager>();
+        gameManager.ResolveAction(current.action, current.context);
+    }
+
+    public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current)
+    {
+        //TODO somehow determine battlecry or attack;
+        var gameManager = FindFirstObjectByType<GameManager>();
+
+        AttackAction attackAction = new();
+        ActionContext context = new()
+        {
+            SourcePlayer = Data.Owner,
+            Source = Data,
+            Target = target.GetData()
+        };
+
+        current = (attackAction, context);
+        return gameManager.ChecksValid(attackAction, context);
+    }
+
 	public AimIntent AimIntent { get; set; } = AimIntent.Attack;
+
+    public GameObject DragObject => this.gameObject;
 }

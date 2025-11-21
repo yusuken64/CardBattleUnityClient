@@ -1,3 +1,4 @@
+using CardBattleEngine;
 using System.Linq;
 using UnityEngine;
 
@@ -312,8 +313,11 @@ public interface ITargetOrigin
 {
 	public AimIntent AimIntent { get; set; }
 	bool CanStartAiming();
+	GameObject DragObject { get; }
 	CardBattleEngine.IGameEntity GetData();
 	CardBattleEngine.Player GetPlayer();
+	void ResolveAim((IGameAction action, ActionContext context) current);
+	bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current);
 }
 
 public enum AimIntent
@@ -330,7 +334,14 @@ public interface ITargetable
 
 public interface IDraggable
 {
+	GameObject DragObject { get; }
 	bool Dragging { get; set; }
 
 	bool CanStartDrag();
+	void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard);
+	void Resolve(Vector3 mousePos);
+	void CancelDrag();
+	bool RequiresTarget();
+	GameObject TransitionToAim(Vector3 mousePos);
+	void CancelAim();
 }

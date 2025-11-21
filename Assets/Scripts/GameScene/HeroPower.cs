@@ -30,6 +30,8 @@ public class HeroPower : MonoBehaviour, ITargetOrigin
 
 	public AimIntent AimIntent { get; set; } = AimIntent.HeroPower;
 
+	public GameObject DragObject => this.gameObject;
+
 	public bool CanStartAiming()
 	{
 		return !Data.UsedThisTurn;//TODO heropoweraction.isvalid
@@ -45,4 +47,24 @@ public class HeroPower : MonoBehaviour, ITargetOrigin
 		return Player.Data;
 	}
 
+	public void ResolveAim((IGameAction action, ActionContext context) current)
+	{
+		var gameManager = FindFirstObjectByType<GameManager>();
+		gameManager.ResolveAction(current.action, current.context);
+	}
+
+	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current)
+	{
+		var gameManager = FindFirstObjectByType<GameManager>();
+		CardBattleEngine.HeroPowerAction action = new CardBattleEngine.HeroPowerAction();
+		CardBattleEngine.ActionContext context = new CardBattleEngine.ActionContext()
+		{
+			Source = Player.Data,
+			Target = target.GetData(),
+			SourcePlayer = Player.Data
+		};
+
+		current = (action, context);
+		return gameManager.ChecksValid(action, context);
+	}
 }

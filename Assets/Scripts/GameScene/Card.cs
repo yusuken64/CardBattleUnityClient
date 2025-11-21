@@ -129,11 +129,19 @@ public class Card : MonoBehaviour, IDraggable
 
     public bool Dragging { get; set; }
 
+    public GameObject DragObject => this.gameObject;
+
 	public bool CanStartDrag() => true;
     public bool RequiresTarget()
     {
         if (this.Data is MinionCard minionCard)
         {
+            if (minionCard.TriggeredEffects.Count() == 0)
+			{
+                return false;
+			}
+
+            return minionCard.TriggeredEffects[0].TargetType != TargetingType.None;
         }
         else if (this.Data is SpellCard spellCard)
         {
@@ -150,8 +158,158 @@ public class Card : MonoBehaviour, IDraggable
         return false;
     }
 
-	public IGameEntity GetData()
+    public GameObject TransitionToAim(Vector3 mousePos)
+    {
+        var animator = GetComponent<Animator>();
+        animator.Play("CardCast", 0, 0f);
+
+        var gameManager = FindFirstObjectByType<GameManager>();
+        var player = gameManager.GetPlayerFor(this.Data.Owner);
+        if (this.Data is MinionCard minionCard)
+        {
+            //summon pending minion
+            var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
+            var minionPrefab = FindFirstObjectByType<PlayResolver>().MinionPrefab;
+            var pendingMinion = Instantiate(minionPrefab, player.Board.transform);
+            pendingMinion.SetupWithCard(Data as CardBattleEngine.MinionCard);
+            player.Board.Minions.Insert(index, pendingMinion);
+            player.Board.UpdateMinionPositions();
+            pendingMinion.transform.position = pendingMinion.TargetPosition;
+
+            return pendingMinion.gameObject;
+        }
+        else if (this.Data is SpellCard spellCard)
+        {
+            //pending cast from player
+            return player.HeroSpellOrigin.gameObject;
+        }
+
+        return null;
+    }
+
+    public void CancelAim()
+    {
+        Dragging = false;
+        var gameManager = FindFirstObjectByType<GameManager>();
+        var player = gameManager.GetPlayerFor(this.Data.Owner);
+        player.Board.UpdateMinionPositions();
+        player.Hand.UpdateCardPositions();
+        this.transform.localPosition = this.TargetPosition;
+
+        var animator = GetComponent<Animator>();
+        animator.Play("CardAppear", 0, 0f);
+    }
+
+    public IGameEntity GetData()
 	{
         return this.Data as IGameEntity;
 	}
+
+	public void Resolve(Vector3 mousePos)
+	{
+        var gameManager = FindFirstObjectByType<GameManager>();
+        var player = gameManager.GetPlayerFor(Data.Owner);
+        var minionPrefab = FindFirstObjectByType<PlayResolver>().MinionPrefab;
+        var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
+
+        //play the card
+        var animator = GetComponent<Animator>();
+        animator.Play("CardCast", 0, 0f);
+
+        var card = this;
+        var cardIndex = player.Hand.Cards.IndexOf(card);
+        player.Hand.Cards.Remove(card);
+        player.Hand.UpdateCardPositions();
+
+        if (card.CardType == CardBattleEngine.CardType.Minion)
+        {
+            var newMinion = Instantiate(minionPrefab, player.Board.transform);
+            //var minionData = new CardBattleEngine.Minion(card.Data as CardBattleEngine.MinionCard, player.Data);
+            newMinion.SetupWithCard(card.Data as CardBattleEngine.MinionCard);
+            player.Board.Minions.Insert(index, newMinion);
+            player.Board.UpdateMinionPositions();
+            newMinion.transform.position = newMinion.TargetPosition;
+
+            animator.Play("MinionAppear");
+            card.transform.position = newMinion.transform.position;
+
+            if (card.RequiresTarget())
+            {
+                //CardInteractionController.StartAiming(newMinion.transform);
+            }
+            else
+            {
+                gameManager.ResolveAction(
+                    new CardBattleEngine.PlayCardAction()
+                    {
+                        Card = card.Data,
+                    },
+                    new CardBattleEngine.ActionContext()
+                    {
+                        SourcePlayer = player.Data,
+                        PlayIndex = index
+                    });
+            }
+        }
+        else if (card.CardType == CardBattleEngine.CardType.Weapon)
+        {
+            gameManager.ResolveAction(
+                new CardBattleEngine.PlayCardAction()
+                {
+                    Card = card.Data,
+                },
+                new CardBattleEngine.ActionContext()
+                {
+                    SourcePlayer = player.Data,
+                    PlayIndex = index,
+                    Target = player.Data
+                });
+            Destroy(card.gameObject, 2f);
+        }
+        else
+        {
+            gameManager.ResolveAction(
+                new CardBattleEngine.PlayCardAction()
+                {
+                    Card = card.Data,
+                },
+                new CardBattleEngine.ActionContext()
+                {
+                    SourcePlayer = player.Data,
+                    PlayIndex = index
+                });
+            Destroy(card.gameObject, 2f);
+        }
+    }
+
+	public void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard)
+    {
+        var gameManager = FindFirstObjectByType<GameManager>();
+        var player = gameManager.GetPlayerFor(Data.Owner);
+        var minionPlayPreview = FindFirstObjectByType<PlayResolver>().MinionPlayPreview;
+        var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
+
+        if (!mouseOverBoard ||
+            index == -1 ||
+            Data.Type != CardType.Minion)
+        {
+            player.Board.UpdateMinionPositions();
+            minionPlayPreview.gameObject.SetActive(false);
+        }
+        else
+        {
+            var originalMinions = player.Board.Minions.ToList();
+            originalMinions.Insert(index, minionPlayPreview);
+            player.Board.UpdateMinionPositions(originalMinions);
+            minionPlayPreview.gameObject.SetActive(true);
+        }
+    }
+
+	public void CancelDrag()
+    {
+        var gameManager = FindFirstObjectByType<GameManager>();
+        var player = gameManager.GetPlayerFor(Data.Owner);
+        player.Board.UpdateMinionPositions();
+        player.Hand.UpdateCardPositions();
+    }
 }
