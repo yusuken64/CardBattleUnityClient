@@ -63,6 +63,6 @@ public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
 		};
 
 		current = (action, context);
-		return gameManager.ChecksValid(action, context);
+		return gameManager.CheckIsValid(action, context);
 	}
 }

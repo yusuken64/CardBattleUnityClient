@@ -85,5 +85,10 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 		}
 
 		yield return new WaitForSecondsRealtime(0.5f);
+
+		var player = gameManager.GetPlayerFor(current.context.SourcePlayer);
+		var opponent = gameManager.GetPlayerFor(state.OpponentOf(current.context.SourcePlayer));
+		player.RefreshData(true);
+		opponent.RefreshData(false);
 	}
 }

@@ -114,7 +114,21 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         this.SummonedCard = data;
         Attack = data.Attack;
         Health = data.Health;
-	}
+
+        var cardDefinition = FindFirstObjectByType<CardManager>().GetCardByName(data.Name);
+        CardImage.sprite = cardDefinition.Sprite;
+
+        Attack = SummonedCard.Attack;
+        Health = SummonedCard.Health;
+        CanAttack = false;
+        HasDivineShield = false;
+        HasTaunt = false;
+        HasPoisonous = false;
+        HasSummoningSickness = false;
+        IsFrozen = false;
+
+        UpdateUI();
+    }
 
 	public bool CanStartAiming()
 	{
@@ -140,19 +154,36 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
 
     public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current)
     {
-        //TODO somehow determine battlecry or attack;
         var gameManager = FindFirstObjectByType<GameManager>();
 
-        AttackAction attackAction = new();
-        ActionContext context = new()
+        if (SummonedCard != null)
         {
-            SourcePlayer = Data.Owner,
-            Source = Data,
-            Target = target.GetData()
-        };
+            PlayCardAction playCardAction = new()
+            {
+                Card = SummonedCard
+            };
+            ActionContext context = new()
+            {
+                SourcePlayer = SummonedCard.Owner,
+                SourceCard = this.SummonedCard,
+                Target = target.GetData()
+            };
+            current = (playCardAction, context);
+            SummonedCard = null;
+        }
+        else
+        {
+            AttackAction attackAction = new();
+            ActionContext context = new()
+            {
+                SourcePlayer = Data.Owner,
+                Source = Data,
+                Target = target.GetData()
+            };
+            current = (attackAction, context);
+        }
 
-        current = (attackAction, context);
-        return gameManager.ChecksValid(attackAction, context);
+        return gameManager.CheckIsValid(current.Item1, current.Item2);
     }
 
 	public AimIntent AimIntent { get; set; } = AimIntent.Attack;

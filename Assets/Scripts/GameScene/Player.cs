@@ -23,6 +23,8 @@ public class Player : MonoBehaviour, ITargetable
 	public CardBattleEngine.Player Data { get; internal set; }
 
 	public int Health;
+	public int Mana;
+	public int MaxMana;
 
 	public TextMeshProUGUI ManaText;
 	public TextMeshProUGUI HealthText;
@@ -46,6 +48,8 @@ public class Player : MonoBehaviour, ITargetable
 	internal void RefreshData(bool activePlayerTurn)
 	{
 		Health = Data.Health;
+		Mana = Data.Mana;
+		MaxMana = Data.MaxMana;
 		CanAttack = Data.CanAttack();
 
 		if (HeroPower != null)
@@ -72,9 +76,10 @@ public class Player : MonoBehaviour, ITargetable
 		UpdateUI();
 	}
 
-	private void UpdateUI()
+	public void UpdateUI()
 	{
 		HealthText.text = Health.ToString();
+		ManaText.text = $"{Mana}/{MaxMana}";
 		CanAttackIndicator.SetActive(CanAttack);
 	}
 

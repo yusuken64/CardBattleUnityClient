@@ -103,9 +103,10 @@ public class GameInteractionHandler : MonoBehaviour
 			currentDraggable.DragObject.transform.position = mousePos;
 			currentDraggable.Dragging = false;
 
-			if (MouseOverBoard(mousePos).collider != null)
+			if (MouseOverBoard(mousePos).collider != null &&
+				currentDraggable.CanResolve(mousePos, out var current))
 			{
-				currentDraggable.Resolve(mousePos);
+				currentDraggable.Resolve(mousePos, current);
 				CancelAim();
 			}
 			else
@@ -180,13 +181,16 @@ public class GameInteractionHandler : MonoBehaviour
 		else if (hit.collider != null)
 		{
 			var targetOrigin = hit.collider.GetComponent<ITargetOrigin>();
-			if (targetOrigin.CanStartAiming())
+			if (targetOrigin != null)
 			{
-				currentAimable = targetOrigin;
-			}
-			else
-			{
-				//currentAimable.ResolveTarget(null);
+				if (targetOrigin.CanStartAiming())
+				{
+					currentAimable = targetOrigin;
+				}
+				else
+				{
+					//currentAimable.ResolveTarget(null);
+				}
 			}
 		}
 	}
@@ -283,7 +287,8 @@ public interface IDraggable
 
 	bool CanStartDrag();
 	void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard);
-	void Resolve(Vector3 mousePos);
+	bool CanResolve(Vector3 mousePos, out (IGameAction action, ActionContext context) current);
+	void Resolve(Vector3 mousePos, (IGameAction action, ActionContext context) current);
 	void CancelDrag();
 	bool RequiresTarget();
 	GameObject TransitionToAim(Vector3 mousePos);

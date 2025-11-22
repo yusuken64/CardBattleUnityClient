@@ -36,7 +36,7 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 		};
 
 		current = (attackAction, context);
-		return gameManager.ChecksValid(attackAction, context);
+		return gameManager.CheckIsValid(attackAction, context);
 	}
 
 

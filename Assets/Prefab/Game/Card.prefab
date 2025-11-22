@@ -1178,7 +1178,7 @@ MonoBehaviour:
   TribeText: {fileID: 7706660267379408038}
   CastIndicator: {fileID: 6099414598535451997}
   VisualParent: {fileID: 4728465195448024071}
-  moveSpeed: 10
+  moveSpeed: 20
   rotateSpeed: 100
 --- !u!61 &8010682437845266216
 BoxCollider2D:

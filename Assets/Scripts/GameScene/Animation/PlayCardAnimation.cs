@@ -34,7 +34,6 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 			yield return playedCard.transform.DOMove(Vector3.zero, 0.4f).WaitForCompletion();
 		}
 
-		player.ManaText.text = $"{player.Data.Mana}/{player.Data.MaxMana}";
 		yield return null;
 	}
 }

@@ -80,7 +80,7 @@ public class Card : MonoBehaviour, IDraggable
                 transform.localRotation,
                 Quaternion.Euler(0, 0, 0),
                 rotateSpeed * Time.deltaTime
-);
+            );
         }
     }
 
@@ -218,13 +218,71 @@ public class Card : MonoBehaviour, IDraggable
         return this.Data as IGameEntity;
 	}
 
-	public void Resolve(Vector3 mousePos)
-	{
+    public bool CanResolve(Vector3 mousePos, out (IGameAction action, ActionContext context) current)
+    {
+        var gameManager = FindFirstObjectByType<GameManager>();
+        var player = gameManager.GetPlayerFor(Data.Owner);
+
+        var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
+
+        PlayCardAction action = null;
+        ActionContext context = null;
+        var card = this;
+        if (card.CardType == CardBattleEngine.CardType.Minion)
+        {
+            if (card.RequiresTarget())
+            {
+                //CardInteractionController.StartAiming(newMinion.transform);
+            }
+            else
+            {
+                action = new CardBattleEngine.PlayCardAction()
+                {
+                    Card = card.Data,
+                };
+                context = new CardBattleEngine.ActionContext()
+                {
+                    SourcePlayer = player.Data,
+                    PlayIndex = index
+                };
+            }
+        }
+        else if (card.CardType == CardBattleEngine.CardType.Weapon)
+        {
+            action = new CardBattleEngine.PlayCardAction()
+            {
+                Card = card.Data,
+            };
+            context = new CardBattleEngine.ActionContext()
+            {
+                SourcePlayer = player.Data,
+                PlayIndex = index,
+                Target = player.Data
+            };
+        }
+        else
+        {
+            action = new CardBattleEngine.PlayCardAction()
+            {
+                Card = card.Data,
+            };
+            context = new CardBattleEngine.ActionContext()
+            {
+                SourcePlayer = player.Data,
+                PlayIndex = index
+            };
+        }
+        current = (action, context);
+        return gameManager.CheckIsValid(action, context);
+    }
+
+    public void Resolve(Vector3 mousePos, (IGameAction action, ActionContext context) current)
+    {
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
         GameInteractionHandler cardInteractionController = FindFirstObjectByType<GameInteractionHandler>();
-		var minionPrefab = cardInteractionController.MinionPrefab;
-		cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
+        var minionPrefab = cardInteractionController.MinionPrefab;
+        cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
         var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
 
         //play the card
@@ -255,46 +313,18 @@ public class Card : MonoBehaviour, IDraggable
             }
             else
             {
-                gameManager.ResolveAction(
-                    new CardBattleEngine.PlayCardAction()
-                    {
-                        Card = card.Data,
-                    },
-                    new CardBattleEngine.ActionContext()
-                    {
-                        SourcePlayer = player.Data,
-                        PlayIndex = index
-                    });
+                gameManager.ResolveAction(current.action, current.context);
             }
             Destroy(card.gameObject, 2f);
         }
         else if (card.CardType == CardBattleEngine.CardType.Weapon)
         {
-            gameManager.ResolveAction(
-                new CardBattleEngine.PlayCardAction()
-                {
-                    Card = card.Data,
-                },
-                new CardBattleEngine.ActionContext()
-                {
-                    SourcePlayer = player.Data,
-                    PlayIndex = index,
-                    Target = player.Data
-                });
+            gameManager.ResolveAction(current.action, current.context);
             Destroy(card.gameObject, 2f);
         }
         else
         {
-            gameManager.ResolveAction(
-                new CardBattleEngine.PlayCardAction()
-                {
-                    Card = card.Data,
-                },
-                new CardBattleEngine.ActionContext()
-                {
-                    SourcePlayer = player.Data,
-                    PlayIndex = index
-                });
+            gameManager.ResolveAction(current.action, current.context);
             Destroy(card.gameObject, 2f);
         }
     }
@@ -326,6 +356,8 @@ public class Card : MonoBehaviour, IDraggable
 
 	public void CancelDrag()
     {
+        CastIndicator.gameObject.SetActive(false);
+
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
         player.Board.UpdateMinionPositions();

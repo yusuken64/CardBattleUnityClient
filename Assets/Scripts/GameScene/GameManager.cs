@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
 		_engine.StartGame(_gameState);
+
+		Player.RefreshData(false);
+		Opponent.RefreshData(false);
 	}
 
 	private GameState CreateTestGame()
@@ -84,7 +87,7 @@ public class GameManager : MonoBehaviour
 		return null;
 	}
 
-	public bool ChecksValid(IGameAction action, ActionContext context)
+	public bool CheckIsValid(IGameAction action, ActionContext context)
 	{
 		return action.IsValid(_gameState, context);
 	}
@@ -112,7 +115,7 @@ public class GameManager : MonoBehaviour
 		Debug.Log(current);
 		AnimationQueue.EnqueueAnimation(this, state, current);
 
-		UpdateAllEntities();
+		//UpdateAllEntities();
 	}
 
 	private void UpdateAllEntities()

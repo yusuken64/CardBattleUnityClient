@@ -42,6 +42,17 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 		// backward bump
 		Tween back = attacker.DOMove(startPos, 0.15f).SetEase(Ease.Linear);
 
+		var playerObject = attacker.gameObject.GetComponentInParent<Player>();
+		var minion = attacker.gameObject.GetComponent<Minion>();
+		if (playerObject != null)
+		{
+			playerObject.RefreshData(playerObject.Data == state.CurrentPlayer);
+		}
+		else if (minion != null)
+		{
+			minion.RefreshData(minion.Data.Owner == state.CurrentPlayer);
+		}
+
 		yield return back.WaitForCompletion();
 	}
 }
@@ -61,7 +72,8 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 
 	public override IEnumerator Play()
 	{
-		Transform target = gameManager.GetObjectFor(current.context.Target).transform;
+		GameObject gameObject = gameManager.GetObjectFor(current.context.Target);
+		Transform target = gameObject.transform;
 
 		// simple shake: short, small, no fancy stuff
 		Tween shake = target.DOShakePosition(
@@ -73,6 +85,17 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 		);
 
 		Object.FindFirstObjectByType<UI>().ShowDamage((current.action as DamageAction).Damage, target);
+
+		var player = gameObject.GetComponentInParent<Player>();
+		var minion = gameObject.GetComponent<Minion>();
+		if (player != null)
+		{
+			player.RefreshData(player.Data == state.CurrentPlayer);
+		}
+		else if (minion != null)
+		{
+			minion.RefreshData(minion.Data.Owner == state.CurrentPlayer);
+		}
 
 		yield return shake.WaitForCompletion();
 	}
