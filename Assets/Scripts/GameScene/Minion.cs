@@ -93,7 +93,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         FreezeIndicator.gameObject.SetActive(IsFrozen);
     }
 
-internal void RefreshData(bool activePlayerTurn)
+    internal void RefreshData(bool activePlayerTurn)
     {
         if (Data == null) { return; }
 
@@ -132,7 +132,7 @@ internal void RefreshData(bool activePlayerTurn)
 	}
 
     //doesn't know if it's resolving an attack or battlecry target
-    public void ResolveAim((IGameAction action, ActionContext context) current)
+    public void ResolveAim((IGameAction action, ActionContext context) current, GameObject gameObject)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
         gameManager.ResolveAction(current.action, current.context);

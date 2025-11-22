@@ -1,7 +1,7 @@
 using CardBattleEngine;
 using UnityEngine;
 
-public class HeroPortrait : MonoBehaviour, ITargetOrigin
+public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 {
 	public Player Player;
     public AimIntent AimIntent { get; set; } = AimIntent.Attack;
@@ -31,6 +31,7 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin
 		ActionContext context = new()
 		{
 			SourcePlayer = Player.Data,
+			Source = Player.Data,
 			Target = target.GetData()
 		};
 
@@ -39,7 +40,7 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin
 	}
 
 
-	public void ResolveAim((IGameAction action, ActionContext context) current)
+	public void ResolveAim((IGameAction action, ActionContext context) current, GameObject gameObject)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
 		gameManager.ResolveAction(current.action, current.context);

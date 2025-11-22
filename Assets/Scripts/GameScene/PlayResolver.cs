@@ -316,7 +316,7 @@ public interface ITargetOrigin
 	GameObject DragObject { get; }
 	CardBattleEngine.IGameEntity GetData();
 	CardBattleEngine.Player GetPlayer();
-	void ResolveAim((IGameAction action, ActionContext context) current);
+	void ResolveAim((IGameAction action, ActionContext context) current, GameObject dragObject);
 	bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current);
 }
 

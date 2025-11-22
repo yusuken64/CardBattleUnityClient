@@ -29,7 +29,13 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			//play summon animation and set existingMinion
 			var newMinion = Object.Instantiate(gameManager.PlayResolver.MinionPrefab, player.Board.transform);
 			newMinion.Setup(minionData);
-			player.Board.Minions.Insert(index, newMinion);
+			if (index != -1)
+			{
+				player.Board.Minions.Insert(index, newMinion);
+			} else
+			{
+				player.Board.Minions.Add(newMinion);
+			}
 			player.Board.UpdateMinionPositions();
 
 			var animator = newMinion.GetComponent<Animator>();

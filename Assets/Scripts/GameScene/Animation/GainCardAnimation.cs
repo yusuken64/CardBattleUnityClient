@@ -79,7 +79,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			// Reset alpha
 			cg.alpha = 1f;
 
-			yield return new WaitForSecondsRealtime(2f);
+			yield return new WaitForSecondsRealtime(0.3f);
 
 			Object.FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
 		}

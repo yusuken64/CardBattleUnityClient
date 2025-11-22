@@ -1,4 +1,5 @@
 using CardBattleEngine;
+using System.Linq;
 using UnityEngine;
 
 public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
@@ -23,10 +24,21 @@ public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
 		return Player.Data;
 	}
 
-	public void ResolveAim((IGameAction action, ActionContext context) current)
+	public void ResolveAim((IGameAction action, ActionContext context) current, GameObject dragObject)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
 		gameManager.ResolveAction(current.action, current.context);
+
+		if (dragObject != null)
+		{
+			var card = dragObject.GetComponent<Card>();
+			if (card != null)
+			{
+				Player.Hand.Cards.Remove(card);
+				Destroy(card.gameObject);
+			}
+		}
+		Player.Hand.UpdateCardPositions();
 	}
 
 	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current)
@@ -39,7 +51,10 @@ public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
 		}
 
 		var gameManager = FindFirstObjectByType<GameManager>();
-		CastSpellAction action = new();
+		PlayCardAction action = new()
+		{
+			Card = pendingCard.Data
+		};
 		ActionContext context = new()
 		{
 			SourceCard = pendingCard.Data,

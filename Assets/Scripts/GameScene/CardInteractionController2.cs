@@ -13,7 +13,6 @@ public class CardInteractionController2 : MonoBehaviour
 	public int CurveResolution = 20;
 	public float CurveStrength = 2f;
 	private Vector3 _aimStartPosition;
-	private GameObject pendingAimObject;
 	private IDraggable pendingDraggable;
 
 	private void OnEnable()
@@ -56,6 +55,7 @@ public class CardInteractionController2 : MonoBehaviour
 				targetOrigin.CanStartAiming())
 			{
 				currentAimable = targetOrigin;
+				StartLine(currentAimable.DragObject.transform.position);
 			}
 		}
 	}
@@ -101,10 +101,12 @@ public class CardInteractionController2 : MonoBehaviour
 			if (MouseOverBoard(mousePos).collider != null)
 			{
 				currentDraggable.Resolve(mousePos);
+				CancelAim();
 			}
 			else
 			{
 				currentDraggable.CancelDrag();
+				CancelAim();
 			}
 
 			currentDraggable = null;
@@ -116,12 +118,17 @@ public class CardInteractionController2 : MonoBehaviour
 			if (hit.collider != null)
 			{
 				target = hit.collider.GetComponent<ITargetable>();
+				if (target == null)
+				{
+					target = hit.collider.GetComponentInParent<ITargetable>();
+				}
 			}
 
 			if (target != null &&
-				currentAimable.WillResolveSuccessfully(target, pendingAimObject, out var current))
+				currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current))
 			{
-				currentAimable.ResolveAim(current);
+				currentAimable.ResolveAim(current, pendingDraggable?.DragObject);
+				CancelAim();
 			}
 			else
 			{
@@ -133,7 +140,15 @@ public class CardInteractionController2 : MonoBehaviour
 
 	private void CancelAim()
 	{
-		pendingDraggable.CancelAim();
+		if (pendingDraggable != null)
+		{
+			pendingDraggable?.CancelAim();
+		}
+
+		pendingDraggable = null;
+		currentAimable = null;
+		currentDraggable = null;
+
 		EndLine();
 	}
 

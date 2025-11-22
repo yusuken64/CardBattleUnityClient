@@ -47,7 +47,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin
 		return Player.Data;
 	}
 
-	public void ResolveAim((IGameAction action, ActionContext context) current)
+	public void ResolveAim((IGameAction action, ActionContext context) current, GameObject gameObject)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
 		gameManager.ResolveAction(current.action, current.context);

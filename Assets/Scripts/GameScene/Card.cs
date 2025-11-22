@@ -27,6 +27,8 @@ public class Card : MonoBehaviour, IDraggable
     public GameObject TribeObject;
     public TextMeshProUGUI TribeText;
 
+    public GameObject CastIndicator;
+
     #endregion
 
     #region Animation
@@ -44,6 +46,7 @@ public class Card : MonoBehaviour, IDraggable
 
 	public void ResetVisuals()
 	{
+        CastIndicator.gameObject.SetActive(false);
         VisualParent.transform.localScale = Vector3.one;
     }
 
@@ -181,6 +184,7 @@ public class Card : MonoBehaviour, IDraggable
         else if (this.Data is SpellCard spellCard)
         {
             //pending cast from player
+            this.transform.position = player.HeroSpellOrigin.transform.position;
             return player.HeroSpellOrigin.gameObject;
         }
 
@@ -189,6 +193,7 @@ public class Card : MonoBehaviour, IDraggable
 
     public void CancelAim()
     {
+        CastIndicator.gameObject.SetActive(false);
         Dragging = false;
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(this.Data.Owner);
@@ -209,7 +214,9 @@ public class Card : MonoBehaviour, IDraggable
 	{
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
-        var minionPrefab = FindFirstObjectByType<PlayResolver>().MinionPrefab;
+		PlayResolver playResolver = FindFirstObjectByType<PlayResolver>();
+		var minionPrefab = playResolver.MinionPrefab;
+		playResolver.MinionPlayPreview.gameObject.SetActive(false);
         var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
 
         //play the card
@@ -220,6 +227,7 @@ public class Card : MonoBehaviour, IDraggable
         var cardIndex = player.Hand.Cards.IndexOf(card);
         player.Hand.Cards.Remove(card);
         player.Hand.UpdateCardPositions();
+        CastIndicator.gameObject.SetActive(false);
 
         if (card.CardType == CardBattleEngine.CardType.Minion)
         {
@@ -250,6 +258,7 @@ public class Card : MonoBehaviour, IDraggable
                         PlayIndex = index
                     });
             }
+            Destroy(card.gameObject, 2f);
         }
         else if (card.CardType == CardBattleEngine.CardType.Weapon)
         {
@@ -288,6 +297,8 @@ public class Card : MonoBehaviour, IDraggable
         var player = gameManager.GetPlayerFor(Data.Owner);
         var minionPlayPreview = FindFirstObjectByType<PlayResolver>().MinionPlayPreview;
         var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
+
+        CastIndicator.gameObject.SetActive(mouseOverBoard);
 
         if (!mouseOverBoard ||
             index == -1 ||
