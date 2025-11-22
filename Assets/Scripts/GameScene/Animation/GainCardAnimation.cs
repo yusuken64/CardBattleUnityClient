@@ -19,7 +19,7 @@ public class GainCardAnimation : GameActionAnimation<GainCardAction>
 	public override IEnumerator Play()
 	{
 		var player = gameManager.GetPlayerFor(current.context.SourcePlayer);
-		var cardPrefab = gameManager.PlayResolver.CardPrefab;
+		var cardPrefab = Object.FindAnyObjectByType<GameInteractionHandler>().CardPrefab;
 		var newCard = Object.Instantiate(cardPrefab, player.Hand.transform);
 		var cardData = (current.action as GainCardAction).Card;
 		cardData.Owner = current.context.SourcePlayer;

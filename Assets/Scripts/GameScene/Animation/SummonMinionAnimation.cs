@@ -27,7 +27,8 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			var index = player.Data.Board.IndexOf(current.context.SummonedMinion);
 
 			//play summon animation and set existingMinion
-			var newMinion = Object.Instantiate(gameManager.PlayResolver.MinionPrefab, player.Board.transform);
+			var minionPrefab = Object.FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
+			var newMinion = Object.Instantiate(minionPrefab, player.Board.transform);
 			newMinion.Setup(minionData);
 			if (index != -1)
 			{

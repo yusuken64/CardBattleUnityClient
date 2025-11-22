@@ -74,6 +74,14 @@ public class Card : MonoBehaviour, IDraggable
                 Moving = false;
             }
         }
+        else if (Dragging)
+		{
+            transform.localRotation = Quaternion.RotateTowards(
+                transform.localRotation,
+                Quaternion.Euler(0, 0, 0),
+                rotateSpeed * Time.deltaTime
+);
+        }
     }
 
 	internal void Setup(CardBattleEngine.Card cardData)
@@ -172,7 +180,7 @@ public class Card : MonoBehaviour, IDraggable
         {
             //summon pending minion
             var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
-            var minionPrefab = FindFirstObjectByType<PlayResolver>().MinionPrefab;
+            var minionPrefab = FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
             var pendingMinion = Instantiate(minionPrefab, player.Board.transform);
             pendingMinion.SetupWithCard(Data as CardBattleEngine.MinionCard);
             player.Board.Minions.Insert(index, pendingMinion);
@@ -214,9 +222,9 @@ public class Card : MonoBehaviour, IDraggable
 	{
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
-		PlayResolver playResolver = FindFirstObjectByType<PlayResolver>();
-		var minionPrefab = playResolver.MinionPrefab;
-		playResolver.MinionPlayPreview.gameObject.SetActive(false);
+        GameInteractionHandler cardInteractionController = FindFirstObjectByType<GameInteractionHandler>();
+		var minionPrefab = cardInteractionController.MinionPrefab;
+		cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
         var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
 
         //play the card
@@ -295,7 +303,7 @@ public class Card : MonoBehaviour, IDraggable
     {
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
-        var minionPlayPreview = FindFirstObjectByType<PlayResolver>().MinionPlayPreview;
+        var minionPlayPreview = FindFirstObjectByType<GameInteractionHandler>().MinionPlayPreview;
         var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
 
         CastIndicator.gameObject.SetActive(mouseOverBoard);

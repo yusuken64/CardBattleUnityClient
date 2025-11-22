@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public Player Player;
     public Player Opponent;
 
-	public PlayResolver PlayResolver;
 	public AnimationQueue AnimationQueue;
 	public DeckDefinition TestDeck;
 

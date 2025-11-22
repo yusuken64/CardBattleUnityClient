@@ -4852,7 +4852,7 @@ GameObject:
   - component: {fileID: 1038288297035625781}
   - component: {fileID: 1100483820342427298}
   m_Layer: 0
-  m_Name: Particle System (3)
+  m_Name: SlowClouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9746,7 +9746,7 @@ GameObject:
   - component: {fileID: 4579143587184835901}
   - component: {fileID: 6390138342650326689}
   m_Layer: 0
-  m_Name: Particle System (1)
+  m_Name: SmallDots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14640,7 +14640,7 @@ GameObject:
   - component: {fileID: 5469651785992231072}
   - component: {fileID: 3606422593184728614}
   m_Layer: 0
-  m_Name: Particle System (2)
+  m_Name: WhiteLines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14915,8 +14915,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 1
+      scalar: 5
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14968,8 +14968,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 140
-      minScalar: 100
+      scalar: 120.3
+      minScalar: 76.57
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -15296,7 +15296,7 @@ ParticleSystem:
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 1
+    radiusThickness: 0
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
@@ -15379,7 +15379,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.2
+      value: 0.0001
       mode: 0
       spread: 0
       speed:
@@ -19543,7 +19543,7 @@ GameObject:
   - component: {fileID: 8205097503127638975}
   - component: {fileID: 3532920037892302137}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: FireDots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

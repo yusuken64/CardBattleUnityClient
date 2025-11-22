@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using CardBattleEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class CardInteractionController2 : MonoBehaviour
+public class GameInteractionHandler : MonoBehaviour
 {
-    public PointerInput PointerInput;
+	public Card CardPrefab;
+	public Minion MinionPrefab;
+	public Minion MinionPlayPreview;
+
+	public PointerInput PointerInput;
 	public LayerMask ClickableMask;
 	private IDraggable currentDraggable;
 	private ITargetOrigin currentAimable;
@@ -247,4 +252,40 @@ public class CardInteractionController2 : MonoBehaviour
 		LineRenderer.enabled = false;
 		ArrowHead.enabled = false;
 	}
+}
+public interface ITargetOrigin
+{
+	public AimIntent AimIntent { get; set; }
+	bool CanStartAiming();
+	GameObject DragObject { get; }
+	CardBattleEngine.IGameEntity GetData();
+	CardBattleEngine.Player GetPlayer();
+	void ResolveAim((IGameAction action, ActionContext context) current, GameObject dragObject);
+	bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current);
+}
+
+public enum AimIntent
+{
+	Attack,
+	CastSpell,
+	HeroPower
+}
+
+public interface ITargetable
+{
+	CardBattleEngine.IGameEntity GetData();
+}
+
+public interface IDraggable
+{
+	GameObject DragObject { get; }
+	bool Dragging { get; set; }
+
+	bool CanStartDrag();
+	void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard);
+	void Resolve(Vector3 mousePos);
+	void CancelDrag();
+	bool RequiresTarget();
+	GameObject TransitionToAim(Vector3 mousePos);
+	void CancelAim();
 }
