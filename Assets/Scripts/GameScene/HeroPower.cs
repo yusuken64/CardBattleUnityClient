@@ -53,7 +53,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin
 		gameManager.ResolveAction(current.action, current.context);
 	}
 
-	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current)
+	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
 		CardBattleEngine.HeroPowerAction action = new CardBattleEngine.HeroPowerAction();

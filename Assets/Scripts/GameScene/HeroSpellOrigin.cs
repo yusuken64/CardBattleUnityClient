@@ -41,7 +41,7 @@ public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
 		Player.Hand.UpdateCardPositions();
 	}
 
-	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current)
+	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos)
 	{
 		var pendingCard = pendingAimObject.GetComponent<Card>();
 		if (pendingCard == null)

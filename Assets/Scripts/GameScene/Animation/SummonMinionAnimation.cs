@@ -33,7 +33,8 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			if (index != -1)
 			{
 				player.Board.Minions.Insert(index, newMinion);
-			} else
+			}
+			else
 			{
 				player.Board.Minions.Add(newMinion);
 			}
@@ -45,6 +46,7 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			existingMinion = newMinion;
 		}
 
+		existingMinion.SummonedCard = null;
 		existingMinion.Setup(minionData);
 
 		yield return null;

@@ -1,4 +1,5 @@
 using CardBattleEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -41,7 +42,9 @@ public class Card : MonoBehaviour, IDraggable
 	public GameObject VisualParent;
 
 	public float moveSpeed;
-	public float rotateSpeed; 
+	public float rotateSpeed;
+	private Minion _pendingMinion;
+	public int _pendingIndex;
 	#endregion
 
 	public void ResetVisuals()
@@ -181,13 +184,15 @@ public class Card : MonoBehaviour, IDraggable
             //summon pending minion
             var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
             var minionPrefab = FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
-            var pendingMinion = Instantiate(minionPrefab, player.Board.transform);
-            pendingMinion.SetupWithCard(Data as CardBattleEngine.MinionCard);
-            player.Board.Minions.Insert(index, pendingMinion);
+            _pendingIndex = index;
+            _pendingMinion = Instantiate(minionPrefab, player.Board.transform);
+            _pendingMinion.SetupWithCard(Data as CardBattleEngine.MinionCard);
+            player.Board.Minions.Insert(_pendingIndex, _pendingMinion);
             player.Board.UpdateMinionPositions();
-            pendingMinion.transform.position = pendingMinion.TargetPosition;
+            _pendingMinion.transform.position = _pendingMinion.TargetPosition;
+            this.transform.position = _pendingMinion.TargetPosition;
 
-            return pendingMinion.gameObject;
+            return _pendingMinion.gameObject;
         }
         else if (this.Data is SpellCard spellCard)
         {
@@ -200,20 +205,61 @@ public class Card : MonoBehaviour, IDraggable
     }
 
     public void CancelAim()
-    {
+	{
+        StartCoroutine(CancelAimRoutine());
+	}
+
+    public void EndAim()
+	{
+        _pendingIndex = -1;
+        _pendingMinion = null;
         CastIndicator.gameObject.SetActive(false);
-        Dragging = false;
+
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(this.Data.Owner);
         player.Board.UpdateMinionPositions();
         player.Hand.UpdateCardPositions();
-        this.transform.localPosition = this.TargetPosition;
 
-        var animator = GetComponent<Animator>();
-        animator.Play("CardAppear", 0, 0f);
+        GameInteractionHandler cardInteractionController = FindFirstObjectByType<GameInteractionHandler>();
+        cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
     }
 
-    public IGameEntity GetData()
+	private IEnumerator CancelAimRoutine()
+	{
+        GameInteractionHandler cardInteractionController = FindFirstObjectByType<GameInteractionHandler>();
+        cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
+        CastIndicator.gameObject.SetActive(false);
+
+        var gameManager = FindFirstObjectByType<GameManager>();
+		var player = gameManager.GetPlayerFor(this.Data.Owner);
+
+		if (_pendingMinion != null)
+		{
+			//play minion clear
+			//remove from board
+			if (player.Board.Minions.Contains(_pendingMinion))
+			{
+				player.Board.Minions.Remove(_pendingMinion);
+				var pendingAnimator = _pendingMinion.GetComponent<Animator>();
+				pendingAnimator.Play("MinionReturn");
+			}
+			player.Board.UpdateMinionPositions();
+			Destroy(_pendingMinion.gameObject, 2f); //the length of animation
+
+            yield return new WaitForSecondsRealtime(2f);
+		}
+
+		Dragging = false;
+		player.Board.UpdateMinionPositions();
+		player.Hand.UpdateCardPositions();
+		this.transform.localPosition = this.TargetPosition;
+
+		var animator = GetComponent<Animator>();
+		animator.Play("CardAppear", 0, 0f);
+        yield return null;
+    }
+
+	public IGameEntity GetData()
 	{
         return this.Data as IGameEntity;
 	}
@@ -281,8 +327,8 @@ public class Card : MonoBehaviour, IDraggable
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
         GameInteractionHandler cardInteractionController = FindFirstObjectByType<GameInteractionHandler>();
-        var minionPrefab = cardInteractionController.MinionPrefab;
         cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
+        var minionPrefab = cardInteractionController.MinionPrefab;
         var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
 
         //play the card

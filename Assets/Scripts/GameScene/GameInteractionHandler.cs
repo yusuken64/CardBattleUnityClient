@@ -131,10 +131,10 @@ public class GameInteractionHandler : MonoBehaviour
 			}
 
 			if (target != null &&
-				currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current))
+				currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current, mousePos))
 			{
 				currentAimable.ResolveAim(current, pendingDraggable?.DragObject);
-				CancelAim();
+				EndAim();
 			}
 			else
 			{
@@ -149,6 +149,16 @@ public class GameInteractionHandler : MonoBehaviour
 		if (pendingDraggable != null)
 		{
 			pendingDraggable?.CancelAim();
+		}
+
+		EndAim();
+	}
+
+	private void EndAim()
+	{
+		if (pendingDraggable != null)
+		{
+			pendingDraggable?.EndAim();
 		}
 
 		pendingDraggable = null;
@@ -265,7 +275,7 @@ public interface ITargetOrigin
 	CardBattleEngine.IGameEntity GetData();
 	CardBattleEngine.Player GetPlayer();
 	void ResolveAim((IGameAction action, ActionContext context) current, GameObject dragObject);
-	bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current);
+	bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos);
 }
 
 public enum AimIntent
@@ -293,4 +303,5 @@ public interface IDraggable
 	bool RequiresTarget();
 	GameObject TransitionToAim(Vector3 mousePos);
 	void CancelAim();
+	void EndAim();
 }

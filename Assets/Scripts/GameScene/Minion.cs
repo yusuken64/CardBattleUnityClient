@@ -1,5 +1,6 @@
 using CardBattleEngine;
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
 {
     public CardBattleEngine.Minion Data { get; private set; }
-	public MinionCard SummonedCard { get; private set; }
+	public MinionCard SummonedCard { get; set; }
 
     public Image CardImage;
 	public int Attack;
@@ -152,12 +153,19 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         gameManager.ResolveAction(current.action, current.context);
     }
 
-    public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current)
+    public bool WillResolveSuccessfully(
+        ITargetable target,
+        GameObject pendingAimObject,
+        out (IGameAction, ActionContext) current,
+        Vector3 mousePos)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
 
         if (SummonedCard != null)
         {
+            var player = gameManager.GetPlayerFor(SummonedCard.Owner);
+            var first = player.Hand.Cards.FirstOrDefault(x => x.Data == SummonedCard);
+            player.Hand.Cards.Remove(first);
             PlayCardAction playCardAction = new()
             {
                 Card = SummonedCard
@@ -166,10 +174,10 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
             {
                 SourcePlayer = SummonedCard.Owner,
                 SourceCard = this.SummonedCard,
-                Target = target.GetData()
+                Target = target.GetData(),
+                PlayIndex = first._pendingIndex
             };
             current = (playCardAction, context);
-            SummonedCard = null;
         }
         else
         {

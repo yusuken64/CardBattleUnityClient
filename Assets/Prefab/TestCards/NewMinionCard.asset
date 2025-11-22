@@ -15,7 +15,7 @@ MonoBehaviour:
   CardName: test
   ID: test
   Sprite: {fileID: 21300000, guid: 2c8fb92718ac38d49930bf882cb885d0, type: 3}
-  Cost: 0
+  Cost: 1
   Attack: 1
   Health: 3
   MinionTribes: 

@@ -445,6 +445,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1bcb9cdcb00062043a73ce2edf35bef1, type: 2}
   - {fileID: 11400000, guid: f1f335770c3b57c4a8d694321a62d771, type: 2}
   - {fileID: 11400000, guid: f8455985b1f07db4686857662b488df2, type: 2}
+  - {fileID: 11400000, guid: 67aa3b84f10ba99478501ae86e1b4f44, type: 2}
 --- !u!4 &18950029
 Transform:
   m_ObjectHideFlags: 0
@@ -3440,6 +3441,8 @@ MonoBehaviour:
   HeroPower: {fileID: 0}
   CanAttack: 0
   Health: 0
+  Mana: 0
+  MaxMana: 0
   ManaText: {fileID: 719156766}
   HealthText: {fileID: 1835882949}
 --- !u!1 &1132939049
