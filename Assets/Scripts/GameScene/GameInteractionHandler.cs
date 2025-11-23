@@ -171,11 +171,26 @@ public class GameInteractionHandler : MonoBehaviour
 	private void PointerInput_OnHoldEnd(Vector2 obj)
 	{
 		//hide info
+		var ui = FindFirstObjectByType<UI>();
+		ui.PreviewEnd();
 	}
 
 	private void PointerInput_OnHoldStart(Vector2 obj)
 	{
-		//show info
+		var mousePos = GetMouseWorldPosition2D(obj);
+
+			RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
+		if (hit.collider != null)
+		{
+			//show info
+			var ui = FindFirstObjectByType<UI>();
+
+			var hoverable = hit.collider.GetComponent<IHoverable>();
+			if (hoverable != null)
+			{
+				ui.PreviewStart(hoverable);
+			}
+		}
 	}
 
 	private void PointerInput_OnClick(Vector2 obj)
@@ -304,4 +319,9 @@ public interface IDraggable
 	GameObject TransitionToAim(Vector3 mousePos);
 	void CancelAim();
 	void EndAim();
+}
+
+public interface IHoverable
+{
+	CardBattleEngine.Card GetDisplayCard();
 }

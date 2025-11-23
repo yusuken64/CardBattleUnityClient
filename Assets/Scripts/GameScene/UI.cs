@@ -94,13 +94,15 @@ public class UI : MonoBehaviour
            });
     }
 
-	internal void PreviewStart(IDraggable gameEntity)
-	{
-        CardPreview.Setup((gameEntity as Card).Data);
+    internal void PreviewStart(IHoverable hoverable)
+    {
+        var card = hoverable.GetDisplayCard();
+        if (card == null) { return; }
+        CardPreview.Setup(card);
         CardPreview.gameObject.SetActive(true);
     }
 
-	internal void PreviewEnd(IDraggable gameEntity)
+	internal void PreviewEnd()
     {
         CardPreview.gameObject.SetActive(false);
     }

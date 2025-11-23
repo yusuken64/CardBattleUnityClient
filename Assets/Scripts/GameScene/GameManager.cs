@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
 		_engine.StartGame(_gameState);
 
 		Player.HeroImage.sprite = TestDeck.HeroCard.Sprite;
+		Player.HeroPower.OriginalCard = TestDeck.HeroCard.CreateCard();
+		Player.HeroPower.OriginalCard.Owner = Player.Data;
 		Player.RefreshData(false);
 		Opponent.RefreshData(false);
 	}

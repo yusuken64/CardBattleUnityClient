@@ -46,12 +46,14 @@ public class PointerInput : MonoBehaviour
             {
                 dragging = true;
                 OnDragStart?.Invoke(pos);
+                OnHoldEnd?.Invoke(pos);
             }
 
             // Drag update
             if (dragging)
             {
                 OnDrag?.Invoke(pos);
+                OnHoldEnd?.Invoke(pos);
             }
 
             // Hold start (if not dragging)

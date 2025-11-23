@@ -41,6 +41,7 @@ public class MinionCardDefinition : CardDefinition
             HasLifeSteal = this.HasLifeSteal,
         };
         card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
+        card.Description = string.Join(Environment.NewLine, TriggeredEffects.Select(ToDescription));
 
         return card;
     }
@@ -49,6 +50,7 @@ public class MinionCardDefinition : CardDefinition
 [Serializable]
 public class TriggeredEffectWrapper
 {
+    public string Description;
     public EffectTrigger EffectTrigger;
     public EffectTiming EffectTiming;
     public TargetingType TargetType;

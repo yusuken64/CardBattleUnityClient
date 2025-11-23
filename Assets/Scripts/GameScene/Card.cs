@@ -1,4 +1,5 @@
 using CardBattleEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Card : MonoBehaviour, IDraggable
+public class Card : MonoBehaviour, IDraggable, IHoverable
 {
     public string CardName => this.name;
     public Image CardImage;
@@ -20,8 +21,11 @@ public class Card : MonoBehaviour, IDraggable
     public bool CanPlay;
     public TextMeshProUGUI CostText;
     public TextMeshProUGUI AttackText;
+    public GameObject AttackObject;
     public TextMeshProUGUI HealthText;
+    public GameObject HealthObject;
     public GameObject CanPlayIndicator;
+    public TextMeshProUGUI CardTypeText;
 
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI DescriptionText;
@@ -109,16 +113,42 @@ public class Card : MonoBehaviour, IDraggable
 
             var keyWords = new List<string>();
             if (minionCard.HasCharge) { keyWords.Add("Charge"); }
+            if (minionCard.HasRush) { keyWords.Add("Rush"); }
             if (minionCard.HasTaunt) { keyWords.Add("Taunt"); }
             if (minionCard.HasDivineShield) { keyWords.Add("Divine Shield"); }
             if (minionCard.HasPoisonous) { keyWords.Add("Poison"); }
             if (minionCard.IsStealth) { keyWords.Add("Stealth"); }
+            if (minionCard.HasReborn) { keyWords.Add("Reborn"); }
+            if (minionCard.HasLifeSteal) { keyWords.Add("LifeSteal"); }
+            if (minionCard.HasWindfury) { keyWords.Add("Windfury"); }
             description = string.Join(",", keyWords);
+
+            AttackObject.SetActive(true);
+            HealthObject.SetActive(true);
+            CardTypeText.text = "Minion";
+
+            if (!string.IsNullOrWhiteSpace(minionCard.Description))
+			{
+                description += $"{Environment.NewLine}{minionCard.Description}";
+			}
         }
-		else
-		{
+		else if (this.Data is WeaponCard weaponCard)
+        {
+            AttackObject.SetActive(true);
+            HealthObject.SetActive(true);
             TribeObject.gameObject.SetActive(false);
+            CardTypeText.text = "Weapon";
+            description += $"{Environment.NewLine}{weaponCard.Description}";
         }
+        else if (this.Data is SpellCard spellCard)
+        {
+            AttackObject.SetActive(false);
+            HealthObject.SetActive(false);
+            TribeObject.gameObject.SetActive(false);
+            CardTypeText.text = "Spell";
+            description += $"{Environment.NewLine}{spellCard.Description}";
+        }
+
         //description = Data.CardText;
         DescriptionText.text = description;
 
@@ -128,7 +158,7 @@ public class Card : MonoBehaviour, IDraggable
         if (HealthText != null) HealthText.text = Health.ToString();
     }
 
-    internal void RefreshData(bool activePlayerTurn)
+	internal void RefreshData(bool activePlayerTurn)
     {
         Cost = this.Data.ManaCost;
         CanPlay = this.Data.Owner.Mana >= Cost && activePlayerTurn;
@@ -138,6 +168,17 @@ public class Card : MonoBehaviour, IDraggable
             Attack = minionCard.Attack;
             Health = minionCard.Health;
         }
+        else if (this.Data is WeaponCard weaponCard)
+        {
+            Attack = weaponCard.Attack;
+            Health -= weaponCard.Durability;
+		}
+        else if (this.Data is SpellCard spellCard)
+        {
+            Attack = 0;
+            Health -= 0;
+        }
+
         UpdateUI();
     }
 
@@ -409,4 +450,9 @@ public class Card : MonoBehaviour, IDraggable
         player.Board.UpdateMinionPositions();
         player.Hand.UpdateCardPositions();
     }
+
+	public CardBattleEngine.Card GetDisplayCard()
+	{
+        return this.Data;
+	}
 }

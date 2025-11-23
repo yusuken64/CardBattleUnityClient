@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
+public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
 {
     public CardBattleEngine.Minion Data { get; private set; }
 	public MinionCard SummonedCard { get; set; }
@@ -215,4 +215,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
 	public AimIntent AimIntent { get; set; } = AimIntent.Attack;
 
     public GameObject DragObject => this.gameObject;
+    public CardBattleEngine.Card GetDisplayCard()
+    {
+        return Data.OriginalCard;
+    }
 }
