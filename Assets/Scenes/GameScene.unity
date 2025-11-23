@@ -3544,6 +3544,7 @@ MonoBehaviour:
   EndTurnButton: {fileID: 892486615}
   Message: {fileID: 303076845}
   DamageNumberPrefab: {fileID: 3723504351424086593, guid: d796c6cd5d539b844b07260e2946787e, type: 3}
+  HealNumberPrefab: {fileID: 3723504351424086593, guid: e38b1d3515255f54e888c2c7ac4d5f17, type: 3}
   CardPreview: {fileID: 1995981154}
 --- !u!224 &1132939054
 RectTransform:

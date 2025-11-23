@@ -14,6 +14,7 @@ public class UI : MonoBehaviour
     private Coroutine messageCoroutine;
 
     public DamageNumber DamageNumberPrefab;
+    public DamageNumber HealNumberPrefab;
     public Card CardPreview;
 
 	private void Start()
@@ -66,6 +67,30 @@ public class UI : MonoBehaviour
            .OnComplete(() =>
            {
                Destroy(damageNumber.gameObject);
+           });
+    }
+
+    public void ShowHeal(int heal, Transform target)
+    {
+        var healNumber = Instantiate(HealNumberPrefab);
+        healNumber.DamageText.text = $"{heal}";
+        healNumber.transform.position = target.transform.position;
+
+        Transform t = healNumber.transform;
+
+        // starting scale (small pop)
+        t.localScale = Vector3.zero;
+
+        // Build the sequence
+        var seq = DOTween.Sequence();
+
+        seq.Append(t.DOScale(1f, 0.15f))               // pop in
+           .Join(t.DOMoveY(t.position.y + 0.5f, 0.6f)) // float upward
+           .Join(healNumber.Background.DOFade(0f, 0.6f)) // fade out
+           .SetEase(Ease.OutQuad)
+           .OnComplete(() =>
+           {
+               Destroy(healNumber.gameObject);
            });
     }
 

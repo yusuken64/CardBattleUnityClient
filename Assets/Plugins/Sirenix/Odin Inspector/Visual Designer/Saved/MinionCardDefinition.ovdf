@@ -2,7 +2,7 @@ OVDF v1.0
 MinionCardDefinition, Assembly-CSharp
 
 # $YTgoJejBh7uaWZBzfcgn97
-Position: $root:3
+Position: $root:2
 + [Sirenix.OdinInspector.HorizontalGroupAttribute]
 
 # $85xZi2y1YJnyaBSJDK6UZT
@@ -14,7 +14,7 @@ Position: $root:0
 + [Sirenix.OdinInspector.HorizontalGroupAttribute]
 
 # $YZ6bgLeuwWupM5XZ4PRK2D
-Position: $root:2
+Position: $root:1
 + [Sirenix.OdinInspector.HorizontalGroupAttribute]
 
 # Sprite
@@ -53,10 +53,16 @@ Position: $YZ6bgLeuwWupM5XZ4PRK2D:3
 Position: $85xZi2y1YJnyaBSJDK6UZT:1
 
 # TriggeredEffects
-Position: $root:4
+Position: $root:3
 
 # HasWindFury
 Position: $YTgoJejBh7uaWZBzfcgn97:0
 
 # HasTaunt
 Position: $YZ6bgLeuwWupM5XZ4PRK2D:0
+
+# HasReborn
+Position: $YTgoJejBh7uaWZBzfcgn97:3
+
+# HasLifeSteal
+Position: $YTgoJejBh7uaWZBzfcgn97:2

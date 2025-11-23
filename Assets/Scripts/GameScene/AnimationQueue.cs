@@ -35,6 +35,7 @@ public class AnimationQueue : MonoBehaviour
             SummonMinionAction => new SummonMinionAnimation(gameManager, state, current),
             AttackAction => new AttackAnimation(gameManager, state, current),
             DamageAction => new TakeDamageAnimation(gameManager, state, current),
+            HealAction => new TakeHealAnimation(gameManager, state, current),
             DeathAction => new DeathAnimation(gameManager, state, current),
             EquipWeaponAction => new EquipWeaponAnimation(gameManager, state, current),
             DestroyWeaponAction => new DestoryWeaponAnimation(gameManager, state, current),

@@ -21,6 +21,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
     public bool IsFrozen;
     public bool HasWindFury;
     public bool HasStealth;
+    public bool HasLifeSteal;
+    public bool HasReborn;
 
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
@@ -33,6 +35,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
     public GameObject FreezeIndicator;
     public GameObject WindFuryIndicator;
     public GameObject StealthIndicator;
+    public GameObject LifeStealIndicator;
+    public GameObject RebornIndicator;
 
 	#region Animation
 	public Vector2 TargetPosition { get; internal set; }
@@ -98,6 +102,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         FreezeIndicator.gameObject.SetActive(IsFrozen);
         WindFuryIndicator.gameObject.SetActive(HasWindFury);
         StealthIndicator.gameObject.SetActive(HasStealth);
+        LifeStealIndicator.gameObject.SetActive(HasLifeSteal);
+        RebornIndicator.gameObject.SetActive(RebornIndicator);
     }
 
     internal void RefreshData(bool activePlayerTurn)
@@ -114,6 +120,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         IsFrozen = Data.IsFrozen;
         HasWindFury = Data.HasWindfury;
         HasStealth = Data.IsStealth;
+        HasLifeSteal = Data.HasLifeSteal;
+        HasReborn = Data.HasReborn;
 
         UpdateUI();
     }

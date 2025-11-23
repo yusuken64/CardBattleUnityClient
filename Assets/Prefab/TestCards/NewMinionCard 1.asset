@@ -24,6 +24,9 @@ MonoBehaviour:
   HasDivineShield: 0
   HasTaunt: 0
   HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 1
+  HasReborn: 1
   TriggeredEffects:
   - EffectTrigger: 1
     EffectTiming: 1
