@@ -19,6 +19,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
     public bool HasPoisonous;
     public bool HasSummoningSickness;
     public bool IsFrozen;
+    public bool HasWindFury;
+    public bool HasStealth;
 
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
@@ -29,6 +31,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
     public GameObject DeathRattleIndicator;
     public GameObject SleepIndicator;
     public GameObject FreezeIndicator;
+    public GameObject WindFuryIndicator;
+    public GameObject StealthIndicator;
 
 	#region Animation
 	public Vector2 TargetPosition { get; internal set; }
@@ -92,6 +96,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         PoisonIndicator.gameObject.SetActive(HasPoisonous);
         SleepIndicator.gameObject.SetActive(HasSummoningSickness && !CanAttack);
         FreezeIndicator.gameObject.SetActive(IsFrozen);
+        WindFuryIndicator.gameObject.SetActive(HasWindFury);
+        StealthIndicator.gameObject.SetActive(HasStealth);
     }
 
     internal void RefreshData(bool activePlayerTurn)
@@ -106,6 +112,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         HasPoisonous = Data.HasPoisonous;
         HasSummoningSickness = Data.HasSummoningSickness;
         IsFrozen = Data.IsFrozen;
+        HasWindFury = Data.HasWindfury;
+        HasStealth = Data.IsStealth;
 
         UpdateUI();
     }
@@ -127,6 +135,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         HasPoisonous = false;
         HasSummoningSickness = false;
         IsFrozen = false;
+        HasWindFury = false;
+        HasStealth = false;
 
         UpdateUI();
     }

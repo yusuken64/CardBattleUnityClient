@@ -2,7 +2,7 @@ OVDF v1.0
 MinionCardDefinition, Assembly-CSharp
 
 # $YTgoJejBh7uaWZBzfcgn97
-Position: $root:2
+Position: $root:3
 + [Sirenix.OdinInspector.HorizontalGroupAttribute]
 
 # $85xZi2y1YJnyaBSJDK6UZT
@@ -11,6 +11,10 @@ Position: $Hf4BhEa2Y1yu4dAEekPPnd:0
 
 # $Hf4BhEa2Y1yu4dAEekPPnd
 Position: $root:0
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# $YZ6bgLeuwWupM5XZ4PRK2D
+Position: $root:2
 + [Sirenix.OdinInspector.HorizontalGroupAttribute]
 
 # Sprite
@@ -34,19 +38,25 @@ Position: $85xZi2y1YJnyaBSJDK6UZT:4
 Position: $85xZi2y1YJnyaBSJDK6UZT:5
 
 # IsStealth
-Position: $YTgoJejBh7uaWZBzfcgn97:1
+Position: $YZ6bgLeuwWupM5XZ4PRK2D:2
 
 # HasCharge
-Position: $YTgoJejBh7uaWZBzfcgn97:0
+Position: $YTgoJejBh7uaWZBzfcgn97:1
 
 # HasDivineShield
-Position: $YTgoJejBh7uaWZBzfcgn97:2
+Position: $YZ6bgLeuwWupM5XZ4PRK2D:1
 
 # HasPoisonous
-Position: $YTgoJejBh7uaWZBzfcgn97:3
+Position: $YZ6bgLeuwWupM5XZ4PRK2D:3
 
 # CardName
 Position: $85xZi2y1YJnyaBSJDK6UZT:1
 
 # TriggeredEffects
-Position: $root:3
+Position: $root:4
+
+# HasWindFury
+Position: $YTgoJejBh7uaWZBzfcgn97:0
+
+# HasTaunt
+Position: $YZ6bgLeuwWupM5XZ4PRK2D:0

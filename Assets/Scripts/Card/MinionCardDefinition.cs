@@ -18,6 +18,7 @@ public class MinionCardDefinition : CardDefinition
     public bool HasDivineShield;
     public bool HasTaunt;
     public bool HasPoisonous;
+    public bool HasWindFury;
 
     [Header("Triggered Effects")]
     public List<TriggeredEffectWrapper> TriggeredEffects = new List<TriggeredEffectWrapper>();
@@ -32,7 +33,8 @@ public class MinionCardDefinition : CardDefinition
             HasCharge = this.HasCharge,
             HasDivineShield = this.HasDivineShield,
             HasPoisonous = this.HasPoisonous,
-            HasTaunt = this.HasTaunt
+            HasTaunt = this.HasTaunt,
+            HasWindfury = this.HasWindFury
         };
         card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
 
