@@ -103,7 +103,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable
         WindFuryIndicator.gameObject.SetActive(HasWindFury);
         StealthIndicator.gameObject.SetActive(HasStealth);
         LifeStealIndicator.gameObject.SetActive(HasLifeSteal);
-        RebornIndicator.gameObject.SetActive(RebornIndicator);
+        RebornIndicator.gameObject.SetActive(HasReborn);
     }
 
     internal void RefreshData(bool activePlayerTurn)

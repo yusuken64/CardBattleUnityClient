@@ -15,15 +15,35 @@ MonoBehaviour:
   CardName: Archer 03
   ID: archer_03
   Sprite: {fileID: 21300000, guid: 39c49d8e411f01c469f792b630be0ea3, type: 3}
-  Cost: 1
+  Cost: 2
   Attack: 1
   Health: 1
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  TriggeredEffects:
+  - EffectTrigger: 0
+    EffectTiming: 1
+    TargetType: 5
+    GameActions:
+    - rid: 6533011647806046268
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: -2
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6533011647806046268
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage: 1
+        Canceled: 0

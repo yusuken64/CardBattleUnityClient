@@ -11,7 +11,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin
 	public GameObject HeroPowerCostObject;
 	public TextMeshProUGUI HeroPowerCostText;
 
-	public CardBattleEngine.HeroPower Data { get; internal set; }
+	public CardBattleEngine.HeroPower Data { get; set; }
 	internal void RefreshData()
 	{
 		if (Data == null)
@@ -25,7 +25,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin
 		HeroPowerCostObject.SetActive(Data.ManaCost >= 0);
 		HeroPowerCostText.text = Data.ManaCost.ToString();
 
-		HeroPowerImage.sprite = FindFirstObjectByType<CardManager>().GetCardByName(Data.Name).Sprite;
+		//HeroPowerImage.sprite = FindFirstObjectByType<CardManager>().GetCardByName(Data.Name).Sprite;
 	}
 
 	public AimIntent AimIntent { get; set; } = AimIntent.HeroPower;

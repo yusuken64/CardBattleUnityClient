@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
 		_engine.StartGame(_gameState);
 
+		Player.HeroImage.sprite = TestDeck.HeroCard.Sprite;
 		Player.RefreshData(false);
 		Opponent.RefreshData(false);
 	}
@@ -56,10 +57,12 @@ public class GameManager : MonoBehaviour
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
 		p1.Deck.AddRange(testDeck.ToList());
 		p1.Deck.ForEach(x => x.Owner = p1);
-		p1.HeroPower = TestDeck.HeroPower.CreateHeroPower();
+		p1.HeroPower = TestDeck.CreateHeroPowerFromHeroCard();
+
 		CardBattleEngine.Player p2 = new CardBattleEngine.Player("Bob");
 		p2.Deck.AddRange(testDeck.ToList());
 		p2.Deck.ForEach(x => x.Owner = p2);
+		p2.HeroPower = TestDeck.CreateHeroPowerFromHeroCard();
 
 		return new GameState(p1, p2);
 	}
