@@ -33,7 +33,16 @@ public class GameManager : MonoBehaviour
 	{
 		_engine = new GameEngine(new UnityRNG());
 
-		_gameState = CreateTestGame();
+		Deck deck;
+		if (Common.Instance.CurrentDeck != null)
+		{
+			deck = Common.Instance.CurrentDeck;
+		}
+		else
+		{
+			deck = TestDeck.ToDeck();
+		}
+		_gameState = CreateTestGame(deck.Cards, TestDeck.ToDeck().Cards);
 		Player.Data = _gameState.Players[0];
 		Opponent.Data = _gameState.Players[1];
 		_opponentAgent = new RandomAI(Opponent.Data, new UnityRNG());
@@ -42,27 +51,24 @@ public class GameManager : MonoBehaviour
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
 		_engine.StartGame(_gameState);
 
-		Player.HeroImage.sprite = TestDeck.HeroCard.Sprite;
-		Player.HeroPower.OriginalCard = TestDeck.HeroCard.CreateCard();
+		Player.HeroImage.sprite = deck.HeroCard.Sprite;
+		Player.HeroPower.OriginalCard = deck.HeroCard.CreateCard();
 		Player.HeroPower.OriginalCard.Owner = Player.Data;
 		Player.RefreshData(false);
 		Opponent.RefreshData(false);
 	}
 
-	private GameState CreateTestGame()
+	private GameState CreateTestGame(List<CardDefinition> playerCards, List<CardDefinition> enemyCards)
 	{
 		var cardManager = FindFirstObjectByType<CardManager>();
-		var list = TestDeck.Cards.ToList();
 		
-		var testDeck = list.Select(x => x.CreateCard());
-
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
-		p1.Deck.AddRange(testDeck.ToList());
+		p1.Deck.AddRange(playerCards.Select(x => x.CreateCard()).ToList());
 		p1.Deck.ForEach(x => x.Owner = p1);
 		p1.HeroPower = TestDeck.CreateHeroPowerFromHeroCard();
 
 		CardBattleEngine.Player p2 = new CardBattleEngine.Player("Bob");
-		p2.Deck.AddRange(testDeck.ToList());
+		p2.Deck.AddRange(enemyCards.Select(x => x.CreateCard()).ToList());
 		p2.Deck.ForEach(x => x.Owner = p2);
 		p2.HeroPower = TestDeck.CreateHeroPowerFromHeroCard();
 

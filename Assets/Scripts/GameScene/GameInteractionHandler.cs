@@ -220,7 +220,7 @@ public class GameInteractionHandler : MonoBehaviour
 		}
 	}
 
-	private Vector3 GetMouseWorldPosition2D(Vector3 mousePos)
+	public static Vector3 GetMouseWorldPosition2D(Vector3 mousePos)
 	{
 		Vector3 world = Camera.main.ScreenToWorldPoint(mousePos);
 		world.z = 0;
@@ -324,4 +324,9 @@ public interface IDraggable
 public interface IHoverable
 {
 	CardBattleEngine.Card GetDisplayCard();
+}
+
+public interface IClickable
+{
+	void OnClick();
 }

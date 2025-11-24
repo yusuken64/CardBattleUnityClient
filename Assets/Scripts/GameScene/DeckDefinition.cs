@@ -9,6 +9,7 @@ using UnityEngine;
 )]
 public class DeckDefinition : ScriptableObject
 {
+    public string Title;
     public CardDefinition HeroCard;
     public HeroPowerDefinition HeroPower;
     public List<CardDefinition> Cards;
@@ -33,5 +34,15 @@ public class DeckDefinition : ScriptableObject
             }
         }
         return null; //TODO allow other types or restrict to minion cards
+    }
+
+	internal Deck ToDeck()
+    {
+        return new Deck()
+        {
+            Title = Title,
+            HeroCard = HeroCard,
+            Cards = Cards,
+        };
     }
 }
