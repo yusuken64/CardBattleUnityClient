@@ -39,6 +39,7 @@ public class AnimationQueue : MonoBehaviour
             DeathAction => new DeathAnimation(gameManager, state, current),
             EquipWeaponAction => new EquipWeaponAnimation(gameManager, state, current),
             DestroyWeaponAction => new DestoryWeaponAnimation(gameManager, state, current),
+            EndGameAction => new EndGameActionAnimation(gameManager, state, current),
             _ => null
         };
     }

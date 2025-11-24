@@ -17,9 +17,12 @@ public class UI : MonoBehaviour
     public DamageNumber HealNumberPrefab;
     public Card CardPreview;
 
+    public GameResultScreen GameResultScreen;
+
 	private void Start()
 	{
         Message.gameObject.SetActive(false);
+        GameResultScreen.gameObject.SetActive(false);
 	}
 
 	public void ShowMessage(string message)
@@ -34,7 +37,13 @@ public class UI : MonoBehaviour
         messageCoroutine = StartCoroutine(ShowMessageCoroutine(message));
     }
 
-    private IEnumerator ShowMessageCoroutine(string message)
+	internal IEnumerator DoGameEndRoutine(bool isWin)
+    {
+        this.gameObject.SetActive(true);
+        yield return GameResultScreen.DoGameEndRoutine(isWin);
+	}
+
+	private IEnumerator ShowMessageCoroutine(string message)
     {
         Message.text = message;
         Message.gameObject.SetActive(true);
