@@ -26,8 +26,12 @@ public static class WrapperGenerator
             GenerateField = p => $"    public {typeof(MinionCardDefinition).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateCard() as MinionCard;"
         },
-
-        // Add more replacements here...
+        new PropertyReplacement
+		{
+            OriginalType = typeof(CardBattleEngine.TriggeredEffect),
+            GenerateField = p => $"    public {typeof(TriggeredEffectWrapper).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateEffect();"
+        }
     };
     
     private static PropertyReplacement GetReplacement(PropertyInfo property)

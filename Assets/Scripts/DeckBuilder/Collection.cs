@@ -15,10 +15,9 @@ public class Collection : MonoBehaviour
     public Button NextButton;
     public Button PrevButton;
 
-    public List<CardDefinition> CardDB;
 	private CardBattleEngine.Player owner = new CardBattleEngine.Player("Test Player");
 
-	private int MaxPage => Mathf.Max(0, (CardDB.Count - 1) / ItemsPerPage);
+	private int MaxPage => Mathf.Max(0, (Common.Instance.CardManager.Cards.Count - 1) / ItemsPerPage);
 
     private void Start()
     {
@@ -28,7 +27,7 @@ public class Collection : MonoBehaviour
     public void SetToPage(int page)
     {
         // Clamp page number
-        int maxPage = Mathf.Max(0, (CardDB.Count - 1) / ItemsPerPage);
+        int maxPage = Mathf.Max(0, (Common.Instance.CardManager.Cards.Count - 1) / ItemsPerPage);
         CurrentPage = Mathf.Clamp(page, 0, maxPage);
 
         // Clear existing contents
@@ -36,7 +35,8 @@ public class Collection : MonoBehaviour
             Destroy(child.gameObject);
 
         // Load items
-        var itemsToShow = CardDB
+        var itemsToShow = Common.Instance.CardManager.Cards
+            .OrderBy(x => x.Cost)
             .Skip(ItemsPerPage * CurrentPage)
             .Take(ItemsPerPage)
             .ToList();

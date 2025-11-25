@@ -82,7 +82,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
 
     internal void Setup(CardBattleEngine.Minion minionData)
     {
-        var cardDefinition = FindFirstObjectByType<CardManager>().GetCardByName(minionData.Name);
+        var cardDefinition = Common.Instance.CardManager.GetCardByName(minionData.Name);
         CardImage.sprite = cardDefinition.Sprite;
 
         this.Data = minionData;
@@ -132,7 +132,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
         Attack = data.Attack;
         Health = data.Health;
 
-        var cardDefinition = FindFirstObjectByType<CardManager>().GetCardByName(data.Name);
+        var cardDefinition = Common.Instance.CardManager.GetCardByName(data.Name);
         CardImage.sprite = cardDefinition.Sprite;
 
         Attack = SummonedCard.Attack;

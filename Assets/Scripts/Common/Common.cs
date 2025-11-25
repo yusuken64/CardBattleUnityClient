@@ -6,6 +6,7 @@ public class Common : MonoBehaviour
 	public static Common Instance;
 
 	public GameSaveData GameSaveData = new();
+	public CardManager CardManager;
 	public Deck CurrentDeck { get; internal set; }
 
 	private void Awake()
@@ -17,7 +18,8 @@ public class Common : MonoBehaviour
 		}
 		else
 		{
-			throw new System.Exception("Duplicate instance");
+			Debug.Log("Duplicate Instance", this);
+			//throw new System.Exception("Duplicate instance");
 		}
 	}
 

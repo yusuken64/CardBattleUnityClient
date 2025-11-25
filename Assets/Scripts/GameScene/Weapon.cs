@@ -26,7 +26,7 @@ public class Weapon : MonoBehaviour
 			return;
 		}
 
-		var cardManager = FindFirstObjectByType<CardManager>();
+		var cardManager = Common.Instance.CardManager;
 		WeaponImage.sprite = cardManager.GetCardByName(weapon.Name).Sprite;
 
 		RefreshData();

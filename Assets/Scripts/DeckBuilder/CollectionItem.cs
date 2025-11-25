@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CollectionItem : MonoBehaviour, IClickable
@@ -9,7 +10,15 @@ public class CollectionItem : MonoBehaviour, IClickable
 	{
 		this.CardDefinition = cardDefinition;
 		CardBattleEngine.Card cardData = cardDefinition.CreateCard();
-		cardData.Owner = owner;
+		if (cardData == null) { return; }
+		try
+		{
+			cardData.Owner = owner;
+		}
+		catch(Exception exception)
+		{
+			Debug.LogException(exception);
+		}
 		Card.Setup(cardData);
 	}
 	public void OnClick()

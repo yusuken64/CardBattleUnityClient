@@ -21,8 +21,12 @@ MonoBehaviour:
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
-  HasDivineShield: 0
+  HasDivineShield: 1
+  HasTaunt: 1
   HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
   TriggeredEffects: []
   references:
     version: 2

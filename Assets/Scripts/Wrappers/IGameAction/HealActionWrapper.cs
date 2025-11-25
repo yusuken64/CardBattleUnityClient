@@ -5,17 +5,13 @@ using System.Linq;
 using CardBattleEngine;
 
 [Serializable]
-public class DamageActionWrapper : IGameActionWrapperBase
+public class HealActionWrapper : IGameActionWrapperBase
 {
-    public System.Int32 Damage;
-    public System.Int32 ActualDamageDealt;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()
     {
-        var instance = new CardBattleEngine.DamageAction();
-        instance.Damage = this.Damage;
-        instance.ActualDamageDealt = this.ActualDamageDealt;
+        var instance = new CardBattleEngine.HealAction();
         instance.Canceled = this.Canceled;
         return instance;
     }

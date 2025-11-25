@@ -22,7 +22,11 @@ MonoBehaviour:
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 1
   TriggeredEffects: []
   references:
     version: 2

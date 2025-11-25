@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
 	private GameState CreateTestGame(List<CardDefinition> playerCards, List<CardDefinition> enemyCards)
 	{
-		var cardManager = FindFirstObjectByType<CardManager>();
+		var cardManager = Common.Instance.CardManager;
 		
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
 		p1.Deck.AddRange(playerCards.Select(x => x.CreateCard()).ToList());

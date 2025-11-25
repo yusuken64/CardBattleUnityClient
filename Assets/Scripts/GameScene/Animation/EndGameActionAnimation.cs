@@ -1,7 +1,6 @@
 ﻿using CardBattleEngine;
 using System.Collections;
 using UnityEngine;
-
 public class EndGameActionAnimation : GameActionAnimation<EndGameAction>
 {
 	private GameManager gameManager;

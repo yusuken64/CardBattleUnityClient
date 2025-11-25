@@ -9,6 +9,7 @@ public class AddStatModifierActionWrapper : IGameActionWrapperBase
 {
     public System.Int32 AttackChange;
     public System.Int32 HealthChange;
+    public TriggeredEffectWrapper ExpirationTrigger;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()
@@ -16,6 +17,7 @@ public class AddStatModifierActionWrapper : IGameActionWrapperBase
         var instance = new CardBattleEngine.AddStatModifierAction();
         instance.AttackChange = this.AttackChange;
         instance.HealthChange = this.HealthChange;
+        instance.ExpirationTrigger = ExpirationTrigger?.CreateEffect();
         instance.Canceled = this.Canceled;
         return instance;
     }

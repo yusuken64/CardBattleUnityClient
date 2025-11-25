@@ -22,8 +22,30 @@ MonoBehaviour:
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  TriggeredEffects:
+  - Description: 
+    EffectTrigger: 1
+    EffectTiming: 1
+    TargetType: 0
+    GameActions:
+    - rid: 6533011672544051260
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: -2
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6533011672544051260
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage: 1
+        ActualDamageDealt: 0
+        Canceled: 0

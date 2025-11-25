@@ -22,8 +22,55 @@ MonoBehaviour:
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  TriggeredEffects:
+  - Description: 
+    EffectTrigger: 1
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 6533011672544051278
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 6533011672544051279
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6533011672544051278
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange: 2
+        HealthChange: 0
+        ExpirationTrigger:
+          Description: 
+          EffectTrigger: 12
+          EffectTiming: 1
+          TargetType: 0
+          GameActions:
+          - rid: 6533011672544051281
+          Condition:
+            rid: -2
+          AffectedEntitySelectorWrapper:
+            rid: -2
+        Canceled: 0
+    - rid: 6533011672544051279
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 6533011672544051280
+    - rid: 6533011672544051280
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 1
+        Group: 0
+    - rid: 6533011672544051281
+      type: {class: RemoveModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
