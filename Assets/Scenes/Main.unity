@@ -5858,7 +5858,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
   startobect: {fileID: 1746107361}
-  StartingDeck: {fileID: 11400000, guid: 0a36f179fd931e6428774d7e2cbc77b7, type: 2}
 --- !u!4 &1421078723
 Transform:
   m_ObjectHideFlags: 0

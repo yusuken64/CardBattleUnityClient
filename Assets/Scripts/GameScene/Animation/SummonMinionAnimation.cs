@@ -24,20 +24,13 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 		var existingMinion = player.Board.Minions.FirstOrDefault(minion => minion.SummonedCard == (current.action as SummonMinionAction).Card);
 		if (existingMinion == null)
 		{
-			var index = player.Data.Board.IndexOf(current.context.SummonedMinion);
+			var index = current.context.PlayIndex;
 
 			//play summon animation and set existingMinion
 			var minionPrefab = Object.FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
 			var newMinion = Object.Instantiate(minionPrefab, player.Board.transform);
 			newMinion.Setup(minionData);
-			if (index != -1)
-			{
-				player.Board.Minions.Insert(index, newMinion);
-			}
-			else
-			{
-				player.Board.Minions.Add(newMinion);
-			}
+			player.Board.Minions.Insert(index, newMinion);
 			player.Board.UpdateMinionPositions();
 
 			var animator = newMinion.GetComponent<Animator>();

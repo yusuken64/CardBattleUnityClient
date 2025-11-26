@@ -68,7 +68,7 @@ MonoBehaviour:
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Side: 1
-        Group: 0
+        Group: 2
         ExcludeSelf: 0
     - rid: 6533011711507038273
       type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
