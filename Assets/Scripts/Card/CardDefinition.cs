@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class CardDefinition : ScriptableObject
 {
+    public bool Collectable;
     public string CardName;
     public string ID;
     public Sprite Sprite;

@@ -23,19 +23,19 @@ Position: $Hf4BhEa2Y1yu4dAEekPPnd:1
 	Height = 189.33
 
 # ID
-Position: $85xZi2y1YJnyaBSJDK6UZT:0
+Position: $85xZi2y1YJnyaBSJDK6UZT:1
 
 # Cost
-Position: $85xZi2y1YJnyaBSJDK6UZT:2
-
-# Attack
 Position: $85xZi2y1YJnyaBSJDK6UZT:3
 
-# Health
+# Attack
 Position: $85xZi2y1YJnyaBSJDK6UZT:4
 
-# MinionTribes
+# Health
 Position: $85xZi2y1YJnyaBSJDK6UZT:5
+
+# MinionTribes
+Position: $85xZi2y1YJnyaBSJDK6UZT:6
 
 # IsStealth
 Position: $YZ6bgLeuwWupM5XZ4PRK2D:2
@@ -50,7 +50,7 @@ Position: $YZ6bgLeuwWupM5XZ4PRK2D:1
 Position: $YZ6bgLeuwWupM5XZ4PRK2D:3
 
 # CardName
-Position: $85xZi2y1YJnyaBSJDK6UZT:1
+Position: $85xZi2y1YJnyaBSJDK6UZT:2
 
 # TriggeredEffects
 Position: $root:3
@@ -66,3 +66,6 @@ Position: $YTgoJejBh7uaWZBzfcgn97:3
 
 # HasLifeSteal
 Position: $YTgoJejBh7uaWZBzfcgn97:2
+
+# Collectable
+Position: $85xZi2y1YJnyaBSJDK6UZT:0

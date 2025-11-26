@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: spider_02
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
   CardName: Spider 02
   ID: spider_02
   Sprite: {fileID: 21300000, guid: fe8877eedd153d94a8634e74f2e96217, type: 3}

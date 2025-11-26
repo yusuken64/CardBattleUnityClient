@@ -42,6 +42,7 @@ public class AnimationQueue : MonoBehaviour
             EndGameAction => new EndGameActionAnimation(gameManager, state, current),
             AddStatModifierAction => new UpdateStatsActionAnimation(gameManager, state, current),
             RemoveModifierAction => new UpdateStatsActionAnimation(gameManager, state, current),
+            TriggerEffectAction => new TriggerEffectActionAnimation(gameManager, state, current),
             _ => null
         };
     }

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,8 +6,13 @@ public class Common : MonoBehaviour
 {
 	public static Common Instance;
 
-	public GameSaveData GameSaveData = new();
+	[SerializeReference]
+	public GameSaveData GameSaveData;
+
 	public CardManager CardManager;
+	public SaveManager SaveManager;
+
+	public DeckDefinition StartingDeck;
 	public Deck CurrentDeck { get; internal set; }
 
 	private void Awake()
@@ -21,6 +27,18 @@ public class Common : MonoBehaviour
 			Debug.Log("Duplicate Instance", this);
 			//throw new System.Exception("Duplicate instance");
 		}
+	}
+
+	private void Start()
+	{
+		SaveManager = new();
+		GameSaveData = SaveManager.Load();
+
+		if (GameSaveData.Decks.Count() == 0)
+		{
+			GameSaveData.Decks.Add(StartingDeck.ToDeck());
+		}
+		CurrentDeck = GameSaveData.Decks[0];
 	}
 
 	//public GameSaveData GameSaveData;

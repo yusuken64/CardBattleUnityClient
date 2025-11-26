@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: beholder_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
   CardName: Beholder 1
   ID: beholder_1
   Sprite: {fileID: 21300000, guid: 828b5d80038739e44b49583b74b21269, type: 3}
@@ -46,8 +47,8 @@ MonoBehaviour:
     - rid: 6533011672544051261
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Damage: 1
-        ActualDamageDealt: 0
+        Damage:
+          rid: -2
         Canceled: 0
     - rid: 6533011672544051262
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
@@ -59,3 +60,4 @@ MonoBehaviour:
       data:
         Side: 0
         Group: 1
+        ExcludeSelf: 0

@@ -14,6 +14,7 @@ public class UpdateStatsActionAnimation : GameActionAnimation<AddStatModifierAct
 		this.state = state;
 		this.current = current;
 	}
+
 	public override IEnumerator Play()
 	{
 		var player = gameManager.GetPlayerFor(current.context.SourcePlayer);

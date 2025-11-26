@@ -164,8 +164,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb4d569994f951408f3651ac9cc7ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common
+  GameSaveData:
+    rid: -2
   CardManager: {fileID: 18950028}
+  StartingDeck: {fileID: 11400000, guid: b81bae1c68bc30d4c9c2ee5ca93b100b, type: 2}
   SceneTransferObjects: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!4 &255597556
 Transform:
   m_ObjectHideFlags: 0

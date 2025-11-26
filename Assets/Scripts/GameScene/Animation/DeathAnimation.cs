@@ -49,7 +49,8 @@ public class DeathAnimation : GameActionAnimation<DeathAction>
 
 			seq.OnComplete(() =>
 			{
-				GameObject.Destroy(deadMinion.gameObject);
+				deadMinion.gameObject.gameObject.SetActive(false);
+				//GameObject.Destroy(deadMinion.gameObject);
 				owner.Board.UpdateMinionPositions();
 			});
 

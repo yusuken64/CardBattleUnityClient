@@ -3552,6 +3552,7 @@ MonoBehaviour:
   DamageNumberPrefab: {fileID: 3723504351424086593, guid: d796c6cd5d539b844b07260e2946787e, type: 3}
   HealNumberPrefab: {fileID: 3723504351424086593, guid: e38b1d3515255f54e888c2c7ac4d5f17, type: 3}
   CardPreview: {fileID: 1995981154}
+  TriggeredEffectParticlePrefab: {fileID: 3695537189138359838, guid: 82d38c91af67fa34bbfa57556bafb573, type: 3}
   GameResultScreen: {fileID: 1405684315}
 --- !u!224 &1132939054
 RectTransform:

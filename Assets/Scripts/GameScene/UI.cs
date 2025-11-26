@@ -16,6 +16,7 @@ public class UI : MonoBehaviour
     public DamageNumber DamageNumberPrefab;
     public DamageNumber HealNumberPrefab;
     public Card CardPreview;
+    public GameObject TriggeredEffectParticlePrefab;
 
     public GameResultScreen GameResultScreen;
 

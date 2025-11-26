@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: entin_4
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
   CardName: Entin 4
   ID: entin_4
   Sprite: {fileID: 21300000, guid: 5e3e2cb52d9441a45bc11603c80bdcd5, type: 3}
