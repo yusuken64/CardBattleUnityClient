@@ -30,7 +30,7 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 			fadeOut: true
 		);
 
-		//Object.FindFirstObjectByType<UI>().ShowDamage((current.context.DamageDealt), target);
+		Object.FindFirstObjectByType<UI>().ShowDamage((current.context.DamageDealt), target);
 
 		var player = gameObject.GetComponentInParent<Player>();
 		var minion = gameObject.GetComponent<Minion>();

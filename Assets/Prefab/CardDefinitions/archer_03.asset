@@ -28,22 +28,53 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   TriggeredEffects:
-  - EffectTrigger: 0
+  - Description: Knife juggler
+    EffectTrigger: 4
     EffectTiming: 1
-    TargetType: 5
+    TargetType: 7
     GameActions:
     - rid: 6533011647806046268
     Condition:
-      rid: -2
+      rid: 6533011711507038270
     AffectedEntitySelectorWrapper:
-      rid: -2
+      rid: 6533011711507038271
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 6533011647806046268
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Damage: 1
+        Damage:
+          rid: 6533011711507038268
         Canceled: 0
+    - rid: 6533011711507038268
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 6533011711507038270
+      type: {class: SummonedMinionConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        MinionToMinionRelationship: 0
+        MinionTribe: 1
+        ExcludeSelf: 1
+    - rid: 6533011711507038271
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 6533011711507038272
+        - rid: 6533011711507038273
+    - rid: 6533011711507038272
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 1
+        Group: 0
+        ExcludeSelf: 0
+    - rid: 6533011711507038273
+      type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Count:
+          rid: 6533011711507038274
+    - rid: 6533011711507038274
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1

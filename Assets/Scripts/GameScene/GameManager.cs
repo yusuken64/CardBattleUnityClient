@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
 	private void InitializeGame()
 	{
-		_engine = new GameEngine(new UnityRNG());
+		_engine = new GameEngine();
 
 		Deck deck;
 		if (Common.Instance.CurrentDeck != null)
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 		p2.Deck.ForEach(x => x.Owner = p2);
 		p2.HeroPower = TestDeck.CreateHeroPowerFromHeroCard();
 
-		return new GameState(p1, p2);
+		return new GameState(p1, p2, new UnityRNG());
 	}
 
 	internal GameObject GetObjectFor(IGameEntity source)

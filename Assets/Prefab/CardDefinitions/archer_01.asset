@@ -51,4 +51,5 @@ MonoBehaviour:
         Canceled: 0
     - rid: 6533011672544051283
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        Number: 1

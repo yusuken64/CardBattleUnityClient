@@ -7,12 +7,12 @@ using CardBattleEngine;
 [Serializable]
 public class StatValueWrapper : IValueProviderWrapperBase
 {
-    public CardBattleEngine.ValueProviders.Stat EntityStat;
-    public CardBattleEngine.ValueProviders.ContextProvider EntityContextProvider;
+    public CardBattleEngine.Stat EntityStat;
+    public CardBattleEngine.ContextProvider EntityContextProvider;
 
     public override CardBattleEngine.IValueProvider Create()
     {
-        var instance = new CardBattleEngine.ValueProviders.StatValue();
+        var instance = new CardBattleEngine.StatValue();
         instance.EntityStat = this.EntityStat;
         instance.EntityContextProvider = this.EntityContextProvider;
         return instance;

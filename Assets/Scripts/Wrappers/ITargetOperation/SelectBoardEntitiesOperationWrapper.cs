@@ -7,7 +7,7 @@ using CardBattleEngine;
 [Serializable]
 public class SelectBoardEntitiesOperationWrapper : ITargetOperationWrapperBase
 {
-    public CardBattleEngine.TargetSide Side;
+    public CardBattleEngine.TeamRelationship Side;
     public CardBattleEngine.TargetGroup Group;
     public System.Boolean ExcludeSelf;
 
