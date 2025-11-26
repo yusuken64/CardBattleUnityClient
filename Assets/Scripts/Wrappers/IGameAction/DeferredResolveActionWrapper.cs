@@ -5,15 +5,15 @@ using System.Linq;
 using CardBattleEngine;
 
 [Serializable]
-public class DamageActionWrapper : IGameActionWrapperBase
+public class DeferredResolveActionWrapper : IGameActionWrapperBase
 {
-    [SerializeReference] public IValueProviderWrapperBase Damage;
+    public CardBattleEngine.TargetOperationSelector AffectedEntitySelector;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()
     {
-        var instance = new CardBattleEngine.DamageAction();
-        instance.Damage = Damage?.Create();
+        var instance = new CardBattleEngine.DeferredResolveAction();
+        instance.AffectedEntitySelector = this.AffectedEntitySelector;
         instance.Canceled = this.Canceled;
         return instance;
     }

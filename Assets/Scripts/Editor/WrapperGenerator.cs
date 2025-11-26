@@ -13,7 +13,8 @@ public static class WrapperGenerator
         typeof(CardBattleEngine.ITriggerCondition),
         typeof(CardBattleEngine.IGameAction),
         typeof(CardBattleEngine.IAffectedEntitySelector),
-        typeof(CardBattleEngine.ITargetOperation)
+        typeof(CardBattleEngine.ITargetOperation),
+        typeof(CardBattleEngine.IValueProvider)
     };
 
     private static readonly List<PropertyReplacement> PropertyReplacements = new()
@@ -31,8 +32,14 @@ public static class WrapperGenerator
             OriginalType = typeof(CardBattleEngine.TriggeredEffect),
             GenerateField = p => $"    public {typeof(TriggeredEffectWrapper).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateEffect();"
-        }
-    };
+        },
+		new PropertyReplacement
+		{
+			OriginalType = typeof(CardBattleEngine.IValueProvider),
+			GenerateField = p => $"    [SerializeReference] public {typeof(IValueProviderWrapperBase).FullName} {p.Name};",
+			GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+		}
+	};
     
     private static PropertyReplacement GetReplacement(PropertyInfo property)
     {

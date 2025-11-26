@@ -46,6 +46,9 @@ MonoBehaviour:
     - rid: 6533011672544051260
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Damage: 1
-        ActualDamageDealt: 0
+        Damage:
+          rid: 6533011672544051283
         Canceled: 0
+    - rid: 6533011672544051283
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data: 
