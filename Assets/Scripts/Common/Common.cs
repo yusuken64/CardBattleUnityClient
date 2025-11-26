@@ -13,7 +13,7 @@ public class Common : MonoBehaviour
 	public SaveManager SaveManager;
 
 	public DeckDefinition StartingDeck;
-	public Deck CurrentDeck { get; internal set; }
+	public int CurrentDeckIndex { get; internal set; } = -1;
 
 	private void Awake()
 	{
@@ -32,13 +32,15 @@ public class Common : MonoBehaviour
 	private void Start()
 	{
 		SaveManager = new();
-		GameSaveData = SaveManager.Load();
+		//GameSaveData = SaveManager.Load();
+		GameSaveData = new();
 
-		if (GameSaveData.Decks.Count() == 0)
+		if (GameSaveData.DeckSaveDatas.Count() == 0)
 		{
-			GameSaveData.Decks.Add(StartingDeck.ToDeck());
+			GameSaveData.DeckSaveDatas.Add(StartingDeck.ToDeckData());
 		}
-		CurrentDeck = GameSaveData.Decks[0];
+		CurrentDeckIndex = 0;
+		SaveManager.Save(GameSaveData);
 	}
 
 	//public GameSaveData GameSaveData;

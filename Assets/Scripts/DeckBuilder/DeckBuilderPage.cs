@@ -22,11 +22,12 @@ public class DeckBuilderPage : MonoBehaviour
 		DeckViewer.Setup(deckPickerButton.Deck);
 	}
 
-	public void DeckViewer_DeckSaved(Deck deckData)
+	public void DeckViewer_DeckSaved(Deck deck)
 	{
-		if (deckData != null)
+		if (deck != null)
 		{
 			//Update data?
+			Common.Instance.GameSaveData.DeckSaveDatas[0] = new DeckSaveData().FromDeck(deck);
 			Common.Instance.SaveManager.Save(Common.Instance.GameSaveData);
 		}
 		DeckPicker.gameObject.SetActive(true);

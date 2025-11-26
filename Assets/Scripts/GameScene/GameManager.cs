@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour
 		_engine = new GameEngine();
 
 		Deck deck;
-		if (Common.Instance.CurrentDeck != null)
+		if (Common.Instance.CurrentDeckIndex != -1)
 		{
-			deck = Common.Instance.CurrentDeck;
+			deck = Common.Instance.GameSaveData.DeckSaveDatas[Common.Instance.CurrentDeckIndex].ToDeck();
 		}
 		else
 		{

@@ -45,4 +45,13 @@ public class DeckDefinition : ScriptableObject
             Cards = Cards,
         };
     }
+
+    public DeckSaveData ToDeckData()
+	{
+        return new DeckSaveData()
+		{
+            Title = Title,
+            CardIDs = Cards.Select(x => x.CardName).ToList()
+		};
+	}
 }

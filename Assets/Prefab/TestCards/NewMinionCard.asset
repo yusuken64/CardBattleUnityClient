@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: NewMinionCard
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 0
   CardName: test
   ID: test
   Sprite: {fileID: 21300000, guid: 2c8fb92718ac38d49930bf882cb885d0, type: 3}
@@ -25,8 +26,11 @@ MonoBehaviour:
   HasTaunt: 1
   HasPoisonous: 1
   HasWindFury: 1
+  HasLifeSteal: 0
+  HasReborn: 0
   TriggeredEffects:
-  - EffectTrigger: 2
+  - Description: 
+    EffectTrigger: 2
     EffectTiming: 1
     TargetType: 7
     GameActions:
@@ -53,5 +57,6 @@ MonoBehaviour:
     - rid: 6533011596573933632
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Side: 1
+        Side: 0
         Group: 1
+        ExcludeSelf: 0

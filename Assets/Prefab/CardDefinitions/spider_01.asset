@@ -39,7 +39,7 @@ MonoBehaviour:
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
-      rid: -2
+      rid: 6533011717531107400
   references:
     version: 2
     RefIds:
@@ -55,3 +55,14 @@ MonoBehaviour:
       data:
         Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}
         Canceled: 0
+    - rid: 6533011717531107400
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 6533011717531107401
+    - rid: 6533011717531107401
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+        Group: 1
+        ExcludeSelf: 0

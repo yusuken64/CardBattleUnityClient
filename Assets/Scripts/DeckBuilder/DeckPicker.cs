@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DeckPicker : MonoBehaviour
@@ -18,10 +19,12 @@ public class DeckPicker : MonoBehaviour
 		}
 		DeckPickerButtons.Clear();
 
-		foreach (var deck in Common.Instance.GameSaveData.Decks)
+		foreach (var deckData in Common.Instance.GameSaveData.DeckSaveDatas)
 		{
 			var deckPickerButton = Instantiate(DeckPickerButtonPrefab, DeckPickerButtonContainer);
 			deckPickerButton.DeckPickedAction = DeckPickedAction;
+
+			var deck = deckData.ToDeck();
 			deckPickerButton.Setup(deck);
 			DeckPickerButtons.Add(deckPickerButton);
 		}

@@ -20,10 +20,17 @@ public class Collection : MonoBehaviour
 	private int MaxPage => Mathf.Max(0, (CardsToShow.Count() - 1) / ItemsPerPage);
 
 	public IEnumerable<CardDefinition> CardsToShow { get; private set; }
-
+    public bool HideUncollectable;
 	private void Start()
     {
-        CardsToShow = Common.Instance.CardManager.Cards.Where(x => x.Collectable);
+        if (HideUncollectable)
+        {
+            CardsToShow = Common.Instance.CardManager.Cards.Where(x => x.Collectable);
+        }
+		else
+        {
+            CardsToShow = Common.Instance.CardManager.Cards;
+        }
         SetToPage(CurrentPage);
     }
 

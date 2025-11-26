@@ -25,6 +25,6 @@ public class DeckPickerButton : MonoBehaviour
 	internal void UpdateUI()
 	{
 		TitleText.text = Deck.Title;
-		DeckImage.sprite = Deck.HeroCard.Sprite;
+		//DeckImage.sprite = Deck.HeroCard.Sprite;
 	}
 }
