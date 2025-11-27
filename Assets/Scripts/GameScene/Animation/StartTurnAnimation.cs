@@ -5,20 +5,16 @@ using UnityEngine;
 
 public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 {
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public StartTurnAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+	public StartTurnAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
 	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
 	}
 
 	public override IEnumerator Play()
 	{
-		if (current.context.SourcePlayer.Name == gameManager.Player.Data.Name)
+		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
+		var opponent = GameManager.GetPlayerFor(State.OpponentOf(Context.SourcePlayer));
+
+		if (Context.SourcePlayer == player.Data)
 		{
 			var turnStartObject = Object.FindFirstObjectByType<UI>().TurnStartObject;
 			turnStartObject.gameObject.SetActive(true);
@@ -56,9 +52,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 
 		yield return new WaitForSecondsRealtime(0.5f);
 
-		var player = gameManager.GetPlayerFor(current.context.SourcePlayer);
-		var opponent = gameManager.GetPlayerFor(state.OpponentOf(current.context.SourcePlayer));
-		player.RefreshData(true);
-		opponent.RefreshData(false);
+		player.RefreshData();
+		opponent.RefreshData();
 	}
 }

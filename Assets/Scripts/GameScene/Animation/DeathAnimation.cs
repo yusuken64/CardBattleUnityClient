@@ -5,24 +5,17 @@ using UnityEngine;
 
 public class DeathAnimation : GameActionAnimation<DeathAction>
 {
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public DeathAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+	public DeathAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
 	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
 	}
 
 	public override IEnumerator Play()
 	{
-		var owner = gameManager.GetPlayerFor(current.context.Target.Owner);
+		var owner = GameManager.GetPlayerFor(Context.Target.Owner);
 
-		if (current.context.Target is CardBattleEngine.Minion minion)
+		if (Context.Target is CardBattleEngine.Minion minion)
 		{
-			var deadMinion = gameManager.GetObjectFor(current.context.Target)
+			var deadMinion = GameManager.GetObjectFor(Context.Target)
 				.GetComponent<Minion>();
 
 			if (owner.Board.Minions.Contains(deadMinion))
@@ -50,13 +43,13 @@ public class DeathAnimation : GameActionAnimation<DeathAction>
 			seq.OnComplete(() =>
 			{
 				deadMinion.gameObject.gameObject.SetActive(false);
-				//GameObject.Destroy(deadMinion.gameObject);
+				GameObject.Destroy(deadMinion.gameObject);
 				owner.Board.UpdateMinionPositions();
 			});
 
 			yield return seq.WaitForCompletion();
 		}
-		else if (current.context.Target is CardBattleEngine.Player player)
+		else if (Context.Target is CardBattleEngine.Player player)
 		{
 			yield return owner.DoDeathRoutine();
 		}

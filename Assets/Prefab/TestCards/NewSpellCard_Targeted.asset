@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
   m_Name: NewSpellCard_Targeted
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 0
   CardName: TestSpell
   ID: TestSpell
   Sprite: {fileID: 21300000, guid: 285948c4f66a0544c8136249f0bcfef0, type: 3}
   Cost: 1
   TargetingType: 0
   SpellCastEffects:
-  - GameActions:
+  - Description: 
+    GameActions:
     - rid: 6533011575016521996
     - rid: 6533011575016522001
     AffectedEntitySelectorWrapper:
@@ -31,9 +33,14 @@ MonoBehaviour:
     - rid: 6533011575016521996
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Damage: 3
+        Damage:
+          rid: 6533011738762674248
         Canceled: 0
     - rid: 6533011575016522001
       type: {class: FreezeActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
+    - rid: 6533011738762674248
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 6

@@ -86,7 +86,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
         CardImage.sprite = cardDefinition.Sprite;
 
         this.Data = minionData;
-        RefreshData(false);
+        RefreshData();
 	}
 
 	private void UpdateUI()
@@ -106,13 +106,13 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
         RebornIndicator.gameObject.SetActive(HasReborn);
     }
 
-    internal void RefreshData(bool activePlayerTurn)
+    internal void RefreshData()
     {
         if (Data == null) { return; }
 
         Attack = Data.Attack;
         Health = Data.Health;
-        CanAttack = Data.CanAttack() && activePlayerTurn;
+        CanAttack = Data.CanAttack();
         HasDivineShield = Data.HasDivineShield;
         HasTaunt = Data.Taunt;
         HasPoisonous = Data.HasPoisonous;

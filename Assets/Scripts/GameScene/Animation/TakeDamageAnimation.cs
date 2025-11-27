@@ -5,20 +5,13 @@ using UnityEngine;
 
 public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 {
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public TakeDamageAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+	public TakeDamageAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
 	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
 	}
 
 	public override IEnumerator Play()
 	{
-		GameObject gameObject = gameManager.GetObjectFor(current.context.Target);
+		GameObject gameObject = GameManager.GetObjectFor(Context.Target);
 		Transform target = gameObject.transform;
 
 		// simple shake: short, small, no fancy stuff
@@ -30,55 +23,19 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 			fadeOut: true
 		);
 
-		Object.FindFirstObjectByType<UI>().ShowDamage((current.context.DamageDealt), target);
+		Object.FindFirstObjectByType<UI>().ShowDamage((Context.DamageDealt), target);
 
 		var player = gameObject.GetComponentInParent<Player>();
 		var minion = gameObject.GetComponent<Minion>();
 		if (player != null)
 		{
-			player.RefreshData(player.Data == state.CurrentPlayer);
+			player.RefreshData();
 		}
 		else if (minion != null)
 		{
-			minion.RefreshData(minion.Data.Owner == state.CurrentPlayer);
+			minion.RefreshData();
 		}
 
 		yield return shake.WaitForCompletion();
-	}
-}
-
-public class TakeHealAnimation : GameActionAnimation<HealAction>
-{
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public TakeHealAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
-	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
-	}
-
-	public override IEnumerator Play()
-	{
-		GameObject gameObject = gameManager.GetObjectFor(current.context.Target);
-		Transform target = gameObject.transform;
-
-		//TODO get healedamount from context;
-		Object.FindFirstObjectByType<UI>().ShowHeal((current.action as HealAction).Amount.GetValue(state, current.context), target);
-
-		var player = gameObject.GetComponentInParent<Player>();
-		var minion = gameObject.GetComponent<Minion>();
-		if (player != null)
-		{
-			player.RefreshData(player.Data == state.CurrentPlayer);
-		}
-		else if (minion != null)
-		{
-			minion.RefreshData(minion.Data.Owner == state.CurrentPlayer);
-		}
-
-		yield return null;
 	}
 }

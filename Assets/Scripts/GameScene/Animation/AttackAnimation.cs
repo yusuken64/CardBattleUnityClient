@@ -5,21 +5,14 @@ using UnityEngine;
 
 public class AttackAnimation : GameActionAnimation<AttackAction>
 {
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public AttackAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+	public AttackAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
 	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
 	}
 
 	public override IEnumerator Play()
 	{
-		Transform attacker = gameManager.GetObjectFor(current.context.Source).transform;
-		Transform target = gameManager.GetObjectFor(current.context.Target).transform;
+		Transform attacker = GameManager.GetObjectFor(Context.Source).transform;
+		Transform target = GameManager.GetObjectFor(Context.Target).transform;
 
 		Vector3 startPos = attacker.position;
 		Vector3 dir = (target.position - attacker.position).normalized;
@@ -31,10 +24,10 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 		// wait
 		yield return forward.WaitForCompletion();
 
-		if (current.context.Source is CardBattleEngine.Player player &&
+		if (Context.Source is CardBattleEngine.Player player &&
 			player.EquippedWeapon != null)
 		{
-			var gamePlayer = gameManager.GetObjectFor(current.context.Source).GetComponentInParent<Player>();
+			var gamePlayer = GameManager.GetObjectFor(Context.Source).GetComponentInParent<Player>();
 			gamePlayer.Weapon.Durablity--;
 			gamePlayer.Weapon.UpdateUI();
 		}
@@ -46,11 +39,11 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 		var minion = attacker.gameObject.GetComponent<Minion>();
 		if (playerObject != null)
 		{
-			playerObject.RefreshData(playerObject.Data == state.CurrentPlayer);
+			playerObject.RefreshData();
 		}
 		else if (minion != null)
 		{
-			minion.RefreshData(minion.Data.Owner == state.CurrentPlayer);
+			minion.RefreshData();
 		}
 
 		yield return back.WaitForCompletion();

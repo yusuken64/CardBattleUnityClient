@@ -3,21 +3,14 @@ using System.Collections;
 
 public class SpendManaAnimation : GameActionAnimation<SpendManaAction>
 {
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public SpendManaAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+	public SpendManaAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
 	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
 	}
 
 	public override IEnumerator Play()
 	{
-		var spendManaAction = current.action as SpendManaAction;
-		var player = gameManager.GetPlayerFor(current.context.SourcePlayer);
+		var spendManaAction = Action;
+		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		player.Mana -= spendManaAction.Amount;
 		player.UpdateUI();
 

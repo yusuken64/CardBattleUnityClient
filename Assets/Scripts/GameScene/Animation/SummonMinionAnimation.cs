@@ -5,26 +5,19 @@ using UnityEngine;
 
 public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 {
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public SummonMinionAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+	public SummonMinionAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
 	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
 	}
 
 	public override IEnumerator Play()
 	{
-		var player = gameManager.GetPlayerFor(current.context.SourcePlayer);
-		CardBattleEngine.Minion minionData = current.context.SummonedMinion;
+		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
+		CardBattleEngine.Minion minionData = Context.SummonedMinion;
 
-		var existingMinion = player.Board.Minions.FirstOrDefault(minion => minion.SummonedCard == (current.action as SummonMinionAction).Card);
+		var existingMinion = player.Board.Minions.FirstOrDefault(minion => minion.SummonedCard == Action.Card);
 		if (existingMinion == null)
 		{
-			var index = current.context.PlayIndex;
+			var index = Context.PlayIndex;
 
 			//play summon animation and set existingMinion
 			var minionPrefab = Object.FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;

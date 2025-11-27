@@ -1,5 +1,4 @@
 using CardBattleEngine;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +7,6 @@ public class AnimationQueue : MonoBehaviour
 {
     private Queue<IAnimation> queue = new();
     private bool isPlaying = false;
-
-    [SerializeReference]
-    public List<IAnimation> Animations;
 
     public void EnqueueAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
     {
@@ -44,10 +40,10 @@ public class AnimationQueue : MonoBehaviour
             RemoveModifierAction => new UpdateStatsActionAnimation(gameManager, state, current),
             TriggerEffectAction => new TriggerEffectActionAnimation(gameManager, state, current),
             HeroPowerAction => new HeroPowerActionAnimation(gameManager, state, current),
+            GainArmorAction => new GainArmorActionAnimation(gameManager, state, current),
             _ => null
         };
     }
-
 
     private IEnumerator ProcessQueue()
     {
@@ -62,7 +58,23 @@ public class AnimationQueue : MonoBehaviour
 
 public abstract class GameActionAnimation<T> : IAnimation where T : IGameAction
 {
-	public abstract IEnumerator Play();
+    protected GameManager GameManager { get; private set; }
+    protected GameState State { get; private set; }
+    protected T Action { get; private set; }
+    protected ActionContext Context { get; private set; }
+
+    protected GameActionAnimation(
+    GameManager gameManager,
+    GameState state,
+    (IGameAction action, ActionContext context) current)
+    {
+        GameManager = gameManager;
+        State = state;
+        Action = (T)current.action;
+        Context = current.context;
+    }
+
+    public abstract IEnumerator Play();
 }
 
 public interface IAnimation

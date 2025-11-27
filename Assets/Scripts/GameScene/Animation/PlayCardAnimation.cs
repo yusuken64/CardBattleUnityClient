@@ -6,21 +6,14 @@ using UnityEngine;
 
 public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 {
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public PlayCardAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+	public PlayCardAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
 	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
 	}
 
 	public override IEnumerator Play()
 	{
-		var playCardAction = (current.action as PlayCardAction);
-		var player = this.gameManager.GetPlayerFor(playCardAction.Card.Owner);
+		var playCardAction = Action;
+		var player = this.GameManager.GetPlayerFor(playCardAction.Card.Owner);
 
 		var playedCard = player.Hand.Cards.FirstOrDefault(x => x.Data == playCardAction.Card);
 		if (playedCard != null)

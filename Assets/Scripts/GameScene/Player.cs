@@ -46,14 +46,13 @@ public class Player : MonoBehaviour, ITargetable
 		Board.Minions.Clear();
 	}
 
-	internal void RefreshData(bool activePlayerTurn)
+	internal void RefreshData()
 	{
 		Health = Data.Health;
 		Attack = Data.Attack;
 		//Armor = Data.Armor;
 		Mana = Data.Mana;
 		MaxMana = Data.MaxMana;
-		CanAttack = Data.CanAttack();
 
 		if (HeroPower != null)
 		{
@@ -68,12 +67,12 @@ public class Player : MonoBehaviour, ITargetable
 
 		foreach(var minion in Board.Minions)
 		{
-			minion.RefreshData(activePlayerTurn);
+			minion.RefreshData();
 		}
 
 		foreach (var card in Hand.Cards)
 		{
-			card.RefreshData(activePlayerTurn);
+			card.RefreshData();
 		}
 
 		UpdateUI();
@@ -118,5 +117,22 @@ public class Player : MonoBehaviour, ITargetable
 		Destroy(explode.gameObject, 3f);
 		yield return new WaitForSecondsRealtime(1f);
 		HeroPortrait.gameObject.SetActive(false);
+	}
+
+	internal void UpdatePlayableActions(bool isActivePlayer)
+	{
+		CanAttackIndicator.gameObject.SetActive(isActivePlayer && CanAttack);
+		HeroPower.RefreshData();
+
+		foreach(var card in Hand.Cards)
+		{
+			card.RefreshData();
+			card.CanPlayIndicator.gameObject.SetActive(isActivePlayer && card.CanPlay);
+		}
+
+		foreach(var minion in Board.Minions)
+		{
+			minion.AttackReadyIndicator.gameObject.SetActive(isActivePlayer && minion.CanAttack);
+		}
 	}
 }

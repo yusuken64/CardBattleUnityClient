@@ -4,24 +4,17 @@ using UnityEngine;
 
 public class GainCardAnimation : GameActionAnimation<GainCardAction>
 {
-	private GameManager gameManager;
-	private GameState state;
-	private (IGameAction action, ActionContext context) current;
-
-	public GainCardAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+	public GainCardAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
 	{
-		this.gameManager = gameManager;
-		this.state = state;
-		this.current = current;
 	}
 
 	public override IEnumerator Play()
 	{
-		var player = gameManager.GetPlayerFor(current.context.SourcePlayer);
+		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		var cardPrefab = Object.FindAnyObjectByType<GameInteractionHandler>().CardPrefab;
 		var newCard = Object.Instantiate(cardPrefab, player.Hand.transform);
-		var cardData = (current.action as GainCardAction).Card;
-		cardData.Owner = current.context.SourcePlayer;
+		var cardData = Action.Card;
+		cardData.Owner = Context.SourcePlayer;
 		newCard.Setup(cardData);
 		player.Hand.AddCard(newCard);
 

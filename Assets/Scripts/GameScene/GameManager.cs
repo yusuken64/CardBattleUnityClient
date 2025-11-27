@@ -54,8 +54,8 @@ public class GameManager : MonoBehaviour
 		Player.HeroImage.sprite = deck.HeroCard.Sprite;
 		Player.HeroPower.OriginalCard = deck.HeroCard.CreateCard();
 		Player.HeroPower.Data = Player.Data.HeroPower;
-		Player.RefreshData(false);
-		Opponent.RefreshData(false);
+		Player.RefreshData();
+		Opponent.RefreshData();
 	}
 
 	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck)
@@ -133,17 +133,19 @@ public class GameManager : MonoBehaviour
 	{
 		var activePlayer = GetPlayerFor(_gameState.CurrentPlayer);
 
-		Player.RefreshData(Player == activePlayer);
-		Opponent.RefreshData(Opponent == activePlayer);
+		Player.RefreshData();
+		Opponent.RefreshData();
 	}
 
 	private void ActionResolvedCallback(GameState state)
 	{
-		if (state.CurrentPlayer.Name == Opponent.Data.Name)
+		if (state.CurrentPlayer == Opponent.Data)
 		{
 			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(state);
 			ResolveAction(nextAction.Item1, nextAction.Item2);
 		}
+
+		Player.UpdatePlayableActions(state.CurrentPlayer == Player.Data);
 	}
 }
 

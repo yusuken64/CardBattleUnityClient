@@ -98,7 +98,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
         this.CardImage.sprite = cardDefinition.Sprite;
 
         this.Data = cardData;
-        RefreshData(false);
+        RefreshData();
     }
 
     private void UpdateUI()
@@ -158,10 +158,10 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
         if (HealthText != null) HealthText.text = Health.ToString();
     }
 
-	internal void RefreshData(bool activePlayerTurn)
+	internal void RefreshData()
     {
         Cost = this.Data.ManaCost;
-        //CanPlay = this.Data.Owner.Mana >= Cost && activePlayerTurn;
+        CanPlay = this.Data.Owner.Mana >= Cost;
 
         if (this.Data is MinionCard minionCard)
         {
