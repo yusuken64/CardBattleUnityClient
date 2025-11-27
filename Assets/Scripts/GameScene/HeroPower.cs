@@ -79,7 +79,10 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 	public void OnClick()
 	{
 		if (Data.TargetingType != TargetingType.None &&
-			!Data.UsedThisTurn);
+			!Data.UsedThisTurn)
+		{
+			return;
+		}
 
 		var gameManager = FindFirstObjectByType<GameManager>();
 

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, ITargetable
 {
-	public GameObject HeroPortrait;
+	public HeroPortrait HeroPortrait;
 	public HeroSpellOrigin HeroSpellOrigin;
 	public Image HeroImage;
 	public GameObject ExplodeParticlePrefab;
@@ -23,11 +23,12 @@ public class Player : MonoBehaviour, ITargetable
 	public CardBattleEngine.Player Data { get; internal set; }
 
 	public int Health;
+	public int Attack;
+	public int Armor;
 	public int Mana;
 	public int MaxMana;
 
 	public TextMeshProUGUI ManaText;
-	public TextMeshProUGUI HealthText;
 
 	internal void Clear()
 	{
@@ -48,6 +49,8 @@ public class Player : MonoBehaviour, ITargetable
 	internal void RefreshData(bool activePlayerTurn)
 	{
 		Health = Data.Health;
+		Attack = Data.Attack;
+		//Armor = Data.Armor;
 		Mana = Data.Mana;
 		MaxMana = Data.MaxMana;
 		CanAttack = Data.CanAttack();
@@ -78,7 +81,7 @@ public class Player : MonoBehaviour, ITargetable
 
 	public void UpdateUI()
 	{
-		HealthText.text = Health.ToString();
+		HeroPortrait.UpdateUI();
 		ManaText.text = $"{Mana}/{MaxMana}";
 		CanAttackIndicator.SetActive(CanAttack);
 	}

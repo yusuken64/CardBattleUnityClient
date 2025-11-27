@@ -11,7 +11,7 @@ public class DeckDefinition : ScriptableObject
 {
     public string Title;
     public CardDefinition HeroCard;
-    public HeroPowerDefinition HeroPower;
+    //public HeroPowerDefinition HeroPower;
     public List<CardDefinition> Cards;
 
 	internal Deck ToDeck()
@@ -29,6 +29,7 @@ public class DeckDefinition : ScriptableObject
         return new DeckSaveData()
 		{
             Title = Title,
+            HeroCard = HeroCard.CardName,
             CardIDs = Cards.Select(x => x.CardName).ToList()
 		};
 	}

@@ -5,14 +5,14 @@ using System.Linq;
 using CardBattleEngine;
 
 [Serializable]
-public class GainManaActionWrapper : IGameActionWrapperBase
+public class GainArmorActionWrapper : IGameActionWrapperBase
 {
     [SerializeReference] public IValueProviderWrapperBase Amount;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()
     {
-        var instance = new CardBattleEngine.GainManaAction();
+        var instance = new CardBattleEngine.GainArmorAction();
         instance.Amount = Amount?.Create();
         instance.Canceled = this.Canceled;
         return instance;

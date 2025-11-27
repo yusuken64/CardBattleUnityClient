@@ -37,19 +37,21 @@ public class HeroPowerDefinition : CardDefinition
 			UsedThisTurn = false
 		};
 	}
-	public static CardBattleEngine.HeroPower CreateHeroPowerFromHeroCard(MinionCardDefinition mimionCard)
+	public static CardBattleEngine.HeroPower CreateHeroPowerFromHeroCard(MinionCardDefinition minionCard)
 	{
-		if (mimionCard.TriggeredEffects != null &&
-			mimionCard.TriggeredEffects.Any())
+		if (minionCard == null) { return null; }
+
+		if (minionCard.TriggeredEffects != null &&
+			minionCard.TriggeredEffects.Any())
 		{
-			TriggeredEffectWrapper triggeredEffectWrapper = mimionCard.TriggeredEffects[0];
+			TriggeredEffectWrapper triggeredEffectWrapper = minionCard.TriggeredEffects[0];
 			return new CardBattleEngine.HeroPower()
 			{
-				Name = $"Invoke {mimionCard.CardName}",
+				Name = $"Invoke {minionCard.CardName}",
 				TargetingType = triggeredEffectWrapper.TargetType,
-				AffectedEntitySelector = mimionCard.TriggeredEffects[0].AffectedEntitySelectorWrapper?.Create(),
-				GameActions = mimionCard.TriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
-				ManaCost = mimionCard.Cost,
+				AffectedEntitySelector = minionCard.TriggeredEffects[0].AffectedEntitySelectorWrapper?.Create(),
+				GameActions = minionCard.TriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
+				ManaCost = minionCard.Cost,
 				UsedThisTurn = false
 			};
 		}

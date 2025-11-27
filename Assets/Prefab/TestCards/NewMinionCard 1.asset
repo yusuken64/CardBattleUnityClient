@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: NewMinionCard 1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 0
   CardName: BattleCryTest
   ID: BattleCryTest
   Sprite: {fileID: 21300000, guid: 1b1db58ce7df35444bb2e76db1854b0a, type: 3}
@@ -28,7 +29,8 @@ MonoBehaviour:
   HasLifeSteal: 1
   HasReborn: 1
   TriggeredEffects:
-  - EffectTrigger: 1
+  - Description: 
+    EffectTrigger: 1
     EffectTiming: 1
     TargetType: 5
     GameActions:
@@ -45,5 +47,10 @@ MonoBehaviour:
     - rid: 6533011601016225854
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Damage: 20
+        Damage:
+          rid: 6533011738762674245
         Canceled: 0
+    - rid: 6533011738762674245
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 20
