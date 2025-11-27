@@ -219,4 +219,16 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
     {
         return Data.OriginalCard;
     }
+
+    public void HoldStart()
+    {
+        var ui = FindFirstObjectByType<UI>();
+        ui.PreviewStart(this);
+    }
+
+    public void HoldEnd()
+    {
+        var ui = FindFirstObjectByType<UI>();
+        ui.PreviewEnd();
+    }
 }

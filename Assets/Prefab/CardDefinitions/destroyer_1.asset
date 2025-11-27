@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: destroyer_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
   CardName: destroyer 1
   ID: destroyer_1
   Sprite: {fileID: 21300000, guid: cb37fb195bfd0c149aba6ad7ad1ec754, type: 3}
@@ -22,8 +23,40 @@ MonoBehaviour:
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  TriggeredEffects:
+  - Description: 
+    EffectTrigger: 1
+    EffectTiming: 0
+    TargetType: 8
+    GameActions:
+    - rid: 6533011735244963900
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: -2
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6533011735244963900
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange: 2
+        HealthChange: 0
+        ExpirationTrigger:
+          Description: 
+          EffectTrigger: 12
+          EffectTiming: 0
+          TargetType: 0
+          GameActions: []
+          Condition:
+            rid: -2
+          AffectedEntitySelectorWrapper:
+            rid: -2
+        Canceled: 0

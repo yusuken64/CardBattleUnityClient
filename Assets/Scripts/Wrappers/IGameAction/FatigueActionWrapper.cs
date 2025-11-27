@@ -5,15 +5,13 @@ using System.Linq;
 using CardBattleEngine;
 
 [Serializable]
-public class HealActionWrapper : IGameActionWrapperBase
+public class FatigueActionWrapper : IGameActionWrapperBase
 {
-    [SerializeReference] public IValueProviderWrapperBase Amount;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()
     {
-        var instance = new CardBattleEngine.HealAction();
-        instance.Amount = Amount?.Create();
+        var instance = new CardBattleEngine.FatigueAction();
         instance.Canceled = this.Canceled;
         return instance;
     }

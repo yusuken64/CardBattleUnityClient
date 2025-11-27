@@ -1,10 +1,21 @@
 using System;
 using UnityEngine;
 
-public class CollectionItem : MonoBehaviour, IClickable
+public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 {
 	public Card Card;
 	public CardDefinition CardDefinition;
+	public HoldClickableButton HoldClickableButton;
+
+	private void OnEnable()
+	{
+		HoldClickableButton.OnHoldClicked += OnHoldClicked;
+	}
+
+	private void OnDisable()
+	{
+		HoldClickableButton.OnHoldClicked -= OnHoldClicked;
+	}
 
 	public void Setup(CardDefinition cardDefinition, CardBattleEngine.Player owner)
 	{
@@ -26,4 +37,28 @@ public class CollectionItem : MonoBehaviour, IClickable
 		var verticalDeckViewer = FindFirstObjectByType<VerticalDeckViewer>();
 		verticalDeckViewer?.AddCardToDeck(CardDefinition);
 	}
+
+	public CardBattleEngine.Card GetDisplayCard()
+	{
+		return CardDefinition.CreateCard();
+	}
+
+	public void HoldStart()
+	{
+		var ui = FindFirstObjectByType<CollectionUI>();
+		ui.PreviewStart(this);
+	}
+
+	public void HoldEnd()
+	{
+		var ui = FindFirstObjectByType<CollectionUI>();
+		ui.PreviewEnd();
+	}
+
+	private void OnHoldClicked()
+	{
+		var ui = FindFirstObjectByType<CollectionUI>();
+		ui.PreviewStart(this);
+	}
+
 }

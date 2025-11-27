@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8066115730787946941}
   - component: {fileID: 5842989980387145638}
   - component: {fileID: 5005807210442070638}
+  - component: {fileID: 7194127126175451437}
   m_Layer: 5
   m_Name: CollectionItem
   m_TagString: Untagged
@@ -53,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CollectionItem
   Card: {fileID: 3796801786167867802}
   CardDefinition: {fileID: 0}
+  HoldClickableButton: {fileID: 7194127126175451437}
 --- !u!114 &5005807210442070638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +111,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7194127126175451437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3130662784365045429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cca43c3284a5b74bae4d834a8494832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoldClickableButton
+  _holdDuration: 0.32
 --- !u!1 &6614669864427076208
 GameObject:
   m_ObjectHideFlags: 0

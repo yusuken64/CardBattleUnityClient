@@ -19,13 +19,13 @@ public abstract class CardDefinition : ScriptableObject
 
 		return gameAction switch
 		{
-			DamageAction dealDamage => $"Deal {dealDamage.Damage} damage",
+			DamageAction dealDamage => $"Deal {dealDamage.Damage?.GetType().Name} damage",
 			DrawCardFromDeckAction drawCard => $"Draw card",
 			SummonMinionAction summon => $"Summon {summon.Card.Name}",
 			FreezeAction freeze => $"Freeze",
 			//HealAction heal => $"Heal {heal.Target} for {heal.Amount} HP",
 			// Add more types as needed
-			_ => action.Create().ToString() // fallback
+			_ => action.Create().GetType().Name.ToString() // fallback
 		};
 	}
 
@@ -40,7 +40,7 @@ public abstract class CardDefinition : ScriptableObject
 		var condition = "";
 		if (triggeredEffect.Condition is not null)
 		{
-			condition = triggeredEffect.Condition.ToString() + ",";
+			condition = triggeredEffect.Condition.GetType().Name + ",";
 		}
 
 		string actions = string.Join(Environment.NewLine, triggeredEffect.GameActions.Select(ActionToDescription));

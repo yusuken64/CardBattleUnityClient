@@ -12,6 +12,7 @@ public class GameInteractionHandler : MonoBehaviour
 	public LayerMask ClickableMask;
 	private IDraggable currentDraggable;
 	private ITargetOrigin currentAimable;
+	private IHoverable currentHolding;
 
 	public LineRenderer LineRenderer;
 	public Image ArrowHead;
@@ -172,9 +173,8 @@ public class GameInteractionHandler : MonoBehaviour
 
 	private void PointerInput_OnHoldEnd(Vector2 obj)
 	{
-		//hide info
-		//var ui = FindFirstObjectByType<UI>();
-		//ui.PreviewEnd();
+		currentHolding?.HoldEnd();
+		currentHolding = null;
 	}
 
 	private void PointerInput_OnHoldStart(Vector2 obj)
@@ -184,13 +184,12 @@ public class GameInteractionHandler : MonoBehaviour
 			RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
 		if (hit.collider != null)
 		{
-			//show info
-			var ui = FindFirstObjectByType<UI>();
-
 			var hoverable = hit.collider.GetComponent<IHoverable>();
 			if (hoverable != null)
 			{
-				ui.PreviewStart(hoverable);
+				//show info
+				currentHolding = hoverable;
+				currentHolding.HoldStart();
 			}
 		}
 	}
@@ -333,6 +332,8 @@ public interface IDraggable
 public interface IHoverable
 {
 	CardBattleEngine.Card GetDisplayCard();
+	void HoldStart();
+	void HoldEnd();
 }
 
 public interface IClickable

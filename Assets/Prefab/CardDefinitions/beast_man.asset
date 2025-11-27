@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: beast_man
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 1
+  Collectable: 0
   CardName: beast man
   ID: beast_man
   Sprite: {fileID: 21300000, guid: 9bbfce270efa42049b9b1be39ce185b0, type: 3}

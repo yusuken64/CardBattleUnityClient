@@ -12,18 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: rockman_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
   CardName: rockman 1
   ID: rockman_1
   Sprite: {fileID: 21300000, guid: bb525cf3643b50544b25fa859d87f9f8, type: 3}
   Cost: 1
   Attack: 1
-  Health: 1
+  Health: 2
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  TriggeredEffects:
+  - Description: 
+    EffectTrigger: 1
+    EffectTiming: 0
+    TargetType: 1
+    GameActions:
+    - rid: 6533011735244963923
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: -2
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6533011735244963923
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange: 0
+        HealthChange: 2
+        ExpirationTrigger:
+          Description: 
+          EffectTrigger: 0
+          EffectTiming: 0
+          TargetType: 0
+          GameActions: []
+          Condition:
+            rid: -2
+          AffectedEntitySelectorWrapper:
+            rid: -2
+        Canceled: 0

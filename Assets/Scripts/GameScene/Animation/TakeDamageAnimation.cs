@@ -65,7 +65,8 @@ public class TakeHealAnimation : GameActionAnimation<HealAction>
 		GameObject gameObject = gameManager.GetObjectFor(current.context.Target);
 		Transform target = gameObject.transform;
 
-		Object.FindFirstObjectByType<UI>().ShowHeal((current.action as HealAction).Amount, target);
+		//TODO get healedamount from context;
+		Object.FindFirstObjectByType<UI>().ShowHeal((current.action as HealAction).Amount.GetValue(state, current.context), target);
 
 		var player = gameObject.GetComponentInParent<Player>();
 		var minion = gameObject.GetComponent<Minion>();

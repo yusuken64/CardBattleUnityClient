@@ -161,7 +161,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
 	internal void RefreshData(bool activePlayerTurn)
     {
         Cost = this.Data.ManaCost;
-        CanPlay = this.Data.Owner.Mana >= Cost && activePlayerTurn;
+        //CanPlay = this.Data.Owner.Mana >= Cost && activePlayerTurn;
 
         if (this.Data is MinionCard minionCard)
         {
@@ -455,4 +455,16 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
 	{
         return this.Data;
 	}
+
+	public void HoldStart()
+    {
+        var ui = FindFirstObjectByType<UI>();
+        ui.PreviewStart(this);
+    }
+
+	public void HoldEnd()
+    {
+        var ui = FindFirstObjectByType<UI>();
+        ui.PreviewEnd();
+    }
 }

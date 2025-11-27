@@ -96,4 +96,16 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 			gameManager.ResolveAction(current.action, current.context);
 		}
 	}
+
+	public void HoldStart()
+	{
+		var ui = FindFirstObjectByType<UI>();
+		ui.PreviewStart(this);
+	}
+
+	public void HoldEnd()
+	{
+		var ui = FindFirstObjectByType<UI>();
+		ui.PreviewEnd();
+	}
 }
