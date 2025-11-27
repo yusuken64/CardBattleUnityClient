@@ -39,6 +39,9 @@ public class GameResultScreen : MonoBehaviour
 		var gameManager = FindFirstObjectByType<GameManager>();
 		HeroImage.sprite = gameManager.Player.HeroImage.sprite;
 
+		var pointerInput = FindFirstObjectByType<PointerInput>();
+		pointerInput.gameObject.SetActive(false);
+
 		// Ensure everything starts hidden
 		WinObject.SetActive(false);
 		LoseObject.SetActive(false);

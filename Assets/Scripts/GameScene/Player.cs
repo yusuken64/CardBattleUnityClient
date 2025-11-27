@@ -54,7 +54,7 @@ public class Player : MonoBehaviour, ITargetable
 
 		if (HeroPower != null)
 		{
-			HeroPower.Data = Data.HeroPower;
+			//HeroPower.Data = Data.HeroPower;
 			HeroPower.RefreshData();
 		}
 

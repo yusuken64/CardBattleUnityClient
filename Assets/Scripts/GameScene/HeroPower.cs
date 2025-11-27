@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable
+public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 {
 	public Player Player;
 	public Image HeroPowerImage;
@@ -36,7 +36,8 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable
 
 	public bool CanStartAiming()
 	{
-		return !Data.UsedThisTurn;//TODO heropoweraction.isvalid
+		return Data.TargetingType != TargetingType.None &&
+				!Data.UsedThisTurn;//TODO heropoweraction.isvalid
 	}
 
 	public IGameEntity GetData()
@@ -73,5 +74,26 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable
 	public CardBattleEngine.Card GetDisplayCard()
 	{
 		return OriginalCard;
+	}
+
+	public void OnClick()
+	{
+		if (Data.TargetingType != TargetingType.None &&
+			!Data.UsedThisTurn);
+
+		var gameManager = FindFirstObjectByType<GameManager>();
+
+		CardBattleEngine.HeroPowerAction action = new CardBattleEngine.HeroPowerAction();
+		CardBattleEngine.ActionContext context = new CardBattleEngine.ActionContext()
+		{
+			Source = Player.Data,
+			SourcePlayer = Player.Data
+		};
+
+		var current = (action, context);
+		if (gameManager.CheckIsValid(current.action, current.context))
+		{
+			gameManager.ResolveAction(current.action, current.context);
+		}
 	}
 }

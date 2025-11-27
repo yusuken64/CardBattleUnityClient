@@ -14,28 +14,6 @@ public class DeckDefinition : ScriptableObject
     public HeroPowerDefinition HeroPower;
     public List<CardDefinition> Cards;
 
-    internal CardBattleEngine.HeroPower CreateHeroPowerFromHeroCard()
-    {
-        if (HeroCard is MinionCardDefinition mimionCard)
-        {
-            if (mimionCard.TriggeredEffects != null &&
-                mimionCard.TriggeredEffects.Any())
-            {
-                TriggeredEffectWrapper triggeredEffectWrapper = mimionCard.TriggeredEffects[0];
-                return new CardBattleEngine.HeroPower()
-                {
-                    Name = $"Invoke {HeroCard.CardName}",
-                    TargetingType = triggeredEffectWrapper.TargetType,
-                    AffectedEntitySelector = mimionCard.TriggeredEffects[0].AffectedEntitySelectorWrapper?.Create(),
-                    GameActions = mimionCard.TriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
-                    ManaCost = HeroCard.Cost,
-                    UsedThisTurn = false
-                };
-            }
-        }
-        return null; //TODO allow other types or restrict to minion cards
-    }
-
 	internal Deck ToDeck()
     {
         return new Deck()

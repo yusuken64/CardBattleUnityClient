@@ -48,7 +48,7 @@ MonoBehaviour:
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Damage:
-          rid: -2
+          rid: 6533011729798922311
         Canceled: 0
     - rid: 6533011672544051265
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
@@ -58,6 +58,10 @@ MonoBehaviour:
     - rid: 6533011672544051266
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Side: 0
+        Side: 2
         Group: 0
         ExcludeSelf: 0
+    - rid: 6533011729798922311
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1

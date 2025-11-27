@@ -150,6 +150,8 @@ public class GameInteractionHandler : MonoBehaviour
 		{
 			pendingDraggable?.CancelAim();
 		}
+		var ui = FindFirstObjectByType<UI>();
+		ui.PreviewEnd();
 
 		EndAim();
 	}
@@ -171,8 +173,8 @@ public class GameInteractionHandler : MonoBehaviour
 	private void PointerInput_OnHoldEnd(Vector2 obj)
 	{
 		//hide info
-		var ui = FindFirstObjectByType<UI>();
-		ui.PreviewEnd();
+		//var ui = FindFirstObjectByType<UI>();
+		//ui.PreviewEnd();
 	}
 
 	private void PointerInput_OnHoldStart(Vector2 obj)
@@ -205,6 +207,13 @@ public class GameInteractionHandler : MonoBehaviour
 		}
 		else if (hit.collider != null)
 		{
+			var clickable = hit.collider.GetComponent<IClickable>();
+			if (clickable != null)
+			{
+				clickable.OnClick();
+				return;
+			}
+
 			var targetOrigin = hit.collider.GetComponent<ITargetOrigin>();
 			if (targetOrigin != null)
 			{

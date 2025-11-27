@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 		{
 			deck = TestDeck.ToDeck();
 		}
-		_gameState = CreateTestGame(deck.Cards, TestDeck.ToDeck().Cards);
+		_gameState = CreateTestGame(deck, TestDeck.ToDeck());
 		Player.Data = _gameState.Players[0];
 		Opponent.Data = _gameState.Players[1];
 		_opponentAgent = new RandomAI(Opponent.Data, new UnityRNG());
@@ -53,24 +53,24 @@ public class GameManager : MonoBehaviour
 
 		Player.HeroImage.sprite = deck.HeroCard.Sprite;
 		Player.HeroPower.OriginalCard = deck.HeroCard.CreateCard();
-		Player.HeroPower.OriginalCard.Owner = Player.Data;
+		Player.HeroPower.Data = Player.Data.HeroPower;
 		Player.RefreshData(false);
 		Opponent.RefreshData(false);
 	}
 
-	private GameState CreateTestGame(List<CardDefinition> playerCards, List<CardDefinition> enemyCards)
+	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck)
 	{
 		var cardManager = Common.Instance.CardManager;
 		
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
-		p1.Deck.AddRange(playerCards.Select(x => x.CreateCard()).ToList());
+		p1.Deck.AddRange(playerDeck.Cards.Select(x => x.CreateCard()).ToList());
 		p1.Deck.ForEach(x => x.Owner = p1);
-		p1.HeroPower = TestDeck.CreateHeroPowerFromHeroCard();
+		p1.HeroPower = HeroPowerDefinition.CreateHeroPowerFromHeroCard(playerDeck.HeroCard as MinionCardDefinition);
 
 		CardBattleEngine.Player p2 = new CardBattleEngine.Player("Bob");
-		p2.Deck.AddRange(enemyCards.Select(x => x.CreateCard()).ToList());
+		p2.Deck.AddRange(enemyDeck.Cards.Select(x => x.CreateCard()).ToList());
 		p2.Deck.ForEach(x => x.Owner = p2);
-		p2.HeroPower = TestDeck.CreateHeroPowerFromHeroCard();
+		p2.HeroPower = HeroPowerDefinition.CreateHeroPowerFromHeroCard(enemyDeck.HeroCard as MinionCardDefinition);
 
 		return new GameState(p1, p2, new UnityRNG());
 	}

@@ -43,6 +43,7 @@ public class AnimationQueue : MonoBehaviour
             AddStatModifierAction => new UpdateStatsActionAnimation(gameManager, state, current),
             RemoveModifierAction => new UpdateStatsActionAnimation(gameManager, state, current),
             TriggerEffectAction => new TriggerEffectActionAnimation(gameManager, state, current),
+            HeroPowerAction => new HeroPowerActionAnimation(gameManager, state, current),
             _ => null
         };
     }
