@@ -94,8 +94,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
 	internal void Setup(CardBattleEngine.Card cardData)
 	{
         var cardManager = Common.Instance.CardManager;
-        var cardDefinition = cardManager.GetCardByName(cardData.Name);
-        this.CardImage.sprite = cardDefinition.Sprite;
+        this.CardImage.sprite = cardManager.GetSpriteByCardName(cardData.Name);
 
         this.Data = cardData;
         RefreshData();

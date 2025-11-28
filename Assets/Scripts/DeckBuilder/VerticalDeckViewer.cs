@@ -128,7 +128,7 @@ public class VerticalDeckViewer : MonoBehaviour
     {
         editingDeck.Title = TitleText.text;
         editingDeck.Cards = _spawnedCards.Select(x => x.CardDefinition).ToList();
-        editingDeck.HeroCard = _spawnedCards.FirstOrDefault(x => x.HeroIndicator.DeckCard = HeroCard).CardDefinition;
+        editingDeck.HeroCard = _spawnedCards.FirstOrDefault(x => x.HeroIndicator.DeckCard == HeroCard).CardDefinition;
         DeckClosedAction?.Invoke(editingDeck);
     }
 
