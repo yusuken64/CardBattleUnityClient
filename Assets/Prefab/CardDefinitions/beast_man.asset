@@ -17,6 +17,7 @@ MonoBehaviour:
   ID: beast_man
   Sprite: {fileID: 21300000, guid: 9bbfce270efa42049b9b1be39ce185b0, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 1
   Health: 1
   MinionTribes: 
@@ -28,7 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  TriggeredEffects: []
+  MinionTriggeredEffects: []
   references:
     version: 2
     RefIds: []

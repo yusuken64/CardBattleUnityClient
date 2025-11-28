@@ -13,12 +13,12 @@ public class WeaponCardDefinition : CardDefinition
 	public int Attack;
 	public int Durability;
 
-	public List<TriggeredEffectWrapper> TriggeredEffectWrappers;
+	public List<TriggeredEffectWrapper> WeaponTriggeredEffects;
 
 	internal override CardBattleEngine.Card CreateCard()
 	{
 		var weapon = new WeaponCard(WeaponName, Cost, Attack, Durability);
-		weapon.TriggeredEffects.AddRange(TriggeredEffectWrappers.Select(x => x.CreateEffect()));
+		weapon.TriggeredEffects.AddRange(WeaponTriggeredEffects.Select(x => x.CreateEffect()));
 
 		return weapon;
 	}

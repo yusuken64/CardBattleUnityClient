@@ -191,12 +191,12 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
     {
         if (this.Data is MinionCard minionCard)
         {
-            if (minionCard.TriggeredEffects.Count() == 0)
+            if (minionCard.MinionTriggeredEffects.Count() == 0)
 			{
                 return false;
 			}
 
-            return minionCard.TriggeredEffects[0].TargetType != TargetingType.None;
+            return minionCard.MinionTriggeredEffects[0].TargetType != TargetingType.None;
         }
         else if (this.Data is SpellCard spellCard)
         {

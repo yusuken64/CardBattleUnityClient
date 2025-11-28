@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: vagabond_4
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 0
   CardName: vagabond 4
   ID: vagabond_4
   Sprite: {fileID: 21300000, guid: 6c393d5ac67b20d499626e8a8ef1aa12, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 1
   Health: 1
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  MinionTriggeredEffects: []
   references:
     version: 2
     RefIds: []

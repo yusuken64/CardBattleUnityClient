@@ -17,6 +17,7 @@ MonoBehaviour:
   ID: slayer_1
   Sprite: {fileID: 21300000, guid: bc14b8645d41a1741bc74a1cebc23346, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 1
   Health: 2
   MinionTribes: 
@@ -28,7 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  TriggeredEffects:
+  MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 5
     EffectTiming: 1

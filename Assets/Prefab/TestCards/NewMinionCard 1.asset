@@ -17,6 +17,7 @@ MonoBehaviour:
   ID: BattleCryTest
   Sprite: {fileID: 21300000, guid: 1b1db58ce7df35444bb2e76db1854b0a, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 7
   Health: 7
   MinionTribes: 
@@ -28,7 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 1
   HasReborn: 1
-  TriggeredEffects:
+  MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 1

@@ -17,6 +17,7 @@ MonoBehaviour:
   ID: spider_01
   Sprite: {fileID: 21300000, guid: 885322928eea7dc46b11b3d69a75340f, type: 3}
   Cost: 2
+  TriggeredEffects: []
   Attack: 1
   Health: 2
   MinionTribes: 
@@ -28,7 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  TriggeredEffects:
+  MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 2
     EffectTiming: 1

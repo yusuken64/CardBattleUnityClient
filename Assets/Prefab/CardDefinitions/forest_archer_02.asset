@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: forest_archer_02
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 0
   CardName: Forest archer 02
   ID: forest_archer_02
   Sprite: {fileID: 21300000, guid: 7b5df734a862b214998a98c5b80444d2, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 1
   Health: 1
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  MinionTriggeredEffects: []
   references:
     version: 2
     RefIds: []

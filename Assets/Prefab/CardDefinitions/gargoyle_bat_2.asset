@@ -17,6 +17,7 @@ MonoBehaviour:
   ID: gargoyle_bat_2
   Sprite: {fileID: 21300000, guid: 7577e7418b7aa3145b4ce23bfd44faca, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 1
   Health: 1
   MinionTribes: 
@@ -28,7 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  TriggeredEffects: []
+  MinionTriggeredEffects: []
   references:
     version: 2
     RefIds: []

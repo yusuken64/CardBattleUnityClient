@@ -22,8 +22,7 @@ public class MinionCardDefinition : CardDefinition
     public bool HasLifeSteal;
     public bool HasReborn;
 
-    [Header("Triggered Effects")]
-    public List<TriggeredEffectWrapper> TriggeredEffects = new List<TriggeredEffectWrapper>();
+    public List<TriggeredEffectWrapper> MinionTriggeredEffects = new List<TriggeredEffectWrapper>();
 
     // Creates a runtime MinionCard from this definition
     internal override CardBattleEngine.Card CreateCard()
@@ -41,7 +40,12 @@ public class MinionCardDefinition : CardDefinition
             HasLifeSteal = this.HasLifeSteal,
         };
         card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
-        card.Description = string.Join(Environment.NewLine, TriggeredEffects.Select(ToDescription));
+        card.MinionTriggeredEffects.AddRange(MinionTriggeredEffects.Select(x => x.CreateEffect()));
+
+        var triggeredEffects = new List<TriggeredEffectWrapper>();
+        triggeredEffects.AddRange(TriggeredEffects);
+        triggeredEffects.AddRange(MinionTriggeredEffects);
+        card.Description = string.Join(Environment.NewLine, triggeredEffects.Select(ToDescription));
 
         return card;
     }
@@ -72,7 +76,7 @@ public class TriggeredEffectWrapper
             EffectTrigger = this.EffectTrigger,
             EffectTiming = this.EffectTiming,
             TargetType = this.TargetType,
-            GameActions = GameActions.Select(x => x.Create()).ToList(),
+            GameActions = GameActions?.Select(x => x.Create()).ToList(),
             Condition = Condition?.Create(),
             AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create()
         };

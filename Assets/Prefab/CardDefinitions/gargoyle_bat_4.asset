@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: gargoyle_bat_4
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 0
   CardName: Gargoyle Bat 4
   ID: gargoyle_bat_4
   Sprite: {fileID: 21300000, guid: 9d06da2692b5fdd459937032e6af025e, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 1
   Health: 1
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  MinionTriggeredEffects: []
   references:
     version: 2
     RefIds: []

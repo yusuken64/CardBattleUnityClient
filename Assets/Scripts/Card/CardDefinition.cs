@@ -1,5 +1,6 @@
 using CardBattleEngine;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public abstract class CardDefinition : ScriptableObject
 	public Sprite Sprite;
 	public int Cost = 1;
 
+	[SerializeReference]
+	public List<TriggeredEffectWrapper> TriggeredEffects = new List<TriggeredEffectWrapper>();
+
 	internal abstract CardBattleEngine.Card CreateCard();
 
 	public string ActionToDescription(IGameActionWrapperBase action, int arg2)
@@ -19,7 +23,7 @@ public abstract class CardDefinition : ScriptableObject
 
 		return gameAction switch
 		{
-			DamageAction dealDamage => $"Deal {dealDamage.Damage?.GetType().Name} damage",
+			DamageAction dealDamage => DescribeDamage(dealDamage),
 			DrawCardFromDeckAction drawCard => $"Draw card",
 			SummonMinionAction summon => $"Summon {summon.Card.Name}",
 			FreezeAction freeze => $"Freeze",
@@ -29,7 +33,17 @@ public abstract class CardDefinition : ScriptableObject
 		};
 	}
 
-	public string ToDescription(TriggeredEffectWrapper triggeredEffect, int arg2)
+	string DescribeDamage(DamageAction d)
+	{
+		var damageString = d.Damage switch
+		{
+			ConstantValue value => $"Deal {value.Number} damage",
+			_ => d.GetType().Name,
+		};
+		return damageString;
+	}
+
+	public virtual string ToDescription(TriggeredEffectWrapper triggeredEffect, int arg2)
 	{
 		if (!string.IsNullOrWhiteSpace(triggeredEffect.Description))
 		{

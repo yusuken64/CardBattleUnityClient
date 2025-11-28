@@ -17,6 +17,7 @@ MonoBehaviour:
   ID: archer_02
   Sprite: {fileID: 21300000, guid: 2b28699e663e7744887b174825ba6789, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 1
   Health: 1
   MinionTribes: 
@@ -28,7 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  TriggeredEffects: []
+  MinionTriggeredEffects: []
   references:
     version: 2
     RefIds: []

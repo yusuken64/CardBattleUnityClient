@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: fire_devil_03
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 0
   CardName: Fire Devil 03
   ID: fire_devil_03
   Sprite: {fileID: 21300000, guid: 7df7ba77c189929428212409962cecd4, type: 3}
   Cost: 1
+  TriggeredEffects: []
   Attack: 1
   Health: 1
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
+  HasTaunt: 0
   HasPoisonous: 0
-  TriggeredEffects: []
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  MinionTriggeredEffects: []
   references:
     version: 2
     RefIds: []
