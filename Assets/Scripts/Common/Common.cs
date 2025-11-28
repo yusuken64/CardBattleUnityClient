@@ -31,9 +31,15 @@ public class Common : MonoBehaviour
 
 	private void Start()
 	{
-		SaveManager = new();
-		//GameSaveData = SaveManager.Load();
-		GameSaveData = new();
+		SaveManager.Initialize();
+		if (SaveManager.LoadDataAtStart)
+		{
+			GameSaveData = SaveManager.Load();
+		}
+		else
+		{
+			GameSaveData = new();
+		}
 
 		if (GameSaveData.DeckSaveDatas.Count() == 0)
 		{

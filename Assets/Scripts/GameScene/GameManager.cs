@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
 	private RandomAI _opponentAgent;
 	public GameState _gameState { get; private set; }
 
-
 	void Start()
     {
 		ClearBoard();
@@ -47,15 +46,16 @@ public class GameManager : MonoBehaviour
 		Opponent.Data = _gameState.Players[1];
 		_opponentAgent = new RandomAI(Opponent.Data, new UnityRNG());
 
-		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
-		_engine.ActionResolvedCallback = ActionResolvedCallback;
-		_engine.StartGame(_gameState);
-
 		Player.HeroImage.sprite = deck.HeroCard.Sprite;
 		Player.HeroPower.OriginalCard = deck.HeroCard.CreateCard();
 		Player.HeroPower.Data = Player.Data.HeroPower;
 		Player.RefreshData();
 		Opponent.RefreshData();
+
+		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
+		_engine.ActionResolvedCallback = ActionResolvedCallback;
+		_engine.StartGame(_gameState);
+
 	}
 
 	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck)

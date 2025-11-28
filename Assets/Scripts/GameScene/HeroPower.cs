@@ -14,11 +14,9 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 	public CardBattleEngine.HeroPower Data { get; set; }
 	internal void RefreshData()
 	{
-		if (Data == null)
-		{
-			this.gameObject.SetActive(false);
-			return;
-		}
+		this.gameObject.SetActive(Data != null);
+
+		if (Data == null) { return; }
 
 		//FindFirstObjectByType<CardManager>();
 		HeroPowerExpiredObject.SetActive(Data.UsedThisTurn);

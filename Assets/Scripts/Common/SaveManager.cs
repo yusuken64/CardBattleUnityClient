@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.IO;
 
-public class SaveManager
+public class SaveManager : MonoBehaviour
 {
-	private readonly string _savePath;
+	public bool LoadDataAtStart;
+	public string _savePath;
 
-	public SaveManager()
+	public void Initialize()
 	{
-		// Save file name, stored under persistentDataPath
 		_savePath = Path.Combine(Application.persistentDataPath, "save.json");
 	}
 

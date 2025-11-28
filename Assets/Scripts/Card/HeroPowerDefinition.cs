@@ -41,16 +41,17 @@ public class HeroPowerDefinition : CardDefinition
 	{
 		if (minionCard == null) { return null; }
 
-		if (minionCard.TriggeredEffects != null &&
-			minionCard.TriggeredEffects.Any())
+		List<TriggeredEffectWrapper> minionTriggeredEffects = minionCard.MinionTriggeredEffects;
+		if (minionTriggeredEffects != null &&
+			minionTriggeredEffects.Any())
 		{
-			TriggeredEffectWrapper triggeredEffectWrapper = minionCard.TriggeredEffects[0];
+			TriggeredEffectWrapper triggeredEffectWrapper = minionTriggeredEffects[0];
 			return new CardBattleEngine.HeroPower()
 			{
 				Name = $"Invoke {minionCard.CardName}",
 				TargetingType = triggeredEffectWrapper.TargetType,
-				AffectedEntitySelector = minionCard.TriggeredEffects[0].AffectedEntitySelectorWrapper?.Create(),
-				GameActions = minionCard.TriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
+				AffectedEntitySelector = minionTriggeredEffects[0].AffectedEntitySelectorWrapper?.Create(),
+				GameActions = minionTriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
 				ManaCost = minionCard.Cost,
 				UsedThisTurn = false
 			};
