@@ -20,6 +20,7 @@ public class UI : MonoBehaviour
 
     public GameResultScreen GameResultScreen;
     public GameSettings GameSettingsScreen;
+    public GameObject SettingsButton;
 
 	private void Start()
 	{
@@ -43,6 +44,7 @@ public class UI : MonoBehaviour
 	internal IEnumerator DoGameEndRoutine(bool isWin)
     {
         this.gameObject.SetActive(true);
+        SettingsButton.SetActive(false);
         yield return GameResultScreen.DoGameEndRoutine(isWin);
 	}
 

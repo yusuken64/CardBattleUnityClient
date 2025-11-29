@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 230011931}
   - component: {fileID: 230011930}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2950,6 +2950,7 @@ MonoBehaviour:
   TriggeredEffectParticlePrefab: {fileID: 3695537189138359838, guid: 82d38c91af67fa34bbfa57556bafb573, type: 3}
   GameResultScreen: {fileID: 1405684315}
   GameSettingsScreen: {fileID: 1696105973}
+  SettingsButton: {fileID: 230011928}
 --- !u!224 &1132939054
 RectTransform:
   m_ObjectHideFlags: 0

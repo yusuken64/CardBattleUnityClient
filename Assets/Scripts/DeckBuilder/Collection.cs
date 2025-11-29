@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -15,26 +16,51 @@ public class Collection : MonoBehaviour
     public Button NextButton;
     public Button PrevButton;
 
-	private CardBattleEngine.Player owner = new CardBattleEngine.Player("Test Player");
+    public CollectionFilter CollectionFilter;
+
+    private CardBattleEngine.Player owner = new CardBattleEngine.Player("Test Player");
 
 	private int MaxPage => Mathf.Max(0, (CardsToShow.Count() - 1) / ItemsPerPage);
 
 	public IEnumerable<CardDefinition> CardsToShow { get; private set; }
     public bool HideUncollectable;
-	private void Start()
+
+	private void OnEnable()
+	{
+        CollectionFilter.FilterChanged += CollectionFilter_FilterChanged;
+    }
+
+	private void OnDisable()
     {
-        if (HideUncollectable)
-        {
-            CardsToShow = Common.Instance.CardManager.Cards.Where(x => x.Collectable);
-        }
-		else
-        {
-            CardsToShow = Common.Instance.CardManager.Cards;
-        }
+        CollectionFilter.FilterChanged -= CollectionFilter_FilterChanged;
+    }
+
+    private void CollectionFilter_FilterChanged(Func<CardDefinition, bool> filter)
+    {
+        ResetCardsToShow();
+        CardsToShow = CardsToShow.Where(filter);
         SetToPage(CurrentPage);
     }
 
-    public void SetToPage(int page)
+    private void Start()
+	{
+		ResetCardsToShow();
+		SetToPage(CurrentPage);
+	}
+
+	private void ResetCardsToShow()
+	{
+		if (HideUncollectable)
+		{
+			CardsToShow = Common.Instance.CardManager.Cards.Where(x => x.Collectable);
+		}
+		else
+		{
+			CardsToShow = Common.Instance.CardManager.Cards;
+		}
+	}
+
+	public void SetToPage(int page)
     {
         // Clamp page number
         int maxPage = Mathf.Max(0, (CardsToShow.Count() - 1) / ItemsPerPage);
