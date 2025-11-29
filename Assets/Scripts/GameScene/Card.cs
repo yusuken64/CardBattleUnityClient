@@ -160,7 +160,14 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
 	internal void RefreshData()
     {
         Cost = this.Data.ManaCost;
-        CanPlay = this.Data.Owner.Mana >= Cost;
+        if (Data.Owner == null)
+        {
+            CanPlay = false;
+        }
+        else
+        {
+            CanPlay = this.Data.Owner.Mana >= Cost;
+        }
 
         if (this.Data is MinionCard minionCard)
         {

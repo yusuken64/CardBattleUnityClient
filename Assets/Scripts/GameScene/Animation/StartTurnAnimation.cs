@@ -14,7 +14,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		var opponent = GameManager.GetPlayerFor(State.OpponentOf(Context.SourcePlayer));
 
-		if (Context.SourcePlayer == player.Data)
+		if (Context.SourcePlayer == GameManager.Player.Data)
 		{
 			var turnStartObject = Object.FindFirstObjectByType<UI>().TurnStartObject;
 			turnStartObject.gameObject.SetActive(true);
