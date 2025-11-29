@@ -19,12 +19,14 @@ public class UI : MonoBehaviour
     public GameObject TriggeredEffectParticlePrefab;
 
     public GameResultScreen GameResultScreen;
+    public GameSettings GameSettingsScreen;
 
 	private void Start()
 	{
         Message.gameObject.SetActive(false);
         GameResultScreen.gameObject.SetActive(false);
-	}
+        GameSettingsScreen.gameObject.SetActive(false);
+    }
 
 	public void ShowMessage(string message)
     {
@@ -115,5 +117,11 @@ public class UI : MonoBehaviour
 	internal void PreviewEnd()
     {
         CardPreview.gameObject.SetActive(false);
+    }
+
+    public void OpenSettings_Clicked()
+	{
+        GameSettingsScreen.gameObject.SetActive(true);
+        GameSettingsScreen.Open();
     }
 }
