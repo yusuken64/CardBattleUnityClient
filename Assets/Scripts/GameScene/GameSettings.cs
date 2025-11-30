@@ -10,9 +10,9 @@ public class GameSettings : MonoBehaviour
 		CloseSettingsScreen();
 	}
 
-	public void Settings_Clicked()
+	public void GlobalSettings_Clicked()
 	{
-
+		Common.Instance.GlobalSettings.gameObject.SetActive(true);
 	}
 
 	public void Forfeit_Clicked()
