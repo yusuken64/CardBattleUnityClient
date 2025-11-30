@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 9024296609589710750}
   - component: {fileID: 5362441950451327704}
   - component: {fileID: 8720710610265417497}
+  - component: {fileID: 2204800826143668260}
   m_Layer: 5
   m_Name: FilterCostButton
   m_TagString: Untagged
@@ -286,6 +287,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2204800826143668260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4998202137798280456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: 1eac3a6f32155401a8dc8503f3c46345, type: 3}
+  UnclickableSound: {fileID: 8300000, guid: 252d2e30e835441d6beb7eabe34dcd9c, type: 3}
 --- !u!1 &5238932527631495164
 GameObject:
   m_ObjectHideFlags: 0

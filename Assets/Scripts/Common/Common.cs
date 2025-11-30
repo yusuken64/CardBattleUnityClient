@@ -11,6 +11,7 @@ public class Common : MonoBehaviour
 
 	public CardManager CardManager;
 	public SaveManager SaveManager;
+	public AudioManager AudioManager;
 
 	public DeckDefinition StartingDeck;
 	public int CurrentDeckIndex { get; internal set; } = -1;
@@ -49,17 +50,6 @@ public class Common : MonoBehaviour
 		SaveManager.Save(GameSaveData);
 	}
 
-	//public GameSaveData GameSaveData;
-
-	//public AudioManager AudioManager;
-	//public ItemManager ItemManager;
-	//public SkillManager SkillManager;
-	public GameObject SceneTransferObjects;
-
-
-	//public ScreenTransition ScreenTransition;
-	//public MessageDialog MessageDialog;
-
 	//public GlobalSettings GlobalSettings;
 
 	//	protected override void Initialize()
@@ -69,11 +59,6 @@ public class Common : MonoBehaviour
 	//		SceneManager.LoadScene(1);
 	//#endif
 	//	}
-
-	private void LoadData()
-	{
-		//GameSaveData = SaveSystem.LoadData();
-	}
 }
 
 public class LoadingSceneIntegration
@@ -85,9 +70,10 @@ public class LoadingSceneIntegration
 	static void InitLoadingScene()
 	{
 		int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+		Debug.Log($"original sceneIndex, {sceneIndex}");
 		if (sceneIndex == 0)
 		{
-			otherScene = 1;
+			sceneIndex = 1;
 		};
 
 		otherScene = sceneIndex;
@@ -98,6 +84,7 @@ public class LoadingSceneIntegration
 
 	private static void AsyncOperation_completed(AsyncOperation obj)
 	{
+		Debug.Log($"post load sceneIndex, {otherScene}");
 		SceneManager.LoadScene(otherScene);
 	}
 #endif

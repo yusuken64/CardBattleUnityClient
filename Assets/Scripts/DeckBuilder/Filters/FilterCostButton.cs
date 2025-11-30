@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
 
-public class FilterCostButton : MonoBehaviour, IFilterRule
+public class FilterCostButton : MonoBehaviour, IFilterRule, IButtonSoundState
 {
     public GameObject ActiveIndicator;
 	public bool FilterActive { get; internal set; }
 	public Action FilterChangedCallBack { get; set; }
+
+	public bool IsActive => FilterActive;
 
 	public string Filter;
 

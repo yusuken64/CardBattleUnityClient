@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5842989980387145638}
   - component: {fileID: 5005807210442070638}
   - component: {fileID: 7194127126175451437}
+  - component: {fileID: 6598983543823840049}
   m_Layer: 5
   m_Name: CollectionItem
   m_TagString: Untagged
@@ -124,6 +125,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HoldClickableButton
   _holdDuration: 0.32
+--- !u!114 &6598983543823840049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3130662784365045429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: a5aa2954411de4ec3b92cdd8697646b2, type: 3}
+  UnclickableSound: {fileID: 0}
 --- !u!1 &6614669864427076208
 GameObject:
   m_ObjectHideFlags: 0

@@ -5168,6 +5168,7 @@ GameObject:
   - component: {fileID: 715767481}
   - component: {fileID: 715767480}
   - component: {fileID: 715767479}
+  - component: {fileID: 715767482}
   m_Layer: 5
   m_Name: Close
   m_TagString: Untagged
@@ -5289,6 +5290,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715767477}
   m_CullTransparentMesh: 1
+--- !u!114 &715767482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715767477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: 822494287729540b5926767fc491d09e, type: 3}
+  UnclickableSound: {fileID: 0}
 --- !u!1 &721361740
 GameObject:
   m_ObjectHideFlags: 0
@@ -6247,6 +6263,7 @@ GameObject:
   - component: {fileID: 1459162845}
   - component: {fileID: 1459162844}
   - component: {fileID: 1459162843}
+  - component: {fileID: 1459162846}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -6369,6 +6386,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459162841}
   m_CullTransparentMesh: 1
+--- !u!114 &1459162846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459162841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: 822494287729540b5926767fc491d09e, type: 3}
+  UnclickableSound: {fileID: 0}
 --- !u!1 &1477646460
 GameObject:
   m_ObjectHideFlags: 0
@@ -6381,6 +6413,7 @@ GameObject:
   - component: {fileID: 1477646464}
   - component: {fileID: 1477646463}
   - component: {fileID: 1477646462}
+  - component: {fileID: 1477646465}
   m_Layer: 5
   m_Name: Deck
   m_TagString: Untagged
@@ -6503,6 +6536,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1477646460}
   m_CullTransparentMesh: 1
+--- !u!114 &1477646465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477646460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: 822494287729540b5926767fc491d09e, type: 3}
+  UnclickableSound: {fileID: 0}
 --- !u!1 &1538671061
 GameObject:
   m_ObjectHideFlags: 0

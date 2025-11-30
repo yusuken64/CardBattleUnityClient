@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 2092495090074708821}
   - component: {fileID: 2336565789387853585}
   - component: {fileID: 4984847376032644184}
+  - component: {fileID: 2163904339097548392}
   m_Layer: 5
   m_Name: DeckCard
   m_TagString: Untagged
@@ -304,6 +305,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
   m_ShowMaskGraphic: 1
+--- !u!114 &2163904339097548392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886784726462714553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: 05be2d892afa4437fbb0e15f19c733ad, type: 3}
+  UnclickableSound: {fileID: 0}
 --- !u!1 &3908792838292209940
 GameObject:
   m_ObjectHideFlags: 0
