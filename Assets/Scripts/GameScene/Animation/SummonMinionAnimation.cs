@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 {
-	public SummonMinionAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
+	public AudioClip SummonMinionClip;
 	public override IEnumerator Play()
 	{
+		Common.Instance.AudioManager.PlayClip(SummonMinionClip);
+
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		CardBattleEngine.Minion minionData = Context.SummonedMinion;
 

@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
 	public AudioSource MusicAudioSource;
 	public List<AudioSource> Sounds;
 	public List<AudioSource> UISounds;
+	public ScheduledLoopController ScheduledLoopController;
 	private int _index;
 
 	private void Awake()

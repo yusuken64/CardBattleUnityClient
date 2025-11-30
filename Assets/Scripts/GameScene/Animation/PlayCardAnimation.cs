@@ -6,12 +6,11 @@ using UnityEngine;
 
 public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 {
-	public PlayCardAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
+	public AudioClip PlayCardClip;
 	public override IEnumerator Play()
 	{
+		Common.Instance.AudioManager.PlayClip(PlayCardClip);
+
 		var playCardAction = Action;
 		var player = this.GameManager.GetPlayerFor(playCardAction.Card.Owner);
 

@@ -1,12 +1,9 @@
 ﻿using CardBattleEngine;
 using System.Collections;
 using UnityEngine;
+
 public class EndGameActionAnimation : GameActionAnimation<EndGameAction>
 {
-	public EndGameActionAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
 	public override IEnumerator Play()
 	{
 		var ui = Object.FindFirstObjectByType<UI>();

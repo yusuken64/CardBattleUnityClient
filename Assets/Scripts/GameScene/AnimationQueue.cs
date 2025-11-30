@@ -1,12 +1,38 @@
 using CardBattleEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationQueue : MonoBehaviour
 {
+    public List<GameActionAnimationBase> GameActionAnimations;
+
+    private Dictionary<Type, GameActionAnimationBase> animationMap;
     private Queue<IAnimation> queue = new();
     private bool isPlaying = false;
+
+    private void Awake()
+    {
+        animationMap = new Dictionary<Type, GameActionAnimationBase>();
+
+        foreach (var anim in GameActionAnimations)
+        {
+            if (anim == null)
+                continue;
+
+            var actionType = anim.ActionType;
+
+            if (!animationMap.ContainsKey(actionType))
+            {
+                animationMap.Add(actionType, anim);
+            }
+            else
+            {
+                Debug.LogWarning($"Duplicate animation for {actionType.Name}. Keeping first one.");
+            }
+        }
+    }
 
     public void EnqueueAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
     {
@@ -18,31 +44,19 @@ public class AnimationQueue : MonoBehaviour
             StartCoroutine(ProcessQueue());
     }
 
-    private IAnimation CreateAnimationForAction(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
+    private IAnimation CreateAnimationForAction(
+        GameManager gm,
+        GameState state,
+        (IGameAction action, ActionContext context) current)
     {
-        return current.action switch
-        {
-            StartTurnAction => new StartTurnAnimation(gameManager, state, current),
-            GainCardAction => new GainCardAnimation(gameManager, state, current),
-            RefillManaAction => new RefillManaAnimation(gameManager, state, current),
-            IncreaseMaxManaAction => new IncreaseMaxManaAnimation(gameManager, state, current),
-            PlayCardAction => new PlayCardAnimation(gameManager, state, current),
-            SpendManaAction => new SpendManaAnimation(gameManager, state, current),
-            SummonMinionAction => new SummonMinionAnimation(gameManager, state, current),
-            AttackAction => new AttackAnimation(gameManager, state, current),
-            DamageAction => new TakeDamageAnimation(gameManager, state, current),
-            HealAction => new TakeHealAnimation(gameManager, state, current),
-            DeathAction => new DeathAnimation(gameManager, state, current),
-            EquipWeaponAction => new EquipWeaponAnimation(gameManager, state, current),
-            DestroyWeaponAction => new DestoryWeaponAnimation(gameManager, state, current),
-            EndGameAction => new EndGameActionAnimation(gameManager, state, current),
-            AddStatModifierAction => new UpdateStatsActionAnimation(gameManager, state, current),
-            RemoveModifierAction => new UpdateStatsActionAnimation(gameManager, state, current),
-            TriggerEffectAction => new TriggerEffectActionAnimation(gameManager, state, current),
-            HeroPowerAction => new HeroPowerActionAnimation(gameManager, state, current),
-            GainArmorAction => new GainArmorActionAnimation(gameManager, state, current),
-            _ => null
-        };
+        var actionType = current.action.GetType();
+
+        if (!animationMap.TryGetValue(actionType, out var prefab))
+            return null;
+
+        var instance = Instantiate(prefab, transform);
+        instance.Init(gm, state, current);
+        return instance;
     }
 
     private IEnumerator ProcessQueue()
@@ -50,34 +64,52 @@ public class AnimationQueue : MonoBehaviour
         isPlaying = true;
 
         while (queue.Count > 0)
-            yield return StartCoroutine(queue.Dequeue().Play());
+        {
+
+			IAnimation anim = queue.Dequeue();
+			yield return StartCoroutine(anim.Play());
+            if (anim != null) Destroy(anim.GameObject);
+        }
 
         isPlaying = false;
     }
 }
 
-public abstract class GameActionAnimation<T> : IAnimation where T : IGameAction
+public abstract class GameActionAnimationBase : MonoBehaviour, IAnimation
 {
     protected GameManager GameManager { get; private set; }
     protected GameState State { get; private set; }
-    protected T Action { get; private set; }
+    protected IGameAction Action { get; set; }
     protected ActionContext Context { get; private set; }
+    public abstract Type ActionType { get; }
 
-    protected GameActionAnimation(
-    GameManager gameManager,
-    GameState state,
-    (IGameAction action, ActionContext context) current)
+    public GameObject GameObject => this.gameObject;
+
+	public abstract IEnumerator Play();
+
+    public virtual void Init(GameManager gm, GameState state, (IGameAction action, ActionContext context) current)
     {
-        GameManager = gameManager;
+        GameManager = gm;
         State = state;
-        Action = (T)current.action;
+        Action = current.action;
         Context = current.context;
     }
+}
 
-    public abstract IEnumerator Play();
+public abstract class GameActionAnimation<T> : GameActionAnimationBase where T : IGameAction
+{
+    public override Type ActionType => typeof(T);
+	protected new T Action { get; private set; }
+
+    public override void Init(GameManager gm, GameState state, (IGameAction action, ActionContext context) current)
+    {
+        base.Init(gm, state, current);
+        Action = (T)current.action;
+    }
 }
 
 public interface IAnimation
 {
 	IEnumerator Play();
+    GameObject GameObject { get; }
 }

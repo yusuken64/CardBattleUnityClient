@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class AttackAnimation : GameActionAnimation<AttackAction>
 {
-	public AttackAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
 	public override IEnumerator Play()
 	{
 		Transform attacker = GameManager.GetObjectFor(Context.Source).transform;

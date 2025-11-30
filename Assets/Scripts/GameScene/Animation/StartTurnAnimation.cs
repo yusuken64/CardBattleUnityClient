@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 {
-	public StartTurnAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
+	public AudioClip StartTurnSound;
 	public override IEnumerator Play()
 	{
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
@@ -16,6 +13,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 
 		if (Context.SourcePlayer == GameManager.Player.Data)
 		{
+			Common.Instance.AudioManager.PlaySound(StartTurnSound);
 			var turnStartObject = Object.FindFirstObjectByType<UI>().TurnStartObject;
 			turnStartObject.gameObject.SetActive(true);
 

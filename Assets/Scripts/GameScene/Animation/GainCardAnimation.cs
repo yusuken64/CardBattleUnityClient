@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GainCardAnimation : GameActionAnimation<GainCardAction>
 {
-	public GainCardAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
 	public override IEnumerator Play()
 	{
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);

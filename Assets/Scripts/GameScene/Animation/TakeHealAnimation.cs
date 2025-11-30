@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class TakeHealAnimation : GameActionAnimation<HealAction>
 {
-	public TakeHealAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
 	public override IEnumerator Play()
 	{
 		GameObject gameObject = GameManager.GetObjectFor(Context.Target);

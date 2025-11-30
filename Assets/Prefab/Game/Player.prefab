@@ -133,7 +133,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000002861023}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -36, y: -35.999985}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3670013635039257435
@@ -1208,6 +1208,8 @@ MonoBehaviour:
   Mana: 0
   MaxMana: 0
   ManaText: {fileID: 2451786664727957969}
+  HeroDieStart: {fileID: 8300000, guid: 84e25194d1b544d2d81560da6c2bc904, type: 3}
+  HeroDieExplode: {fileID: 8300000, guid: 821ece3b67b3943e6b0873eeeee164a0, type: 3}
 --- !u!1 &3089692224508902908
 GameObject:
   m_ObjectHideFlags: 0

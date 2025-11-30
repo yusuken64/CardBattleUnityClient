@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 {
-	public TakeDamageAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
+	public AudioClip DamageSound;
 	public override IEnumerator Play()
 	{
+		Common.Instance.AudioManager.PlaySound(DamageSound);
 		GameObject gameObject = GameManager.GetObjectFor(Context.Target);
 		Transform target = gameObject.transform;
 

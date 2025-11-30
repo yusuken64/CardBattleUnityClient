@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class TriggerEffectActionAnimation : GameActionAnimation<TriggerEffectAction>
 {
-	public TriggerEffectActionAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
 	public override IEnumerator Play()
 	{
 		var ui = Object.FindFirstObjectByType<UI>();

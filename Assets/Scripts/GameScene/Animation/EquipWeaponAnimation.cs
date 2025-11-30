@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class EquipWeaponAnimation : GameActionAnimation<EquipWeaponAction>
 {
-	public EquipWeaponAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
+	public AudioClip EquipWeaponClip;
 	public override IEnumerator Play()
 	{
+		Common.Instance.AudioManager.PlayClip(EquipWeaponClip);
+
 		var equipWeaponAction = Action;
 		var player = GameManager.GetPlayerFor(Context.Target as CardBattleEngine.Player);
 		player.Weapon.gameObject.SetActive(true);

@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class DeathAnimation : GameActionAnimation<DeathAction>
 {
-	public DeathAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
+	public AudioClip MinionDie;
 	public override IEnumerator Play()
 	{
 		var owner = GameManager.GetPlayerFor(Context.Target.Owner);

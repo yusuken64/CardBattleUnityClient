@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class DestoryWeaponAnimation : GameActionAnimation<DestroyWeaponAction>
 {
-	public DestoryWeaponAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current) : base(gameManager, state, current)
-	{
-	}
-
 	public override IEnumerator Play()
 	{
 		var destroyWeaponAction = Action as DestroyWeaponAction;

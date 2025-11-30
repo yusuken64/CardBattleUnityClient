@@ -21,6 +21,8 @@ public class GameInteractionHandler : MonoBehaviour
 	private Vector3 _aimStartPosition;
 	private IDraggable pendingDraggable;
 
+	public AudioClip DragStartClip, DraggingClip;
+
 	private void OnEnable()
 	{
 		PointerInput.OnClick += PointerInput_OnClick;
@@ -54,6 +56,7 @@ public class GameInteractionHandler : MonoBehaviour
 			{
 				draggable.Dragging = true;
 				currentDraggable = draggable;
+				Common.Instance.AudioManager.ScheduledLoopController.Play(DragStartClip, DraggingClip);
 			}
 
 			var targetOrigin = hit.collider.GetComponent<ITargetOrigin>();
@@ -98,6 +101,7 @@ public class GameInteractionHandler : MonoBehaviour
 
 	private void PointerInput_OnDragEnd(Vector2 obj)
 	{
+		Common.Instance.AudioManager.ScheduledLoopController.StopLoop();
 		var mousePos = GetMouseWorldPosition2D(obj);
 		if (currentDraggable != null)
 		{

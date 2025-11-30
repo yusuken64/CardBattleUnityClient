@@ -30,6 +30,9 @@ public class Player : MonoBehaviour, ITargetable
 
 	public TextMeshProUGUI ManaText;
 
+	public AudioClip HeroDieStart;
+	public AudioClip HeroDieExplode;
+
 	internal void Clear()
 	{
 		foreach (var card in Hand.Cards)
@@ -100,6 +103,7 @@ public class Player : MonoBehaviour, ITargetable
 
 	internal IEnumerator DoDeathRoutine()
 	{
+		Common.Instance.AudioManager.PlayClip(HeroDieStart);
 		var shake = HeroPortrait.transform.DOShakePosition(1.7f, 1f, 30);
 
 		var sequence = DOTween.Sequence();
@@ -111,6 +115,7 @@ public class Player : MonoBehaviour, ITargetable
 		yield return shake.WaitForCompletion();
 		HeroPortrait.gameObject.SetActive(false);
 
+		Common.Instance.AudioManager.PlayClip(HeroDieExplode);
 		var explode = Instantiate(ExplodeParticlePrefab, this.transform);
 		explode.transform.position = HeroPortrait.transform.position;
 		//Common.Instance.AudioManager.PlayClip(Common.Instance.AudioManager.Explosion);
