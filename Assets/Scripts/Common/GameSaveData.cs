@@ -4,6 +4,23 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
+public class SaveData
+{
+	[SerializeReference]
+	public AppSaveData AppSaveData = new();
+	[SerializeReference]
+	public GameSaveData GameSaveData = new();
+}
+
+[Serializable]
+public class AppSaveData
+{
+	public float MASTERVolume = 1f;
+	public float MUSICVolume = 1f;
+	public float GAMEVolume = 1f;
+}
+
+[Serializable]
 public class GameSaveData
 {
 	[SerializeReference]

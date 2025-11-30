@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 		Deck deck;
 		if (Common.Instance.CurrentDeckIndex != -1)
 		{
-			deck = Common.Instance.GameSaveData.DeckSaveDatas[Common.Instance.CurrentDeckIndex].ToDeck();
+			deck = Common.Instance.SaveData.GameSaveData.DeckSaveDatas[Common.Instance.CurrentDeckIndex].ToDeck();
 		}
 		else
 		{

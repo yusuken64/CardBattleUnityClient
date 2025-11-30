@@ -6,12 +6,12 @@ public class Common : MonoBehaviour
 {
 	public static Common Instance;
 
-	[SerializeReference]
-	public GameSaveData GameSaveData;
+	public SaveData SaveData;
 
 	public CardManager CardManager;
 	public SaveManager SaveManager;
 	public AudioManager AudioManager;
+	public GlobalSettings GlobalSettings;
 
 	public DeckDefinition StartingDeck;
 	public int CurrentDeckIndex { get; internal set; } = -1;
@@ -33,32 +33,17 @@ public class Common : MonoBehaviour
 	private void Start()
 	{
 		SaveManager.Initialize();
-		if (SaveManager.LoadDataAtStart)
+		SaveData = SaveManager.Load();
+
+		if (SaveData.GameSaveData.DeckSaveDatas.Count() == 0)
 		{
-			GameSaveData = SaveManager.Load();
-		}
-		else
-		{
-			GameSaveData = new();
+			CurrentDeckIndex = 0;
+			SaveManager.Save(SaveData);
+			SaveData.GameSaveData.DeckSaveDatas.Add(StartingDeck.ToDeckData());
 		}
 
-		if (GameSaveData.DeckSaveDatas.Count() == 0)
-		{
-			GameSaveData.DeckSaveDatas.Add(StartingDeck.ToDeckData());
-		}
-		CurrentDeckIndex = 0;
-		SaveManager.Save(GameSaveData);
+		AudioManager.ApplicationInitialized(SaveData);
 	}
-
-	//public GlobalSettings GlobalSettings;
-
-	//	protected override void Initialize()
-	//	{
-	//		LoadData();
-	//#if !UNITY_EDITOR
-	//		SceneManager.LoadScene(1);
-	//#endif
-	//	}
 }
 
 public class LoadingSceneIntegration

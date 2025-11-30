@@ -102,27 +102,24 @@ public class AudioManager : MonoBehaviour
 
 		switch (volumeParameter)
 		{
-			case "MIXVol":
-				//SingletonSaveData.Instance.SaveData.ApplicationData.MIXVolume = sliderValue;
+			case "MASTER":
+				Common.Instance.SaveManager.SaveData.AppSaveData.MASTERVolume = sliderValue;
 				break;
-			case "BGMVol":
-				//SingletonSaveData.Instance.SaveData.ApplicationData.BGMVolume = sliderValue;
+			case "MUSIC":
+				Common.Instance.SaveManager.SaveData.AppSaveData.MUSICVolume = sliderValue;
 				break;
-			case "VOCVol":
-				//SingletonSaveData.Instance.SaveData.ApplicationData.VOCVolume = sliderValue;
-				break;
-			case "SFXVol":
-				//SingletonSaveData.Instance.SaveData.ApplicationData.SFXVolume = sliderValue;
+			case "GAME":
+				Common.Instance.SaveManager.SaveData.AppSaveData.GAMEVolume = sliderValue;
 				break;
 			default:
 				break;
 		}
 	}
-	//public void ApplicationInitialized(SaveData saveData)
-	//{
-	//	OnVolumeSliderChanged("MIXVol", saveData.ApplicationData.MIXVolume);
-	//	OnVolumeSliderChanged("BGMVol", saveData.ApplicationData.BGMVolume);
-	//	OnVolumeSliderChanged("VOCVol", saveData.ApplicationData.VOCVolume);
-	//	OnVolumeSliderChanged("SFXVol", saveData.ApplicationData.SFXVolume);
-	//}
+
+	public void ApplicationInitialized(SaveData saveData)
+	{
+		OnVolumeSliderChanged("MASTER", saveData.AppSaveData.MASTERVolume);
+		OnVolumeSliderChanged("MUSIC", saveData.AppSaveData.MUSICVolume);
+		OnVolumeSliderChanged("GAME", saveData.AppSaveData.GAMEVolume);
+	}
 }

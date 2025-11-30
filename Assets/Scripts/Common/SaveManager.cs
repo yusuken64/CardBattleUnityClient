@@ -6,17 +6,19 @@ public class SaveManager : MonoBehaviour
 	public bool LoadDataAtStart;
 	public string _savePath;
 
+	public SaveData SaveData;
+
 	public void Initialize()
 	{
 		_savePath = Path.Combine(Application.persistentDataPath, "save.json");
 	}
 
-	public void Save(GameSaveData gameSaveData)
+	public void Save(SaveData saveData)
 	{
 		try
 		{
 			Debug.Log($"Saving to {_savePath}");
-			string json = JsonUtility.ToJson(gameSaveData, prettyPrint: true);
+			string json = JsonUtility.ToJson(saveData, prettyPrint: true);
 			File.WriteAllText(_savePath, json);
 		}
 		catch (System.Exception ex)
@@ -25,23 +27,28 @@ public class SaveManager : MonoBehaviour
 		}
 	}
 
-	public GameSaveData Load()
+	public SaveData Load()
 	{
 		try
 		{
-			if (!File.Exists(_savePath))
+			if (!LoadDataAtStart ||
+				!File.Exists(_savePath))
 			{
 				Debug.Log($"Save file not found. Creating new save. {_savePath}");
-				return new GameSaveData();
+				SaveData = new SaveData();
 			}
-
-			string json = File.ReadAllText(_savePath);
-			return JsonUtility.FromJson<GameSaveData>(json);
+			else
+			{
+				string json = File.ReadAllText(_savePath);
+				SaveData = JsonUtility.FromJson<SaveData>(json);
+			}
 		}
 		catch (System.Exception ex)
 		{
 			Debug.LogError($"Load failed: {ex}");
-			return new GameSaveData();
+			SaveData = new SaveData();
 		}
+
+		return SaveData;
 	}
 }
