@@ -16,10 +16,11 @@ MonoBehaviour:
   CardName: Big monkey 2
   ID: big_monkey_2
   Sprite: {fileID: 21300000, guid: 5177b097f88f8fe4bab2d673a5b4a366, type: 3}
-  Cost: 1
-  TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Cost: 20
+  TriggeredEffects:
+  - rid: 867525694638784703
+  Attack: 8
+  Health: 8
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -32,4 +33,55 @@ MonoBehaviour:
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 867525694638784703
+      type: {class: TriggeredEffectWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Cost 1 less for each missing health
+        EffectTrigger: 7
+        EffectTiming: 2
+        TargetType: 7
+        GameActions:
+        - rid: 867525694638784704
+        Condition:
+          rid: -2
+        AffectedEntitySelectorWrapper:
+          rid: 867525694638784705
+    - rid: 867525694638784704
+      type: {class: AddStatModifierValueActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: 867525694638784706
+        ExpirationTrigger:
+          Description: 
+          EffectTrigger: 0
+          EffectTiming: 0
+          TargetType: 0
+          GameActions: []
+          Condition:
+            rid: -2
+          AffectedEntitySelectorWrapper:
+            rid: -2
+        Canceled: 0
+    - rid: 867525694638784705
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 1
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+    - rid: 867525694638784706
+      type: {class: NegativeValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        OriginalValue:
+          rid: 867525694638784708
+    - rid: 867525694638784708
+      type: {class: MissingHealthWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0

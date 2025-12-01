@@ -1,0 +1,20 @@
+using System;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using CardBattleEngine;
+
+[Serializable]
+public class AddCardToDeckActionWrapper : IGameActionWrapperBase
+{
+    public CardBattleEngine.Card Card;
+    public System.Boolean Canceled;
+
+    public override CardBattleEngine.IGameAction Create()
+    {
+        var instance = new CardBattleEngine.AddCardToDeckAction();
+        instance.Card = this.Card;
+        instance.Canceled = this.Canceled;
+        return instance;
+    }
+}

@@ -52,11 +52,11 @@ public class Collection : MonoBehaviour
 	{
 		if (HideUncollectable)
 		{
-			CardsToShow = Common.Instance.CardManager.Cards.Where(x => x.Collectable);
+			CardsToShow = Common.Instance.CardManager.AllCards().Where(x => x.Collectable);
 		}
 		else
 		{
-			CardsToShow = Common.Instance.CardManager.Cards;
+			CardsToShow = Common.Instance.CardManager.AllCards();
 		}
 	}
 

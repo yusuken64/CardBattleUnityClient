@@ -8,36 +8,53 @@ public class CardManager : MonoBehaviour
     [Header("Card Data")]
     public List<CardDefinition> Cards;
 
+    public bool AddDebugCards;
+    [Header("Debug Cards")]
+    public List<CardDefinition> DebugCards;
+
+
     [Header("Fallbacks")]
     public Sprite DefaultMissingSprite;
 
     private Dictionary<string, CardDefinition> _cardLookup;
 
     private void Awake()
-    {
-        _cardLookup = new Dictionary<string, CardDefinition>();
+	{
+		_cardLookup = new Dictionary<string, CardDefinition>();
 
-        foreach (var card in Cards)
-        {
-            if (card == null || string.IsNullOrEmpty(card.CardName))
-            {
-                Debug.LogWarning("CardManager: A card entry is null or missing a name.");
-                continue;
-            }
+		foreach (var card in AllCards())
+		{
+			if (card == null || string.IsNullOrEmpty(card.CardName))
+			{
+				Debug.LogWarning("CardManager: A card entry is null or missing a name.");
+				continue;
+			}
 
-            if (_cardLookup.ContainsKey(card.CardName))
-            {
-                Debug.LogWarning(
-                    $"CardManager: Duplicate card name '{card.CardName}' found. " +
-                    $"Keeping the first one and ignoring the duplicate.");
-                continue;
-            }
+			if (_cardLookup.ContainsKey(card.CardName))
+			{
+				Debug.LogWarning(
+					$"CardManager: Duplicate card name '{card.CardName}' found. " +
+					$"Keeping the first one and ignoring the duplicate.");
+				continue;
+			}
 
-            _cardLookup.Add(card.CardName, card);
-        }
-    }
+			_cardLookup.Add(card.CardName, card);
+		}
+	}
 
-    public CardDefinition GetCardByName(string name)
+	public List<CardDefinition> AllCards()
+	{
+		var cardsToAdd = new List<CardDefinition>();
+		cardsToAdd.AddRange(Cards);
+		if (AddDebugCards)
+		{
+			cardsToAdd.AddRange(DebugCards);
+		}
+
+		return cardsToAdd;
+	}
+
+	public CardDefinition GetCardByName(string name)
     {
         return _cardLookup.TryGetValue(name, out var card) ? card : null;
     }
