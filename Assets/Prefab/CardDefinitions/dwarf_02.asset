@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: dwarf_02
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Dwarf 02
   ID: dwarf_02
   Sprite: {fileID: 21300000, guid: 4208c08e92dc45b45818eecb60873ee1, type: 3}

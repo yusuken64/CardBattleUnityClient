@@ -25,7 +25,7 @@ public class MinionCardDefinition : CardDefinition
     public List<TriggeredEffectWrapper> MinionTriggeredEffects = new List<TriggeredEffectWrapper>();
 
     // Creates a runtime MinionCard from this definition
-    internal override CardBattleEngine.Card CreateCard()
+    public override CardBattleEngine.Card CreateCard()
     {
         MinionCard card = new MinionCard(CardName, Cost, Attack, Health)
         {
@@ -82,5 +82,28 @@ public class TriggeredEffectWrapper
         };
 
         return effect;
+    }
+}
+
+[Serializable]
+public class ExpirationTriggerWrapper
+{
+    public EffectTrigger EffectTrigger;
+    public EffectTiming EffectTiming;
+    public TargetingType TargetType;
+
+    [SerializeReference]
+    public ITriggerConditionWrapperBase Condition;
+
+    public ExpirationTrigger CreateEffect()
+    {
+        ExpirationTrigger expirationTrigger = new ExpirationTrigger()
+        {
+            EffectTrigger = this.EffectTrigger,
+            EffectTiming = this.EffectTiming,
+            Condition = Condition?.Create(),
+        };
+
+        return expirationTrigger;
     }
 }

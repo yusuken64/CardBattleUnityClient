@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: big_monkey_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Big monkey 2
   ID: big_monkey_2
   Sprite: {fileID: 21300000, guid: 5177b097f88f8fe4bab2d673a5b4a366, type: 3}

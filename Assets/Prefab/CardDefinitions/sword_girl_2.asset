@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: sword_girl_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: sword girl 2
   ID: sword_girl_2
   Sprite: {fileID: 21300000, guid: 58840ee6f4b6d804296314ae72a25d56, type: 3}
-  Cost: 1
+  Cost: 3
   TriggeredEffects: []
   Attack: 1
-  Health: 1
+  Health: 4
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -29,7 +29,31 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 6
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 867525712731439199
+    Condition:
+      rid: 867525712731439220
+    AffectedEntitySelectorWrapper:
+      rid: 867525712731439200
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 867525712731439199
+      type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+    - rid: 867525712731439200
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+    - rid: 867525712731439220
+      type: {class: SourceIsTargetConditionWrapper, ns: , asm: Assembly-CSharp}
+      data: 

@@ -15,7 +15,7 @@ public abstract class CardDefinition : ScriptableObject
 	[SerializeReference]
 	public List<TriggeredEffectWrapper> TriggeredEffects = new List<TriggeredEffectWrapper>();
 
-	internal abstract CardBattleEngine.Card CreateCard();
+	public abstract CardBattleEngine.Card CreateCard();
 
 	public string ActionToDescription(IGameActionWrapperBase action, int arg2)
 	{

@@ -1469,7 +1469,7 @@ MonoBehaviour:
   NextButton: {fileID: 1406228967}
   PrevButton: {fileID: 1941956233}
   CollectionFilter: {fileID: 175684913}
-  HideUncollectable: 0
+  HideUncollectable: 1
 --- !u!114 &175684913
 MonoBehaviour:
   m_ObjectHideFlags: 0

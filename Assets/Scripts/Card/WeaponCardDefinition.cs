@@ -15,7 +15,7 @@ public class WeaponCardDefinition : CardDefinition
 
 	public List<TriggeredEffectWrapper> WeaponTriggeredEffects;
 
-	internal override CardBattleEngine.Card CreateCard()
+	public override CardBattleEngine.Card CreateCard()
 	{
 		var weapon = new WeaponCard(WeaponName, Cost, Attack, Durability);
 		weapon.TriggeredEffects.AddRange(WeaponTriggeredEffects.Select(x => x.CreateEffect()));

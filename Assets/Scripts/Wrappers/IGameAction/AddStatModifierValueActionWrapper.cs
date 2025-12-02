@@ -10,7 +10,7 @@ public class AddStatModifierValueActionWrapper : IGameActionWrapperBase
     [SerializeReference] public IValueProviderWrapperBase AttackChange;
     [SerializeReference] public IValueProviderWrapperBase HealthChange;
     [SerializeReference] public IValueProviderWrapperBase CostChange;
-    public TriggeredEffectWrapper ExpirationTrigger;
+    [SerializeReference] public ExpirationTriggerWrapper? ExpirationTrigger;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()

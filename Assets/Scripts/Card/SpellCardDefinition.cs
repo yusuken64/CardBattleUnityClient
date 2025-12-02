@@ -15,7 +15,7 @@ public class SpellCardDefinition : CardDefinition
     [Header("SpellCast Effects")]
     public List<SpellCastEffectWrapper> SpellCastEffects = new();
 
-	internal override CardBattleEngine.Card CreateCard()
+    public override CardBattleEngine.Card CreateCard()
 	{
         var spellCard = new SpellCard(CardName, Cost);
         spellCard.TargetingType = TargetingType;

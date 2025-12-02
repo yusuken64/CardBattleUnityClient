@@ -20,7 +20,7 @@ public class HeroPowerDefinition : CardDefinition
 	[SerializeReference]
 	public IAffectedEntitySelectorWrapperBase AffectedEntitySelectorWrapper;
 
-	internal override CardBattleEngine.Card CreateCard()
+	public override CardBattleEngine.Card CreateCard()
 	{
 		return null;
 	}
