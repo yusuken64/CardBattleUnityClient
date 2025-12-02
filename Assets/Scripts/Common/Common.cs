@@ -18,6 +18,7 @@ public class Common : MonoBehaviour
 
 	private void Awake()
 	{
+		Debug.Log("BOOT: Awake");
 		if (Instance == null)
 		{
 			Instance = this;
@@ -32,6 +33,7 @@ public class Common : MonoBehaviour
 
 	private void Start()
 	{
+		Debug.Log("BOOT: Start");
 		SaveManager.Initialize();
 		SaveData = SaveManager.Load();
 
@@ -42,13 +44,14 @@ public class Common : MonoBehaviour
 			SaveData.GameSaveData.DeckSaveDatas.Add(StartingDeck.ToDeckData());
 		}
 
+		Debug.Log("AudioManager Initializing");
 		AudioManager.ApplicationInitialized(SaveData);
+		Debug.Log("AudioManager Initialized");
 	}
 }
 
 public class LoadingSceneIntegration
 {
-#if UNITY_EDITOR
 	public static int otherScene = -2;
 
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -72,5 +75,4 @@ public class LoadingSceneIntegration
 		Debug.Log($"post load sceneIndex, {otherScene}");
 		SceneManager.LoadScene(otherScene);
 	}
-#endif
 }

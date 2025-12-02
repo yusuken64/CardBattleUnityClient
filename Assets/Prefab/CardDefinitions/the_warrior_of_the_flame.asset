@@ -52,15 +52,7 @@ MonoBehaviour:
         HealthChange: 0
         CostChange: 0
         ExpirationTrigger:
-          Description: 
-          EffectTrigger: 0
-          EffectTiming: 0
-          TargetType: 0
-          GameActions: []
-          Condition:
-            rid: -2
-          AffectedEntitySelectorWrapper:
-            rid: -2
+          rid: -2
         Canceled: 0
     - rid: 867525712731439189
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}

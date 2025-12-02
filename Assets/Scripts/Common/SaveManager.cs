@@ -11,6 +11,7 @@ public class SaveManager : MonoBehaviour
 	public void Initialize()
 	{
 		_savePath = Path.Combine(Application.persistentDataPath, "save.json");
+		Debug.Log($"SaveManager path: {_savePath}");
 	}
 
 	public void Save(SaveData saveData)
@@ -39,6 +40,7 @@ public class SaveManager : MonoBehaviour
 			}
 			else
 			{
+				Debug.Log($"Loading data. {_savePath}");
 				string json = File.ReadAllText(_savePath);
 				SaveData = JsonUtility.FromJson<SaveData>(json);
 			}
