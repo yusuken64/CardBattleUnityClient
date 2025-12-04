@@ -50,7 +50,7 @@ public class VerticalDeckViewer : MonoBehaviour
         SortAndReorder();
     }
 
-    internal void AddCardToDeck(CardDefinition cardDefinition)
+    public void AddCardToDeck(CardDefinition cardDefinition)
     {
         var newDeckItem = Instantiate(DeckItemPrefab, VerticalContainer);
         newDeckItem.Setup(cardDefinition, RemoveCardFromDeck, SetCardAsHero);
@@ -132,7 +132,16 @@ public class VerticalDeckViewer : MonoBehaviour
         DeckClosedAction?.Invoke(editingDeck);
     }
 
-    public void DeckCancel_ClickeD()
+    public Deck GetDeck()
+	{
+        editingDeck.Title = TitleText.text;
+        editingDeck.Cards = _spawnedCards.Select(x => x.CardDefinition).ToList();
+        editingDeck.HeroCard = _spawnedCards.FirstOrDefault(x => x.HeroIndicator.DeckCard == HeroCard).CardDefinition;
+
+        return editingDeck;
+    }
+
+    public void DeckCancel_Clicked()
     {
         //close the deckviewer without saving
         //return to deckpicker

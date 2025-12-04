@@ -15,7 +15,14 @@ public class MainMenu : MonoBehaviour
 
 	public void Play_Click()
 	{
+		DeckSaveData firstDeck = Common.Instance.SaveData.GameSaveData.DeckSaveDatas[0];
+		Common.Instance.SaveData.GameSaveData.CombatDeck = firstDeck;
 		SceneManager.LoadScene("GameScene");
+	}
+
+	public void Adventure_Click()
+	{
+		SceneManager.LoadScene("Adventure");
 	}
 
 	public void Deck_Click()

@@ -25,6 +25,18 @@ public class GameSaveData
 {
 	[SerializeReference]
 	public List<DeckSaveData> DeckSaveDatas = new();
+
+	[SerializeReference]
+	public AdventureSaveData AdventureSaveData = new();
+
+	[SerializeReference]
+	public DeckSaveData CombatDeck;
+}
+
+[Serializable]
+public class AdventureSaveData
+{
+	public DeckSaveData CurrentDeck { get; internal set; }
 }
 
 [Serializable]

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Player Player;
-    public Player Opponent;
+	public Player Player;
+	public Player Opponent;
 
 	public AnimationQueue AnimationQueue;
 	public DeckDefinition TestDeck;
@@ -17,10 +17,10 @@ public class GameManager : MonoBehaviour
 	public GameState _gameState { get; private set; }
 
 	void Start()
-    {
+	{
 		ClearBoard();
-        InitializeGame();
-    }
+		InitializeGame();
+	}
 
 	private void ClearBoard()
 	{
@@ -33,9 +33,9 @@ public class GameManager : MonoBehaviour
 		_engine = new GameEngine();
 
 		Deck deck;
-		if (Common.Instance.SaveData.GameSaveData.DeckSaveDatas.Any())
+		if (Common.Instance.SaveData.GameSaveData.CombatDeck != null)
 		{
-			deck = Common.Instance.SaveData.GameSaveData.DeckSaveDatas[0].ToDeck();
+			deck = Common.Instance.SaveData.GameSaveData.CombatDeck.ToDeck();
 		}
 		else
 		{
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck)
 	{
 		var cardManager = Common.Instance.CardManager;
-		
+
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
 		p1.Deck.AddRange(playerDeck.Cards.Select(x => x.CreateCard()).ToList());
 		p1.Deck.ForEach(x => x.Owner = p1);
@@ -109,7 +109,14 @@ public class GameManager : MonoBehaviour
 	{
 		if (action.IsValid(_gameState, context))
 		{
-			_engine.Resolve(_gameState, context, action);
+			try
+			{
+				_engine.Resolve(_gameState, context, action);
+			}
+			catch (System.Exception exception)
+			{
+				Debug.LogError(exception);
+			}
 		}
 	}
 

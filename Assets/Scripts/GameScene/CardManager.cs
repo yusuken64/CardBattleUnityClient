@@ -42,6 +42,11 @@ public class CardManager : MonoBehaviour
 		}
 	}
 
+	public List<CardDefinition> CollectableCards()
+	{
+		return Cards.Where(x => x.Collectable).ToList();
+	}
+
 	public List<CardDefinition> AllCards()
 	{
 		var cardsToAdd = new List<CardDefinition>();
