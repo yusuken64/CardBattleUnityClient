@@ -72,7 +72,9 @@ public class GameManager : MonoBehaviour
 		p2.Deck.ForEach(x => x.Owner = p2);
 		p2.HeroPower = HeroPowerDefinition.CreateHeroPowerFromHeroCard(enemyDeck.HeroCard as MinionCardDefinition);
 
-		return new GameState(p1, p2, new UnityRNG());
+		List<CardBattleEngine.Card> cardDB = Common.Instance.CardManager.AllCards()
+			.Select(x => x.CreateCard()).ToList();
+		return new GameState(p1, p2, new UnityRNG(), cardDB);
 	}
 
 	internal GameObject GetObjectFor(IGameEntity source)
