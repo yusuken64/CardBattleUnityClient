@@ -56,6 +56,7 @@ public class Player : MonoBehaviour, ITargetable
 		//Armor = Data.Armor;
 		Mana = Data.Mana;
 		MaxMana = Data.MaxMana;
+		CanAttack = Data.CanAttack();
 
 		if (HeroPower != null)
 		{
@@ -85,7 +86,6 @@ public class Player : MonoBehaviour, ITargetable
 	{
 		HeroPortrait.UpdateUI();
 		ManaText.text = $"{Mana}/{MaxMana}";
-		CanAttackIndicator.SetActive(CanAttack);
 	}
 
 	public CardBattleEngine.IGameEntity GetData()
@@ -103,6 +103,7 @@ public class Player : MonoBehaviour, ITargetable
 
 	internal IEnumerator DoDeathRoutine()
 	{
+		CanAttackIndicator.gameObject.SetActive(false);
 		Common.Instance.AudioManager.PlayClip(HeroDieStart);
 		var shake = HeroPortrait.transform.DOShakePosition(1.7f, 1f, 30);
 
@@ -126,6 +127,7 @@ public class Player : MonoBehaviour, ITargetable
 
 	internal void UpdatePlayableActions(bool isActivePlayer)
 	{
+		CanAttack = Data.CanAttack();
 		CanAttackIndicator.gameObject.SetActive(isActivePlayer && CanAttack);
 		HeroPower.RefreshData();
 
