@@ -31,6 +31,7 @@ public class GameSaveData
 
 	[SerializeReference]
 	public DeckSaveData CombatDeck;
+	public DeckSaveData CombatDeckEnemy;
 }
 
 [Serializable]
@@ -56,7 +57,7 @@ public class DeckSaveData
 		return deck;
 	}
 
-	public DeckSaveData FromDeck(Deck deck)
+	public static DeckSaveData FromDeck(Deck deck)
 	{
 		return new DeckSaveData()
 		{

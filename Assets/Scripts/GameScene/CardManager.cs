@@ -12,6 +12,7 @@ public class CardManager : MonoBehaviour
     [Header("Debug Cards")]
     public List<CardDefinition> DebugCards;
 
+	public DeckDefinition AdventureStartDeck;
 
     [Header("Fallbacks")]
     public Sprite DefaultMissingSprite;
@@ -44,13 +45,14 @@ public class CardManager : MonoBehaviour
 
 	public List<CardDefinition> CollectableCards()
 	{
-		return Cards.Where(x => x.Collectable).ToList();
+		return AllCards().Where(x => x.Collectable).ToList();
 	}
 
 	public List<CardDefinition> AllCards()
 	{
 		var cardsToAdd = new List<CardDefinition>();
 		cardsToAdd.AddRange(Cards);
+		cardsToAdd.AddRange(AdventureStartDeck.Cards);
 		if (AddDebugCards)
 		{
 			cardsToAdd.AddRange(DebugCards);

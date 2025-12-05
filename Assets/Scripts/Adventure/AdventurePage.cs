@@ -12,12 +12,12 @@ public class AdventurePage : MonoBehaviour
 	private void Start()
 	{
 		//var deck = Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck.ToDeck();
-		Deck deck = new Deck();
-		deck.Title = "Test";
-		deck.HeroCard = Common.Instance.CardManager.AllCards()
-			.OrderBy(x => UnityEngine.Random.Range(0, int.MaxValue))
-			.First();
-		deck.Cards = new();
+		Deck deck = Common.Instance.CardManager.AdventureStartDeck.ToDeck();
+		//deck.Title = "Test";
+		//deck.HeroCard = Common.Instance.CardManager.AllCards()
+		//	.OrderBy(x => UnityEngine.Random.Range(0, int.MaxValue))
+		//	.First();
+		//deck.Cards = new();
 		DeckViewer.Setup(deck);
 		SetToEncounter();
 	}
@@ -45,9 +45,9 @@ public class AdventurePage : MonoBehaviour
 
 	public void Battle_Clicked()
 	{
-		DeckSaveData newDeck = new();
-		var deckSaveData = newDeck.FromDeck(DeckViewer.GetDeck());
-		Common.Instance.SaveData.GameSaveData.CombatDeck = deckSaveData;
+		Common.Instance.SaveData.GameSaveData.CombatDeck = DeckSaveData.FromDeck(DeckViewer.GetDeck());
+		Common.Instance.SaveData.GameSaveData.CombatDeckEnemy = 
+			DeckSaveData.FromDeck(Common.Instance.CardManager.AdventureStartDeck.ToDeck());
 		SceneManager.LoadScene("GameScene");
 	}
 

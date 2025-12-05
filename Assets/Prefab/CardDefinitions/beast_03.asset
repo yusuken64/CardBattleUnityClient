@@ -45,11 +45,14 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 867525788542959708
+      type: {class: DamageDealtValueWrapper, ns: , asm: Assembly-CSharp}
+      data: 
     - rid: 6533011672544051275
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Damage:
-          rid: -2
+          rid: 867525788542959708
         Canceled: 0
     - rid: 6533011672544051276
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}

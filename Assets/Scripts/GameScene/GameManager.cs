@@ -36,12 +36,25 @@ public class GameManager : MonoBehaviour
 		if (Common.Instance.SaveData.GameSaveData.CombatDeck != null)
 		{
 			deck = Common.Instance.SaveData.GameSaveData.CombatDeck.ToDeck();
+			Common.Instance.SaveData.GameSaveData.CombatDeck = null;
 		}
 		else
 		{
 			deck = TestDeck.ToDeck();
 		}
-		_gameState = CreateTestGame(deck, TestDeck.ToDeck());
+
+		Deck enemyDeck;
+		if (Common.Instance.SaveData.GameSaveData.CombatDeckEnemy != null)
+		{
+			enemyDeck = Common.Instance.SaveData.GameSaveData.CombatDeckEnemy.ToDeck();
+			Common.Instance.SaveData.GameSaveData.CombatDeckEnemy = null;
+		}
+		else
+		{
+			enemyDeck = TestDeck.ToDeck();
+		}
+
+		_gameState = CreateTestGame(deck, enemyDeck);
 		Player.Data = _gameState.Players[0];
 		Opponent.Data = _gameState.Players[1];
 		_opponentAgent = new RandomAI(Opponent.Data, new UnityRNG());

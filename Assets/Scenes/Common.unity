@@ -4957,6 +4957,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: AdventureStartDeck
+      value: 
+      objectReference: {fileID: 11400000, guid: e31b1927aae5fc64fa887da9d587752d, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: DefaultMissingSprite
       value: 
       objectReference: {fileID: 21300000, guid: 2c8fb92718ac38d49930bf882cb885d0, type: 3}
