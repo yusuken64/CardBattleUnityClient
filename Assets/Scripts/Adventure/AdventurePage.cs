@@ -9,21 +9,39 @@ public class AdventurePage : MonoBehaviour
 	public GameObject EncouterChoices;
 	public AdventureCardPicker CardPicker;
 
+	public GameObject NewAdventurePrompt;
+
 	private void Start()
 	{
-		//var deck = Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck.ToDeck();
-		Deck deck = Common.Instance.CardManager.AdventureStartDeck.ToDeck();
-		//deck.Title = "Test";
-		//deck.HeroCard = Common.Instance.CardManager.AllCards()
-		//	.OrderBy(x => UnityEngine.Random.Range(0, int.MaxValue))
-		//	.First();
-		//deck.Cards = new();
+		//TODO make a better indicator for "start new game"
+		var newAdventure = Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck == null;
+
+		if (newAdventure)
+		{
+			NewAdventurePrompt.gameObject.SetActive(true);
+			Encouter.gameObject.SetActive(false);
+		}
+		else
+		{
+			var deck = Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck.ToDeck();
+
+			DeckViewer.Setup(deck);
+			SetToEncounter();
+		}
+	}
+
+	public void StartNewAdventure_Clicked()
+	{
+		var deck = Common.Instance.CardManager.AdventureStartDeck.ToDeck();
+		Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = DeckSaveData.FromDeck(deck);
 		DeckViewer.Setup(deck);
 		SetToEncounter();
 	}
 
 	private void SetToEncounter()
 	{
+		NewAdventurePrompt.gameObject.SetActive(false);
+
 		Encouter.gameObject.SetActive(true);
 		EncouterChoices.gameObject.SetActive(true);
 		CardPicker.gameObject.SetActive(false);
@@ -45,9 +63,14 @@ public class AdventurePage : MonoBehaviour
 
 	public void Battle_Clicked()
 	{
-		Common.Instance.SaveData.GameSaveData.CombatDeck = DeckSaveData.FromDeck(DeckViewer.GetDeck());
+		DeckSaveData deckSaveData = DeckSaveData.FromDeck(DeckViewer.GetDeck());
+		Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = deckSaveData;
+
+		Common.Instance.SaveData.GameSaveData.CombatDeck = deckSaveData;
 		Common.Instance.SaveData.GameSaveData.CombatDeckEnemy = 
 			DeckSaveData.FromDeck(Common.Instance.CardManager.AdventureStartDeck.ToDeck());
+
+		GameManager.ReturnScreenName = "Adventure";
 		SceneManager.LoadScene("GameScene");
 	}
 

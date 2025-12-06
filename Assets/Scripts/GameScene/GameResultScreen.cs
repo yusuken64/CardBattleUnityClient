@@ -15,7 +15,16 @@ public class GameResultScreen : MonoBehaviour
 
 	public void Ok_Clicked()
 	{
-		SceneManager.LoadScene("Main");
+		string returnScreenName = GameManager.ReturnScreenName;
+		if (String.IsNullOrWhiteSpace(returnScreenName))
+		{
+			SceneManager.LoadScene("Main");
+		}
+		else
+		{
+			GameManager.ReturnScreenName = null;
+			SceneManager.LoadScene(returnScreenName);
+		}
 	}
 
 	[ContextMenu("Test Win")]

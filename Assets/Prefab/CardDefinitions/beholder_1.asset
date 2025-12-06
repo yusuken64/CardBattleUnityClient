@@ -33,7 +33,7 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 2
     EffectTiming: 1
-    TargetType: 4
+    TargetType: 7
     GameActions:
     - rid: 6533011672544051261
     Condition:
@@ -45,11 +45,15 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 867525809668620414
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
     - rid: 6533011672544051261
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Damage:
-          rid: -2
+          rid: 867525809668620414
         Canceled: 0
     - rid: 6533011672544051262
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
@@ -59,6 +63,6 @@ MonoBehaviour:
     - rid: 6533011672544051263
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Side: 0
+        Side: 1
         Group: 1
         ExcludeSelf: 0
