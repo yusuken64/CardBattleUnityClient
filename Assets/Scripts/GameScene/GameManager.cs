@@ -45,7 +45,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		Deck enemyDeck;
-		if (Common.Instance.SaveData.GameSaveData.CombatDeckEnemy != null)
+		if (Common.Instance.SaveData.GameSaveData.CombatDeckEnemy != null &&
+			Common.Instance.SaveData.GameSaveData.CombatDeckEnemy.CardIDs.Any())
 		{
 			enemyDeck = Common.Instance.SaveData.GameSaveData.CombatDeckEnemy.ToDeck();
 			Common.Instance.SaveData.GameSaveData.CombatDeckEnemy = null;

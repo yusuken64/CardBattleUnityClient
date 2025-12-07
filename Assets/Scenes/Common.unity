@@ -4954,7 +4954,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: AddDebugCards
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: AdventureStartDeck
