@@ -151,6 +151,7 @@ public class GameInteractionHandler : MonoBehaviour
 
 	private void CancelAim()
 	{
+		MinionPlayPreview.gameObject.SetActive(false);
 		if (pendingDraggable != null)
 		{
 			pendingDraggable?.CancelAim();

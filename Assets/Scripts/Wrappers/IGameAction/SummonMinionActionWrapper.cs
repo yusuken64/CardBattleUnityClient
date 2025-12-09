@@ -8,12 +8,14 @@ using CardBattleEngine;
 public class SummonMinionActionWrapper : IGameActionWrapperBase
 {
     public MinionCardDefinition Card;
+    public System.Int32 IndexOffset;
     public System.Boolean Canceled;
 
     public override CardBattleEngine.IGameAction Create()
     {
         var instance = new CardBattleEngine.SummonMinionAction();
         instance.Card = Card?.CreateCard() as MinionCard;
+        instance.IndexOffset = this.IndexOffset;
         instance.Canceled = this.Canceled;
         return instance;
     }

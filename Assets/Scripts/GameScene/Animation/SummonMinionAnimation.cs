@@ -13,6 +13,7 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		CardBattleEngine.Minion minionData = Context.SummonedMinion;
 
+		Debug.Log($"{minionData} at {Context.PlayIndex}");
 		var existingMinion = player.Board.Minions.FirstOrDefault(minion => minion.SummonedCard == Action.Card);
 		if (existingMinion == null)
 		{
@@ -29,6 +30,12 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			animator.Play("MinionAppear");
 
 			existingMinion = newMinion;
+		}
+		else
+		{
+			player.Board.Minions.Remove(existingMinion);
+			player.Board.Minions.Insert(Context.PlayIndex, existingMinion);
+			player.Board.UpdateMinionPositions();
 		}
 
 		existingMinion.SummonedCard = null;
