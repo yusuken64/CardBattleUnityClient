@@ -12,6 +12,7 @@ public class AddStatModifierActionWrapper : IGameActionWrapperBase
     public System.Int32 CostChange;
     [SerializeReference] public ExpirationTriggerWrapper? ExpirationTrigger;
     public System.Boolean Canceled;
+    public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
     {
@@ -21,6 +22,7 @@ public class AddStatModifierActionWrapper : IGameActionWrapperBase
         instance.CostChange = this.CostChange;
         instance.ExpirationTrigger = ExpirationTrigger?.CreateEffect();
         instance.Canceled = this.Canceled;
+        instance.CustomSFX = CustomSFX;
         return instance;
     }
 }

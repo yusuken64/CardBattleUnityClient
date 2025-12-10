@@ -53,4 +53,10 @@ public class SaveManager : MonoBehaviour
 
 		return SaveData;
 	}
+
+	[ContextMenu("Reset Data")]
+	public void ResetData()
+	{
+		SaveData = new SaveData();
+	}
 }

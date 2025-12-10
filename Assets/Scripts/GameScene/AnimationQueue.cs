@@ -65,9 +65,11 @@ public class AnimationQueue : MonoBehaviour
 
         while (queue.Count > 0)
         {
+            IAnimation anim = queue.Dequeue();
+            var sfxRoutine = anim.CustomSFX();
+            yield return StartCoroutine(sfxRoutine);
 
-			IAnimation anim = queue.Dequeue();
-			yield return StartCoroutine(anim.Play());
+            yield return StartCoroutine(anim.Play());
             if (anim != null) Destroy(anim.GameObject);
         }
 
@@ -94,6 +96,8 @@ public abstract class GameActionAnimationBase : MonoBehaviour, IAnimation
         Action = current.action;
         Context = current.context;
     }
+
+	public abstract IEnumerator CustomSFX();
 }
 
 public abstract class GameActionAnimation<T> : GameActionAnimationBase where T : IGameAction
@@ -101,15 +105,29 @@ public abstract class GameActionAnimation<T> : GameActionAnimationBase where T :
     public override Type ActionType => typeof(T);
 	protected new T Action { get; private set; }
 
-    public override void Init(GameManager gm, GameState state, (IGameAction action, ActionContext context) current)
+	public override void Init(GameManager gm, GameState state, (IGameAction action, ActionContext context) current)
     {
         base.Init(gm, state, current);
         Action = (T)current.action;
     }
+
+	public override IEnumerator CustomSFX()
+    {
+		if (Action.CustomSFX == null)
+			yield break;
+
+        CustomSFX SFXScriptableObject = Action.CustomSFX as CustomSFX;
+        if (SFXScriptableObject == null)
+            yield break;
+
+        yield return SFXScriptableObject.Routine(Action, Context);
+	}
 }
 
 public interface IAnimation
 {
 	IEnumerator Play();
+    IEnumerator CustomSFX();
+
     GameObject GameObject { get; }
 }

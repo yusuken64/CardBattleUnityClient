@@ -9,12 +9,14 @@ public class GainManaActionWrapper : IGameActionWrapperBase
 {
     [SerializeReference] public IValueProviderWrapperBase Amount;
     public System.Boolean Canceled;
+    public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
     {
         var instance = new CardBattleEngine.GainManaAction();
         instance.Amount = Amount?.Create();
         instance.Canceled = this.Canceled;
+        instance.CustomSFX = CustomSFX;
         return instance;
     }
 }

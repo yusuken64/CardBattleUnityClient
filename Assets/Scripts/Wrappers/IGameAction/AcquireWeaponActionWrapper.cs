@@ -9,12 +9,14 @@ public class AcquireWeaponActionWrapper : IGameActionWrapperBase
 {
     public CardBattleEngine.Weapon Weapon;
     public System.Boolean Canceled;
+    public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
     {
         var instance = new CardBattleEngine.AcquireWeaponAction();
         instance.Weapon = this.Weapon;
         instance.Canceled = this.Canceled;
+        instance.CustomSFX = CustomSFX;
         return instance;
     }
 }

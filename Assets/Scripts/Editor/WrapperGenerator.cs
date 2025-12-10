@@ -44,8 +44,14 @@ public static class WrapperGenerator
 			OriginalType = typeof(CardBattleEngine.IValueProvider),
 			GenerateField = p => $"    [SerializeReference] public {typeof(IValueProviderWrapperBase).FullName} {p.Name};",
 			GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
-		}
-	};
+        },
+        new PropertyReplacement
+        {
+            OriginalType = typeof(System.Object),
+            GenerateField = p => $"    public {typeof(CustomSFX).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name};"
+        },
+    };
     
     private static PropertyReplacement GetReplacement(PropertyInfo property)
     {
