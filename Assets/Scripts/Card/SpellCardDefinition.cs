@@ -15,12 +15,15 @@ public class SpellCardDefinition : CardDefinition
     [Header("SpellCast Effects")]
     public List<SpellCastEffectWrapper> SpellCastEffects = new();
 
+    public CustomSFX CustomSFX;
+
     public override CardBattleEngine.Card CreateCard()
 	{
         var spellCard = new SpellCard(CardName, Cost);
         spellCard.TargetingType = TargetingType;
         spellCard.SpellCastEffects.AddRange(SpellCastEffects.Select(x => x.Create()));
         spellCard.Description = string.Join(Environment.NewLine, SpellCastEffects.Select(ToDescription));
+        spellCard.CustomSFX = CustomSFX;
 
         return spellCard;
     }
@@ -55,6 +58,7 @@ public class SpellCardDefinition : CardDefinition
 public class SpellCastEffectWrapper
 {
     public string Description;
+
     [SerializeReference]
     public List<IGameActionWrapperBase> GameActions = new List<IGameActionWrapperBase>();
 
@@ -66,7 +70,7 @@ public class SpellCastEffectWrapper
         return new SpellCastEffect()
         {
             GameActions = GameActions.Select(x => x.Create()).ToList(),
-            AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create()
+            AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create(),
         };
 	}
 }
