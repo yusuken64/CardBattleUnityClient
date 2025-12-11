@@ -17,6 +17,10 @@ Position: $root:0
 Position: $root:1
 + [Sirenix.OdinInspector.HorizontalGroupAttribute]
 
+# $XGG13EC3yefb8XbDu7M2Vy
+Position: $root:3
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
 # Sprite
 Position: $Hf4BhEa2Y1yu4dAEekPPnd:1
 + [Sirenix.OdinInspector.PreviewFieldAttribute]
@@ -53,7 +57,7 @@ Position: $YZ6bgLeuwWupM5XZ4PRK2D:3
 Position: $85xZi2y1YJnyaBSJDK6UZT:2
 
 # TriggeredEffects
-Position: $root:3
+Position: $root:5
 
 # HasWindFury
 Position: $YTgoJejBh7uaWZBzfcgn97:0
@@ -69,3 +73,6 @@ Position: $YTgoJejBh7uaWZBzfcgn97:2
 
 # Collectable
 Position: $85xZi2y1YJnyaBSJDK6UZT:0
+
+# CannotAttack
+Position: $XGG13EC3yefb8XbDu7M2Vy:0

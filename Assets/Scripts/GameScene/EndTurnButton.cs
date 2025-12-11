@@ -49,7 +49,11 @@ public class EndTurnButton : MonoBehaviour
 			SetToUnclickable();
 			_gameManager.ResolveAction(
 				new EndTurnAction(),
-				new ActionContext() { SourcePlayer = _gameManager.Player.Data }
+				new ActionContext()
+				{
+					Source = _gameManager.Player.Data,
+					SourcePlayer = _gameManager.Player.Data
+				}
 				);
 		}
 		else

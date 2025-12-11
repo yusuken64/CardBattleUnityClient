@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
-  m_Name: fire_magician_3
+  m_Name: fire_magician_3 1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: fire magician 3
-  ID: fire_magician_3
+  CardName: fire magician 3 test
+  ID: fire_magician_3test
   Sprite: {fileID: 21300000, guid: 598391d1cb85dab46a5b5cf510ab49b3, type: 3}
-  Cost: 8
+  Cost: 1
   TriggeredEffects: []
   Attack: 8
   Health: 8
@@ -36,48 +36,48 @@ MonoBehaviour:
     EffectTiming: 1
     TargetType: 7
     GameActions:
-    - rid: 867525922271264768
+    - rid: 867525921397276740
     Condition:
-      rid: 867525922271264769
+      rid: 867525921397276742
     AffectedEntitySelectorWrapper:
-      rid: 867525922271264770
+      rid: 867525921397276736
   references:
     version: 2
     RefIds:
-    - rid: 867525922271264768
-      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Damage:
-          rid: 867525922271264771
-        Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 0d898c30b67cde946a3620081bd1acc2, type: 2}
-    - rid: 867525922271264769
-      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        TeamRelationship: 0
-        SourceType: 1
-    - rid: 867525922271264770
+    - rid: 867525921397276736
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         Operations:
-        - rid: 867525922271264772
-        - rid: 867525922271264773
-    - rid: 867525922271264771
-      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Number: 8
-    - rid: 867525922271264772
+        - rid: 867525921397276737
+        - rid: 867525921397276738
+    - rid: 867525921397276737
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Side: 1
         Group: 2
         ExcludeSelf: 0
-    - rid: 867525922271264773
+    - rid: 867525921397276738
       type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Count:
-          rid: 867525922271264774
-    - rid: 867525922271264774
+          rid: 867525921397276739
+    - rid: 867525921397276739
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 1
+    - rid: 867525921397276740
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 867525921397276741
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 0d898c30b67cde946a3620081bd1acc2, type: 2}
+    - rid: 867525921397276741
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 8
+    - rid: 867525921397276742
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+        SourceType: 1

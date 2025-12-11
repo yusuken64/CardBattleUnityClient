@@ -21,6 +21,7 @@ public class MinionCardDefinition : CardDefinition
     public bool HasWindFury;
     public bool HasLifeSteal;
     public bool HasReborn;
+    public bool CannotAttack;
 
     public List<TriggeredEffectWrapper> MinionTriggeredEffects = new List<TriggeredEffectWrapper>();
 
@@ -38,6 +39,7 @@ public class MinionCardDefinition : CardDefinition
             HasWindfury = this.HasWindFury,
             HasReborn = this.HasReborn,
             HasLifeSteal = this.HasLifeSteal,
+            CannotAttack = this.CannotAttack
         };
         card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
         card.MinionTriggeredEffects.AddRange(MinionTriggeredEffects.Select(x => x.CreateEffect()));

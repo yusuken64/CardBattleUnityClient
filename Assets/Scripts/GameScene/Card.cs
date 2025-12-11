@@ -120,6 +120,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
             if (minionCard.HasReborn) { keyWords.Add("Reborn"); }
             if (minionCard.HasLifeSteal) { keyWords.Add("LifeSteal"); }
             if (minionCard.HasWindfury) { keyWords.Add("Windfury"); }
+            if (minionCard.CannotAttack) { keyWords.Add("Cannot Attack"); }
             description = string.Join(",", keyWords);
 
             AttackObject.SetActive(true);
