@@ -34,16 +34,22 @@ public static class WrapperGenerator
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateEffect();"
         },
         new PropertyReplacement
-		{
+        {
             OriginalType = typeof(CardBattleEngine.TriggeredEffect),
             GenerateField = p => $"    public {typeof(TriggeredEffectWrapper).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateEffect();"
         },
-		new PropertyReplacement
-		{
-			OriginalType = typeof(CardBattleEngine.IValueProvider),
-			GenerateField = p => $"    [SerializeReference] public {typeof(IValueProviderWrapperBase).FullName} {p.Name};",
-			GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        new PropertyReplacement
+        {
+            OriginalType = typeof(CardBattleEngine.IValueProvider),
+            GenerateField = p => $"    [SerializeReference] public {typeof(IValueProviderWrapperBase).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
+        {
+            OriginalType = typeof(CardBattleEngine.Weapon),
+            GenerateField = p => $"    public {typeof(WeaponCardDefinition).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = ({p.Name}?.CreateCard() as WeaponCard)?.CreateWeapon();"
         },
         new PropertyReplacement
         {

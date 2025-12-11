@@ -16,7 +16,7 @@ MonoBehaviour:
   CardName: deep water 1
   ID: deep_water_1
   Sprite: {fileID: 21300000, guid: 0de505f4141a67244917ecfa986d69c9, type: 3}
-  Cost: 1
+  Cost: 4
   TriggeredEffects: []
   Attack: 3
   Health: 6
@@ -29,6 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 6
@@ -47,6 +48,7 @@ MonoBehaviour:
       type: {class: FreezeActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 6533011672544051273
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:

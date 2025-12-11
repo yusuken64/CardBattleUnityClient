@@ -12,24 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: daffodils_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Daffodils 01
   ID: daffodils_01
   Sprite: {fileID: 21300000, guid: 5de41b855ebcbba4fa2a8a1c8d7a4a86, type: 3}
-  Cost: 1
+  Cost: 10
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 10
+  Health: 10
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
-  HasTaunt: 0
+  HasTaunt: 1
   HasPoisonous: 0
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  MinionTriggeredEffects: []
+  CannotAttack: 0
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 1
+    EffectTiming: 0
+    TargetType: 7
+    GameActions:
+    - rid: 867525924129079298
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 867525924129079296
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 867525924129079296
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 867525924129079297
+    - rid: 867525924129079297
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 2
+        Group: 0
+        ExcludeSelf: 0
+    - rid: 867525924129079298
+      type: {class: DeathActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+        CustomSFX: {fileID: 0}

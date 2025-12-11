@@ -12,24 +12,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: seraphiel_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Seraphiel 01
   ID: seraphiel_01
   Sprite: {fileID: 21300000, guid: bd4e4a34bfdffa140813420745cb1c03, type: 3}
-  Cost: 1
+  Cost: 8
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 6
+  Health: 6
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
-  HasDivineShield: 0
-  HasTaunt: 0
+  HasDivineShield: 1
+  HasTaunt: 1
   HasPoisonous: 0
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  MinionTriggeredEffects: []
+  CannotAttack: 0
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 2
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 867525924129079370
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 867525924129079369
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 867525924129079369
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+    - rid: 867525924129079370
+      type: {class: AcquireWeaponActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Weapon: {fileID: 11400000, guid: f1f335770c3b57c4a8d694321a62d771, type: 2}
+        Canceled: 0
+        CustomSFX: {fileID: 0}

@@ -12,23 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: dryad_ss
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Dryad SS
   ID: dryad_ss
   Sprite: {fileID: 21300000, guid: 9b43655f16ef28b458fb43e9a087ff0f, type: 3}
-  Cost: 1
+  Cost: 8
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 12
+  Health: 12
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
-  HasTaunt: 0
+  HasTaunt: 1
   HasPoisonous: 0
   HasWindFury: 0
-  HasLifeSteal: 0
+  HasLifeSteal: 1
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2
