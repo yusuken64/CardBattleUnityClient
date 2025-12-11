@@ -1,22 +1,22 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CostFilter : MonoBehaviour, IFilterRule
+public class CardTypeFilter : MonoBehaviour, IFilterRule
 {
-    public List<FilterCostButton> CostButtons;
+    public List<FilterCardTypeButton> CardTypeButtons;
 
-	public Action FilterChangedCallBack { get; set; }
+    public Action FilterChangedCallBack { get; set; }
 
-	private void Start()
-	{
-        CostButtons.ForEach(x => x.FilterChangedCallBack = FilterChangedCallBack);
+    private void Start()
+    {
+        CardTypeButtons.ForEach(x => x.FilterChangedCallBack = FilterChangedCallBack);
     }
 
-	public Func<CardDefinition, bool> GetPredicate()
+    public Func<CardDefinition, bool> GetPredicate()
     {
-        var activePredicates = CostButtons
+        var activePredicates = CardTypeButtons
             .Where(b => b.FilterActive)
             .Select(b => b.GetPredicate())
             .ToList();

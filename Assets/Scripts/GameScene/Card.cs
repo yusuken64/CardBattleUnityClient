@@ -178,7 +178,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
         else if (this.Data is WeaponCard weaponCard)
         {
             Attack = weaponCard.Attack;
-            Health -= weaponCard.Durability;
+            Health = weaponCard.Durability;
 		}
         else if (this.Data is SpellCard spellCard)
         {

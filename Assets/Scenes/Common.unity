@@ -4957,6 +4957,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: Cards.Array.size
+      value: 309
+      objectReference: {fileID: 0}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: AdventureStartDeck
       value: 
       objectReference: {fileID: 11400000, guid: e31b1927aae5fc64fa887da9d587752d, type: 2}
@@ -4964,6 +4968,46 @@ PrefabInstance:
       propertyPath: DefaultMissingSprite
       value: 
       objectReference: {fileID: 21300000, guid: 2c8fb92718ac38d49930bf882cb885d0, type: 3}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[299]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[300]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[301]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[302]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[303]'
+      value: 
+      objectReference: {fileID: 11400000, guid: bf151d0725b4fe24baeab9714aa2d4e9, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[304]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 216d237b9ae55d443aca1fae15c9513b, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[305]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 6668746a80b9adf44a10190ac074b684, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[306]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7377ee7c21badc74695ef944f46fef46, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[307]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 46f536ca86614da488b3e26799c2f3b5, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[308]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 39134ca7c0407f64ebe835f7eeb34714, type: 2}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: DebugCards.Array.size
       value: 5

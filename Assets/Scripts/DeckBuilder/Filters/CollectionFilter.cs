@@ -29,12 +29,8 @@ public class CollectionFilter : MonoBehaviour
         FilterChanged?.Invoke(CurrentPredicate);
     }
 
-    // Build the "where clause" based on current UI state
     private Func<CardDefinition, bool> BuildPredicate()
     {
-        // Example: combine multiple subfilters dynamically
-        // Expand this to your actual filter logic
-
         List<Func<CardDefinition, bool>> activeFilters = new();
 
         foreach (var f in Filters)
@@ -58,10 +54,10 @@ public class CollectionFilter : MonoBehaviour
         {
             foreach (var rule in activeFilters)
             {
-                if (rule(card))
-                    return true;
+                if (!rule(card))
+                    return false;
             }
-            return false;
+            return true;
         };
     }
 }
