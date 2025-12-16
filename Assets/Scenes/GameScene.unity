@@ -4360,6 +4360,8 @@ MonoBehaviour:
   Opponent: {fileID: 568661103}
   AnimationQueue: {fileID: 984708922}
   TestDeck: {fileID: 11400000, guid: b81bae1c68bc30d4c9c2ee5ca93b100b, type: 2}
+  UseSeed: 1
+  RandomSeed: 0
 --- !u!1 &1191839122
 GameObject:
   m_ObjectHideFlags: 0

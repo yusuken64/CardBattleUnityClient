@@ -125,7 +125,27 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
         UpdateUI();
     }
 
-	internal void SetupWithCard(CardBattleEngine.MinionCard data)
+    internal void RefreshData(CardBattleEngine.Minion data)
+    {
+        if (data == null) { return; }
+
+        Attack = data.Attack;
+        Health = data.Health;
+        CanAttack = data.CanAttack();
+        HasDivineShield = data.HasDivineShield;
+        HasTaunt = data.Taunt;
+        HasPoisonous = data.HasPoisonous;
+        HasSummoningSickness = data.HasSummoningSickness;
+        IsFrozen = data.IsFrozen;
+        HasWindFury = data.HasWindfury;
+        HasStealth = data.IsStealth;
+        HasLifeSteal = data.HasLifeSteal;
+        HasReborn = data.HasReborn;
+
+        UpdateUI();
+    }
+
+    internal void SetupWithCard(CardBattleEngine.MinionCard data)
 	{
         this.SummonedCard = data;
         Attack = data.Attack;

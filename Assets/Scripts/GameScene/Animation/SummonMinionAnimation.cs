@@ -12,6 +12,7 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		CardBattleEngine.Minion minionData = Context.SummonedMinion;
+		CardBattleEngine.Minion minionDataSnapShot = Context.SummonedMinionSnapShot;
 
 		Debug.Log($"{minionData} at {Context.PlayIndex}");
 		var existingMinion = player.Board.Minions.FirstOrDefault(minion => minion.SummonedCard == Action.Card);
@@ -40,6 +41,7 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 
 		existingMinion.SummonedCard = null;
 		existingMinion.Setup(minionData);
+		existingMinion.RefreshData(minionDataSnapShot);
 
 		yield return null;
 	}

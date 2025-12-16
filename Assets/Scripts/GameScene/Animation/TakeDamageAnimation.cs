@@ -10,6 +10,12 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 	{
 		Common.Instance.AudioManager.PlaySound(DamageSound);
 		GameObject gameObject = GameManager.GetObjectFor(Context.Target);
+
+		if (gameObject is null)
+		{
+			throw new System.Exception("No damage object");
+		}
+
 		Transform target = gameObject.transform;
 
 		// simple shake: short, small, no fancy stuff

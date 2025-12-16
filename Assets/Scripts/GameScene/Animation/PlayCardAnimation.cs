@@ -15,15 +15,25 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 		var player = this.GameManager.GetPlayerFor(playCardAction.Card.Owner);
 
 		var playedCard = player.Hand.Cards.FirstOrDefault(x => x.Data == playCardAction.Card);
+
 		if (playedCard != null)
 		{
-			//This is always the opponent playing a card
 			var animator = playedCard.GetComponent<Animator>();
 			animator.Play("CardCast", 0, 0f);
 			player.Hand.Cards.Remove(playedCard);
 			player.Hand.UpdateCardPositions();
 
+			if (playCardAction.Card.Owner == this.GameManager.Opponent.Data)
+			{
+				FindFirstObjectByType<UI>().PreviewStart(playedCard);
+			}
 			yield return playedCard.transform.DOMove(Vector3.zero, 0.4f).WaitForCompletion();
+		}
+
+		if (playCardAction.Card.Owner == this.GameManager.Opponent.Data)
+		{
+			yield return new WaitForSecondsRealtime(1.0f);
+			FindFirstObjectByType<UI>().PreviewEnd();
 		}
 
 		yield return null;

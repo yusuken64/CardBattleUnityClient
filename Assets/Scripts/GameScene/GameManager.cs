@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
 	private RandomAI _opponentAgent;
 	public GameState _gameState { get; private set; }
 
+	public bool UseSeed;
+	public int RandomSeed;
+
 	void Start()
 	{
 		ClearBoard();
@@ -56,10 +59,18 @@ public class GameManager : MonoBehaviour
 			enemyDeck = TestDeck.ToDeck();
 		}
 
-		_gameState = CreateTestGame(deck, enemyDeck);
+		int seed = 0;
+		if (UseSeed)
+		{
+			Random.InitState(seed);
+		}
+
+		UnityRNG rng = new UnityRNG();
+
+		_gameState = CreateTestGame(deck, enemyDeck, rng);
 		Player.Data = _gameState.Players[0];
 		Opponent.Data = _gameState.Players[1];
-		_opponentAgent = new RandomAI(Opponent.Data, new UnityRNG());
+		_opponentAgent = new RandomAI(Opponent.Data, rng);
 
 		Player.HeroImage.sprite = deck.HeroCard.Sprite;
 		Player.HeroPower.OriginalCard = deck.HeroCard.CreateCard();
@@ -72,7 +83,7 @@ public class GameManager : MonoBehaviour
 		_engine.StartGame(_gameState);
 	}
 
-	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck)
+	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck, UnityRNG rng)
 	{
 		var cardManager = Common.Instance.CardManager;
 
@@ -88,7 +99,7 @@ public class GameManager : MonoBehaviour
 
 		List<CardBattleEngine.Card> cardDB = Common.Instance.CardManager.AllCards()
 			.Select(x => x.CreateCard()).ToList();
-		return new GameState(p1, p2, new UnityRNG(), cardDB);
+		return new GameState(p1, p2, rng, cardDB);
 	}
 
 	internal GameObject GetObjectFor(IGameEntity source)
@@ -160,7 +171,7 @@ public class GameManager : MonoBehaviour
 				var triggerSource = nextAction.Item2?.Source as ITriggerSource;
 
 				if (triggerSource == null) { return null; }
-				var targets = state.GetValidTargets(nextAction.Item2.Source as ITriggerSource, x);
+				var targets = state.GetValidTargets(triggerSource, x);
 
 				if (!targets.Any()) { return null; }
 
@@ -177,6 +188,7 @@ public class GameManager : MonoBehaviour
 			ResolveAction(nextAction.Item1, nextAction.Item2);
 		}
 
+		Opponent.UpdatePlayableActions(false);
 		Player.UpdatePlayableActions(state.CurrentPlayer == Player.Data);
 	}
 }

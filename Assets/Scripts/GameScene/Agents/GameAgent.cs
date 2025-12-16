@@ -51,14 +51,12 @@ public class RandomAI : IGameAgent
 		var context = nextAction.Item2;
 
 		CardBattleEngine.Card card;
-		if (action is PlayCardAction playCardAction)
-		{
-			card = playCardAction.Card;
-		}
-		else
+		if (!(action is PlayCardAction playCardAction))
 		{
 			return;
 		}
+
+		card = playCardAction.Card;
 
 		TargetingType targetingType = TargetingType.None;
 		if (card is MinionCard minionCard)
@@ -74,6 +72,7 @@ public class RandomAI : IGameAgent
 			targetingType = TargetingType.FriendlyHero;
 		}
 
+		context.Source = card;
 		var target = targetSelector?.Invoke(targetingType);
 		context.Target = target?.Entity;
 	}

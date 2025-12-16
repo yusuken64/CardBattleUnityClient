@@ -37,7 +37,11 @@ public class AnimationQueue : MonoBehaviour
     public void EnqueueAnimation(GameManager gameManager, GameState state, (IGameAction action, ActionContext context) current)
     {
         IAnimation newAnimation = CreateAnimationForAction(gameManager, state, current);
-        if (newAnimation is null) { return; }
+        if (newAnimation is null)
+        {
+            Debug.Log($"No animation for {current.action}");
+            return;
+        }
         queue.Enqueue(newAnimation);
 
         if (!isPlaying)
