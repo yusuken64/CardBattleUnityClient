@@ -88,7 +88,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
         RefreshData();
 	}
 
-	private void UpdateUI()
+	public void UpdateUI()
 	{
         AttackText.text = Attack.ToString();
         HealthText.text = Health.ToString();

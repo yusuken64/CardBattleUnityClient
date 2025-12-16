@@ -43,7 +43,6 @@ public class EndTurnButton : MonoBehaviour
 
 	public void OnClick()
 	{
-		ValidateState();
 		if (_gameManager._gameState.CurrentPlayer.Name == _gameManager.Player.Data.Name)
 		{
 			SetToUnclickable();
@@ -66,36 +65,5 @@ public class EndTurnButton : MonoBehaviour
 	{
 		SetToEnemyTurn();
 		this.Button.interactable = false;
-	}
-
-	public void ValidateState()
-	{
-		var gameManager = FindFirstObjectByType<GameManager>();
-
-		var state = gameManager._gameState;
-		PlayersEqual(gameManager.Player, state.Players[0]);
-		//PlayersEqual(gameManager.Opponent, state.Players[1]);
-	}
-
-	private void PlayersEqual(Player player, CardBattleEngine.Player data)
-	{
-		for (int i = 0; i < data.Board.Count; i++)
-		{
-			CardBattleEngine.Minion minionData = data.Board[i];
-			var boardMinion = player.Board.Minions[i];
-
-			AssertAreEqual(boardMinion.Data, minionData);
-			AssertAreEqual(boardMinion.Attack, minionData.Attack);
-			AssertAreEqual(boardMinion.Health, minionData.Health);
-			AssertAreEqual(boardMinion.CanAttack, minionData.CanAttack());
-		}
-	}
-
-	private void AssertAreEqual<T>(T a, T b)
-	{
-		if (!EqualityComparer<T>.Default.Equals(a, b))
-		{
-			throw new Exception($"Validation exception: {a} != {b}");
-		}
 	}
 }

@@ -194,9 +194,15 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
     public GameObject DragObject => this.gameObject;
 
 	public bool CanStartDrag() => true;
+
     public bool RequiresTarget()
     {
-        if (this.Data is MinionCard minionCard)
+        return RequiresTarget(this.Data);
+    }
+
+    public static bool RequiresTarget(CardBattleEngine.Card data)
+    {
+        if (data is MinionCard minionCard)
         {
             if (minionCard.MinionTriggeredEffects.Count() == 0)
 			{
@@ -205,7 +211,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
 
             return minionCard.MinionTriggeredEffects[0].TargetType != TargetingType.None;
         }
-        else if (this.Data is SpellCard spellCard)
+        else if (data is SpellCard spellCard)
         {
             if (spellCard.TargetingType == TargetingType.None)
             {
@@ -324,7 +330,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
         var card = this;
         if (card.CardType == CardBattleEngine.CardType.Minion)
         {
-            if (card.RequiresTarget())
+            if (RequiresTarget(this.Data))
             {
                 //CardInteractionController.StartAiming(newMinion.transform);
             }
@@ -401,15 +407,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
             animator.Play("MinionAppear");
             card.transform.position = newMinion.transform.position;
 
-            if (card.RequiresTarget())
-            {
-                //CardInteractionController.StartAiming(newMinion.transform);
-            }
-            else
-            {
-                gameManager.ResolveAction(current.action, current.context);
-            }
-            Destroy(card.gameObject, 2f);
+			if (!RequiresTarget(this.Data))
+			{
+				gameManager.ResolveAction(current.action, current.context);
+			}
+			Destroy(card.gameObject, 2f);
         }
         else if (card.CardType == CardBattleEngine.CardType.Weapon)
         {

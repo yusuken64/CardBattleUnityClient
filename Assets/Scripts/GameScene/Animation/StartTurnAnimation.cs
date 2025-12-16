@@ -1,6 +1,8 @@
 ﻿using CardBattleEngine;
 using DG.Tweening;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
@@ -14,7 +16,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 		if (Context.SourcePlayer == GameManager.Player.Data)
 		{
 			Common.Instance.AudioManager.PlaySound(StartTurnSound);
-			var turnStartObject = Object.FindFirstObjectByType<UI>().TurnStartObject;
+			var turnStartObject = FindFirstObjectByType<UI>().TurnStartObject;
 			turnStartObject.gameObject.SetActive(true);
 
 			// Ensure it starts at normal scale
@@ -45,12 +47,36 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 
 			yield return new WaitForSecondsRealtime(0.3f);
 
-			Object.FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
+			FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
 		}
 
 		yield return new WaitForSecondsRealtime(0.5f);
 
 		player.RefreshData();
-		opponent.RefreshData();
+		//opponent.RefreshData();
+
+		//ValidateState(Context.SourcePlayer, player);
+	}
+
+	public void ValidateState(CardBattleEngine.Player data, Player player)
+	{
+		for (int i = 0; i < data.Board.Count; i++)
+		{
+			CardBattleEngine.Minion minionData = data.Board[i];
+			var boardMinion = player.Board.Minions[i];
+
+			AssertAreEqual(boardMinion.Data, minionData);
+			AssertAreEqual(boardMinion.Attack, minionData.Attack);
+			AssertAreEqual(boardMinion.Health, minionData.Health);
+			AssertAreEqual(boardMinion.CanAttack, minionData.CanAttack());
+		}
+	}
+
+	private void AssertAreEqual<T>(T a, T b)
+	{
+		if (!EqualityComparer<T>.Default.Equals(a, b))
+		{
+			throw new Exception($"Validation exception: {a} != {b}");
+		}
 	}
 }

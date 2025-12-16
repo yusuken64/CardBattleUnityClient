@@ -127,8 +127,8 @@ public class Player : MonoBehaviour, ITargetable
 
 	internal void UpdatePlayableActions(bool isActivePlayer)
 	{
-		CanAttack = Data.CanAttack();
-		CanAttackIndicator.gameObject.SetActive(isActivePlayer && CanAttack);
+		CanAttack = isActivePlayer && Data.CanAttack();
+		CanAttackIndicator.gameObject.SetActive(CanAttack);
 		HeroPower.RefreshData();
 
 		foreach(var card in Hand.Cards)

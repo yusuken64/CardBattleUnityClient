@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
 		_engine.StartGame(_gameState);
-
 	}
 
 	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck)
@@ -137,7 +136,7 @@ public class GameManager : MonoBehaviour
 
 	internal Player GetPlayerFor(CardBattleEngine.Player sourcePlayer)
 	{
-		return Player.Data.Name == sourcePlayer.Name ? Player : Opponent;
+		return Player.Data == sourcePlayer ? Player : Opponent;
 	}
 
 	internal CardBattleEngine.Player GetDataFor(GameState state, Player player)
@@ -149,16 +148,6 @@ public class GameManager : MonoBehaviour
 	{
 		Debug.Log(current);
 		AnimationQueue.EnqueueAnimation(this, state, current);
-
-		//UpdateAllEntities();
-	}
-
-	private void UpdateAllEntities()
-	{
-		var activePlayer = GetPlayerFor(_gameState.CurrentPlayer);
-
-		Player.RefreshData();
-		Opponent.RefreshData();
 	}
 
 	private void ActionResolvedCallback(GameState state)
@@ -166,6 +155,25 @@ public class GameManager : MonoBehaviour
 		if (state.CurrentPlayer == Opponent.Data)
 		{
 			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(state);
+			((IGameAgent)_opponentAgent).SetTarget(nextAction, (x) =>
+			{
+				var triggerSource = nextAction.Item2?.Source as ITriggerSource;
+
+				if (triggerSource == null) { return null; }
+				var targets = state.GetValidTargets(nextAction.Item2.Source as ITriggerSource, x);
+
+				if (!targets.Any()) { return null; }
+
+				return targets[Random.Range(0, targets.Count())];
+			});
+
+			string actionString = nextAction.Item1.ToString();
+			IGameAction item1 = nextAction.Item1;
+			if (item1 is PlayCardAction playCardAction)
+			{
+				actionString = $"Play card {playCardAction.Card.Name}";
+			}
+			Debug.Log($"Enemy Action {actionString}");
 			ResolveAction(nextAction.Item1, nextAction.Item2);
 		}
 

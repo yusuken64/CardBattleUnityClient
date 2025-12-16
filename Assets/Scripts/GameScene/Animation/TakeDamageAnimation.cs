@@ -23,17 +23,21 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 
 		Object.FindFirstObjectByType<UI>().ShowDamage((Context.DamageDealt), target);
 
-		var player = gameObject.GetComponentInParent<Player>();
+		yield return shake.WaitForCompletion();
+
+		var portrait = gameObject.GetComponent<HeroPortrait>();
 		var minion = gameObject.GetComponent<Minion>();
-		if (player != null)
+		if (portrait != null)
 		{
-			player.RefreshData();
+			portrait.Player.Health -= Context.DamageDealt;
+			portrait.Player.Armor -= Context.ArmorDamageDealt;
+			portrait.Player.UpdateUI();
 		}
 		else if (minion != null)
 		{
-			minion.RefreshData();
+			minion.Health -= Context.DamageDealt;
+			minion.HasDivineShield = (Context.Target as CardBattleEngine.Minion).HasDivineShield;
+			minion.UpdateUI();
 		}
-
-		yield return shake.WaitForCompletion();
 	}
 }

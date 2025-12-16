@@ -31,17 +31,19 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 		// backward bump
 		Tween back = attacker.DOMove(startPos, 0.15f).SetEase(Ease.Linear);
 
-		var playerObject = attacker.gameObject.GetComponentInParent<Player>();
+		yield return back.WaitForCompletion();
+
+		var heroPortrait = attacker.gameObject.GetComponent<HeroPortrait>();
 		var minion = attacker.gameObject.GetComponent<Minion>();
-		if (playerObject != null)
+		if (heroPortrait != null)
 		{
-			playerObject.RefreshData();
+			heroPortrait.Player.CanAttack = (Context.Source as CardBattleEngine.Player).CanAttack();
+			heroPortrait.Player.UpdateUI();
 		}
 		else if (minion != null)
 		{
-			minion.RefreshData();
+			minion.CanAttack = (Context.Source as CardBattleEngine.Minion).CanAttack();
+			minion.UpdateUI();
 		}
-
-		yield return back.WaitForCompletion();
 	}
 }
