@@ -14,7 +14,7 @@ public class EquipWeaponActionWrapper : IGameActionWrapperBase
     public override CardBattleEngine.IGameAction Create()
     {
         var instance = new CardBattleEngine.EquipWeaponAction();
-        instance.Weapon = (Weapon?.CreateCard() as WeaponCard).CreateWeapon();
+        instance.Weapon = (Weapon?.CreateCard() as WeaponCard)?.CreateWeapon();
         instance.Canceled = this.Canceled;
         instance.CustomSFX = CustomSFX;
         return instance;

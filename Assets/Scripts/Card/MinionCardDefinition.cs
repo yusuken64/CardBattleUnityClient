@@ -41,13 +41,22 @@ public class MinionCardDefinition : CardDefinition
             HasLifeSteal = this.HasLifeSteal,
             CannotAttack = this.CannotAttack
         };
-        card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
-        card.MinionTriggeredEffects.AddRange(MinionTriggeredEffects.Select(x => x.CreateEffect()));
 
-        var triggeredEffects = new List<TriggeredEffectWrapper>();
-        triggeredEffects.AddRange(TriggeredEffects);
-        triggeredEffects.AddRange(MinionTriggeredEffects);
-        card.Description = string.Join(Environment.NewLine, triggeredEffects.Select(ToDescription));
+		try
+		{
+			card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
+			card.MinionTriggeredEffects.AddRange(MinionTriggeredEffects.Select(x => x.CreateEffect()));
+
+			var triggeredEffects = new List<TriggeredEffectWrapper>();
+			triggeredEffects.AddRange(TriggeredEffects);
+			triggeredEffects.AddRange(MinionTriggeredEffects);
+			card.Description = string.Join(Environment.NewLine, triggeredEffects.Select(ToDescription));
+		}
+		catch (Exception e)
+		{
+            Debug.LogError($"Error with card {CardName}", this);
+			throw;
+		}
 
         return card;
     }
