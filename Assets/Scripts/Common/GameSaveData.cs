@@ -27,11 +27,20 @@ public class GameSaveData
 	public List<DeckSaveData> DeckSaveDatas = new();
 
 	[SerializeReference]
+	public StorySaveData StorySaveData = new();
+
+	[SerializeReference]
 	public AdventureSaveData AdventureSaveData = new();
 
 	[SerializeReference]
 	public DeckSaveData CombatDeck;
 	public DeckSaveData CombatDeckEnemy;
+}
+
+[Serializable]
+public class StorySaveData
+{
+	public List<string> CompletedLevels = new();
 }
 
 [Serializable]

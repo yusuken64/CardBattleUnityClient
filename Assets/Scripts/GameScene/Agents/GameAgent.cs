@@ -61,7 +61,10 @@ public class RandomAI : IGameAgent
 		TargetingType targetingType = TargetingType.None;
 		if (card is MinionCard minionCard)
 		{
-			targetingType = minionCard.MinionTriggeredEffects[0].TargetType;
+			if (minionCard.MinionTriggeredEffects.Any())
+			{
+				targetingType = minionCard.MinionTriggeredEffects[0].TargetType;
+			}
 		}
 		else if (card is SpellCard spellCard)
 		{

@@ -57,8 +57,8 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 
 	private void OnHoldClicked()
 	{
-		var ui = FindFirstObjectByType<CollectionUI>();
+		var ui = FindFirstObjectByType<CollectionUI>(FindObjectsInactive.Include);
+		ui.gameObject.SetActive(true);
 		ui.PreviewStart(this);
 	}
-
 }

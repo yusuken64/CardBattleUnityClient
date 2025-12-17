@@ -43,6 +43,10 @@ public class GameResultScreen : MonoBehaviour
 
 	internal IEnumerator DoGameEndRoutine(bool isWin)
 	{
+		var gameResultAction = GameManager.GameResultAction;
+		GameManager.GameResultAction = null;
+		gameResultAction?.Invoke(isWin);
+
 		this.gameObject.SetActive(true);
 
 		var gameManager = FindFirstObjectByType<GameManager>();

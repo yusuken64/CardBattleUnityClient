@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 	public static string ReturnScreenName;
+	public static System.Action<bool> GameResultAction;
 	public Player Player;
 	public Player Opponent;
 
