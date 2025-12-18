@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
 	private RandomAI _opponentAgent;
 	public GameState _gameState { get; private set; }
+	public bool ActivePlayerTurn { get; internal set; } //based on client animation timing
 
 	public bool UseSeed;
 	public int RandomSeed;
@@ -151,15 +152,26 @@ public class GameManager : MonoBehaviour
 		return Player.Data == sourcePlayer ? Player : Opponent;
 	}
 
-	internal CardBattleEngine.Player GetDataFor(GameState state, Player player)
-	{
-		return Player.Data.Name == state.Players[0].Name ? state.Players[0] : state.Players[1];
-	}
-
 	private void ActionPlaybackCallback(GameState state, (IGameAction action, ActionContext context) current)
 	{
 		Debug.Log(current);
 		AnimationQueue.EnqueueAnimation(this, state, current);
+
+		if (state.CurrentPlayer == Player.Data)
+		{
+			var validActions = state.GetValidActions(Player.Data)
+				.ToList();
+
+			if (validActions.Count() == 1 &&
+				validActions[0].Item1 is EndTurnAction)
+			{
+				//highlight endturn button;
+				if (ActivePlayerTurn)
+				{
+					FindFirstObjectByType<UI>().EndTurnButton.SetToOnlyAction();
+				}
+			}
+		}
 	}
 
 	private void ActionResolvedCallback(GameState state)
@@ -190,7 +202,9 @@ public class GameManager : MonoBehaviour
 		}
 
 		Opponent.UpdatePlayableActions(false);
-		Player.UpdatePlayableActions(state.CurrentPlayer == Player.Data);
+		Player.UpdatePlayableActions(
+			ActivePlayerTurn &&
+			state.CurrentPlayer == Player.Data);
 	}
 }
 

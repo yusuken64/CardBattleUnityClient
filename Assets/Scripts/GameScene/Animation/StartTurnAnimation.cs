@@ -48,6 +48,11 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			yield return new WaitForSecondsRealtime(0.3f);
 
 			FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
+			GameManager.ActivePlayerTurn = true;
+		}
+		else
+		{
+			GameManager.ActivePlayerTurn = false;
 		}
 
 		yield return new WaitForSecondsRealtime(0.5f);

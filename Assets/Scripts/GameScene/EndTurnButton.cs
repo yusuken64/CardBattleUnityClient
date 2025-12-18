@@ -10,6 +10,7 @@ public class EndTurnButton : MonoBehaviour
 	public TextMeshProUGUI ButtonText;
 	public Image ButtonImage;
 	public Button Button;
+	public GameObject OnlyActionIndicator;
 
 	public Color ReadyColor;
 	public Color OnlyColor;
@@ -21,6 +22,7 @@ public class EndTurnButton : MonoBehaviour
 	{
 		_gameManager = FindFirstObjectByType<GameManager>();
 		_ui = FindFirstObjectByType<UI>();
+		OnlyActionIndicator.gameObject.SetActive(false);
 	}
 
 	public void SetToReady()
@@ -28,17 +30,20 @@ public class EndTurnButton : MonoBehaviour
 		ButtonImage.color = ReadyColor;
 		this.Button.interactable = true;
 		ButtonText.text = "End Turn";
+		OnlyActionIndicator.gameObject.SetActive(false);
 	}
 
 	public void SetToOnlyAction()
 	{
-		ButtonText.text = "End Turn!";
+		ButtonText.text = "End Turn";
+		OnlyActionIndicator.gameObject.SetActive(true);
 	}
 
 	public void SetToEnemyTurn()
 	{
 		ButtonImage.color = EnemyColor;
 		ButtonText.text = "Enemy Turn";
+		OnlyActionIndicator.gameObject.SetActive(false);
 	}
 
 	public void OnClick()
