@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
 	private RandomAI _opponentAgent;
 	public GameState _gameState { get; private set; }
-	public bool ActivePlayerTurn { get; internal set; } //based on client animation timing
+	public bool ActivePlayerTurn { get; internal set; } //based on client animation timing 
 
 	public bool UseSeed;
 	public int RandomSeed;
@@ -127,14 +127,14 @@ public class GameManager : MonoBehaviour
 		return null;
 	}
 
-	public bool CheckIsValid(IGameAction action, ActionContext context)
+	public bool CheckIsValid(IGameAction action, ActionContext context, out string reason)
 	{
-		return action.IsValid(_gameState, context);
+		return action.IsValid(_gameState, context, out reason);
 	}
 
 	public void ResolveAction(IGameAction action, ActionContext context)
 	{
-		if (action.IsValid(_gameState, context))
+		if (action.IsValid(_gameState, context, out string reason))
 		{
 			try
 			{
@@ -142,6 +142,7 @@ public class GameManager : MonoBehaviour
 			}
 			catch (System.Exception exception)
 			{
+				Debug.LogError(reason);
 				Debug.LogError(exception);
 			}
 		}

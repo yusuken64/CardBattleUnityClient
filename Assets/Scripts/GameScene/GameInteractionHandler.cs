@@ -108,17 +108,23 @@ public class GameInteractionHandler : MonoBehaviour
 			currentDraggable.DragObject.transform.position = mousePos;
 			currentDraggable.Dragging = false;
 
-			if (MouseOverBoard(mousePos).collider != null &&
-				currentDraggable.CanResolve(mousePos, out var current))
+			if (MouseOverBoard(mousePos).collider != null)
 			{
-				currentDraggable.Resolve(mousePos, current);
-				CancelAim();
+				if (currentDraggable.CanResolve(mousePos, out var current, out string reason))
+				{
+					currentDraggable.Resolve(mousePos, current);
+				}
+				else
+				{
+					if (!string.IsNullOrWhiteSpace(reason))
+					{
+						var ui = FindFirstObjectByType<UI>();
+						ui.ShowMessage(reason);
+					}
+					currentDraggable.CancelDrag();
+				}
 			}
-			else
-			{
-				currentDraggable.CancelDrag();
-				CancelAim();
-			}
+			CancelAim();
 
 			currentDraggable = null;
 		}
@@ -135,16 +141,23 @@ public class GameInteractionHandler : MonoBehaviour
 				}
 			}
 
-			if (target != null &&
-				currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current, mousePos))
+			if (target != null)
 			{
-				currentAimable.ResolveAim(current, pendingDraggable?.DragObject);
-				EndAim();
-			}
-			else
-			{
-				//cancel the action
-				CancelAim();
+				if (currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current, mousePos, out string reason))
+				{
+					currentAimable.ResolveAim(current, pendingDraggable?.DragObject);
+					EndAim();
+				}
+				else
+				{
+					//cancel the action
+					if (!string.IsNullOrWhiteSpace(reason))
+					{
+						var ui = FindFirstObjectByType<UI>();
+						ui.ShowMessage(reason);
+					}
+					CancelAim();
+				}
 			}
 		}
 	}
@@ -303,7 +316,7 @@ public interface ITargetOrigin
 	CardBattleEngine.IGameEntity GetData();
 	CardBattleEngine.Player GetPlayer();
 	void ResolveAim((IGameAction action, ActionContext context) current, GameObject dragObject);
-	bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos);
+	bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos, out string reason);
 }
 
 public enum AimIntent
@@ -325,7 +338,7 @@ public interface IDraggable
 
 	bool CanStartDrag();
 	void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard);
-	bool CanResolve(Vector3 mousePos, out (IGameAction action, ActionContext context) current);
+	bool CanResolve(Vector3 mousePos, out (IGameAction action, ActionContext context) current, out string reason);
 	void Resolve(Vector3 mousePos, (IGameAction action, ActionContext context) current);
 	void CancelDrag();
 	bool RequiresTarget();

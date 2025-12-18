@@ -30,7 +30,7 @@ public class RandomAI : IGameAgent
 	(IGameAction, ActionContext) IGameAgent.GetNextAction(GameState game)
 	{
 		var validActions = game.GetValidActions(_player)
-			.Where(x => x.Item1.IsValid(game, x.Item2))
+			.Where(x => x.Item1.IsValid(game, x.Item2, out string _))
 			.ToList();
 
 		return ChooseRandom(validActions);

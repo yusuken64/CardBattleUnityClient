@@ -193,7 +193,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
         ITargetable target,
         GameObject pendingAimObject,
         out (IGameAction, ActionContext) current,
-        Vector3 mousePos)
+        Vector3 mousePos,
+        out string reason)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
 
@@ -227,7 +228,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
             current = (attackAction, context);
         }
 
-        return gameManager.CheckIsValid(current.Item1, current.Item2);
+        return gameManager.CheckIsValid(current.Item1, current.Item2, out reason);
     }
 
 	public AimIntent AimIntent { get; set; } = AimIntent.Attack;

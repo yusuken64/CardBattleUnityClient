@@ -41,12 +41,18 @@ public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
 		Player.Hand.UpdateCardPositions();
 	}
 
-	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos)
+	public bool WillResolveSuccessfully(
+		ITargetable target,
+		GameObject pendingAimObject,
+		out (IGameAction, ActionContext) current,
+		Vector3 mousePos,
+		out string reason)
 	{
 		var pendingCard = pendingAimObject.GetComponent<Card>();
 		if (pendingCard == null)
 		{
 			current = (null, null);
+			reason = null;
 			return false;
 		}
 
@@ -63,6 +69,6 @@ public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
 		};
 
 		current = (action, context);
-		return gameManager.CheckIsValid(action, context);
+		return gameManager.CheckIsValid(action, context, out reason);
 	}
 }

@@ -318,7 +318,9 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
         return this.Data as IGameEntity;
 	}
 
-    public bool CanResolve(Vector3 mousePos, out (IGameAction action, ActionContext context) current)
+    public bool CanResolve(Vector3 mousePos,
+						   out (IGameAction action, ActionContext context) current,
+						   out string reason)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
@@ -373,7 +375,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
             };
         }
         current = (action, context);
-        return gameManager.CheckIsValid(action, context);
+        return gameManager.CheckIsValid(action, context, out reason);
     }
 
     public void Resolve(Vector3 mousePos, (IGameAction action, ActionContext context) current)

@@ -43,7 +43,12 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 		return Player.Data;
 	}
 
-	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos)
+	public bool WillResolveSuccessfully(
+		ITargetable target,
+		GameObject pendingAimObject,
+		out (IGameAction, ActionContext) current,
+		Vector3 mousePos,
+		out string reason)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
 
@@ -56,7 +61,7 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 		};
 
 		current = (attackAction, context);
-		return gameManager.CheckIsValid(attackAction, context);
+		return gameManager.CheckIsValid(attackAction, context, out reason);
 	}
 
 

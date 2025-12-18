@@ -54,7 +54,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		gameManager.ResolveAction(current.action, current.context);
 	}
 
-	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos)
+	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos, out string reason)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
 		CardBattleEngine.HeroPowerAction action = new CardBattleEngine.HeroPowerAction();
@@ -66,7 +66,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		};
 
 		current = (action, context);
-		return gameManager.CheckIsValid(action, context);
+		return gameManager.CheckIsValid(action, context, out reason);
 	}
 
 	public CardBattleEngine.Card GetDisplayCard()
@@ -92,7 +92,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		};
 
 		var current = (action, context);
-		if (gameManager.CheckIsValid(current.action, current.context))
+		if (gameManager.CheckIsValid(current.action, current.context, out string _))
 		{
 			gameManager.ResolveAction(current.action, current.context);
 		}
