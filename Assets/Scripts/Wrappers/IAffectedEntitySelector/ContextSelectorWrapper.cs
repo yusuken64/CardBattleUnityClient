@@ -11,6 +11,7 @@ public class ContextSelectorWrapper : IAffectedEntitySelectorWrapperBase
     public System.Boolean IncludeSource;
     public System.Boolean IncludeSourcePlayer;
     public System.Boolean IncludeTargetOwner;
+    public CardBattleEngine.TargetResolutionTiming ResolutionTiming;
 
     public override CardBattleEngine.IAffectedEntitySelector Create()
     {
@@ -19,6 +20,7 @@ public class ContextSelectorWrapper : IAffectedEntitySelectorWrapperBase
         instance.IncludeSource = this.IncludeSource;
         instance.IncludeSourcePlayer = this.IncludeSourcePlayer;
         instance.IncludeTargetOwner = this.IncludeTargetOwner;
+        instance.ResolutionTiming = this.ResolutionTiming;
         return instance;
     }
 }
