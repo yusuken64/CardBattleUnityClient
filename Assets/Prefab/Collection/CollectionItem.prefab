@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5005807210442070638}
   - component: {fileID: 7194127126175451437}
   - component: {fileID: 6598983543823840049}
+  - component: {fileID: 2078706007201903709}
   m_Layer: 5
   m_Name: CollectionItem
   m_TagString: Untagged
@@ -56,6 +57,7 @@ MonoBehaviour:
   Card: {fileID: 3796801786167867802}
   CardDefinition: {fileID: 0}
   HoldClickableButton: {fileID: 7194127126175451437}
+  CanvasGroup: {fileID: 2078706007201903709}
 --- !u!114 &5005807210442070638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +142,18 @@ MonoBehaviour:
   HoverSound: {fileID: 0}
   ClickSound: {fileID: 8300000, guid: a5aa2954411de4ec3b92cdd8697646b2, type: 3}
   UnclickableSound: {fileID: 0}
+--- !u!225 &2078706007201903709
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3130662784365045429}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6614669864427076208
 GameObject:
   m_ObjectHideFlags: 0

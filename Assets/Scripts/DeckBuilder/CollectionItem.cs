@@ -7,6 +7,8 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 	public CardDefinition CardDefinition;
 	public HoldClickableButton HoldClickableButton;
 
+	public CanvasGroup CanvasGroup;
+
 	private void OnEnable()
 	{
 		HoldClickableButton.OnHoldClicked += OnHoldClicked;
@@ -60,5 +62,15 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 		var ui = FindFirstObjectByType<CollectionUI>(FindObjectsInactive.Include);
 		ui.gameObject.SetActive(true);
 		ui.PreviewStart(this);
+	}
+
+	public void SetToCollected()
+	{
+		CanvasGroup.alpha = 1;
+	}
+
+	public void SetToUnCollected()
+	{
+		CanvasGroup.alpha = 0.2f;
 	}
 }

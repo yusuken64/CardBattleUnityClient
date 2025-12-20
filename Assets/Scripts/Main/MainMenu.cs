@@ -30,6 +30,11 @@ public class MainMenu : MonoBehaviour
 		SceneManager.LoadScene("DeckBuilder");
 	}
 
+	public void OpenPacks_Click()
+	{
+		SceneManager.LoadScene("OpenPacks");
+	}
+
 	public void Settings_Click()
 	{
 		SettingsObject.gameObject.SetActive(true);

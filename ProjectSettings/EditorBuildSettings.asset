@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StoryMode.unity
     guid: 22719e1a9a727b64f88a80afb2820c10
+  - enabled: 1
+    path: Assets/Scenes/OpenPacks.unity
+    guid: c6b1370b6bb205b43aaa0289146d47ff
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
