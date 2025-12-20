@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class AttackAnimation : GameActionAnimation<AttackAction>
 {
+	public float Duration = 0.15f;
+	public AnimationCurve AttackCurve;
+
 	public override IEnumerator Play()
 	{
 		Transform attacker = GameManager.GetObjectFor(Context.Source).transform;
@@ -12,10 +15,10 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 
 		Vector3 startPos = attacker.position;
 		Vector3 dir = (target.position - attacker.position).normalized;
-		Vector3 bumpPos = startPos + dir * 0.4f; // distance of bump
+		Vector3 bumpPos = target.position - dir * 0.4f; // distance of bump
 
 		// forward bump
-		Tween forward = attacker.DOMove(bumpPos, 0.15f).SetEase(Ease.Linear);
+		Tween forward = attacker.DOMove(bumpPos, Duration).SetEase(AttackCurve);
 
 		// wait
 		yield return forward.WaitForCompletion();
