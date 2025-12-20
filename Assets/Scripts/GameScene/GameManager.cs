@@ -70,19 +70,23 @@ public class GameManager : MonoBehaviour
 		UnityRNG rng = new UnityRNG();
 
 		_gameState = CreateTestGame(deck, enemyDeck, rng);
-		Player.Data = _gameState.Players[0];
-		Opponent.Data = _gameState.Players[1];
-		_opponentAgent = new RandomAI(Opponent.Data, rng);
+		SetupPlayer(deck, Player, _gameState.Players[0]);
+		SetupPlayer(enemyDeck, Opponent, _gameState.Players[1]);
 
-		Player.HeroImage.sprite = deck.HeroCard.Sprite;
-		Player.HeroPower.OriginalCard = deck.HeroCard.CreateCard();
-		Player.HeroPower.Data = Player.Data.HeroPower;
-		Player.RefreshData();
-		Opponent.RefreshData();
+		_opponentAgent = new RandomAI(Opponent.Data, rng);
 
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
 		_engine.StartGame(_gameState);
+	}
+
+	private void SetupPlayer(Deck deck, Player player, CardBattleEngine.Player data)
+	{
+		player.Data = data;
+		player.HeroImage.sprite = deck.HeroCard.Sprite;
+		player.HeroPower.OriginalCard = deck.HeroCard.CreateCard();
+		player.HeroPower.Data = player.Data.HeroPower;
+		player.RefreshData();
 	}
 
 	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck, UnityRNG rng)

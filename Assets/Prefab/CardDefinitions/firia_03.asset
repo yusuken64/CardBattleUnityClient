@@ -29,6 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2

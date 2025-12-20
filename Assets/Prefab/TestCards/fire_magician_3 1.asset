@@ -50,6 +50,7 @@ MonoBehaviour:
         Operations:
         - rid: 867525921397276737
         - rid: 867525921397276738
+        ResolutionTiming: 1
     - rid: 867525921397276737
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:

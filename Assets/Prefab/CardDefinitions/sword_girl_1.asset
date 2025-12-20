@@ -29,6 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
@@ -45,20 +46,20 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 867526101213118541
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
     - rid: 6533011672544051267
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        AttackChange: 2
-        HealthChange: 0
-        CostChange: 0
+        AttackChange:
+          rid: 867526101213118541
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
         ExpirationTrigger:
-          Description: 
-          EffectTrigger: 0
-          EffectTiming: 0
-          TargetType: 0
-          GameActions: []
-          Condition:
-            rid: -2
-          AffectedEntitySelectorWrapper:
-            rid: -2
+          rid: -2
         Canceled: 0
+        CustomSFX: {fileID: 0}

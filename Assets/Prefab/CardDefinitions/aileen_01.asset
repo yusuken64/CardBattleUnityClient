@@ -18,17 +18,18 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 2c8fb92718ac38d49930bf882cb885d0, type: 3}
   Cost: 1
   TriggeredEffects: []
-  Attack: 1
+  Attack: 2
   Health: 1
   MinionTribes: 
-  IsStealth: 0
+  IsStealth: 1
   HasCharge: 0
   HasDivineShield: 0
   HasTaunt: 0
-  HasPoisonous: 0
+  HasPoisonous: 1
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2

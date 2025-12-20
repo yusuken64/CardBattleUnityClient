@@ -62,6 +62,7 @@ MonoBehaviour:
         Operations:
         - rid: 867525922271264772
         - rid: 867525922271264773
+        ResolutionTiming: 1
     - rid: 867525922271264771
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
