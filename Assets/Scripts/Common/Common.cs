@@ -6,15 +6,12 @@ public class Common : MonoBehaviour
 {
 	public static Common Instance;
 
-	public SaveData SaveData;
-
 	public CardManager CardManager;
 	public SaveManager SaveManager;
 	public AudioManager AudioManager;
 	public GlobalSettings GlobalSettings;
 
 	public DeckDefinition StartingDeck;
-	public int CurrentDeckIndex { get; internal set; } = -1;
 
 	private void Awake()
 	{
@@ -35,17 +32,11 @@ public class Common : MonoBehaviour
 	{
 		Debug.Log("BOOT: Start");
 		SaveManager.Initialize();
-		SaveData = SaveManager.Load();
-
-		if (SaveData.GameSaveData.DeckSaveDatas.Count() == 0)
-		{
-			CurrentDeckIndex = 0;
-			SaveManager.Save(SaveData);
-			SaveData.GameSaveData.DeckSaveDatas.Add(StartingDeck.ToDeckData());
-		}
+		SaveManager.Load();
+		SaveManager.EnsureData();
 
 		Debug.Log("AudioManager Initializing");
-		AudioManager.ApplicationInitialized(SaveData);
+		AudioManager.ApplicationInitialized(SaveManager.SaveData);
 		Debug.Log("AudioManager Initialized");
 	}
 }

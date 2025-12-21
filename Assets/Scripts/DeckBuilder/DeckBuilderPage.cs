@@ -27,8 +27,8 @@ public class DeckBuilderPage : MonoBehaviour
 		if (deck != null)
 		{
 			//Update data?
-			Common.Instance.SaveData.GameSaveData.DeckSaveDatas[0] = DeckSaveData.FromDeck(deck);
-			Common.Instance.SaveManager.Save(Common.Instance.SaveData);
+			Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas[0] = DeckSaveData.FromDeck(deck);
+			Common.Instance.SaveManager.Save();
 		}
 		DeckPicker.gameObject.SetActive(true);
 		DeckPicker.UpdateUI();

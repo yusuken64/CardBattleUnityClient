@@ -19,7 +19,7 @@ public class BattlePreview : MonoBehaviour
 
 	public void Fight_Clicked()
 	{
-		GameSaveData gameSaveData = Common.Instance.SaveData.GameSaveData;
+		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
 
 		DeckSaveData firstDeck = gameSaveData.DeckSaveDatas[0];
 		gameSaveData.CombatDeck = firstDeck;
@@ -30,7 +30,7 @@ public class BattlePreview : MonoBehaviour
 		{
 			if (!isWin) return;
 
-			var save = Common.Instance.SaveData.GameSaveData;
+			var save = Common.Instance.SaveManager.SaveData.GameSaveData;
 			var completed = save.StorySaveData.CompletedLevels;
 
 			if (!completed.Contains(levelId))

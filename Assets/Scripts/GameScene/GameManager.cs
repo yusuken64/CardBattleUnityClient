@@ -39,10 +39,11 @@ public class GameManager : MonoBehaviour
 		_engine = new GameEngine();
 
 		Deck deck;
-		if (Common.Instance.SaveData.GameSaveData.CombatDeck != null)
+		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
+		if (gameSaveData.CombatDeck != null)
 		{
-			deck = Common.Instance.SaveData.GameSaveData.CombatDeck.ToDeck();
-			Common.Instance.SaveData.GameSaveData.CombatDeck = null;
+			deck = gameSaveData.CombatDeck.ToDeck();
+			gameSaveData.CombatDeck = null;
 		}
 		else
 		{
@@ -50,11 +51,11 @@ public class GameManager : MonoBehaviour
 		}
 
 		Deck enemyDeck;
-		if (Common.Instance.SaveData.GameSaveData.CombatDeckEnemy != null &&
-			Common.Instance.SaveData.GameSaveData.CombatDeckEnemy.CardIDs.Any())
+		if (gameSaveData.CombatDeckEnemy != null &&
+			gameSaveData.CombatDeckEnemy.CardIDs.Any())
 		{
-			enemyDeck = Common.Instance.SaveData.GameSaveData.CombatDeckEnemy.ToDeck();
-			Common.Instance.SaveData.GameSaveData.CombatDeckEnemy = null;
+			enemyDeck = gameSaveData.CombatDeckEnemy.ToDeck();
+			gameSaveData.CombatDeckEnemy = null;
 		}
 		else
 		{

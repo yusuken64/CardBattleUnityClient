@@ -19,7 +19,7 @@ public class DeckPicker : MonoBehaviour
 		}
 		DeckPickerButtons.Clear();
 
-		foreach (var deckData in Common.Instance.SaveData.GameSaveData.DeckSaveDatas)
+		foreach (var deckData in Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas)
 		{
 			var deckPickerButton = Instantiate(DeckPickerButtonPrefab, DeckPickerButtonContainer);
 			deckPickerButton.DeckPickedAction = DeckPickedAction;

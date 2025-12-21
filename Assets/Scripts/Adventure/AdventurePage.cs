@@ -14,7 +14,7 @@ public class AdventurePage : MonoBehaviour
 	private void Start()
 	{
 		//TODO make a better indicator for "start new game"
-		var newAdventure = Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck == null;
+		var newAdventure = Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck == null;
 
 		if (newAdventure)
 		{
@@ -23,7 +23,7 @@ public class AdventurePage : MonoBehaviour
 		}
 		else
 		{
-			var deck = Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck.ToDeck();
+			var deck = Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck.ToDeck();
 
 			DeckViewer.Setup(deck);
 			SetToEncounter();
@@ -33,7 +33,7 @@ public class AdventurePage : MonoBehaviour
 	public void StartNewAdventure_Clicked()
 	{
 		var deck = Common.Instance.CardManager.AdventureStartDeck.ToDeck();
-		Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = DeckSaveData.FromDeck(deck);
+		Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = DeckSaveData.FromDeck(deck);
 		DeckViewer.Setup(deck);
 		SetToEncounter();
 	}
@@ -64,10 +64,10 @@ public class AdventurePage : MonoBehaviour
 	public void Battle_Clicked()
 	{
 		DeckSaveData deckSaveData = DeckSaveData.FromDeck(DeckViewer.GetDeck());
-		Common.Instance.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = deckSaveData;
+		Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = deckSaveData;
 
-		Common.Instance.SaveData.GameSaveData.CombatDeck = deckSaveData;
-		Common.Instance.SaveData.GameSaveData.CombatDeckEnemy = 
+		Common.Instance.SaveManager.SaveData.GameSaveData.CombatDeck = deckSaveData;
+		Common.Instance.SaveManager.SaveData.GameSaveData.CombatDeckEnemy = 
 			DeckSaveData.FromDeck(Common.Instance.CardManager.AdventureStartDeck.ToDeck());
 
 		GameManager.ReturnScreenName = "Adventure";

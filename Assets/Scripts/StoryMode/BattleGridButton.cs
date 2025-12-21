@@ -21,7 +21,7 @@ public class BattleGridButton : MonoBehaviour
 		this._data = data;
 		BattleImage.sprite = data.BattleImage;
 
-		bool completed = Common.Instance.SaveData.GameSaveData.StorySaveData.CompletedLevels.Contains(data.LevelID);
+		bool completed = Common.Instance.SaveManager.SaveData.GameSaveData.StorySaveData.CompletedLevels.Contains(data.LevelID);
 		CompletedIndicator.SetActive(completed);
 	}
 }

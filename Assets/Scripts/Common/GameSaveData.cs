@@ -23,6 +23,7 @@ public class AppSaveData
 [Serializable]
 public class GameSaveData
 {
+	public int CurrentDeckIndex = -1;
 	[SerializeReference]
 	public List<DeckSaveData> DeckSaveDatas = new();
 
