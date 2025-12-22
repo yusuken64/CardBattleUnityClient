@@ -601,21 +601,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb4d569994f951408f3651ac9cc7ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common
-  SaveData:
-    AppSaveData:
-      rid: -2
-    GameSaveData:
-      rid: -2
   CardManager: {fileID: 18950028}
   SaveManager: {fileID: 1671881}
   AudioManager: {fileID: 1461388766}
   GlobalSettings: {fileID: 1280152354}
-  StartingDeck: {fileID: 11400000, guid: b81bae1c68bc30d4c9c2ee5ca93b100b, type: 2}
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+  StartingDeck: {fileID: 11400000, guid: fb1631541ab10ee43a336752f97ae58f, type: 2}
 --- !u!4 &255597556
 Transform:
   m_ObjectHideFlags: 0

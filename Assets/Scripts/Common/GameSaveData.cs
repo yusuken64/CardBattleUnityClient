@@ -36,6 +36,59 @@ public class GameSaveData
 	[SerializeReference]
 	public DeckSaveData CombatDeck;
 	public DeckSaveData CombatDeckEnemy;
+
+	public CardCollection CardCollection = new();
+}
+
+[Serializable]
+public class CardCollection
+{
+	public Dictionary<string, OwnedCardData> Cards = new();
+
+	public void Add(string cardId, int amount = 1)
+	{
+		if (amount <= 0)
+			return;
+
+		if (Cards.TryGetValue(cardId, out var owned))
+		{
+			owned.Count += amount;
+		}
+		else
+		{
+			Cards[cardId] = new OwnedCardData
+			{
+				CardID = cardId,
+				Count = amount
+			};
+		}
+	}
+
+	public bool Remove(string cardId, int amount = 1)
+	{
+		if (!Cards.TryGetValue(cardId, out var owned))
+			return false;
+
+		owned.Count -= amount;
+
+		if (owned.Count <= 0)
+			Cards.Remove(cardId);
+
+		return true;
+	}
+
+	public bool Has(string cardId, int amount = 1)
+	{
+		return Cards.TryGetValue(cardId, out var owned)
+			&& owned.Count >= amount;
+	}
+}
+
+[Serializable]
+public class OwnedCardData
+{
+	public string CardID;
+	public int Count;
 }
 
 [Serializable]

@@ -22,7 +22,8 @@ public class VerticalDeckViewer : MonoBehaviour
     public TextMeshProUGUI CountText;
 	private Deck editingDeck;
 
-	public Action<Deck> DeckClosedAction { get; internal set; }
+    public Action<Deck> DeckChanged { get; internal set; }
+    public Action<Deck> DeckClosedAction { get; internal set; }
 
 	private void Start()
     {
@@ -65,6 +66,8 @@ public class VerticalDeckViewer : MonoBehaviour
         }
         _spawnedCards.Add(newDeckItem);
 
+        GetDeck();
+        DeckChanged(editingDeck);
         SortAndReorder();
     }
 
@@ -109,6 +112,8 @@ public class VerticalDeckViewer : MonoBehaviour
             Destroy(deckCard.gameObject);
             SortAndReorder();
         }
+        GetDeck();
+        DeckChanged(editingDeck);
     }
 
     public void Title_Click()
@@ -136,7 +141,7 @@ public class VerticalDeckViewer : MonoBehaviour
 	{
         editingDeck.Title = TitleText.text;
         editingDeck.Cards = _spawnedCards.Select(x => x.CardDefinition).ToList();
-        editingDeck.HeroCard = _spawnedCards.FirstOrDefault(x => x.HeroIndicator.DeckCard == HeroCard).CardDefinition;
+        editingDeck.HeroCard = _spawnedCards.FirstOrDefault(x => x.HeroIndicator.DeckCard == HeroCard)?.CardDefinition;
 
         return editingDeck;
     }

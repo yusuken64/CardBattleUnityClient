@@ -24,6 +24,7 @@ public class Collection : MonoBehaviour
 
 	public IEnumerable<CardDefinition> CardsToShow { get; private set; }
     public bool HideUncollectable;
+    public List<CollectionItem> showingItems;
 
 	private void OnEnable()
 	{
@@ -48,17 +49,20 @@ public class Collection : MonoBehaviour
 		SetToPage(CurrentPage);
 	}
 
-	private void ResetCardsToShow()
-	{
-		if (HideUncollectable)
-		{
-			CardsToShow = Common.Instance.CardManager.AllCards().Where(x => x.Collectable);
-		}
-		else
-		{
-			CardsToShow = Common.Instance.CardManager.AllCards();
-		}
-	}
+    private void ResetCardsToShow()
+    {
+        if (HideUncollectable)
+        {
+            CardsToShow = Common.Instance.CardManager.AllCards().Where(x => x.Collectable);
+        }
+        else
+        {
+            CardsToShow = Common.Instance.CardManager.AllCards();
+        }
+
+        var cardCollection = Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection;
+        CardsToShow = CardsToShow.Where(x => cardCollection.Has(x.CardName));
+    }
 
 	public void SetToPage(int page)
     {
@@ -77,13 +81,34 @@ public class Collection : MonoBehaviour
             .Take(ItemsPerPage)
             .ToList();
 
+        showingItems.Clear();
         foreach (var item in itemsToShow)
         {
+            var cardCollection = Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection;
+			OwnedCardData ownedCardData = cardCollection.Cards[item.CardName];
             var newGridItem = Instantiate(CardGridItemPrefab, CardGridTransform);
-            newGridItem.Setup(item, owner);
+            newGridItem.Setup(item, owner, ownedCardData);
+
+            showingItems.Add(newGridItem);
         }
 
         UpdatePageIndicator();
+    }
+
+    public void SetToCollectionView()
+	{
+        foreach(var item in showingItems)
+		{
+            item.SetToCollectionView();
+		}
+	}
+
+    public void SetToDeckView(Deck editingDeck)
+    {
+        foreach (var item in showingItems)
+        {
+            item.SetToDeckView(editingDeck);
+        }
     }
 
     public void NextPage()

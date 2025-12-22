@@ -8,7 +8,7 @@ public class SaveManager : MonoBehaviour
 	public bool LoadDataAtStart;
 	public string _savePath;
 
-	public SaveData SaveData { get; private set; }
+	public SaveData SaveData;
 
 	public void Initialize()
 	{
@@ -64,6 +64,11 @@ public class SaveManager : MonoBehaviour
 			var startingDeck = Common.Instance.StartingDeck;
 			SaveData.GameSaveData.DeckSaveDatas.Add(startingDeck.ToDeckData());
 			SaveData.GameSaveData.CurrentDeckIndex = 0;
+
+			foreach (var card in startingDeck.Cards)
+			{
+				SaveData.GameSaveData.CardCollection.Add(card.CardName, 1);
+			}
 			Save();
 		}
 	}

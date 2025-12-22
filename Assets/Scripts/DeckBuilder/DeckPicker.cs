@@ -24,8 +24,7 @@ public class DeckPicker : MonoBehaviour
 			var deckPickerButton = Instantiate(DeckPickerButtonPrefab, DeckPickerButtonContainer);
 			deckPickerButton.DeckPickedAction = DeckPickedAction;
 
-			var deck = deckData.ToDeck();
-			deckPickerButton.Setup(deck);
+			deckPickerButton.Setup(deckData);
 			DeckPickerButtons.Add(deckPickerButton);
 		}
 		UpdateUI();

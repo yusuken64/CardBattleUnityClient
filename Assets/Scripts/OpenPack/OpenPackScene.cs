@@ -17,7 +17,8 @@ public class OpenPackScene : MonoBehaviour
 	public GameObject OKButton;
 	public GameObject ReturnButton;
 
-	public int CardsOpend { get; private set; }
+	public int CardsOpened { get; private set; }
+	public List<CardDefinition> CardsCollected = new();
 
 	public void Start()
 	{
@@ -42,6 +43,7 @@ public class OpenPackScene : MonoBehaviour
 		{
 			Destroy(child.gameObject);
 		}
+		CardsCollected.Clear();
 	}
 
 	public void OpenPack()
@@ -51,6 +53,8 @@ public class OpenPackScene : MonoBehaviour
 			return;
 		}
 
+		CardsCollected.Clear();
+
 		ClosedChest.gameObject.SetActive(false);
 		OpenChest.gameObject.SetActive(true);
 		ReturnButton.gameObject.SetActive(false);
@@ -59,7 +63,7 @@ public class OpenPackScene : MonoBehaviour
 		float totalWidth = (CardCount - 1) * CardSpacing;
 		float startX = -totalWidth * 0.5f;
 
-		for (int i = 0;i < CardCount; i++)
+		for (int i = 0; i < CardCount; i++)
 		{
 			Vector3 localPos = new Vector3(
 				startX + i * CardSpacing,
@@ -79,14 +83,16 @@ public class OpenPackScene : MonoBehaviour
 			card.transform.localScale = Vector3.one;
 			card.FlipComplete = FlipComplete;
 			card.Setup(cardDefinition);
+
+			CardsCollected.Add(cardDefinition);
 		}
 	}
 
 	private void FlipComplete()
 	{
-		CardsOpend++;
+		CardsOpened++;
 
-		if (CardsOpend >= CardCount)
+		if (CardsOpened >= CardCount)
 		{
 			OKButton.gameObject.SetActive(true);
 		}
@@ -94,6 +100,11 @@ public class OpenPackScene : MonoBehaviour
 
 	public void OK_Clicked()
 	{
+		foreach(var card in CardsCollected)
+		{
+			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(card.CardName);
+		}
+
 		ResetChest();
 	}
 
@@ -105,7 +116,7 @@ public class OpenPackScene : MonoBehaviour
 		OpenChest.gameObject.SetActive(false);
 		OKButton.gameObject.SetActive(false);
 		ReturnButton.gameObject.SetActive(true);
-		CardsOpend = 0;
+		CardsOpened = 0;
 	}
 
 	public void Return_Clicked()

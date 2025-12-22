@@ -7,18 +7,27 @@ public class DeckPickerButton : MonoBehaviour
 {
 	public Image DeckImage;
 	public TextMeshProUGUI TitleText;
+	private DeckSaveData _deckData;
 
 	public Action<DeckPickerButton> DeckPickedAction { get; internal set; }
 	public Deck Deck { get; private set; }
 
-	internal void Setup(Deck deck)
-	{	
-		Deck = deck;
+
+	internal void Setup(DeckSaveData deckData)
+	{
+		_deckData = deckData;
+		ResetData();
+	}
+
+	public void ResetData()
+	{
+		Deck = _deckData.ToDeck();
 		UpdateUI();
 	}
 
 	public void Click()
 	{
+		ResetData();
 		DeckPickedAction?.Invoke(this);
 	}
 
