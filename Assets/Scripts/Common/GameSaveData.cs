@@ -45,37 +45,60 @@ public class GameSaveData
 [Serializable]
 public class CardCollection
 {
-	public Dictionary<string, OwnedCardData> Cards = new();
+	[SerializeField]
+	private List<OwnedCardData> cards = new();
+
+	private Dictionary<string, OwnedCardData> cache;
+
+	private void InvalidateCache()
+	{
+		cache = null;
+	}
+
+	public Dictionary<string, OwnedCardData> Cards
+	{
+		get
+		{
+			if (cache == null)
+				cache = cards.ToDictionary(c => c.CardID);
+			return cache;
+		}
+	}
 
 	public void Add(string cardId, int amount = 1)
 	{
 		if (amount <= 0)
 			return;
 
-		if (Cards.TryGetValue(cardId, out var owned))
+		var owned = cards.FirstOrDefault(c => c.CardID == cardId);
+		if (owned != null)
 		{
 			owned.Count += amount;
 		}
 		else
 		{
-			Cards[cardId] = new OwnedCardData
+			cards.Add(new OwnedCardData
 			{
 				CardID = cardId,
 				Count = amount
-			};
+			});
 		}
+
+		InvalidateCache();
 	}
 
 	public bool Remove(string cardId, int amount = 1)
 	{
-		if (!Cards.TryGetValue(cardId, out var owned))
+		var owned = cards.FirstOrDefault(c => c.CardID == cardId);
+		if (owned == null)
 			return false;
 
 		owned.Count -= amount;
 
 		if (owned.Count <= 0)
-			Cards.Remove(cardId);
+			cards.Remove(owned);
 
+		InvalidateCache();
 		return true;
 	}
 
