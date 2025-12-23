@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Battle6
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level6
-  BattleImage: {fileID: 21300000, guid: eaa0690ae3b17fd45b44cba2c3cdc93d, type: 3}
+  BattleImage: {fileID: 21300000, guid: 87d487cf9199fbb48840b5621997d753, type: 3}
   Description: 
   Deck: {fileID: 11400000, guid: 925ed256ef2d26a4591cde5815260acc, type: 2}

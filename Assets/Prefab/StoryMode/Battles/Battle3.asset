@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Battle3
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level3
-  BattleImage: {fileID: 21300000, guid: 128cd68fb7585704b8a92781dfc99d72, type: 3}
-  Description: 
+  BattleImage: {fileID: 21300000, guid: 1d94a9bf06b52f74bb8a1d0a742da600, type: 3}
+  Description: Definitely doesn't worship hitler, posts suspiciously a lot on twitter.
   Deck: {fileID: 11400000, guid: e2c24338442c0574ca881ef39bbf67a0, type: 2}

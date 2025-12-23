@@ -288,6 +288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleGridButton (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
+      objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -384,6 +388,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
@@ -486,6 +494,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
@@ -643,6 +655,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
@@ -846,6 +862,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
@@ -1243,9 +1263,6 @@ MonoBehaviour:
   BattleGridButtonPrefab: {fileID: 2726272988894325921, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
   BattlePreview: {fileID: 637828221}
   Datas:
-  - {fileID: 11400000, guid: 8f7107bf381e6144b8e7008827cb0340, type: 2}
-  - {fileID: 11400000, guid: c4aa126431c64164d955b729e31ebeef, type: 2}
-  - {fileID: 11400000, guid: aaa552a4369d1da4d923705175cdae0d, type: 2}
   - {fileID: 11400000, guid: 88c7f34e61379234eb3e64bc85080876, type: 2}
   - {fileID: 11400000, guid: b9b64c0fc2e22f2409d24769ee822fc3, type: 2}
   - {fileID: 11400000, guid: ec7ad4e353a0aa0478a8602d6cffa89f, type: 2}
@@ -1256,6 +1273,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a74e9dc010daaf4a80951b7ec6dd984, type: 2}
   - {fileID: 11400000, guid: 454b5f463383a8440b720fb4a08dbb38, type: 2}
   - {fileID: 11400000, guid: 13fe9b71ac155d144bf03f7600f29fb6, type: 2}
+  - {fileID: 11400000, guid: 2a80c09ab1cf26a41a1ba44bcf95c4e9, type: 2}
+  - {fileID: 11400000, guid: 5af3f3a8fc92507439f865da000cc5c8, type: 2}
 --- !u!4 &938256840
 Transform:
   m_ObjectHideFlags: 0
@@ -1363,6 +1382,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleGridButton (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
+      objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1459,6 +1482,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
@@ -1562,6 +1589,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleGridButton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
+      objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1658,6 +1689,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
@@ -1835,6 +1870,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
@@ -2163,6 +2202,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x
@@ -2560,6 +2603,10 @@ PrefabInstance:
     - target: {fileID: 450032743595539095, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Name
       value: BattleGridButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859435565126440249, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.071045
       objectReference: {fileID: 0}
     - target: {fileID: 7953073548817786051, guid: cc6317e7f4814b54e81005efecd33b51, type: 3}
       propertyPath: m_Pivot.x

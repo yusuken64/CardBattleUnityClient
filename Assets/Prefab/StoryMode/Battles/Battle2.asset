@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Battle2
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level2
-  BattleImage: {fileID: 21300000, guid: fa80981d3b2da9145b0c633a7bcc155e, type: 3}
-  Description: 
+  BattleImage: {fileID: 21300000, guid: 7577e7418b7aa3145b4ce23bfd44faca, type: 3}
+  Description: '"I''m Trans" she said, derailing the story. Trannie no dev who doom
+    posts about AI slop'
   Deck: {fileID: 11400000, guid: b13303dde9d6dc54dbf604f0a24f922e, type: 2}

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Battle0
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level0
-  BattleImage: {fileID: 21300000, guid: 36fdf5d5b0810ee4197ea5b22bfc9580, type: 3}
-  Description: 
+  BattleImage: {fileID: 21300000, guid: bd4e4a34bfdffa140813420745cb1c03, type: 3}
+  Description: I can't believe this 6/7 dragon girl is only 6 mana!
   Deck: {fileID: 11400000, guid: 1d3afb2a9809a764cbf904977a5c3d11, type: 2}

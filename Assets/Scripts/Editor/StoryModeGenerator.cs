@@ -37,17 +37,15 @@ public static class StoryModeGenerator
             .Where(x => x.Collectable)
             .ToList();
 
-        var heroPool = cards
-            .OfType<MinionCardDefinition>()
-            .ToList();
+        var heroPool = PickRandomWithoutReplacement(cards.OfType<MinionCardDefinition>().ToList(), 12);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 12; i++)
         {
             string battleFilePath = Path.Combine(StoryDefinitionFolder, $"Battle{i}.asset");
             string battleDeckFilePath = Path.Combine(StoryDefinitionFolder, $"Battle{i}_Deck.asset");
             var newBattleDefinition = EnsureObjectExists<StoryModeBattleDefinition>(battleFilePath);
             var newBattleDeckDefinition = EnsureObjectExists<DeckDefinition>(battleDeckFilePath);
-            var hero = PickRandomWithReplacement(heroPool)[0];
+            var hero = heroPool[i];
 
             newBattleDefinition.LevelID = $"Level{i}";
             newBattleDefinition.BattleImage = hero.Sprite; //sprite of the deckleader
@@ -79,6 +77,26 @@ public static class StoryModeGenerator
         }
 
         return cards;
+    }
+
+    private static List<T> PickRandomWithoutReplacement<T>(IList<T> list, int count)
+    {
+        if (list == null || list.Count == 0)
+            throw new ArgumentException("PickRandom called with null or empty list");
+
+        if (count < 0 || count > list.Count)
+            throw new ArgumentOutOfRangeException(nameof(count));
+
+        var copy = new List<T>(list);
+
+        // Fisher-Yates shuffle
+        for (int i = copy.Count - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            (copy[i], copy[j]) = (copy[j], copy[i]);
+        }
+
+        return copy.GetRange(0, count);
     }
 
     private static List<T> PickRandomWithReplacement<T>(IList<T> list, int count = 1)
