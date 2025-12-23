@@ -13,6 +13,7 @@ public class GameSettings : MonoBehaviour
 	public void GlobalSettings_Clicked()
 	{
 		Common.Instance.GlobalSettings.gameObject.SetActive(true);
+		Common.Instance.GlobalSettings.SetToAudioSettings();
 	}
 
 	public void Forfeit_Clicked()

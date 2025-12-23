@@ -56,13 +56,21 @@ public class MainMenu : MonoBehaviour
 		DataObject.gameObject.SetActive(false);
 	}
 
-	public void GlobalSettings_Click()
+	public void AudioSettings_Click()
 	{
 		Common.Instance.GlobalSettings.gameObject.SetActive(true);
+		Common.Instance.GlobalSettings.SetToAudioSettings();
+	}
+
+	public void DisplaySettings_Click()
+	{
+		Common.Instance.GlobalSettings.gameObject.SetActive(true);
+		Common.Instance.GlobalSettings.SetToDisplaySettings();
 	}
 
 	public void Close_Click()
 	{
+		Common.Instance.SaveManager.Save();
 		Application.Quit();
 	}
 }
