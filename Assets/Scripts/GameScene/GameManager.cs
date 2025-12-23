@@ -1,4 +1,6 @@
 using CardBattleEngine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,7 +8,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 	public static string ReturnScreenName;
-	public static System.Action<bool> GameResultAction;
+	public static Func<bool, IEnumerator> GameResultRoutine;
 	public Player Player;
 	public Player Opponent;
 
@@ -65,7 +67,7 @@ public class GameManager : MonoBehaviour
 		int seed = 0;
 		if (UseSeed)
 		{
-			Random.InitState(seed);
+			UnityEngine.Random.InitState(seed);
 		}
 
 		UnityRNG rng = new UnityRNG();
@@ -194,7 +196,7 @@ public class GameManager : MonoBehaviour
 
 				if (!targets.Any()) { return null; }
 
-				return targets[Random.Range(0, targets.Count())];
+				return targets[UnityEngine.Random.Range(0, targets.Count())];
 			});
 
 			string actionString = nextAction.Item1.ToString();

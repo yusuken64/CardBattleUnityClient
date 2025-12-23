@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,9 +27,14 @@ public class BattlePreview : MonoBehaviour
 		gameSaveData.CombatDeckEnemy = _data.Deck.ToDeckData();
 		var levelId = _data.LevelID;
 
-		GameManager.GameResultAction = (isWin) =>
+		GameManager.GameResultRoutine = GameResult;
+
+		IEnumerator GameResult(bool isWin)
 		{
-			if (!isWin) return;
+			if (!isWin)
+			{
+				yield break;
+			}
 
 			var save = Common.Instance.SaveManager.SaveData.GameSaveData;
 			var completed = save.StorySaveData.CompletedLevels;
@@ -37,7 +43,15 @@ public class BattlePreview : MonoBehaviour
 			{
 				completed.Add(levelId);
 			}
-		};
+
+			save.PackCount++;
+
+			FindFirstObjectByType<UI>().ShowMessage("Acquired 1 Pack");
+
+			Common.Instance.SaveManager.Save();
+
+			yield return null;
+		}
 
 		GameManager.ReturnScreenName = "StoryMode";
 

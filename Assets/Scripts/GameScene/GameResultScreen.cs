@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,7 +14,13 @@ public class GameResultScreen : MonoBehaviour
 
 	public GameObject OkButton;
 
+	private bool okClicked = false;
 	public void Ok_Clicked()
+	{
+		okClicked = true;
+	}
+
+	private static void ExitScene()
 	{
 		string returnScreenName = GameManager.ReturnScreenName;
 		if (String.IsNullOrWhiteSpace(returnScreenName))
@@ -43,10 +50,6 @@ public class GameResultScreen : MonoBehaviour
 
 	internal IEnumerator DoGameEndRoutine(bool isWin)
 	{
-		var gameResultAction = GameManager.GameResultAction;
-		GameManager.GameResultAction = null;
-		gameResultAction?.Invoke(isWin);
-
 		this.gameObject.SetActive(true);
 
 		var gameManager = FindFirstObjectByType<GameManager>();
@@ -101,5 +104,21 @@ public class GameResultScreen : MonoBehaviour
 
 		// Wait for the sequence to finish
 		yield return seq.WaitForCompletion();
+		yield return new WaitUntil(() => okClicked);
+
+		var gameResultRoutine = GameManager.GameResultRoutine;
+		GameManager.GameResultRoutine = null;
+
+		if (gameResultRoutine != null)
+		{
+			yield return gameResultRoutine(isWin);
+			yield return new WaitUntil(() =>
+				Mouse.current?.leftButton.wasPressedThisFrame == true ||
+				Keyboard.current?.anyKey.wasPressedThisFrame == true ||
+				Touchscreen.current?.primaryTouch.press.wasPressedThisFrame == true
+			);
+		}
+
+		ExitScene();
 	}
 }

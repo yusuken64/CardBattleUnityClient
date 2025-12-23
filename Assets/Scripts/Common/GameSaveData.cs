@@ -38,6 +38,8 @@ public class GameSaveData
 	public DeckSaveData CombatDeckEnemy;
 
 	public CardCollection CardCollection = new();
+
+	public int PackCount;
 }
 
 [Serializable]

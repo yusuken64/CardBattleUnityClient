@@ -16,6 +16,7 @@ public class OpenPackScene : MonoBehaviour
 	public GameObject OpenChest;
 	public GameObject OKButton;
 	public GameObject ReturnButton;
+	public PackRedDot PackRedDot;
 
 	public int CardsOpened { get; private set; }
 	public List<CardDefinition> CardsCollected = new();
@@ -52,6 +53,14 @@ public class OpenPackScene : MonoBehaviour
 		{
 			return;
 		}
+
+		var packCount = Common.Instance.SaveManager.SaveData.GameSaveData.PackCount;
+		if (packCount <= 0)
+		{
+			return;
+		}
+
+		Common.Instance.SaveManager.SaveData.GameSaveData.PackCount -= 1;
 
 		CardsCollected.Clear();
 
@@ -110,6 +119,7 @@ public class OpenPackScene : MonoBehaviour
 
 	private void ResetChest()
 	{
+		PackRedDot.RefreshData();
 		readyToOpen = true;
 		ClearPack();
 		ClosedChest.gameObject.SetActive(true);
