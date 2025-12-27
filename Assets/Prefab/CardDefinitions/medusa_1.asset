@@ -12,23 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: medusa_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: medusa 1
   ID: medusa_1
   Sprite: {fileID: 21300000, guid: 273b1360503b40d4daae09b4d856726e, type: 3}
-  Cost: 1
+  Cost: 5
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 5
+  Health: 5
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
-  HasDivineShield: 0
-  HasTaunt: 0
+  HasDivineShield: 1
+  HasTaunt: 1
   HasPoisonous: 0
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2

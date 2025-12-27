@@ -29,36 +29,42 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 5
-    EffectTiming: 1
+    EffectTiming: 0
     TargetType: 7
     GameActions:
     - rid: 6533011672544051275
     Condition:
-      rid: -2
+      rid: 867526235581054991
     AffectedEntitySelectorWrapper:
       rid: 6533011672544051276
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 867525788542959708
-      type: {class: DamageDealtValueWrapper, ns: , asm: Assembly-CSharp}
+    - rid: 867526235581054991
+      type: {class: OriginalSourceConditionWrapper, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 867526235581055067
+      type: {class: StatValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityStat: 1
+        EntityContextProvider: 1
     - rid: 6533011672544051275
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Damage:
-          rid: 867525788542959708
+          rid: 867526235581055067
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 6533011672544051276
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         Operations:
         - rid: 6533011672544051277
+        ResolutionTiming: 0
     - rid: 6533011672544051277
       type: {class: CleaveOperationWrapper, ns: , asm: Assembly-CSharp}
       data:

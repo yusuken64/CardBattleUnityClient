@@ -22,14 +22,20 @@ MonoBehaviour:
   SpellCastEffects:
   - Description: Draw 2 Cards
     GameActions:
-    - rid: 6533011592832090112
+    - rid: 867526235581055073
+    - rid: 867526235581055074
     AffectedEntitySelectorWrapper:
       rid: 6533011592832090114
   CustomSFX: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 6533011592832090112
+    - rid: 867526235581055073
+      type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 867526235581055074
       type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
@@ -39,6 +45,7 @@ MonoBehaviour:
       data:
         Operations:
         - rid: 6533011592832090115
+        ResolutionTiming: 0
     - rid: 6533011592832090115
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:

@@ -10,6 +10,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 	public AudioClip StartTurnSound;
 	public override IEnumerator Play()
 	{
+		yield return new WaitForSecondsRealtime(0.5f);
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		var opponent = GameManager.GetPlayerFor(State.OpponentOf(Context.SourcePlayer));
 
@@ -55,7 +56,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			GameManager.ActivePlayerTurn = false;
 		}
 
-		yield return new WaitForSecondsRealtime(0.5f);
+		yield return new WaitForSecondsRealtime(1.0f);
 
 		player.RefreshData();
 		//opponent.RefreshData();

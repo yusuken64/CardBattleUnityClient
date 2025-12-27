@@ -58,7 +58,10 @@ public class CardManager : MonoBehaviour
 			cardsToAdd.AddRange(DebugCards);
 		}
 
-		return cardsToAdd;
+		return cardsToAdd
+			.GroupBy(c => c.CardName)
+			.Select(g => g.First())
+			.ToList();
 	}
 
 	public CardDefinition GetCardByName(string name)

@@ -12,23 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: heavy_gunner
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: heavy gunner
   ID: heavy_gunner
   Sprite: {fileID: 21300000, guid: f38f0e6607b90084bb86bf52a124d30c, type: 3}
-  Cost: 1
+  Cost: 5
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 3
+  Health: 2
   MinionTribes: 
   IsStealth: 0
-  HasCharge: 0
-  HasDivineShield: 0
+  HasCharge: 1
+  HasDivineShield: 1
   HasTaunt: 0
   HasPoisonous: 0
   HasWindFury: 0
-  HasLifeSteal: 0
+  HasLifeSteal: 1
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2

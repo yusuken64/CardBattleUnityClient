@@ -124,6 +124,10 @@ public class GameInteractionHandler : MonoBehaviour
 					currentDraggable.CancelDrag();
 				}
 			}
+			else
+			{
+				currentDraggable.CancelDrag();
+			}
 			CancelAim();
 
 			currentDraggable = null;
@@ -158,6 +162,10 @@ public class GameInteractionHandler : MonoBehaviour
 					}
 					CancelAim();
 				}
+			}
+			else
+			{
+				CancelAim();
 			}
 		}
 	}

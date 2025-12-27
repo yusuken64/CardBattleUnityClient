@@ -29,6 +29,13 @@ public static class WrapperGenerator
         },
         new PropertyReplacement
         {
+            OriginalType = typeof(CardBattleEngine.Card),
+            //ReplacementType = typeof(MinionCardDefinition),
+            GenerateField = p => $"    public {typeof(CardDefinition).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateCard();"
+        },
+        new PropertyReplacement
+        {
             OriginalType = typeof(CardBattleEngine.ExpirationTrigger),
             GenerateField = p => $"    [SerializeReference] public {typeof(ExpirationTriggerWrapper).FullName}? {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateEffect();"
