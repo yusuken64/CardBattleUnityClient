@@ -131,13 +131,40 @@ public class VerticalDeckViewer : MonoBehaviour
 
     public void DeckSave_Clicked()
     {
+        if (!isValidDeck(out string message))
+		{
+            //show error message
+            FindFirstObjectByType<DeckBuilderPage>().ShowMessage(message);
+            return;
+		}
+
         editingDeck.Title = TitleText.text;
         editingDeck.Cards = _spawnedCards.Select(x => x.CardDefinition).ToList();
         editingDeck.HeroCard = _spawnedCards.FirstOrDefault(x => x.HeroIndicator.DeckCard == HeroCard).CardDefinition;
         DeckClosedAction?.Invoke(editingDeck);
     }
 
-    public Deck GetDeck()
+	private bool isValidDeck(out string message)
+    {
+		DeckCard deckCard = _spawnedCards.FirstOrDefault(x => x.HeroIndicator.DeckCard == HeroCard);
+		if (deckCard == null)
+        {
+            //hero needs to be set
+            message = "Hero needs to be set (red dot)";
+            return false;
+        }
+
+        if (deckCard.CardDefinition is not MinionCardDefinition)
+		{
+            message = "Hero needs to be a minion";
+            return false;
+        }
+
+        message = "";
+        return true;
+    }
+
+	public Deck GetDeck()
 	{
         editingDeck.Title = TitleText.text;
         editingDeck.Cards = _spawnedCards.Select(x => x.CardDefinition).ToList();

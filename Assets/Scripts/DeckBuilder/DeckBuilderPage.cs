@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,10 +11,14 @@ public class DeckBuilderPage : MonoBehaviour
 	public VerticalDeckViewer DeckViewer;
 	public Collection Collection;
 
+	public GameObject ErrorMessageCanvas;
+	public TextMeshProUGUI ErrorMessageText;
+
 	private void Start()
 	{
 		DeckPicker.gameObject.SetActive(true);
 		DeckViewer.gameObject.SetActive(false);
+		ErrorMessageCanvas.gameObject.SetActive(false);
 
 		DeckPicker.DeckPickedAction = DeckPicker_DeckPicked;
 		DeckViewer.DeckClosedAction = DeckViewer_DeckSaved;
@@ -51,5 +57,18 @@ public class DeckBuilderPage : MonoBehaviour
 	public void ReturnToMain()
 	{
 		SceneManager.LoadScene("Main");
+	}
+
+	public void ShowMessage(string message)
+	{
+		ErrorMessageCanvas.gameObject.SetActive(true);
+		ErrorMessageText.text = message;
+		StartCoroutine(HideMessageAfterDelay(3f)); // Hide after 3 seconds
+	}
+
+	private IEnumerator HideMessageAfterDelay(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		ErrorMessageCanvas.gameObject.SetActive(false);
 	}
 }
