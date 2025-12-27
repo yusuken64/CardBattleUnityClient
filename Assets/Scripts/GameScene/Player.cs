@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour, ITargetable
 	public Board Board;
 	public Weapon Weapon;
 	public GameObject DrawPile;
+	public TextMeshProUGUI DrawPileCount;
 	public HeroPower HeroPower;
 	public bool CanAttack;
 
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour, ITargetable
 	public int Armor;
 	public int Mana;
 	public int MaxMana;
+	public int CardsLeftInDeck;
 
 	public TextMeshProUGUI ManaText;
 
@@ -57,6 +60,7 @@ public class Player : MonoBehaviour, ITargetable
 		Mana = Data.Mana;
 		MaxMana = Data.MaxMana;
 		CanAttack = Data.CanAttack();
+		CardsLeftInDeck = Data.Deck.Count();
 
 		if (HeroPower != null)
 		{
@@ -86,6 +90,7 @@ public class Player : MonoBehaviour, ITargetable
 	{
 		HeroPortrait.UpdateUI();
 		ManaText.text = $"{Mana}/{MaxMana}";
+		DrawPileCount.text = CardsLeftInDeck.ToString();
 	}
 
 	public CardBattleEngine.IGameEntity GetData()
