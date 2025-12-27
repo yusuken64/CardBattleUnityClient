@@ -25,6 +25,8 @@ public class Collection : MonoBehaviour
 	public IEnumerable<CardDefinition> CardsToShow { get; private set; }
     public bool HideUncollectable;
     public List<CollectionItem> showingItems;
+    public bool IsCollectionView;
+    public Deck CurrentDeck;
 
 	private void OnEnable()
 	{
@@ -45,7 +47,8 @@ public class Collection : MonoBehaviour
 
     private void Start()
 	{
-		ResetCardsToShow();
+        IsCollectionView = true;
+        ResetCardsToShow();
 		SetToPage(CurrentPage);
 	}
 
@@ -92,12 +95,23 @@ public class Collection : MonoBehaviour
             showingItems.Add(newGridItem);
         }
 
+        if (IsCollectionView)
+        {
+            SetToCollectionView();
+        }
+        else
+        {
+            SetToDeckView(CurrentDeck);
+        }
+
         UpdatePageIndicator();
     }
 
     public void SetToCollectionView()
 	{
-        foreach(var item in showingItems)
+        IsCollectionView = true;
+        CurrentDeck = null;
+        foreach (var item in showingItems)
 		{
             item.SetToCollectionView();
 		}
@@ -105,6 +119,8 @@ public class Collection : MonoBehaviour
 
     public void SetToDeckView(Deck editingDeck)
     {
+        IsCollectionView = false;
+        CurrentDeck = editingDeck;
         foreach (var item in showingItems)
         {
             item.SetToDeckView(editingDeck);
