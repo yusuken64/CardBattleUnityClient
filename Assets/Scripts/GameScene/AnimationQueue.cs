@@ -73,6 +73,7 @@ public class AnimationQueue : MonoBehaviour
             var sfxRoutine = anim.CustomSFX();
             yield return StartCoroutine(sfxRoutine);
 
+            yield return StartCoroutine(anim.ApplyStatus());
             yield return StartCoroutine(anim.Play());
             if (anim != null) Destroy(anim.GameObject);
         }
@@ -102,6 +103,7 @@ public abstract class GameActionAnimationBase : MonoBehaviour, IAnimation
     }
 
 	public abstract IEnumerator CustomSFX();
+    public abstract IEnumerator ApplyStatus();
 }
 
 public abstract class GameActionAnimation<T> : GameActionAnimationBase where T : IGameAction
@@ -126,12 +128,38 @@ public abstract class GameActionAnimation<T> : GameActionAnimationBase where T :
 
         yield return SFXScriptableObject.Routine(Action, Context);
 	}
+
+    public override IEnumerator ApplyStatus()
+    {
+        foreach (var change in Context.ResolvedStatusChanges)
+		{
+            var target = GameManager.GetObjectFor(change.Target);
+            if (target == null) { continue; }
+
+            //TODO: Have each IGameEntity implement a view interface like IStatusView
+            //and call ApplyStatusDelta on it
+            Minion minion = target.GetComponent<Minion>();
+			switch (change.Status)
+			{
+				case StatusType.Freeze:
+					minion.IsFrozen = change.Gained;
+					break;
+				case StatusType.Stealth:
+					minion.HasStealth = change.Gained;
+                    break;
+			}
+            minion.UpdateUI();
+		}
+
+		yield return null;
+	}
 }
 
 public interface IAnimation
 {
 	IEnumerator Play();
     IEnumerator CustomSFX();
+    IEnumerator ApplyStatus();
 
     GameObject GameObject { get; }
 }

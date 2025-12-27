@@ -3,22 +3,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
-public class StatusChangeAnimation : GameActionAnimation<StatusChangeAction>
-{
-	public override IEnumerator Play()
-	{
-		Transform target = GameManager.GetObjectFor(Context.Target).transform;
-
-		if (Action.LostStealth)
-		{
-			target.Stealth = false;
-			target.UpdateUI();
-		}
-		//.. handle other status like freeze
-	}
-}
-
-	public class AttackAnimation : GameActionAnimation<AttackAction>
+public class AttackAnimation : GameActionAnimation<AttackAction>
 {
 	public float Duration = 0.15f;
 	public AnimationCurve AttackCurve;
