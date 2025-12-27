@@ -11,6 +11,7 @@ public class EndTurnAnimation : GameActionAnimation<EndTurnAction>
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		if (Context.SourcePlayer == GameManager.Opponent.Data)
 		{
+			GameManager.OpponentTurn = false;
 			yield return new WaitForSecondsRealtime(1.0f);
 		}
 

@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 	private RandomAI _opponentAgent;
 	public GameState _gameState { get; private set; }
 	public bool ActivePlayerTurn { get; internal set; } //based on client animation timing 
+	public bool OpponentTurn { get; internal set; }
 
 	public bool UseSeed;
 	public int RandomSeed;
@@ -184,7 +185,18 @@ public class GameManager : MonoBehaviour
 
 	private void ActionResolvedCallback(GameState state)
 	{
-		if (state.CurrentPlayer == Opponent.Data)
+		ProcessEnemyMove(state);
+
+		Opponent.UpdatePlayableActions(false);
+		Player.UpdatePlayableActions(
+			ActivePlayerTurn &&
+			state.CurrentPlayer == Player.Data);
+	}
+
+	public void ProcessEnemyMove(GameState state)
+	{
+		if (OpponentTurn &&
+			state.CurrentPlayer == Opponent.Data)
 		{
 			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(state);
 			((IGameAgent)_opponentAgent).SetTarget(nextAction, (x) =>
@@ -208,11 +220,6 @@ public class GameManager : MonoBehaviour
 			Debug.Log($"Enemy Action {actionString}");
 			ResolveAction(nextAction.Item1, nextAction.Item2);
 		}
-
-		Opponent.UpdatePlayableActions(false);
-		Player.UpdatePlayableActions(
-			ActivePlayerTurn &&
-			state.CurrentPlayer == Player.Data);
 	}
 }
 

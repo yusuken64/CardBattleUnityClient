@@ -13,6 +13,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 		yield return new WaitForSecondsRealtime(0.5f);
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		var opponent = GameManager.GetPlayerFor(State.OpponentOf(Context.SourcePlayer));
+		player.RefreshData();
 
 		if (Context.SourcePlayer == GameManager.Player.Data)
 		{
@@ -53,14 +54,14 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 		}
 		else
 		{
+			GameManager.OpponentTurn = true;
 			GameManager.ActivePlayerTurn = false;
+			yield return new WaitForSecondsRealtime(1.0f);
+
+			GameManager.ProcessEnemyMove(State);
 		}
 
-		yield return new WaitForSecondsRealtime(1.0f);
-
-		player.RefreshData();
 		//opponent.RefreshData();
-
 		//ValidateState(Context.SourcePlayer, player);
 	}
 
