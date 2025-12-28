@@ -38,18 +38,12 @@ MonoBehaviour:
     GameActions:
     - rid: 867526235581054990
     Condition:
-      rid: 867526235581054989
+      rid: 867526304419807315
     AffectedEntitySelectorWrapper:
-      rid: -2
+      rid: 867526304419807297
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 867526235581054989
-      type: {class: OriginalSourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        TeamRelationship: 0
     - rid: 867526235581054990
       type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -57,3 +51,16 @@ MonoBehaviour:
         IndexOffset: 0
         Canceled: 0
         CustomSFX: {fileID: 0}
+    - rid: 867526304419807297
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 867526304419807315
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+        SourceType: 0
