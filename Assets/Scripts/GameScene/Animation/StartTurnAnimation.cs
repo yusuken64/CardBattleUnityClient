@@ -13,11 +13,11 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 	{
 		yield return new WaitForSecondsRealtime(0.5f);
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
-		var opponent = GameManager.GetPlayerFor(State.OpponentOf(Context.SourcePlayer));
-		player.RefreshData();
+		var opponent = GameManager.GetPlayerFor(ClonedState.OpponentOf(Context.SourcePlayer));
 
 		if (Context.SourcePlayer == GameManager.Player.Data)
 		{
+			player.RefreshData();
 			Common.Instance.AudioManager.PlaySound(StartTurnSound);
 			var turnStartObject = FindFirstObjectByType<UI>().TurnStartObject;
 			turnStartObject.gameObject.SetActive(true);
@@ -52,6 +52,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 
 			FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
 			GameManager.ActivePlayerTurn = true;
+			player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
 #if UNITY_EDITOR
 			ValidateState(Context.SourcePlayer, player);
 #endif
@@ -60,12 +61,11 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 		{
 			GameManager.OpponentTurn = true;
 			GameManager.ActivePlayerTurn = false;
+			GameManager.Player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
 			yield return new WaitForSecondsRealtime(1.0f);
 
-			GameManager.ProcessEnemyMove(State);
+			GameManager.ProcessEnemyMove(ClonedState);
 		}
-
-		//opponent.RefreshData();
 	}
 
 	public void ValidateState(CardBattleEngine.Player data, Player player)

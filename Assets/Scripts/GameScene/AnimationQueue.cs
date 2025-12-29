@@ -91,7 +91,7 @@ public class AnimationQueue : MonoBehaviour
 public abstract class GameActionAnimationBase : MonoBehaviour, IAnimation
 {
     protected GameManager GameManager { get; private set; }
-    protected GameState State { get; private set; }
+    protected GameState ClonedState { get; private set; }
     protected IGameAction Action { get; set; }
     protected ActionContext Context { get; private set; }
     public abstract Type ActionType { get; }
@@ -100,10 +100,10 @@ public abstract class GameActionAnimationBase : MonoBehaviour, IAnimation
 
     public abstract IEnumerator Play();
 
-    public virtual void Init(GameManager gm, GameState state, (IGameAction action, ActionContext context) current)
+    public virtual void Init(GameManager gm, GameState clonedState, (IGameAction action, ActionContext context) current)
     {
         GameManager = gm;
-        State = state;
+        ClonedState = clonedState;
         Action = current.action;
         Context = current.context;
     }
@@ -163,12 +163,12 @@ public abstract class GameActionAnimation<T> : GameActionAnimationBase where T :
 
 	public override void SyncData()
 	{
-        var allEnitites = State.GetAllEntities();
-        foreach (var entity in allEnitites)
+        var allEnitities = ClonedState.GetAllEntities();
+        foreach (var entity in allEnitities)
         {
-            var unityEnity = GameManager.GetObjectByID(entity.Id);
-            if (unityEnity?.Entity == null) { continue; }
-            unityEnity?.SyncData(entity);
+            var unityEntity = GameManager.GetObjectByID(entity.Id);
+            if (unityEntity?.Entity == null) { continue; }
+            unityEntity?.SyncData(entity);
         }
 	}
 }

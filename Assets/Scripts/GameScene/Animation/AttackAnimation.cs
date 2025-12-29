@@ -27,7 +27,7 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 			player.EquippedWeapon != null)
 		{
 			var gamePlayer = GameManager.GetObjectFor(Context.Source).GetComponentInParent<Player>();
-			gamePlayer.Weapon.Durablity--;
+			gamePlayer.Weapon.Durability--;
 			gamePlayer.Weapon.UpdateUI();
 		}
 

@@ -19,7 +19,7 @@ public class EquipWeaponAnimation : GameActionAnimation<EquipWeaponAction>
 		player.Weapon.transform.DOScale(Vector3.one, 0.3f);
 		player.Weapon.transform.DOPunchScale(Vector3.one * 1.1f, 0.2f);
 
-		player.Weapon.RefreshData();
+		//player.Weapon.RefreshData();
 		player.Attack += player.Data.Attack;
 		player.UpdateUI();
 

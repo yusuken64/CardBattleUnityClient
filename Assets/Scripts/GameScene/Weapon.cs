@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
 	public CardBattleEngine.Weapon Data;
 
 	public int Attack;
-	public int Durablity;
+	public int Durability;
 
 	internal void Setup(CardBattleEngine.Weapon weapon)
 	{
@@ -37,14 +37,31 @@ public class Weapon : MonoBehaviour
 		if (Data == null) { return; }
 
 		Attack = Data.Attack;
-		Durablity = Data.Durability;
+		Durability = Data.Durability;
 
 		UpdateUI();
 	}
 
 	public void UpdateUI()
 	{
+		gameObject.SetActive(Data != null);
 		AttackText.text = Attack.ToString();
-		DurabilityText.text = Durablity.ToString();
+		DurabilityText.text = Durability.ToString();
+	}
+
+	internal void SyncData(CardBattleEngine.Weapon equippedWeapon)
+	{
+		if (equippedWeapon != null)
+		{
+			Attack = equippedWeapon.Attack;
+			Durability = equippedWeapon.Durability;
+		}
+		else
+		{
+			Attack = 0;
+			Durability = 0;
+		}
+
+		UpdateUI();
 	}
 }

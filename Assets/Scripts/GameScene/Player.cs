@@ -103,9 +103,13 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 			HeroPower.RefreshData();
 		}
 
+		Weapon.SyncData(data.EquippedWeapon);
 		if (data.EquippedWeapon == null)
 		{
 			Weapon.gameObject.SetActive(false);
+		}
+		else
+		{
 		}
 
 		UpdateUI();

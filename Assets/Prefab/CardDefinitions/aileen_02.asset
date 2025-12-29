@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: aileen_02
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Aileen 02
   ID: aileen_02
   Sprite: {fileID: 21300000, guid: b4885aa188590df438fb6a201df30bc9, type: 3}
-  Cost: 1
+  Cost: 2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 2
+  Health: 2
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -30,7 +30,33 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 1
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 867526332731097089
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 867526332731097088
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 867526332731097088
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 867526332731097089
+      type: {class: AcquireWeaponActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Weapon: {fileID: 11400000, guid: 7377ee7c21badc74695ef944f46fef46, type: 2}
+        Canceled: 0
+        CustomSFX: {fileID: 0}

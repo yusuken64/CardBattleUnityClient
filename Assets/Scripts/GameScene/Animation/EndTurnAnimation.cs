@@ -15,6 +15,6 @@ public class EndTurnAnimation : GameActionAnimation<EndTurnAction>
 			yield return new WaitForSecondsRealtime(1.0f);
 		}
 
-		player.RefreshData();
+		//player.RefreshData();
 	}
 }
