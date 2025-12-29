@@ -38,7 +38,7 @@ MonoBehaviour:
     GameActions:
     - rid: 867525712731439229
     Condition:
-      rid: 867525712731439227
+      rid: 867526333345562698
     AffectedEntitySelectorWrapper:
       rid: 867525712731439228
   references:
@@ -46,10 +46,6 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 867525712731439227
-      type: {class: OriginalSourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        TeamRelationship: 0
     - rid: 867525712731439228
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -79,3 +75,7 @@ MonoBehaviour:
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 1
+    - rid: 867526333345562698
+      type: {class: TargetOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
