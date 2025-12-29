@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level7
   BattleImage: {fileID: 21300000, guid: 5d8b513313fb442478ce13916bcac516, type: 3}
-  Description: 
+  Description: Takes personal offense at even mild criticism. Reflexively brands
+    dissenters as irredeemable extremists, fueling a constant state of righteous
+    fury. Both noses are pierced.
   Deck: {fileID: 11400000, guid: a6fe28e532618a54981e67e6a8a24020, type: 2}

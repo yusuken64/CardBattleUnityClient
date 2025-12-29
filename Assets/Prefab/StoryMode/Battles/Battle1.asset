@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level1
   BattleImage: {fileID: 21300000, guid: 598391d1cb85dab46a5b5cf510ab49b3, type: 3}
-  Description: 
+  Description: Butthurt DIscord mod who privately messages you about your "intentions"
+    before deleting your message anyway in the name of "peacekeeping". Had no intention
+    of hearing you out.
   Deck: {fileID: 11400000, guid: 9d314a8a51fa20b46a9396d263150479, type: 2}

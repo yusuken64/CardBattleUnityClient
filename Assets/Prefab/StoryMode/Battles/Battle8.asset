@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level8
   BattleImage: {fileID: 21300000, guid: bb525cf3643b50544b25fa859d87f9f8, type: 3}
-  Description: 
+  Description: Deeply entitled and physically indulgent, this character refuses labor,
+    citing unresolved psychological wounds. Has a labubu collection they can't afford.
   Deck: {fileID: 11400000, guid: 6ddf61ed13d8c9b45b3e17fcb9da68f0, type: 2}
