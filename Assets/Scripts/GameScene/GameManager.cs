@@ -115,8 +115,8 @@ public class GameManager : MonoBehaviour
 	internal GameObject GetObjectFor(IGameEntity source)
 	{
 #pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
-		if (source == Player.Data) { return Player.HeroPortrait.gameObject; }
-		if (source == Opponent.Data) { return Opponent.HeroPortrait.gameObject; }
+		if (source.Id == Player.Data.Id) { return Player.HeroPortrait.gameObject; }
+		if (source.Id == Opponent.Data.Id) { return Opponent.HeroPortrait.gameObject; }
 #pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
 
 		if (source is CardBattleEngine.Minion minion)
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
 			allMinions.AddRange(Player.Board.Minions);
 			allMinions.AddRange(Opponent.Board.Minions);
 
-			var first = allMinions.FirstOrDefault(x => x.Data == minion);
+			var first = allMinions.FirstOrDefault(x => x.Data.Id == minion.Id);
 			if (first != null)
 			{
 				return first.gameObject;
@@ -133,6 +133,23 @@ public class GameManager : MonoBehaviour
 		}
 
 		return null;
+	}
+
+	internal IEnumerable<IUnityGameEntity> EnumerateAllEntities()
+	{
+		yield return Player;
+		foreach (var c in Player.Hand.Cards) yield return c;
+		foreach (var m in Player.Board.Minions) yield return m;
+
+		yield return Opponent;
+		foreach (var c in Opponent.Hand.Cards) yield return c;
+		foreach (var m in Opponent.Board.Minions) yield return m;
+	}
+
+	internal IUnityGameEntity GetObjectByID(Guid id)
+	{
+		return EnumerateAllEntities()
+			.FirstOrDefault(x => x.Entity?.Id == id);
 	}
 
 	public bool CheckIsValid(IGameAction action, ActionContext context, out string reason)
@@ -196,7 +213,7 @@ public class GameManager : MonoBehaviour
 	public void ProcessEnemyMove(GameState state)
 	{
 		if (OpponentTurn &&
-			state.CurrentPlayer == Opponent.Data)
+			state.CurrentPlayer.Id == Opponent.Data.Id)
 		{
 			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(state);
 			((IGameAgent)_opponentAgent).SetTarget(nextAction, (x) =>

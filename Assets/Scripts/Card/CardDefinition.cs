@@ -27,10 +27,24 @@ public abstract class CardDefinition : ScriptableObject
 			DrawCardFromDeckAction drawCard => $"Draw card",
 			SummonMinionAction summon => $"Summon {summon.Card.Name}",
 			FreezeAction freeze => $"Freeze",
+			AddStatModifierAction addStat => DescribeStatMod(addStat),
 			//HealAction heal => $"Heal {heal.Target} for {heal.Amount} HP",
 			// Add more types as needed
 			_ => action.Create().GetType().Name.ToString() // fallback
 		};
+	}
+
+	private string DescribeStatMod(AddStatModifierAction addStat)
+	{
+		var attack = addStat.AttackChange is ConstantValue a ? a.Number : 0;
+		var health = addStat.HealthChange is ConstantValue h ? h.Number : 0;
+
+		return $"{FormatStat(attack)}/{FormatStat(health)}";
+	}
+
+	private string FormatStat(int value)
+	{
+		return value >= 0 ? $"+{value}" : value.ToString();
 	}
 
 	string DescribeDamage(DamageAction d)

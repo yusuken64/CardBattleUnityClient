@@ -10,31 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
-  m_Name: GainMaxMana
+  m_Name: GainMana
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: GainMaxMana
-  ID: GainMaxMana
+  CardName: GainMana
+  ID: GainMana
   Sprite: {fileID: 21300000, guid: 0918ab6964eb6451b8ebc28257b289ce, type: 3}
-  Cost: 2
+  Cost: 0
   TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
-  - Description: GainMaxMana
+  - Description: GainMana
     GameActions:
-    - rid: 6533011592832090113
+    - rid: 867526305074118656
     AffectedEntitySelectorWrapper:
       rid: 6533011592832090114
   CustomSFX: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 6533011592832090113
-      type: {class: IncreaseMaxManaActionWrapper, ns: , asm: Assembly-CSharp}
+    - rid: 867526305074118656
+      type: {class: GainManaActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Amount: 1
+        Amount:
+          rid: 867526305074118657
         Canceled: 0
         CustomSFX: {fileID: 0}
+    - rid: 867526305074118657
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
     - rid: 6533011592832090114
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:

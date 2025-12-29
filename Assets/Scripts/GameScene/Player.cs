@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour, ITargetable
+public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 {
 	public HeroPortrait HeroPortrait;
 	public HeroSpellOrigin HeroSpellOrigin;
@@ -86,6 +86,31 @@ public class Player : MonoBehaviour, ITargetable
 		UpdateUI();
 	}
 
+	public void SyncData(CardBattleEngine.IGameEntity entity)
+	{
+		var data = entity as CardBattleEngine.Player;
+		Health = data.Health;
+		Attack = data.Attack;
+		//Armor = data.Armor;
+		Mana = data.Mana;
+		MaxMana = data.MaxMana;
+		CanAttack = data.CanAttack();
+		CardsLeftInDeck = data.Deck.Count();
+
+		if (HeroPower != null)
+		{
+			//HeroPower.data = data.HeroPower;
+			HeroPower.RefreshData();
+		}
+
+		if (data.EquippedWeapon == null)
+		{
+			Weapon.gameObject.SetActive(false);
+		}
+
+		UpdateUI();
+	}
+
 	public void UpdateUI()
 	{
 		HeroPortrait.UpdateUI();
@@ -99,6 +124,8 @@ public class Player : MonoBehaviour, ITargetable
 	}
 
 	public AimIntent AimIntent { get; set; } = AimIntent.Attack;
+
+	public CardBattleEngine.IGameEntity Entity => GetData();
 
 	[ContextMenu("DoDeathRoutine")]
 	public void TestRoutine()

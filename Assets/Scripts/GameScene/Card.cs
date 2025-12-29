@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Card : MonoBehaviour, IDraggable, IHoverable
+public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 {
     public string CardName => this.name;
     public Image CardImage;
@@ -49,9 +49,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
 	public float rotateSpeed;
 	private Minion _pendingMinion;
 	public int _pendingIndex;
-	#endregion
+    #endregion
 
-	public void ResetVisuals()
+    public CardBattleEngine.IGameEntity Entity => GetData();
+
+    public void ResetVisuals()
 	{
         CastIndicator.gameObject.SetActive(false);
         VisualParent.transform.localScale = Vector3.one;
@@ -181,6 +183,39 @@ public class Card : MonoBehaviour, IDraggable, IHoverable
             Health = weaponCard.Durability;
 		}
         else if (this.Data is SpellCard spellCard)
+        {
+            Attack = 0;
+            Health -= 0;
+        }
+
+        UpdateUI();
+    }
+
+
+    public void SyncData(IGameEntity entity)
+    {
+        var data = entity as CardBattleEngine.Card;
+        Cost = data.ManaCost;
+        if (data.Owner == null)
+        {
+            CanPlay = false;
+        }
+        else
+        {
+            CanPlay = data.Owner.Mana >= Cost;
+        }
+
+        if (data is MinionCard minionCard)
+        {
+            Attack = minionCard.Attack;
+            Health = minionCard.Health;
+        }
+        else if (data is WeaponCard weaponCard)
+        {
+            Attack = weaponCard.Attack;
+            Health = weaponCard.Durability;
+        }
+        else if (data is SpellCard spellCard)
         {
             Attack = 0;
             Health -= 0;

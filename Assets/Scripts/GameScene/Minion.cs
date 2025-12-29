@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
+public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUnityGameEntity
 {
     public CardBattleEngine.Minion Data { get; private set; }
 	public MinionCard SummonedCard { get; set; }
@@ -43,11 +43,13 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
 	public bool Moving { get; internal set; }
 
 	public float moveSpeed;
-	public float rotateSpeed; 
-	#endregion
+	public float rotateSpeed;
+    #endregion
 
-	// Update is called once per frame
-	void Update()
+    public CardBattleEngine.IGameEntity Entity => GetData();
+
+    // Update is called once per frame
+    void Update()
     {
         if (Moving)
         {
@@ -145,6 +147,27 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
         UpdateUI();
     }
 
+    public void SyncData(IGameEntity entity)
+    {
+        var data = entity as CardBattleEngine.Minion;
+        if (data == null) { return; }
+
+        Attack = data.Attack;
+        Health = data.Health;
+        CanAttack = data.CanAttack();
+        HasDivineShield = data.HasDivineShield;
+        HasTaunt = data.Taunt;
+        HasPoisonous = data.HasPoisonous;
+        HasSummoningSickness = data.HasSummoningSickness;
+        IsFrozen = data.IsFrozen;
+        HasWindFury = data.HasWindfury;
+        HasStealth = data.IsStealth;
+        HasLifeSteal = data.HasLifeSteal;
+        HasReborn = data.HasReborn;
+
+        UpdateUI();
+    }
+
     internal void SetupWithCard(CardBattleEngine.MinionCard data)
 	{
         this.SummonedCard = data;
@@ -167,7 +190,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable
         UpdateUI();
     }
 
-	public bool CanStartAiming()
+    public bool CanStartAiming()
 	{
         return CanAttack;
 	}

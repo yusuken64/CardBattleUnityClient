@@ -56,10 +56,12 @@ public class AnimationQueue : MonoBehaviour
         var actionType = current.action.GetType();
 
         if (!animationMap.TryGetValue(actionType, out var prefab))
+        {
             return null;
+        }
 
         var instance = Instantiate(prefab, transform);
-        instance.Init(gm, state, current);
+        instance.Init(gm, state.Clone(), current);
         return instance;
     }
 
@@ -71,10 +73,14 @@ public class AnimationQueue : MonoBehaviour
         {
             IAnimation anim = queue.Dequeue();
             var sfxRoutine = anim.CustomSFX();
-            yield return StartCoroutine(sfxRoutine);
+            if (sfxRoutine != null)
+            {
+                yield return StartCoroutine(sfxRoutine);
+            }
 
             yield return StartCoroutine(anim.ApplyStatus());
             yield return StartCoroutine(anim.Play());
+            anim.SyncData();
             if (anim != null) Destroy(anim.GameObject);
         }
 
@@ -92,7 +98,7 @@ public abstract class GameActionAnimationBase : MonoBehaviour, IAnimation
 
     public GameObject GameObject => this.gameObject;
 
-	public abstract IEnumerator Play();
+    public abstract IEnumerator Play();
 
     public virtual void Init(GameManager gm, GameState state, (IGameAction action, ActionContext context) current)
     {
@@ -102,8 +108,9 @@ public abstract class GameActionAnimationBase : MonoBehaviour, IAnimation
         Context = current.context;
     }
 
-	public abstract IEnumerator CustomSFX();
+    public abstract IEnumerator CustomSFX();
     public abstract IEnumerator ApplyStatus();
+    public abstract void SyncData();
 }
 
 public abstract class GameActionAnimation<T> : GameActionAnimationBase where T : IGameAction
@@ -153,6 +160,16 @@ public abstract class GameActionAnimation<T> : GameActionAnimationBase where T :
 
 		yield return null;
 	}
+
+	public override void SyncData()
+	{
+        var allEnitites = State.GetAllEntities();
+        foreach (var entity in allEnitites)
+        {
+            var unityEnity = GameManager.GetObjectByID(entity.Id);
+            unityEnity?.SyncData(entity);
+        }
+	}
 }
 
 public interface IAnimation
@@ -160,6 +177,7 @@ public interface IAnimation
 	IEnumerator Play();
     IEnumerator CustomSFX();
     IEnumerator ApplyStatus();
+    void SyncData();
 
     GameObject GameObject { get; }
 }
