@@ -104,6 +104,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     private void UpdateUI()
     {
+        if (!this) return;
         NameText.text = Data.Name;
         string description = "";
         if (this.Data is MinionCard minionCard)
@@ -467,7 +468,9 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
         var minionPlayPreview = FindFirstObjectByType<GameInteractionHandler>().MinionPlayPreview;
-        var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
+        var index = player.Board.Minions
+            .Where(x => x)
+            .Count(x => x.transform.position.x < mousePos.x);
 
         CastIndicator.gameObject.SetActive(mouseOverBoard);
 

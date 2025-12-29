@@ -92,6 +92,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
 	public void UpdateUI()
 	{
+        if (!this) return;
+
         AttackText.text = Attack.ToString();
         HealthText.text = Health.ToString();
         AttackReadyIndicator.gameObject.SetActive(CanAttack);

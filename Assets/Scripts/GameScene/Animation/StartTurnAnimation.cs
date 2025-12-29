@@ -3,6 +3,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
@@ -51,6 +52,9 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 
 			FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
 			GameManager.ActivePlayerTurn = true;
+#if UNITY_EDITOR
+			ValidateState(Context.SourcePlayer, player);
+#endif
 		}
 		else
 		{
@@ -62,11 +66,21 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 		}
 
 		//opponent.RefreshData();
-		//ValidateState(Context.SourcePlayer, player);
 	}
 
 	public void ValidateState(CardBattleEngine.Player data, Player player)
 	{
+		if (player.Board.Minions.Any(x => x == null))
+		{
+			throw new Exception($"null minion");
+		}
+
+		if (player.Board.Minions.Count() != data.Board.Count())
+		{
+			Debug.LogError("Minion count mismatch");
+			return;
+		}
+
 		for (int i = 0; i < data.Board.Count; i++)
 		{
 			CardBattleEngine.Minion minionData = data.Board[i];

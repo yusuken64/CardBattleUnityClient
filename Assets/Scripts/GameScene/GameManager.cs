@@ -114,6 +114,8 @@ public class GameManager : MonoBehaviour
 
 	internal GameObject GetObjectFor(IGameEntity source)
 	{
+		if (source == null) { return null; }
+
 #pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
 		if (source.Id == Player.Data.Id) { return Player.HeroPortrait.gameObject; }
 		if (source.Id == Opponent.Data.Id) { return Opponent.HeroPortrait.gameObject; }

@@ -15,7 +15,9 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 		CardBattleEngine.Minion minionDataSnapShot = Context.SummonedMinionSnapShot;
 
 		Debug.Log($"{minionData} at {Context.PlayIndex}");
-		var existingMinion = player.Board.Minions.FirstOrDefault(minion => minion.SummonedCard == Action.Card);
+		var existingMinion = player.Board.Minions
+			.Where(x => x)
+			.FirstOrDefault(minion => minion.SummonedCard == Action.Card);
 		if (existingMinion == null)
 		{
 			var index = Context.PlayIndex;
@@ -24,7 +26,8 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			var minionPrefab = Object.FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
 			var newMinion = Object.Instantiate(minionPrefab, player.Board.transform);
 			newMinion.Setup(minionData);
-			player.Board.Minions.Insert(index, newMinion);
+			var clampedIndex = Mathf.Clamp(index, 0, player.Board.Minions.Count());
+			player.Board.Minions.Insert(clampedIndex, newMinion);
 			player.Board.UpdateMinionPositions();
 
 			var animator = newMinion.GetComponent<Animator>();

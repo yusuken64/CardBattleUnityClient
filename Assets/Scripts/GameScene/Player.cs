@@ -113,6 +113,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 
 	public void UpdateUI()
 	{
+		if (!this) return;
 		HeroPortrait.UpdateUI();
 		ManaText.text = $"{Mana}/{MaxMana}";
 		DrawPileCount.text = CardsLeftInDeck.ToString();

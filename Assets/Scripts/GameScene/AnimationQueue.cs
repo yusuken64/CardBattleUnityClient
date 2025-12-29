@@ -167,6 +167,7 @@ public abstract class GameActionAnimation<T> : GameActionAnimationBase where T :
         foreach (var entity in allEnitites)
         {
             var unityEnity = GameManager.GetObjectByID(entity.Id);
+            if (unityEnity?.Entity == null) { continue; }
             unityEnity?.SyncData(entity);
         }
 	}

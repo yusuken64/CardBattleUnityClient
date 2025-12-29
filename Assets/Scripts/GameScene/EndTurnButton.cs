@@ -51,6 +51,7 @@ public class EndTurnButton : MonoBehaviour
 		if (_gameManager._gameState.CurrentPlayer.Name == _gameManager.Player.Data.Name)
 		{
 			SetToUnclickable();
+			_gameManager.ActivePlayerTurn = false;
 			_gameManager.ResolveAction(
 				new EndTurnAction(),
 				new ActionContext()
