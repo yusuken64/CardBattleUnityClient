@@ -53,7 +53,7 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 		var usedCount = deck.Cards.Count(x => x.CardName == CardDefinition.CardName);
 		if (usedCount < OwnedCardData.Count)
 		{
-			verticalDeckViewer?.AddCardToDeck(CardDefinition);
+			verticalDeckViewer?.AddCardToDeck(CardDefinition, false);
 		}
 	}
 

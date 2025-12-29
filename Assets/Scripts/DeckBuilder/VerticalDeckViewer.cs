@@ -36,9 +36,9 @@ public class VerticalDeckViewer : MonoBehaviour
         TitleText.text = deck.Title;
 
         Clear();
-        foreach (var cardDefinition in deck.Cards)
+        foreach (var cardDefinition in deck.Cards.OrderByDescending(x => x == deck.HeroCard))
         {
-            AddCardToDeck(cardDefinition);
+            AddCardToDeck(cardDefinition, deck.HeroCard == cardDefinition);
         }
     }
 
@@ -51,12 +51,12 @@ public class VerticalDeckViewer : MonoBehaviour
         SortAndReorder();
     }
 
-    public void AddCardToDeck(CardDefinition cardDefinition)
+    public void AddCardToDeck(CardDefinition cardDefinition, bool isHero)
     {
         var newDeckItem = Instantiate(DeckItemPrefab, VerticalContainer);
         newDeckItem.Setup(cardDefinition, RemoveCardFromDeck, SetCardAsHero);
 
-        if (_spawnedCards.Count == 0)
+        if (_spawnedCards.Count == 0 || isHero)
         {
             newDeckItem.SetAsHero_Click();
         }

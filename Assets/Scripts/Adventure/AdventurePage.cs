@@ -55,7 +55,7 @@ public class AdventurePage : MonoBehaviour
 		CardPicker.Setup();
 		CardPicker.CardPickedCallback = (cardDefinition) =>
 		{
-			DeckViewer.AddCardToDeck(cardDefinition);
+			DeckViewer.AddCardToDeck(cardDefinition, false);
 			CardPicker.gameObject.SetActive(false);
 			SetToEncounter();
 		};

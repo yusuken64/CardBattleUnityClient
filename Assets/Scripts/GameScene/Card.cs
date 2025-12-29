@@ -158,9 +158,16 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         CostText.text = Cost.ToString();
 
         GameManager gameManager = FindFirstObjectByType<GameManager>();
-        var activePlayer = Data.Owner == gameManager.Player.Data;
-        CanPlayIndicator.gameObject.SetActive(gameManager.ActivePlayerTurn && activePlayer && CanPlay);
-        if (AttackText != null) AttackText.text = Attack.ToString();
+		if (gameManager != null)
+		{
+			var activePlayer = Data.Owner == gameManager.Player.Data;
+			CanPlayIndicator.gameObject.SetActive(gameManager.ActivePlayerTurn && activePlayer && CanPlay);
+		}
+		else
+		{
+            CanPlayIndicator.gameObject.SetActive(false);
+        }
+		if (AttackText != null) AttackText.text = Attack.ToString();
         if (HealthText != null) HealthText.text = Health.ToString();
     }
 
