@@ -96,7 +96,10 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
         AttackText.text = Attack.ToString();
         HealthText.text = Health.ToString();
-        AttackReadyIndicator.gameObject.SetActive(CanAttack);
+
+        var gameManager = FindFirstObjectByType<GameManager>();
+        var isActivePlayer = this.Data != null && this.Data.Owner == gameManager.Player.Data;
+        AttackReadyIndicator.gameObject.SetActive(CanAttack && isActivePlayer);
 
         TauntIndicator.gameObject.SetActive(HasTaunt);
         ShieldIndicator.gameObject.SetActive(HasDivineShield);
@@ -193,9 +196,14 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     }
 
     public bool CanStartAiming()
-	{
+    {
+        var gameManager = FindFirstObjectByType<GameManager>();
+        if (this.Data.Owner != gameManager.Player.Data)
+        {
+            return false;
+        }
         return CanAttack;
-	}
+    }
 
 	public IGameEntity GetData()
 	{

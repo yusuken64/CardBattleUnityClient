@@ -43,23 +43,23 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public CardType CardType => this.Data.Type;
 
-	public GameObject VisualParent;
+    public GameObject VisualParent;
 
-	public float moveSpeed;
-	public float rotateSpeed;
-	private Minion _pendingMinion;
-	public int _pendingIndex;
+    public float moveSpeed;
+    public float rotateSpeed;
+    private Minion _pendingMinion;
+    public int _pendingIndex;
     #endregion
 
     public CardBattleEngine.IGameEntity Entity => GetData();
 
     public void ResetVisuals()
-	{
+    {
         CastIndicator.gameObject.SetActive(false);
         VisualParent.transform.localScale = Vector3.one;
     }
 
-	private void Update()
+    private void Update()
     {
         if (Moving && !Dragging)
         {
@@ -84,7 +84,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             }
         }
         else if (Dragging)
-		{
+        {
             transform.localRotation = Quaternion.RotateTowards(
                 transform.localRotation,
                 Quaternion.Euler(0, 0, 0),
@@ -93,8 +93,8 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
     }
 
-	internal void Setup(CardBattleEngine.Card cardData)
-	{
+    internal void Setup(CardBattleEngine.Card cardData)
+    {
         var cardManager = Common.Instance.CardManager;
         this.CardImage.sprite = cardManager.GetSpriteByCardName(cardData.Name);
 
@@ -131,11 +131,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             CardTypeText.text = "Minion";
 
             if (!string.IsNullOrWhiteSpace(minionCard.Description))
-			{
+            {
                 description += $"{Environment.NewLine}{minionCard.Description}";
-			}
+            }
         }
-		else if (this.Data is WeaponCard weaponCard)
+        else if (this.Data is WeaponCard weaponCard)
         {
             AttackObject.SetActive(true);
             HealthObject.SetActive(true);
@@ -156,12 +156,15 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         DescriptionText.text = description;
 
         CostText.text = Cost.ToString();
-        CanPlayIndicator.gameObject.SetActive(CanPlay);
+
+        GameManager gameManager = FindFirstObjectByType<GameManager>();
+        var activePlayer = Data.Owner == gameManager.Player.Data;
+        CanPlayIndicator.gameObject.SetActive(gameManager.ActivePlayerTurn && activePlayer && CanPlay);
         if (AttackText != null) AttackText.text = Attack.ToString();
         if (HealthText != null) HealthText.text = Health.ToString();
     }
 
-	internal void RefreshData()
+    internal void RefreshData()
     {
         Cost = this.Data.ManaCost;
         if (Data.Owner == null)
@@ -182,7 +185,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         {
             Attack = weaponCard.Attack;
             Health = weaponCard.Durability;
-		}
+        }
         else if (this.Data is SpellCard spellCard)
         {
             Attack = 0;
@@ -229,7 +232,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public GameObject DragObject => this.gameObject;
 
-	public bool CanStartDrag() => true;
+    public bool CanStartDrag()
+    {
+        var gameManager = FindFirstObjectByType<GameManager>();
+        return this.Data.Owner == gameManager.Player.Data;
+    }
 
     public bool RequiresTarget()
     {
@@ -241,9 +248,9 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         if (data is MinionCard minionCard)
         {
             if (minionCard.MinionTriggeredEffects.Count() == 0)
-			{
+            {
                 return false;
-			}
+            }
 
             return minionCard.MinionTriggeredEffects[0].TargetType != TargetingType.None;
         }
@@ -295,12 +302,12 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     }
 
     public void CancelAim()
-	{
+    {
         StartCoroutine(CancelAimRoutine());
-	}
+    }
 
     public void EndAim()
-	{
+    {
         _pendingIndex = -1;
         _pendingMinion = null;
         CastIndicator.gameObject.SetActive(false);
@@ -314,49 +321,49 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
     }
 
-	private IEnumerator CancelAimRoutine()
-	{
+    private IEnumerator CancelAimRoutine()
+    {
         GameInteractionHandler cardInteractionController = FindFirstObjectByType<GameInteractionHandler>();
         cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
         CastIndicator.gameObject.SetActive(false);
 
         var gameManager = FindFirstObjectByType<GameManager>();
-		var player = gameManager.GetPlayerFor(this.Data.Owner);
+        var player = gameManager.GetPlayerFor(this.Data.Owner);
 
-		if (_pendingMinion != null)
-		{
-			//play minion clear
-			//remove from board
-			if (player.Board.Minions.Contains(_pendingMinion))
-			{
-				player.Board.Minions.Remove(_pendingMinion);
-				var pendingAnimator = _pendingMinion.GetComponent<Animator>();
-				pendingAnimator.Play("MinionReturn");
-			}
-			player.Board.UpdateMinionPositions();
-			Destroy(_pendingMinion.gameObject, 2f); //the length of animation
+        if (_pendingMinion != null)
+        {
+            //play minion clear
+            //remove from board
+            if (player.Board.Minions.Contains(_pendingMinion))
+            {
+                player.Board.Minions.Remove(_pendingMinion);
+                var pendingAnimator = _pendingMinion.GetComponent<Animator>();
+                pendingAnimator.Play("MinionReturn");
+            }
+            player.Board.UpdateMinionPositions();
+            Destroy(_pendingMinion.gameObject, 2f); //the length of animation
 
             yield return new WaitForSecondsRealtime(2f);
-		}
+        }
 
-		Dragging = false;
-		player.Board.UpdateMinionPositions();
-		player.Hand.UpdateCardPositions();
-		this.transform.localPosition = this.TargetPosition;
+        Dragging = false;
+        player.Board.UpdateMinionPositions();
+        player.Hand.UpdateCardPositions();
+        this.transform.localPosition = this.TargetPosition;
 
-		var animator = GetComponent<Animator>();
-		animator.Play("CardAppear", 0, 0f);
+        var animator = GetComponent<Animator>();
+        animator.Play("CardAppear", 0, 0f);
         yield return null;
     }
 
-	public IGameEntity GetData()
-	{
+    public IGameEntity GetData()
+    {
         return this.Data as IGameEntity;
-	}
+    }
 
     public bool CanResolve(Vector3 mousePos,
-						   out (IGameAction action, ActionContext context) current,
-						   out string reason)
+                           out (IGameAction action, ActionContext context) current,
+                           out string reason)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
@@ -445,11 +452,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             animator.Play("MinionAppear");
             card.transform.position = newMinion.transform.position;
 
-			if (!RequiresTarget(this.Data))
-			{
-				gameManager.ResolveAction(current.action, current.context);
-			}
-			Destroy(card.gameObject, 2f);
+            if (!RequiresTarget(this.Data))
+            {
+                gameManager.ResolveAction(current.action, current.context);
+            }
+            Destroy(card.gameObject, 2f);
         }
         else if (card.CardType == CardBattleEngine.CardType.Weapon)
         {
@@ -463,7 +470,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
     }
 
-	public void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard)
+    public void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(Data.Owner);
@@ -490,7 +497,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
     }
 
-	public void CancelDrag()
+    public void CancelDrag()
     {
         CastIndicator.gameObject.SetActive(false);
 
@@ -500,18 +507,18 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         player.Hand.UpdateCardPositions();
     }
 
-	public CardBattleEngine.Card GetDisplayCard()
-	{
+    public CardBattleEngine.Card GetDisplayCard()
+    {
         return this.Data;
-	}
+    }
 
-	public void HoldStart()
+    public void HoldStart()
     {
         var ui = FindFirstObjectByType<UI>();
         ui.PreviewStart(this);
     }
 
-	public void HoldEnd()
+    public void HoldEnd()
     {
         var ui = FindFirstObjectByType<UI>();
         ui.PreviewEnd();

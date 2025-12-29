@@ -157,7 +157,10 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 
 	internal void UpdatePlayableActions(bool isActivePlayer)
 	{
-		CanAttack = isActivePlayer && Data.CanAttack();
+		var gameManager = FindFirstObjectByType<GameManager>();
+		var activePlayer = this.Data.Owner == gameManager.Player.Data;
+
+		CanAttack = activePlayer && isActivePlayer && Data.CanAttack();
 		CanAttackIndicator.gameObject.SetActive(CanAttack);
 		HeroPower.RefreshData();
 
