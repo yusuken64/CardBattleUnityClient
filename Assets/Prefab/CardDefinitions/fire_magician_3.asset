@@ -33,7 +33,7 @@ MonoBehaviour:
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 12
-    EffectTiming: 1
+    EffectTiming: 0
     TargetType: 7
     GameActions:
     - rid: 867525922271264768

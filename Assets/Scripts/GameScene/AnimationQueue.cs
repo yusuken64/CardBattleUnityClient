@@ -2,6 +2,7 @@ using CardBattleEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AnimationQueue : MonoBehaviour
@@ -81,6 +82,19 @@ public class AnimationQueue : MonoBehaviour
             yield return StartCoroutine(anim.ApplyStatus());
             yield return StartCoroutine(anim.Play());
             anim.SyncData();
+#if UNITY_EDITOR
+            var animation = (GameActionAnimationBase)anim;
+            Debug.Log($"Validate {animation.Action.GetType().Name}");
+            
+            if (animation.Context.SourcePlayer == null)
+			{
+                Debug.Log($"Source player null for {animation.Action.GetType().Name}");
+                continue;
+			}
+            var playerData = animation.ClonedState.Players.First(x => x.Id == animation.Context.SourcePlayer.Id);
+            var player = animation.GameManager.GetPlayerFor(playerData);
+            GameManager.ValidateState(playerData, player);
+#endif
             if (anim != null) Destroy(anim.GameObject);
         }
 
@@ -90,10 +104,10 @@ public class AnimationQueue : MonoBehaviour
 
 public abstract class GameActionAnimationBase : MonoBehaviour, IAnimation
 {
-    protected GameManager GameManager { get; private set; }
-    protected GameState ClonedState { get; private set; }
-    protected IGameAction Action { get; set; }
-    protected ActionContext Context { get; private set; }
+    public GameManager GameManager { get; private set; }
+    public GameState ClonedState { get; private set; }
+    public IGameAction Action { get; set; }
+    public ActionContext Context { get; private set; }
     public abstract Type ActionType { get; }
 
     public GameObject GameObject => this.gameObject;

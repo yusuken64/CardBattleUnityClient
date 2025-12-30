@@ -66,10 +66,12 @@ public class GameManager : MonoBehaviour
 		}
 
 		int seed = 0;
+#if UNITY_EDITOR
 		if (UseSeed)
 		{
 			UnityEngine.Random.InitState(seed);
 		}
+#endif
 
 		UnityRNG rng = new UnityRNG();
 
@@ -112,16 +114,16 @@ public class GameManager : MonoBehaviour
 		return new GameState(p1, p2, rng, cardDB);
 	}
 
-	internal GameObject GetObjectFor(IGameEntity source)
+	internal GameObject GetObjectFor(IGameEntity entity)
 	{
-		if (source == null) { return null; }
+		if (entity == null) { return null; }
 
 #pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
-		if (source.Id == Player.Data.Id) { return Player.HeroPortrait.gameObject; }
-		if (source.Id == Opponent.Data.Id) { return Opponent.HeroPortrait.gameObject; }
+		if (entity.Id == Player.Data.Id) { return Player.HeroPortrait.gameObject; }
+		if (entity.Id == Opponent.Data.Id) { return Opponent.HeroPortrait.gameObject; }
 #pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
 
-		if (source is CardBattleEngine.Minion minion)
+		if (entity is CardBattleEngine.Minion minion)
 		{
 			var allMinions = new List<Minion>();
 			allMinions.AddRange(Player.Board.Minions);
@@ -134,6 +136,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
+		Debug.LogError($"Source for {entity} {entity.Id} invalid");
 		return null;
 	}
 
@@ -177,12 +180,12 @@ public class GameManager : MonoBehaviour
 
 	internal Player GetPlayerFor(CardBattleEngine.Player sourcePlayer)
 	{
-		return Player.Data == sourcePlayer ? Player : Opponent;
+		return Player.Data.Id == sourcePlayer.Id ? Player : Opponent;
 	}
 
 	private void ActionPlaybackCallback(GameState state, (IGameAction action, ActionContext context) current)
 	{
-		Debug.Log(current);
+		//Debug.Log(current);
 		AnimationQueue.EnqueueAnimation(this, state, current);
 
 		if (state.CurrentPlayer == Player.Data)
@@ -204,7 +207,7 @@ public class GameManager : MonoBehaviour
 
 	private void ActionResolvedCallback(GameState state)
 	{
-		ProcessEnemyMove(state);
+		ProcessEnemyMove();
 
 		Opponent.UpdatePlayableActions(false);
 		Player.UpdatePlayableActions(
@@ -212,20 +215,25 @@ public class GameManager : MonoBehaviour
 			state.CurrentPlayer == Player.Data);
 	}
 
-	public void ProcessEnemyMove(GameState state)
+	public void ProcessEnemyMove()
 	{
 		if (OpponentTurn &&
-			state.CurrentPlayer.Id == Opponent.Data.Id)
+			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
 		{
-			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(state);
+			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(_gameState);
 			((IGameAgent)_opponentAgent).SetTarget(nextAction, (x) =>
 			{
 				var triggerSource = nextAction.Item2?.Source as ITriggerSource;
 
 				if (triggerSource == null) { return null; }
-				var targets = state.GetValidTargets(triggerSource, x);
+				var targets = _gameState.GetValidTargets(triggerSource, x);
 
 				if (!targets.Any()) { return null; }
+
+				if (targets.Contains(triggerSource))
+				{
+					targets.Remove(triggerSource);
+				}
 
 				return targets[UnityEngine.Random.Range(0, targets.Count())];
 			});
@@ -236,8 +244,62 @@ public class GameManager : MonoBehaviour
 			{
 				actionString = $"Play card {playCardAction.Card.Name}";
 			}
+			else if (item1 is AttackAction attackAction)
+			{
+				var attackSource = nextAction.Item2.Source;
+				var attackTarget = nextAction.Item2.Target;
+				actionString = $"Attack {attackSource} to {attackTarget}";
+			}
 			Debug.Log($"Enemy Action {actionString}");
 			ResolveAction(nextAction.Item1, nextAction.Item2);
+		}
+	}
+
+	public static void ValidateState(CardBattleEngine.Player data, Player player)
+	{
+		if (player.Board.Minions.Any(x => x == null))
+		{
+			throw new Exception($"null minion");
+		}
+
+		var minions = player.Board.Minions
+						.Where(x => x)
+						.Where(x => x.Data != null).ToList();
+		if (minions.Count() != data.Board.Count())
+		{
+			Debug.Log("========Board minions");
+			foreach (var minion in minions)
+			{
+				Debug.Log(minion.Data);
+			}
+
+			Debug.Log("========Data minions");
+			foreach (var minion in data.Board)
+			{
+				Debug.Log(minion);
+			}
+
+			Debug.LogError("Minion count mismatch");
+			return;
+		}
+
+		for (int i = 0; i < data.Board.Count; i++)
+		{
+			CardBattleEngine.Minion minionData = data.Board[i];
+			var boardMinion = minions[i];
+
+			AssertAreEqual(boardMinion.Data.Id, minionData.Id);
+			AssertAreEqual(boardMinion.Attack, minionData.Attack);
+			AssertAreEqual(boardMinion.Health, minionData.Health);
+			AssertAreEqual(boardMinion.CanAttack, minionData.CanAttack());
+		}
+	}
+
+	private static void AssertAreEqual<T>(T a, T b)
+	{
+		if (!EqualityComparer<T>.Default.Equals(a, b))
+		{
+			throw new Exception($"Validation exception: {a} != {b}");
 		}
 	}
 }

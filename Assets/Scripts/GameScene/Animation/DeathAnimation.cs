@@ -1,5 +1,6 @@
 ﻿using CardBattleEngine;
 using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -18,6 +19,10 @@ public class DeathAnimation : GameActionAnimation<DeathAction>
 			if (owner.Board.Minions.Contains(deadMinion))
 			{
 				owner.Board.Minions.Remove(deadMinion);
+			}
+			else
+			{
+				throw new Exception("Invalid dead minion");
 			}
 
 			Transform t = deadMinion.transform;

@@ -15,7 +15,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		var opponent = GameManager.GetPlayerFor(ClonedState.OpponentOf(Context.SourcePlayer));
 
-		if (Context.SourcePlayer == GameManager.Player.Data)
+		if (Context.SourcePlayer.Id == GameManager.Player.Data.Id)
 		{
 			player.RefreshData();
 			Common.Instance.AudioManager.PlaySound(StartTurnSound);
@@ -53,9 +53,6 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
 			GameManager.ActivePlayerTurn = true;
 			player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
-#if UNITY_EDITOR
-			ValidateState(Context.SourcePlayer, player);
-#endif
 		}
 		else
 		{
@@ -64,40 +61,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			GameManager.Player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
 			yield return new WaitForSecondsRealtime(1.0f);
 
-			GameManager.ProcessEnemyMove(ClonedState);
-		}
-	}
-
-	public void ValidateState(CardBattleEngine.Player data, Player player)
-	{
-		if (player.Board.Minions.Any(x => x == null))
-		{
-			throw new Exception($"null minion");
-		}
-
-		if (player.Board.Minions.Count() != data.Board.Count())
-		{
-			Debug.LogError("Minion count mismatch");
-			return;
-		}
-
-		for (int i = 0; i < data.Board.Count; i++)
-		{
-			CardBattleEngine.Minion minionData = data.Board[i];
-			var boardMinion = player.Board.Minions[i];
-
-			AssertAreEqual(boardMinion.Data, minionData);
-			AssertAreEqual(boardMinion.Attack, minionData.Attack);
-			AssertAreEqual(boardMinion.Health, minionData.Health);
-			AssertAreEqual(boardMinion.CanAttack, minionData.CanAttack());
-		}
-	}
-
-	private void AssertAreEqual<T>(T a, T b)
-	{
-		if (!EqualityComparer<T>.Default.Equals(a, b))
-		{
-			throw new Exception($"Validation exception: {a} != {b}");
+			GameManager.ProcessEnemyMove();
 		}
 	}
 }

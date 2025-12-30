@@ -233,6 +233,14 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
         if (SummonedCard != null)
         {
+            var targetData = target?.GetData();
+            if (targetData == null)
+			{
+                reason = "Invalid target";
+                current = (null, null);
+                return false;
+			}
+
             var player = gameManager.GetPlayerFor(SummonedCard.Owner);
             var first = player.Hand.Cards.FirstOrDefault(x => x.Data == SummonedCard);
             player.Hand.Cards.Remove(first);
