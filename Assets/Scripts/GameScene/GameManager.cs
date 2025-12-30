@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		Debug.LogError($"Source for {entity} {entity.Id} invalid");
+		//Debug.LogError($"Source for {entity} {entity.Id} invalid");
 		return null;
 	}
 

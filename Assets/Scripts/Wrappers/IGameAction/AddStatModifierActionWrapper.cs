@@ -10,7 +10,7 @@ public class AddStatModifierActionWrapper : IGameActionWrapperBase
     [SerializeReference] public IValueProviderWrapperBase AttackChange;
     [SerializeReference] public IValueProviderWrapperBase HealthChange;
     [SerializeReference] public IValueProviderWrapperBase CostChange;
-    [SerializeReference] public ExpirationTriggerWrapper? ExpirationTrigger;
+    [SerializeReference] public ExpirationTriggerWrapper ExpirationTrigger;
     public System.Boolean Canceled;
     public CustomSFX CustomSFX;
 

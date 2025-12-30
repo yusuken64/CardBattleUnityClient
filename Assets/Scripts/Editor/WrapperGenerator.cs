@@ -37,7 +37,7 @@ public static class WrapperGenerator
         new PropertyReplacement
         {
             OriginalType = typeof(CardBattleEngine.ExpirationTrigger),
-            GenerateField = p => $"    [SerializeReference] public {typeof(ExpirationTriggerWrapper).FullName}? {p.Name};",
+            GenerateField = p => $"    [SerializeReference] public {typeof(ExpirationTriggerWrapper).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.CreateEffect();"
         },
         new PropertyReplacement

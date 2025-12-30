@@ -52,7 +52,7 @@ public class MinionCardDefinition : CardDefinition
 			triggeredEffects.AddRange(MinionTriggeredEffects);
 			card.Description = string.Join(Environment.NewLine, triggeredEffects.Select(ToDescription));
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
             Debug.LogError($"Error with card {CardName}", this);
 			throw;
