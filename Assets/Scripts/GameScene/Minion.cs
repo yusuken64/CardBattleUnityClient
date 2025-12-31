@@ -98,8 +98,10 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         HealthText.text = Health.ToString();
 
         var gameManager = FindFirstObjectByType<GameManager>();
-        var isActivePlayer = this.Data != null && this.Data.Owner == gameManager.Player.Data;
-        AttackReadyIndicator.gameObject.SetActive(CanAttack && isActivePlayer);
+        var isActivePlayer = gameManager.ActivePlayerTurn &&
+            this.Data != null &&
+            this.Data.Owner == gameManager.Player.Data;
+        AttackReadyIndicator.gameObject.SetActive(CanAttack && isActivePlayer && !IsFrozen);
 
         TauntIndicator.gameObject.SetActive(HasTaunt);
         ShieldIndicator.gameObject.SetActive(HasDivineShield);
