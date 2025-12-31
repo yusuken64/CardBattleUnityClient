@@ -17,7 +17,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 
 		if (Context.SourcePlayer.Id == GameManager.Player.Data.Id)
 		{
-			player.RefreshData();
+			//player.RefreshData();
 			Common.Instance.AudioManager.PlaySound(StartTurnSound);
 			var turnStartObject = FindFirstObjectByType<UI>().TurnStartObject;
 			turnStartObject.gameObject.SetActive(true);
