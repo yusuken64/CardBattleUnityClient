@@ -30,6 +30,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 	public int Mana;
 	public int MaxMana;
 	public int CardsLeftInDeck;
+	public bool IsFrozen;
 
 	public TextMeshProUGUI ManaText;
 
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		MaxMana = Data.MaxMana;
 		CanAttack = Data.CanAttack();
 		CardsLeftInDeck = Data.Deck.Count();
+		IsFrozen = Data.IsFrozen;
 
 		if (HeroPower != null)
 		{
@@ -96,6 +98,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		MaxMana = data.MaxMana;
 		CanAttack = data.CanAttack();
 		CardsLeftInDeck = data.Deck.Count();
+		IsFrozen = data.IsFrozen;
 
 		if (HeroPower != null)
 		{
@@ -161,7 +164,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		var activePlayer = this.Data.Owner == gameManager.Player.Data;
 
 		CanAttack = activePlayer && isActivePlayer && Data.CanAttack();
-		CanAttackIndicator.gameObject.SetActive(CanAttack);
+		CanAttackIndicator.gameObject.SetActive(CanAttack && !IsFrozen);
 		HeroPower.RefreshData();
 
 		foreach(var card in Hand.Cards)

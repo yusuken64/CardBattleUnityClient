@@ -13,6 +13,8 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 	public TextMeshProUGUI AttackText;
 	public TextMeshProUGUI ArmorText;
 
+	public GameObject FreezeIndicator;
+
 	internal void UpdateUI()
 	{
 		HealthText.text = Player.Health.ToString();
@@ -22,6 +24,8 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 		HealthObject.gameObject.SetActive(true);
 		AttackObject.gameObject.SetActive(Player.Attack != 0);
 		ArmorObject.gameObject.SetActive(Player.Armor != 0);
+
+		FreezeIndicator.gameObject.SetActive(Player.IsFrozen);
 	}
 
 	public AimIntent AimIntent { get; set; } = AimIntent.Attack;
