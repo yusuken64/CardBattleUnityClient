@@ -16,10 +16,10 @@ MonoBehaviour:
   CardName: Archer 02
   ID: archer_02
   Sprite: {fileID: 21300000, guid: 2b28699e663e7744887b174825ba6789, type: 3}
-  Cost: 1
+  Cost: 3
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 3
+  Health: 3
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -29,7 +29,31 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  MinionTriggeredEffects: []
+  CannotAttack: 0
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 1
+    EffectTiming: 1
+    TargetType: 5
+    GameActions:
+    - rid: 867526373696864256
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: -2
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 867526373696864256
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 867526373696864257
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 867526373696864257
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2

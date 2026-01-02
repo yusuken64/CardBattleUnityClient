@@ -54,6 +54,8 @@ public class MainMenu : MonoBehaviour
 		Common.Instance.SaveManager.Save();
 		SettingsObject.gameObject.SetActive(false);
 		DataObject.gameObject.SetActive(false);
+
+		SceneManager.LoadScene("Main");
 	}
 
 	public void AudioSettings_Click()

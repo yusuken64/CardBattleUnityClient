@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level4
   BattleImage: {fileID: 21300000, guid: 7518edada618d624fa8dbb31697878ef, type: 3}
-  Description: The throne was promised to her 3000 years ago by the gods.
+  Description: Claims the throne was promised to her 3000 years ago by the gods.
+    Formed a secret, powerful "cabal" that controls world governments, the media,
+    and financial systems.
   Deck: {fileID: 11400000, guid: 3b7c81034006257419370cfff19b33cb, type: 2}

@@ -15,4 +15,6 @@ MonoBehaviour:
   LevelID: Level3
   BattleImage: {fileID: 21300000, guid: 1d94a9bf06b52f74bb8a1d0a742da600, type: 3}
   Description: Definitely doesn't worship hitler, posts suspiciously a lot on twitter.
+    Will play a game and say things like "the pixels are blurry" and "It should have
+    multiplayer"
   Deck: {fileID: 11400000, guid: e2c24338442c0574ca881ef39bbf67a0, type: 2}

@@ -15,5 +15,5 @@ MonoBehaviour:
   LevelID: Level11
   BattleImage: {fileID: 21300000, guid: 1b1db58ce7df35444bb2e76db1854b0a, type: 3}
   Description: The slay queen stands a top the gate keeping it safe from you who
-    never finished a game before.
+    never finished a game before. The time has come to implement the final solution.
   Deck: {fileID: 11400000, guid: 4662c6427963aea4db830554ed21d84c, type: 2}

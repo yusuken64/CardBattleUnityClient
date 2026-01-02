@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level5
   BattleImage: {fileID: 21300000, guid: 39c49d8e411f01c469f792b630be0ea3, type: 3}
-  Description: Coordinate the largest ever false flag operation which blamed terrorists
+  Description: Coordinated the largest ever false flag operation which blamed terrorists
     for attacking the twin towers. Secretly used Directed Energy Weapons to dustify
     the towers.
   Deck: {fileID: 11400000, guid: 6905b24e2a7a95b4f8ab90775728142a, type: 2}
