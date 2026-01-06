@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
 
-public class MulliganOption : MonoBehaviour
+public class MulliganOption : MonoBehaviour, IButtonSoundState
 {
 	public Transform CardParent;
 	public Card Card;
 
 	public GameObject MullIndicator;
 	public bool Keep;
+
+	public bool IsActive => Keep;
 
 	internal void Setup(Card card)
 	{

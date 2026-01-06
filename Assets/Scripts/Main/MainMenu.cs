@@ -18,22 +18,35 @@ public class MainMenu : MonoBehaviour
 	{
 		DeckSaveData firstDeck = Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas[0];
 		Common.Instance.SaveManager.SaveData.GameSaveData.CombatDeck = firstDeck;
-		SceneManager.LoadScene("StoryMode");
+
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("StoryMode");
+		});
 	}
 
 	public void Adventure_Click()
 	{
-		SceneManager.LoadScene("Adventure");
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("Adventure");
+		});
 	}
 
 	public void Deck_Click()
 	{
-		SceneManager.LoadScene("DeckBuilder");
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("DeckBuilder");
+		});
 	}
 
 	public void OpenPacks_Click()
 	{
-		SceneManager.LoadScene("OpenPacks");
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("OpenPacks");
+		});
 	}
 
 	public void Settings_Click()

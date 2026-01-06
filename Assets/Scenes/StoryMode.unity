@@ -2720,6 +2720,7 @@ GameObject:
   - component: {fileID: 1850287151006278420}
   - component: {fileID: 1850287151006278423}
   - component: {fileID: 2005083293280213476}
+  - component: {fileID: 2005083293280213477}
   m_Layer: 5
   m_Name: Button_Circle02_Dark
   m_TagString: Untagged
@@ -2856,6 +2857,21 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.3019608}
   m_EffectDistance: {x: 0, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &2005083293280213477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850287151006278409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: c27c7f7ddd54148d59b5941e08d86860, type: 3}
+  UnclickableSound: {fileID: 0}
 --- !u!1001 &2104590690626665693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3280,6 +3296,7 @@ GameObject:
   - component: {fileID: 4983394787475018323}
   - component: {fileID: 4983394787475018322}
   - component: {fileID: 7069641526406272617}
+  - component: {fileID: 7069641526406272618}
   m_Layer: 5
   m_Name: Button_Rectangle_05_Deco_Yellow
   m_TagString: Untagged
@@ -3338,6 +3355,21 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.3019608}
   m_EffectDistance: {x: 0, y: -7}
   m_UseGraphicAlpha: 1
+--- !u!114 &7069641526406272618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4983394787475018324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: 8845e85486e2d45dc96f509f7daf27ac, type: 3}
+  UnclickableSound: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

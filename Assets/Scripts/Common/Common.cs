@@ -10,6 +10,7 @@ public class Common : MonoBehaviour
 	public SaveManager SaveManager;
 	public AudioManager AudioManager;
 	public GlobalSettings GlobalSettings;
+	public SceneTransition SceneTransition;
 
 	public DeckDefinition StartingDeck;
 

@@ -131,6 +131,9 @@ public class OpenPackScene : MonoBehaviour
 
 	public void Return_Clicked()
 	{
-		SceneManager.LoadScene("Main");
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("Main");
+		});
 	}
 }

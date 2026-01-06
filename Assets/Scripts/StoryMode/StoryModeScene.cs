@@ -43,6 +43,9 @@ public class StoryModeScene : MonoBehaviour
 
     public void Back_Clicked()
     {
-        SceneManager.LoadScene("Main");
+        Common.Instance.SceneTransition.DoTransition(() =>
+        {
+            SceneManager.LoadScene("Main");
+        });
     }
 }

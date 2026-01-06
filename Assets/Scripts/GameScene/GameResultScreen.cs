@@ -25,12 +25,18 @@ public class GameResultScreen : MonoBehaviour
 		string returnScreenName = GameManager.ReturnScreenName;
 		if (String.IsNullOrWhiteSpace(returnScreenName))
 		{
-			SceneManager.LoadScene("Main");
+			Common.Instance.SceneTransition.DoTransition(() =>
+			{
+				SceneManager.LoadScene("Main");
+			});
 		}
 		else
 		{
 			GameManager.ReturnScreenName = null;
-			SceneManager.LoadScene(returnScreenName);
+			Common.Instance.SceneTransition.DoTransition(() =>
+			{
+				SceneManager.LoadScene(returnScreenName);
+			});
 		}
 	}
 

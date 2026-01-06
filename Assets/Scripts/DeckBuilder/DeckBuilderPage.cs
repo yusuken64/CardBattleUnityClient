@@ -56,7 +56,10 @@ public class DeckBuilderPage : MonoBehaviour
 
 	public void ReturnToMain()
 	{
-		SceneManager.LoadScene("Main");
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("Main");
+		});
 	}
 
 	public void ShowMessage(string message)

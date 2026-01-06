@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
   HoverSound: {fileID: 0}
-  ClickSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: 3785e34596f8c4fc182defb6bb1da164, type: 3}
   UnclickableSound: {fileID: 0}
 --- !u!1 &1525484294793445650
 GameObject:
@@ -447,7 +447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.24705884, g: 0.24705884, b: 0.3019608, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

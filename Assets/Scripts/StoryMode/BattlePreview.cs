@@ -55,6 +55,9 @@ public class BattlePreview : MonoBehaviour
 
 		GameManager.ReturnScreenName = "StoryMode";
 
-		SceneManager.LoadScene("GameScene");
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("GameScene");
+		});
 	}
 }
