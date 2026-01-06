@@ -66,6 +66,7 @@ public class CardManager : MonoBehaviour
 
 	public CardDefinition GetCardByName(string name)
     {
+		if (string.IsNullOrWhiteSpace(name)) { return null; }
         return _cardLookup.TryGetValue(name, out var card) ? card : null;
     }
 

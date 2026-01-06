@@ -43,6 +43,7 @@ public class DeckCard : MonoBehaviour,
 	public void OnClick()
 	{
 		RemoveCardFromDeckAction?.Invoke(this);
+		HidePreview();
 	}
 
 	public void SetAsHero_Click()
