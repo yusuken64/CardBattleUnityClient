@@ -12,11 +12,15 @@ public class FlippableCard : MonoBehaviour
 	public Ease FlipEase = Ease.InOutQuad;
 
 	public LayerMask ClickableMask;
+	public bool CanFlip;
 	private bool flipped;
 
 	public Action FlipComplete;
 
 	public Card DisplayCard;
+
+	public AudioClip FlipCard;
+	public AudioClip JumpCard;
 
 	private void Start()
 	{
@@ -32,11 +36,13 @@ public class FlippableCard : MonoBehaviour
 
 	public void Flip()
 	{
-		if (flipped) { return; }
+		if (flipped || !CanFlip) { return; }
 		flipped = true;
 		// Ensure initial visibility
 		Back.SetActive(true);
 		Front.SetActive(false);
+
+		Common.Instance.AudioManager.PlayUISound(FlipCard);
 
 		// First half: rotate to 90 degrees
 		transform.DOLocalRotate(

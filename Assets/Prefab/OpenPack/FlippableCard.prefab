@@ -53,7 +53,10 @@ MonoBehaviour:
   ClickableMask:
     serializedVersion: 2
     m_Bits: 1
+  CanFlip: 0
   DisplayCard: {fileID: 7858033027705099049}
+  FlipCard: {fileID: 8300000, guid: 8845e85486e2d45dc96f509f7daf27ac, type: 3}
+  JumpCard: {fileID: 8300000, guid: 7e4fcb9b1708c4f5395cddee4eefc899, type: 3}
 --- !u!1001 &3055676221147692948
 PrefabInstance:
   m_ObjectHideFlags: 0

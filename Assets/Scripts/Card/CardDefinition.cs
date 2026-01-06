@@ -68,7 +68,14 @@ public abstract class CardDefinition : ScriptableObject
 		var condition = "";
 		if (triggeredEffect.Condition is not null)
 		{
-			condition = triggeredEffect.Condition.GetType().Name + ",";
+			string text = triggeredEffect.Condition.GetType().Name;
+			string suffix = "ConditionWrapper";
+			if (text.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+			{
+				text = text.Substring(0, text.Length - suffix.Length);
+			}
+
+			condition = text + ",";
 		}
 
 		string actions = string.Join(Environment.NewLine, triggeredEffect.GameActions.Select(ActionToDescription));
@@ -85,7 +92,7 @@ public abstract class CardDefinition : ScriptableObject
 			TargetingType.AnyMinion => " to a minion",
 			_ => throw new NotImplementedException(),
 		};
-		string description = $"{trigger}:{condition}{actions}{targeting}.";
+		string description = $"{trigger}: {condition}{actions}{targeting}.";
 
 		return description;
 	}

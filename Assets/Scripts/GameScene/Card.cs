@@ -124,7 +124,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             if (minionCard.HasLifeSteal) { keyWords.Add("LifeSteal"); }
             if (minionCard.HasWindfury) { keyWords.Add("Windfury"); }
             if (minionCard.CannotAttack) { keyWords.Add("Cannot Attack"); }
-            description = string.Join(",", keyWords);
+            if (keyWords.Any())
+            {
+                description = string.Join(", ", keyWords);
+                description += Environment.NewLine;
+            }
 
             AttackObject.SetActive(true);
             HealthObject.SetActive(true);
@@ -132,7 +136,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
             if (!string.IsNullOrWhiteSpace(minionCard.Description))
             {
-                description += $"{Environment.NewLine}{minionCard.Description}";
+                description += minionCard.Description;
             }
         }
         else if (this.Data is WeaponCard weaponCard)
