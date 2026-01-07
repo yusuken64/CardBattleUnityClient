@@ -10,6 +10,7 @@ public class MulliganPrompt : MonoBehaviour
 	public GameManager GameManager;
 	public Transform Container;
 	public MulliganOption MulliganItemPrefab;
+	public GameObject SubmitButton;
 
 	public List<MulliganOption> Items;
 	public RectTransform CardArea;
@@ -30,6 +31,7 @@ public class MulliganPrompt : MonoBehaviour
 
 		UpdatePositions();
 
+		SubmitButton.gameObject.SetActive(true);
 		BG.color = new Color(0f, 0f, 0f, 0f);
 		BG.DOFade(245f / 255f, 0.5f);
 	}
@@ -93,6 +95,7 @@ public class MulliganPrompt : MonoBehaviour
 			}
 		}
 
+		SubmitButton.gameObject.SetActive(false);
 		BG.DOFade(0, 0.5f)
 			.OnComplete(() =>
 			{

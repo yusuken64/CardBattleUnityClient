@@ -28,9 +28,11 @@ public class BattleIntro : MonoBehaviour
 	public void Setup(Deck playerDeck, Deck enemyDeck)
 	{
         HeroPortrait1.sprite = playerDeck.HeroCard.Sprite;
+        Hero1NameText.text = "Player";
         Hero1DeckText.text = playerDeck.Title;
 
         HeroPortrait2.sprite = enemyDeck.HeroCard.Sprite;
+        Hero2NameText.text = "Opponent";
         Hero2DeckText.text = enemyDeck.Title;
     }
 
