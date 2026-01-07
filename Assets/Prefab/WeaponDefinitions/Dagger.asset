@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffbc4880184b03d4d946937f43e2faf4, type: 3}
+  m_Name: Dagger
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponCardDefinition
+  Collectable: 1
+  CardName: Dagger
+  ID: Dagger
+  Sprite: {fileID: 21300000, guid: 3e4bce5241c7642d392b39886c15f562, type: 3}
+  Cost: 2
+  TriggeredEffects: []
+  WeaponName: Dagger
+  Attack: 1
+  Durability: 2
+  WeaponTriggeredEffects: []
+  references:
+    version: 2
+    RefIds: []

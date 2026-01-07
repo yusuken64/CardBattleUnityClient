@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
+  m_Name: spider_01
+  m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
+  CardName: Spider 01
+  ID: spider_01
+  Sprite: {fileID: 21300000, guid: 885322928eea7dc46b11b3d69a75340f, type: 3}
+  Cost: 2
+  TriggeredEffects: []
+  Attack: 1
+  Health: 2
+  MinionTribes: 
+  IsStealth: 0
+  HasCharge: 0
+  HasDivineShield: 0
+  HasTaunt: 0
+  HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 2
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 6533011672544051268
+    - rid: 6533011672544051269
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 6533011717531107400
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6533011672544051268
+      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}
+        Canceled: 0
+    - rid: 6533011672544051269
+      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}
+        Canceled: 0
+    - rid: 6533011717531107400
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 6533011717531107401
+    - rid: 6533011717531107401
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+        Group: 1
+        ExcludeSelf: 0

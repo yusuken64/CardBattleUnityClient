@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
+  m_Name: slayer_1
+  m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
+  CardName: slayer 1
+  ID: slayer_1
+  Sprite: {fileID: 21300000, guid: bc14b8645d41a1741bc74a1cebc23346, type: 3}
+  Cost: 1
+  TriggeredEffects: []
+  Attack: 1
+  Health: 2
+  MinionTribes: 
+  IsStealth: 0
+  HasCharge: 0
+  HasDivineShield: 0
+  HasTaunt: 0
+  HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 5
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 6533011735244963916
+    Condition:
+      rid: 6533011735244963920
+    AffectedEntitySelectorWrapper:
+      rid: 6533011735244963917
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6533011735244963916
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange: 1
+        HealthChange: 0
+        ExpirationTrigger:
+          Description: 
+          EffectTrigger: 0
+          EffectTiming: 0
+          TargetType: 0
+          GameActions: []
+          Condition:
+            rid: -2
+          AffectedEntitySelectorWrapper:
+            rid: -2
+        Canceled: 0
+    - rid: 6533011735244963917
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6533011735244963920
+      type: {class: OriginalSourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0

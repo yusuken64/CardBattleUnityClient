@@ -1,0 +1,27 @@
+OVDF v1.0
+HeroPowerDefinition, Assembly-CSharp
+
+# $4z6KgLhwWkqB8GhzudvBzH
+Position: $root:0
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# $3yYVgdwQxidBpTCW5QmDgP
+Position: $4z6KgLhwWkqB8GhzudvBzH:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+
+# CardName
+Position: $3yYVgdwQxidBpTCW5QmDgP:0
+
+# ID
+Position: $3yYVgdwQxidBpTCW5QmDgP:1
+
+# Sprite
+Position: $4z6KgLhwWkqB8GhzudvBzH:1
++ [Sirenix.OdinInspector.PreviewFieldAttribute]
+	Height = 200
+
+# HeroPowerName
+Position: $3yYVgdwQxidBpTCW5QmDgP:2
+
+# Cost
+Position: $3yYVgdwQxidBpTCW5QmDgP:3

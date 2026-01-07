@@ -42,8 +42,11 @@ public class Board : MonoBehaviour
             float t = (count == 1) ? 0.5f : (float)i / (count - 1); // 0..1
             float y = 0;
 
-            RectTransform rt = minions[i].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(x, y);
+			Minion minion = minions[i];
+            minion.SetTargetPosition(new Vector2(x, y));
+            minion.Moving = true;
+			//RectTransform rt = minion.GetComponent<RectTransform>();
+   //         rt.anchoredPosition = ;
         }
     }
 }

@@ -1,0 +1,29 @@
+OVDF v1.0
+SpellCardDefinition, Assembly-CSharp
+
+# $RT4CuajfSfTFT2tFp5ZU8e
+Position: $S5No6kKWCP6J2TrxGLoERH:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Data"
+	Indent = False
+
+# $S5No6kKWCP6J2TrxGLoERH
+Position: $root:0
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# CardName
+Position: $RT4CuajfSfTFT2tFp5ZU8e:0
+
+# ID
+Position: $RT4CuajfSfTFT2tFp5ZU8e:1
+
+# Sprite
+Position: $S5No6kKWCP6J2TrxGLoERH:1
++ [Sirenix.OdinInspector.PreviewFieldAttribute]
+	Height = 190
+
+# Cost
+Position: $RT4CuajfSfTFT2tFp5ZU8e:2
+
+# TargetingType
+Position: $RT4CuajfSfTFT2tFp5ZU8e:3

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
+  m_Name: Battle2
+  m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
+  LevelID: Level2
+  BattleImage: {fileID: 21300000, guid: 7577e7418b7aa3145b4ce23bfd44faca, type: 3}
+  Description: '"I''m Trans" xie said, derailing the story. Trannie no dev who doom
+    posts about AI slop. Will Pretend to be 5 different people all talking to each
+    other..'
+  Deck: {fileID: 11400000, guid: b13303dde9d6dc54dbf604f0a24f922e, type: 2}

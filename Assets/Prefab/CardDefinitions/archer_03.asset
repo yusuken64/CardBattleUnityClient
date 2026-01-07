@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
+  m_Name: archer_03
+  m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
+  CardName: Archer 03
+  ID: archer_03
+  Sprite: {fileID: 21300000, guid: 39c49d8e411f01c469f792b630be0ea3, type: 3}
+  Cost: 2
+  TriggeredEffects: []
+  Attack: 3
+  Health: 2
+  MinionTribes: 
+  IsStealth: 0
+  HasCharge: 0
+  HasDivineShield: 0
+  HasTaunt: 0
+  HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  MinionTriggeredEffects:
+  - Description: Knife juggler
+    EffectTrigger: 4
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 6533011647806046268
+    Condition:
+      rid: 6533011711507038270
+    AffectedEntitySelectorWrapper:
+      rid: 6533011711507038271
+  references:
+    version: 2
+    RefIds:
+    - rid: 6533011647806046268
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 6533011711507038268
+        Canceled: 0
+    - rid: 6533011711507038268
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 6533011711507038270
+      type: {class: SummonedMinionConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        MinionToMinionRelationship: 0
+        MinionTribe: 1
+        ExcludeSelf: 1
+    - rid: 6533011711507038271
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 6533011711507038272
+        - rid: 6533011711507038273
+    - rid: 6533011711507038272
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 1
+        Group: 2
+        ExcludeSelf: 0
+    - rid: 6533011711507038273
+      type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Count:
+          rid: 6533011711507038274
+    - rid: 6533011711507038274
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1

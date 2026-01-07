@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
+  m_Name: entin_3
+  m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
+  CardName: Entin 3
+  ID: entin_3
+  Sprite: {fileID: 21300000, guid: 5d8b513313fb442478ce13916bcac516, type: 3}
+  Cost: 6
+  TriggeredEffects: []
+  Attack: 6
+  Health: 6
+  MinionTribes: 
+  IsStealth: 0
+  HasCharge: 0
+  HasDivineShield: 0
+  HasTaunt: 0
+  HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  MinionTriggeredEffects: []
+  references:
+    version: 2
+    RefIds: []

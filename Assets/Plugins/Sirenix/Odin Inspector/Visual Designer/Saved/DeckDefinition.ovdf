@@ -1,0 +1,7 @@
+OVDF v1.0
+DeckDefinition, Assembly-CSharp
+
+# HeroCard
++ [Sirenix.OdinInspector.InlineEditorAttribute]
+	DrawHeader = False
+	DrawPreview = True

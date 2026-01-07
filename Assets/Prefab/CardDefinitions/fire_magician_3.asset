@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
+  m_Name: fire_magician_3
+  m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
+  CardName: fire magician 3
+  ID: fire_magician_3
+  Sprite: {fileID: 21300000, guid: 598391d1cb85dab46a5b5cf510ab49b3, type: 3}
+  Cost: 8
+  TriggeredEffects: []
+  Attack: 8
+  Health: 8
+  MinionTribes: 
+  IsStealth: 0
+  HasCharge: 0
+  HasDivineShield: 0
+  HasTaunt: 0
+  HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  CannotAttack: 1
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 12
+    EffectTiming: 0
+    TargetType: 7
+    GameActions:
+    - rid: 867525922271264768
+    Condition:
+      rid: 867525922271264769
+    AffectedEntitySelectorWrapper:
+      rid: 867525922271264770
+  references:
+    version: 2
+    RefIds:
+    - rid: 867525922271264768
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 867525922271264771
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 0d898c30b67cde946a3620081bd1acc2, type: 2}
+    - rid: 867525922271264769
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+        SourceType: 1
+    - rid: 867525922271264770
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 867525922271264772
+        - rid: 867525922271264773
+        ResolutionTiming: 1
+    - rid: 867525922271264771
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 8
+    - rid: 867525922271264772
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 1
+        Group: 2
+        ExcludeSelf: 0
+    - rid: 867525922271264773
+      type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Count:
+          rid: 867525922271264774
+    - rid: 867525922271264774
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1

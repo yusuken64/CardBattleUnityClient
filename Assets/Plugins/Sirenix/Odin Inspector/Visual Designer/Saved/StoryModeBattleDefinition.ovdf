@@ -1,0 +1,11 @@
+OVDF v1.0
+StoryModeBattleDefinition, Assembly-CSharp
+
+# Description
++ [UnityEngine.TextAreaAttribute]
+	minLines = 4
+	maxLines = 4
+
+# BattleImage
++ [Sirenix.OdinInspector.PreviewFieldAttribute]
+	Height = 146.2

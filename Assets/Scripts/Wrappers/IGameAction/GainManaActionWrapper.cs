@@ -1,20 +1,22 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 using CardBattleEngine;
 
 [Serializable]
 public class GainManaActionWrapper : IGameActionWrapperBase
 {
-    public System.Int32 Amount;
+    [SerializeReference] public IValueProviderWrapperBase Amount;
     public System.Boolean Canceled;
+    public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
     {
-        //var instance = new CardBattleEngine.Actions.GainManaAction();
-        //instance.Amount = this.Amount;
-        //instance.Canceled = this.Canceled;
-        //return instance;
-
-        return null;
+        var instance = new CardBattleEngine.GainManaAction();
+        instance.Amount = Amount?.Create();
+        instance.Canceled = this.Canceled;
+        instance.CustomSFX = CustomSFX;
+        return instance;
     }
 }

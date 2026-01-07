@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
+  m_Name: big_monkey_1
+  m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
+  CardName: Big monkey 1
+  ID: big_monkey_1
+  Sprite: {fileID: 21300000, guid: 36b73b06921d0c74f98430dba9422a06, type: 3}
+  Cost: 12
+  TriggeredEffects:
+  - rid: 867525694638784676
+  Attack: 8
+  Health: 8
+  MinionTribes: 
+  IsStealth: 0
+  HasCharge: 0
+  HasDivineShield: 0
+  HasTaunt: 0
+  HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  CannotAttack: 0
+  MinionTriggeredEffects: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 867525694638784676
+      type: {class: TriggeredEffectWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Cost 1 less for each card in hand
+        EffectTrigger: 7
+        EffectTiming: 2
+        TargetType: 7
+        GameActions:
+        - rid: 867526061311393876
+        Condition:
+          rid: -2
+        AffectedEntitySelectorWrapper:
+          rid: 867525694638784690
+    - rid: 867525694638784690
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 1
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+    - rid: 867526061311393876
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: 867526061311393877
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 867526061311393877
+      type: {class: NegativeValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        OriginalValue:
+          rid: 867526061311393878
+    - rid: 867526061311393878
+      type: {class: NumberOfCardsInHandWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0

@@ -1,0 +1,78 @@
+OVDF v1.0
+MinionCardDefinition, Assembly-CSharp
+
+# $YTgoJejBh7uaWZBzfcgn97
+Position: $root:2
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# $85xZi2y1YJnyaBSJDK6UZT
+Position: $Hf4BhEa2Y1yu4dAEekPPnd:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+
+# $Hf4BhEa2Y1yu4dAEekPPnd
+Position: $root:0
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# $YZ6bgLeuwWupM5XZ4PRK2D
+Position: $root:1
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# $XGG13EC3yefb8XbDu7M2Vy
+Position: $root:3
++ [Sirenix.OdinInspector.HorizontalGroupAttribute]
+
+# Sprite
+Position: $Hf4BhEa2Y1yu4dAEekPPnd:1
++ [Sirenix.OdinInspector.PreviewFieldAttribute]
+	Height = 189.33
+
+# ID
+Position: $85xZi2y1YJnyaBSJDK6UZT:1
+
+# Cost
+Position: $85xZi2y1YJnyaBSJDK6UZT:3
+
+# Attack
+Position: $85xZi2y1YJnyaBSJDK6UZT:4
+
+# Health
+Position: $85xZi2y1YJnyaBSJDK6UZT:5
+
+# MinionTribes
+Position: $85xZi2y1YJnyaBSJDK6UZT:6
+
+# IsStealth
+Position: $YZ6bgLeuwWupM5XZ4PRK2D:2
+
+# HasCharge
+Position: $YTgoJejBh7uaWZBzfcgn97:1
+
+# HasDivineShield
+Position: $YZ6bgLeuwWupM5XZ4PRK2D:1
+
+# HasPoisonous
+Position: $YZ6bgLeuwWupM5XZ4PRK2D:3
+
+# CardName
+Position: $85xZi2y1YJnyaBSJDK6UZT:2
+
+# TriggeredEffects
+Position: $root:5
+
+# HasWindFury
+Position: $YTgoJejBh7uaWZBzfcgn97:0
+
+# HasTaunt
+Position: $YZ6bgLeuwWupM5XZ4PRK2D:0
+
+# HasReborn
+Position: $YTgoJejBh7uaWZBzfcgn97:3
+
+# HasLifeSteal
+Position: $YTgoJejBh7uaWZBzfcgn97:2
+
+# Collectable
+Position: $85xZi2y1YJnyaBSJDK6UZT:0
+
+# CannotAttack
+Position: $XGG13EC3yefb8XbDu7M2Vy:0

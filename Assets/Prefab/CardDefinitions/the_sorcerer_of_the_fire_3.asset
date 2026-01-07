@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
+  m_Name: the_sorcerer_of_the_fire_3
+  m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
+  CardName: the sorcerer of the fire 3
+  ID: the_sorcerer_of_the_fire_3
+  Sprite: {fileID: 21300000, guid: ae0fce0b07ccd9546b1e98baf98023b7, type: 3}
+  Cost: 7
+  TriggeredEffects: []
+  Attack: 5
+  Health: 7
+  MinionTribes: 
+  IsStealth: 0
+  HasCharge: 0
+  HasDivineShield: 0
+  HasTaunt: 0
+  HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 0
+  HasReborn: 0
+  CannotAttack: 0
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 14
+    EffectTiming: 1
+    TargetType: 7
+    GameActions:
+    - rid: 867526235581055127
+    Condition:
+      rid: 867526242224308295
+    AffectedEntitySelectorWrapper:
+      rid: 867526242224308288
+  references:
+    version: 2
+    RefIds:
+    - rid: 867526235581055127
+      type: {class: GainCardActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Card: {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 867526242224308288
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 867526242224308295
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+        SourceType: 2

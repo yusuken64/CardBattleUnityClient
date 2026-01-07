@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
+  m_Name: NewSpellCard_Explosion
+  m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 1
+  CardName: Explosion
+  ID: Explosion
+  Sprite: {fileID: 21300000, guid: 5e15e1543f54740dfb1b3ebe8eb5d253, type: 3}
+  Cost: 2
+  TriggeredEffects: []
+  TargetingType: 7
+  SpellCastEffects:
+  - Description: Whielwind
+    GameActions:
+    - rid: 867525919145459776
+    AffectedEntitySelectorWrapper:
+      rid: 867525924825071616
+  CustomSFX: {fileID: 11400000, guid: 5f69b23c980d87b4eaa071852d7da83d, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 867525919145459776
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 867525919145459787
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 867525919145459787
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 867525924825071616
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 867525924825071617
+    - rid: 867525924825071617
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 1
+        Group: 0
+        ExcludeSelf: 0

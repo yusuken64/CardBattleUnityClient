@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
+  m_Name: Battle1
+  m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
+  LevelID: Level1
+  BattleImage: {fileID: 21300000, guid: 598391d1cb85dab46a5b5cf510ab49b3, type: 3}
+  Description: Butthurt Discord mod who privately messages you about your "intentions"
+    before deleting your post. Had no intention of hearing you out.
+  Deck: {fileID: 11400000, guid: 9d314a8a51fa20b46a9396d263150479, type: 2}

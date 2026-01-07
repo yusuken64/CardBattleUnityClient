@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
+  m_Name: dryad_ss
+  m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
+  Collectable: 1
+  CardName: Dryad SS
+  ID: dryad_ss
+  Sprite: {fileID: 21300000, guid: 9b43655f16ef28b458fb43e9a087ff0f, type: 3}
+  Cost: 8
+  TriggeredEffects: []
+  Attack: 12
+  Health: 12
+  MinionTribes: 
+  IsStealth: 0
+  HasCharge: 0
+  HasDivineShield: 0
+  HasTaunt: 1
+  HasPoisonous: 0
+  HasWindFury: 0
+  HasLifeSteal: 1
+  HasReborn: 0
+  CannotAttack: 0
+  MinionTriggeredEffects: []
+  references:
+    version: 2
+    RefIds: []
