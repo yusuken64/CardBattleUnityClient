@@ -7,6 +7,8 @@ using UnityEngine;
 public class DeathAnimation : GameActionAnimation<DeathAction>
 {
 	public AudioClip MinionDie;
+	public GameObject MinionDieParticles;
+
 	public override IEnumerator Play()
 	{
 		var owner = GameManager.GetPlayerFor(Context.Target.Owner);
@@ -15,6 +17,8 @@ public class DeathAnimation : GameActionAnimation<DeathAction>
 		{
 			var deadMinion = GameManager.GetObjectFor(Context.Target)
 				.GetComponent<Minion>();
+
+			var particles = Instantiate(MinionDieParticles, deadMinion.transform.position, Quaternion.identity);
 
 			if (owner.Board.Minions.Contains(deadMinion))
 			{

@@ -6,6 +6,7 @@ using UnityEngine;
 public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 {
 	public AudioClip DamageSound;
+	public GameObject DamageParticles;
 	public override IEnumerator Play()
 	{
 		Common.Instance.AudioManager.PlaySound(DamageSound);
@@ -17,6 +18,8 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 		}
 
 		Transform target = gameObject.transform;
+
+		var particles = Instantiate(DamageParticles, target.transform.position, Quaternion.identity);
 
 		// simple shake: short, small, no fancy stuff
 		Tween shake = target.DOShakePosition(

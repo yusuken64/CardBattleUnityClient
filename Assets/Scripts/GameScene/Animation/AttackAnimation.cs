@@ -8,6 +8,8 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 	public float Duration = 0.15f;
 	public AnimationCurve AttackCurve;
 
+	public GameObject AttackParticlePrefab;
+
 	public override IEnumerator Play()
 	{
 		Transform attacker = GameManager.GetObjectFor(Context.Source).transform;
@@ -18,7 +20,15 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 		Vector3 bumpPos = target.position - dir * 0.4f; // distance of bump
 
 		// forward bump
-		Tween forward = attacker.DOMove(bumpPos, Duration).SetEase(AttackCurve);
+		Tween forward = attacker.DOMove(bumpPos, Duration).SetEase(AttackCurve)
+			.OnComplete(() =>
+			{
+				Vector3 dir = (target.position - attacker.position).normalized;
+				Quaternion rotation = Quaternion.LookRotation(dir);
+
+				var attackParticle = Instantiate(AttackParticlePrefab, attacker.position, rotation);
+				Destroy(attackParticle, 3f);
+			});
 
 		// wait
 		yield return forward.WaitForCompletion();

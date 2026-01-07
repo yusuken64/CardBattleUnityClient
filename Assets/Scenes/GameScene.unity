@@ -1103,6 +1103,7 @@ MonoBehaviour:
   GameManager: {fileID: 1153458584}
   Container: {fileID: 771239541}
   MulliganItemPrefab: {fileID: 4958119418742558544, guid: d23f6de2a95b2bf44bb31ffa9c48bc87, type: 3}
+  SubmitButton: {fileID: 5100907203325996607}
   Items: []
   CardArea: {fileID: 771239541}
   BG: {fileID: 954727647}
@@ -2905,6 +2906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathAnimation
   MinionDie: {fileID: 8300000, guid: 96034023281a345ec93577a2cb66f0a0, type: 3}
+  MinionDieParticles: {fileID: 7390786167409724169, guid: c322a0e7b5af6fe47bfe570d77ed3952, type: 3}
 --- !u!1 &808137667
 GameObject:
   m_ObjectHideFlags: 0
@@ -5819,6 +5821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TakeDamageAnimation
   DamageSound: {fileID: 8300000, guid: 048c79bf7a6134ae38e7883600c586cf, type: 3}
+  DamageParticles: {fileID: 105348336549748525, guid: 311f721c13ea8074a832bf554e4877d5, type: 3}
 --- !u!224 &1568871633 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2444314604437109126, guid: 363cfcfb37569eb428811f26be6c993c, type: 3}
@@ -7154,6 +7157,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AttackParticlePrefab: {fileID: 8666321515539931435, guid: bdac6052ad414614fa94e0e996d9e200, type: 3}
 --- !u!114 &1995981154 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5146108261924859069, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
