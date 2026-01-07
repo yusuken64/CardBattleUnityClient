@@ -20,15 +20,15 @@ jobs:
           lfs: true
           fetch-depth: 0
 
-      - name: Free up disk space
-        run: |
-          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android
-          df -h
+      #- name: Free up disk space
+      #  run: |
+      #    sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android
+      #    df -h
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libglu1-mesa xvfb
+      #- name: Install dependencies
+      #  run: |
+      #    sudo apt-get update
+      #    sudo apt-get install -y libglu1-mesa xvfb
 
       - name: Build project
         id: unity-build
