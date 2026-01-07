@@ -41,6 +41,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: .
           buildsPath: ./build
+          customParameters: -defineSymbols ODIN_INSPECTOR_DISABLED
 
       - name: Upload build output
         if: success()
