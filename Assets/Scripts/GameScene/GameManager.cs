@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
 	public bool UseSeed;
 	public int RandomSeed;
+	public BattleIntro BattleIntro;
 
 	void Start()
 	{
@@ -83,7 +84,17 @@ public class GameManager : MonoBehaviour
 
 		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
 		_engine.ActionResolvedCallback = ActionResolvedCallback;
-		_engine.StartGame(_gameState);
+
+		Player.HeroPortrait.gameObject.SetActive(false);
+		Opponent.HeroPortrait.gameObject.SetActive(false);
+		BattleIntro.Setup(deck, enemyDeck);
+		BattleIntro.gameObject.SetActive(true);
+		BattleIntro.DoIntro(() =>
+		{
+			Player.HeroPortrait.gameObject.SetActive(true);
+			Opponent.HeroPortrait.gameObject.SetActive(true);
+			_engine.StartGame(_gameState);
+		});
 	}
 
 	private void SetupPlayer(Deck deck, Player player, CardBattleEngine.Player data)

@@ -1,7 +1,9 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MulliganPrompt : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class MulliganPrompt : MonoBehaviour
 
 	public List<MulliganOption> Items;
 	public RectTransform CardArea;
+
+	public Image BG;
 
 	public void Setup(List<Card> cards)
 	{
@@ -25,6 +29,9 @@ public class MulliganPrompt : MonoBehaviour
 		}
 
 		UpdatePositions();
+
+		BG.color = new Color(0f, 0f, 0f, 0f);
+		BG.DOFade(245f / 255f, 0.5f);
 	}
 
 	private void ClearItems()
@@ -85,9 +92,13 @@ public class MulliganPrompt : MonoBehaviour
 				Destroy(item.gameObject);
 			}
 		}
-		this.GameManager.Player.Hand.UpdateCardPositions();
 
-		ClearItems();
-		this.gameObject.SetActive(false);
+		BG.DOFade(0, 0.5f)
+			.OnComplete(() =>
+			{
+				this.GameManager.Player.Hand.UpdateCardPositions();
+				ClearItems();
+				this.gameObject.SetActive(false);
+			});
 	}
 }
