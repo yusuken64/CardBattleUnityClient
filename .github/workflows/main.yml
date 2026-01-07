@@ -1,0 +1,61 @@
+name: Build and Upload to Itch.io
+
+on: [push, pull_request]
+
+jobs:
+  buildForAllSupportedPlatforms:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          #- WebGL
+          - StandaloneWindows64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0
+
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android
+          df -h
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglu1-mesa xvfb
+
+      - name: Build project
+        id: unity-build
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          projectPath: .
+          buildsPath: ./build
+
+      - name: Upload build output
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+
+      - name: Set Version
+        run: echo "version=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+
+      - name: Upload to Itch.io
+        uses: robpc/itchio-upload-action@v1
+        with:
+          path: build/${{ matrix.targetPlatform }}
+          project: juicychicken/slayqueen-the-gatekeeper
+          channel: ${{ matrix.targetPlatform }}
+          api-key: ${{ secrets.ITCHIO_API_KEY }}
