@@ -15,12 +15,5 @@ MonoBehaviour:
   Title: TestDeck
   HeroCard: {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
   Cards:
-  - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
-  - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
-  - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
-  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
-  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
-  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
-  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
   - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
   - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}

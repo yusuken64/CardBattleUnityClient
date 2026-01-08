@@ -524,6 +524,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148656604}
   m_CullTransparentMesh: 1
+--- !u!1 &181613470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 181613471}
+  - component: {fileID: 181613472}
+  m_Layer: 0
+  m_Name: FatigueActionAnimation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &181613471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181613470}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 984708921}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &181613472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181613470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3276fdada2969c4ca724bf6daee1574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FatigueActionAnimation
+  FatigueCardPrefab: {fileID: 9053910568178935302, guid: b3487584c2f63404692e8de67ce9f0cb, type: 3}
+  FatigueParticlesPrefab: {fileID: 768564663209305409, guid: 043bd686c8868354c930933d314389d2, type: 3}
 --- !u!1 &203463561
 GameObject:
   m_ObjectHideFlags: 0
@@ -3130,7 +3176,7 @@ Transform:
   m_GameObject: {fileID: 865343062}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.08912, y: -2.81867, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4337,6 +4383,7 @@ Transform:
   - {fileID: 566408350}
   - {fileID: 1141605248}
   - {fileID: 411137853}
+  - {fileID: 181613471}
   m_Father: {fileID: 1153458583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &984708922
@@ -4375,6 +4422,7 @@ MonoBehaviour:
   - {fileID: 1214514926}
   - {fileID: 1141605249}
   - {fileID: 411137854}
+  - {fileID: 181613472}
 --- !u!1 &1045255049
 GameObject:
   m_ObjectHideFlags: 0
