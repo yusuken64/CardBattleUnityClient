@@ -217,13 +217,27 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
         if (!gameManager.ActivePlayerTurn)
 		{
+            _ui.WarnEnemyTurn();
             return false;
 		}
 
         if (this.Data.Owner != gameManager.Player.Data)
         {
+            _ui.ShowWarningMessage("Cannot control enemy minions");
             return false;
         }
+
+        if (this.Data.HasSummoningSickness)
+        {
+            _ui.ShowWarningMessage("Cannot attack right away");
+            return false;
+        }
+        else if (!CanAttack)
+        {
+            _ui.ShowWarningMessage("Minion Can't Attack");
+            return false;
+        }
+
         return CanAttack;
     }
 

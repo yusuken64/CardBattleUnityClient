@@ -49,8 +49,13 @@ public class UI : MonoBehaviour
 
     public void WarnEnemyTurn()
 	{
+		ShowWarningMessage("Not your Turn");
+	}
+
+    public void ShowWarningMessage(string warning)
+    {
         Common.Instance.AudioManager.PlayUISound(ErrorSound);
-		ShowMessage("Not your Turn");
+        ShowMessage(warning);
 	}
 
 	internal IEnumerator DoGameEndRoutine(bool isWin)
@@ -140,6 +145,7 @@ public class UI : MonoBehaviour
         var card = hoverable.GetDisplayCard();
         if (card == null) { return; }
         CardPreview.Setup(card);
+        CardPreview.CanPlayIndicator.gameObject.SetActive(false);
         CardPreview.gameObject.SetActive(true);
     }
 

@@ -367,9 +367,9 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
                 pendingAnimator.Play("MinionReturn");
             }
             player.Board.UpdateMinionPositions();
-            Destroy(_pendingMinion.gameObject, 2f); //the length of animation
+            Destroy(_pendingMinion.gameObject, 1f); //the length of animation
 
-            yield return new WaitForSecondsRealtime(2f);
+            yield return new WaitForSecondsRealtime(1f);
         }
 
         Dragging = false;
@@ -502,7 +502,12 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         var gameManager = FindFirstObjectByType<GameManager>();
         if (!gameManager.ActivePlayerTurn)
         {
-            _ui.ShowMessage("Not your Turn");
+            _ui.WarnEnemyTurn();
+            return false;
+        }
+        else if (Data.Owner.Mana < Data.ManaCost)
+        {
+            _ui.ShowWarningMessage("Not enough Mana");
             return false;
         }
 

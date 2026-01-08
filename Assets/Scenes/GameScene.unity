@@ -2474,6 +2474,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 949474858}
     m_Modifications:
+    - target: {fileID: 2175166854002355625, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4728465195448024071, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_Name
       value: PreviewCard
@@ -4778,6 +4782,7 @@ MonoBehaviour:
   DefaultTextColor: {r: 1, g: 1, b: 1, a: 1}
   DamagedTextColor: {r: 0.8941177, g: 0.023529414, b: 0.003921569, a: 1}
   BuffedTextColor: {r: 0.46325117, g: 0.97735846, b: 0.08667136, a: 1}
+  ErrorSound: {fileID: 8300000, guid: a6940739bc3ef404a8f1e7b861a235c4, type: 3}
 --- !u!224 &1132939054
 RectTransform:
   m_ObjectHideFlags: 0

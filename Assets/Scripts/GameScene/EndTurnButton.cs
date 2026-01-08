@@ -63,7 +63,7 @@ public class EndTurnButton : MonoBehaviour
 		}
 		else
 		{
-			_ui.ShowMessage("Not your turn");
+			_ui.WarnEnemyTurn();
 		}
 	}
 
