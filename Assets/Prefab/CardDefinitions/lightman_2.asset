@@ -49,9 +49,12 @@ MonoBehaviour:
     - rid: 867525924129079365
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        AttackChange: 1
-        HealthChange: 1
-        CostChange: 0
+        AttackChange:
+          rid: 2140584399319859266
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
         ExpirationTrigger:
           rid: -2
         Canceled: 0
@@ -61,9 +64,14 @@ MonoBehaviour:
       data:
         Operations:
         - rid: 867525924129079368
+        ResolutionTiming: 0
     - rid: 867525924129079368
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Side: 0
         Group: 0
         ExcludeSelf: 0
+    - rid: 2140584399319859266
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1

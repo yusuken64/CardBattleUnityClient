@@ -18,6 +18,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     public int Cost;
     public int Attack;
     public int Health;
+    public int MaxHealth;
     public bool CanPlay;
     public TextMeshProUGUI CostText;
     public TextMeshProUGUI AttackText;
@@ -49,9 +50,15 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     public float rotateSpeed;
     private Minion _pendingMinion;
     public int _pendingIndex;
-    #endregion
+	private UI _ui;
+	#endregion
 
-    public CardBattleEngine.IGameEntity Entity => GetData();
+	public CardBattleEngine.IGameEntity Entity => GetData();
+
+    private void Start()
+    {
+        _ui = FindFirstObjectByType<UI>();
+    }
 
     public void ResetVisuals()
     {
@@ -159,8 +166,6 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         //description = Data.CardText;
         DescriptionText.text = description;
 
-        CostText.text = Cost.ToString();
-
         GameManager gameManager = FindFirstObjectByType<GameManager>();
 		if (gameManager != null)
 		{
@@ -173,6 +178,14 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
 		if (AttackText != null) AttackText.text = Attack.ToString();
         if (HealthText != null) HealthText.text = Health.ToString();
+        CostText.text = Cost.ToString();
+
+        if (_ui != null)
+        {
+            AttackText.color = _ui.GetColor(Attack, Data.Attack, Data.Attack);
+            HealthText.color = _ui.GetColor(Health, Data.MaxHealth, MaxHealth);
+            CostText.color = _ui.GetColor(Cost, Data.ManaCost, Data.ManaCost);
+        }
     }
 
     internal void RefreshData()
@@ -191,16 +204,19 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         {
             Attack = minionCard.Attack;
             Health = minionCard.Health;
+            MaxHealth = minionCard.MaxHealth;
         }
         else if (this.Data is WeaponCard weaponCard)
         {
             Attack = weaponCard.Attack;
             Health = weaponCard.Durability;
+            MaxHealth = weaponCard.Durability;
         }
         else if (this.Data is SpellCard spellCard)
         {
             Attack = 0;
             Health -= 0;
+            MaxHealth = 0;
         }
 
         UpdateUI();
@@ -525,13 +541,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public void HoverStart()
     {
-        var ui = FindFirstObjectByType<UI>();
-        ui.PreviewStart(this);
+        _ui.PreviewStart(this);
     }
 
     public void HoverEnd()
     {
-        var ui = FindFirstObjectByType<UI>();
-        ui.PreviewEnd();
+        _ui.PreviewEnd();
     }
 }

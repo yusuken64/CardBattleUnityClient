@@ -29,39 +29,31 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
-    EffectTrigger: 14
+    EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 7
+    TargetType: 0
     GameActions:
     - rid: 6533011735244963905
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
-      rid: 6533011735244963903
+      rid: -2
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6533011735244963903
-      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+    - rid: 2140584398890467328
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Operations:
-        - rid: 6533011735244963904
-    - rid: 6533011735244963904
-      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Side: 0
-        Group: 1
-        ExcludeSelf: 1
+        Number: 2
     - rid: 6533011735244963905
       type: {class: HealActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Amount:
-          rid: 6533011735244963911
+          rid: 2140584398890467328
         Canceled: 0
-    - rid: 6533011735244963911
-      type: {class: CastCardCostValueWrapper, ns: , asm: Assembly-CSharp}
-      data: 
+        CustomSFX: {fileID: 0}

@@ -36,6 +36,7 @@ MonoBehaviour:
     EffectTiming: 0
     TargetType: 7
     GameActions:
+    - rid: 2140584399319859265
     - rid: 6533011672544051275
     Condition:
       rid: 867526235581054991
@@ -52,6 +53,11 @@ MonoBehaviour:
       data:
         EntityStat: 1
         EntityContextProvider: 1
+    - rid: 2140584399319859265
+      type: {class: DeferredResolveActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 6533011672544051275
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:

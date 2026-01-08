@@ -31,7 +31,7 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: When you cast a spell summon a Gargoyle
     EffectTrigger: 14
     EffectTiming: 1
     TargetType: 7

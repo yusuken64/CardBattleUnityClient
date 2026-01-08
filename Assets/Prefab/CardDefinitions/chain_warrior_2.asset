@@ -29,7 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
-  CannotAttack: 1
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: Deal 2 Damage to all minions
     EffectTrigger: 1

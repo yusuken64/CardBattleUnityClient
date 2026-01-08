@@ -22,6 +22,10 @@ public class UI : MonoBehaviour
     public GameSettings GameSettingsScreen;
     public GameObject SettingsButton;
 
+    public Color DefaultTextColor;
+    public Color DamagedTextColor;
+    public Color BuffedTextColor;
+
 	private void Start()
 	{
         Message.gameObject.SetActive(false);
@@ -106,6 +110,21 @@ public class UI : MonoBehaviour
            {
                Destroy(healNumber.gameObject);
            });
+    }
+
+    internal Color GetColor(int current, int baseValue, int maxValue)
+    {
+        if (current > baseValue)
+        {
+            return BuffedTextColor;
+        }
+
+        if (current < maxValue)
+        {
+            return DamagedTextColor;
+        }
+
+        return DefaultTextColor;
     }
 
     internal void PreviewStart(IHoverable hoverable)

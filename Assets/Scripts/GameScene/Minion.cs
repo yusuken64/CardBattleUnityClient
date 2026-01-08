@@ -13,6 +13,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public Image CardImage;
 	public int Attack;
     public int Health;
+    public int MaxHealth;
     public bool CanAttack;
     public bool HasDivineShield;
     public bool HasTaunt;
@@ -44,12 +45,18 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
 	public float moveSpeed;
 	public float rotateSpeed;
-    #endregion
+	private UI _ui;
+	#endregion
 
-    public CardBattleEngine.IGameEntity Entity => GetData();
+	public CardBattleEngine.IGameEntity Entity => GetData();
 
-    // Update is called once per frame
-    void Update()
+	private void Start()
+	{
+        _ui = FindFirstObjectByType<UI>();
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         if (Moving)
         {
@@ -97,6 +104,12 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         AttackText.text = Attack.ToString();
         HealthText.text = Health.ToString();
 
+        if (_ui != null)
+        {
+            AttackText.color = _ui.GetColor(Attack, Data.OriginalCard.Attack, Data.OriginalCard.Attack);
+            HealthText.color = _ui.GetColor(Health, Data.OriginalCard.MaxHealth, MaxHealth);
+        }
+
         var gameManager = FindFirstObjectByType<GameManager>();
         var isActivePlayer = gameManager.ActivePlayerTurn &&
             this.Data != null &&
@@ -119,7 +132,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         if (Data == null) { return; }
 
         Attack = Data.Attack;
-        Health = Data.Health;
+        Attack = Data.Attack;
+        MaxHealth = Data.MaxHealth;
         CanAttack = Data.CanAttack();
         HasDivineShield = Data.HasDivineShield;
         HasTaunt = Data.Taunt;
@@ -279,18 +293,16 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public GameObject DragObject => this.gameObject;
     public CardBattleEngine.Card GetDisplayCard()
     {
-        return Data.OriginalCard;
+        return Data?.OriginalCard;
     }
 
     public void HoverStart()
     {
-        var ui = FindFirstObjectByType<UI>();
-        ui.PreviewStart(this);
+        _ui.PreviewStart(this);
     }
 
     public void HoverEnd()
     {
-        var ui = FindFirstObjectByType<UI>();
-        ui.PreviewEnd();
+        _ui.PreviewEnd();
     }
 }

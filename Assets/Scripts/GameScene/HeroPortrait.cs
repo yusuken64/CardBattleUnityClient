@@ -14,6 +14,12 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 	public TextMeshProUGUI ArmorText;
 
 	public GameObject FreezeIndicator;
+	private UI _ui;
+
+	private void Start()
+	{
+		_ui = FindFirstObjectByType<UI>();
+	}
 
 	internal void UpdateUI()
 	{
@@ -26,6 +32,12 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 		ArmorObject.gameObject.SetActive(Player.Armor != 0);
 
 		FreezeIndicator.gameObject.SetActive(Player.IsFrozen);
+
+		if (_ui != null)
+		{
+			AttackText.color = _ui.GetColor(Player.Attack, Player.Attack, Player.Attack);
+			HealthText.color = _ui.GetColor(Player.Health, 30, Player.MaxHealth);
+		}
 	}
 
 	public AimIntent AimIntent { get; set; } = AimIntent.Attack;

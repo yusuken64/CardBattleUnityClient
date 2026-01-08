@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
-  m_Name: NewSpellCard_Whirlwind
+  m_Name: Whirlwind
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
   CardName: Whirlwind
@@ -20,7 +20,7 @@ MonoBehaviour:
   TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
-  - Description: Whirlwind
+  - Description: Deal 1 Damage to all minions
     GameActions:
     - rid: 867525919145459776
     AffectedEntitySelectorWrapper:

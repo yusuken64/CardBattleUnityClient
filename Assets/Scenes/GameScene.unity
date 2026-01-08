@@ -4775,6 +4775,9 @@ MonoBehaviour:
   GameResultScreen: {fileID: 1405684315}
   GameSettingsScreen: {fileID: 891839487}
   SettingsButton: {fileID: 2648988384104997274}
+  DefaultTextColor: {r: 1, g: 1, b: 1, a: 1}
+  DamagedTextColor: {r: 0.8941177, g: 0.023529414, b: 0.003921569, a: 1}
+  BuffedTextColor: {r: 0.46325117, g: 0.97735846, b: 0.08667136, a: 1}
 --- !u!224 &1132939054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7389,6 +7392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PointerHandler
   clickTime: 0.2
   dragThreshold: 10
+  moveThreshold: 0.01
 --- !u!4 &2043662397
 Transform:
   m_ObjectHideFlags: 0
