@@ -98,13 +98,13 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		}
 	}
 
-	public void HoldStart()
+	public void HoverStart()
 	{
 		var ui = FindFirstObjectByType<UI>();
 		ui.PreviewStart(this);
 	}
 
-	public void HoldEnd()
+	public void HoverEnd()
 	{
 		var ui = FindFirstObjectByType<UI>();
 		ui.PreviewEnd();

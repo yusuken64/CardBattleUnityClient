@@ -62,13 +62,13 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 		return CardDefinition.CreateCard();
 	}
 
-	public void HoldStart()
+	public void HoverStart()
 	{
 		var ui = FindFirstObjectByType<CollectionUI>();
 		ui.PreviewStart(this);
 	}
 
-	public void HoldEnd()
+	public void HoverEnd()
 	{
 		var ui = FindFirstObjectByType<CollectionUI>();
 		ui.PreviewEnd();
