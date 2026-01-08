@@ -34,6 +34,14 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 
 	public bool CanStartAiming()
 	{
+		var gameManager = FindFirstObjectByType<GameManager>();
+		if (!gameManager.ActivePlayerTurn)
+		{
+			var ui = FindFirstObjectByType<UI>();
+			ui.WarnEnemyTurn();
+			return false;
+		}
+
 		return Data.TargetingType != TargetingType.None &&
 				!Data.UsedThisTurn;//TODO heropoweraction.isvalid
 	}

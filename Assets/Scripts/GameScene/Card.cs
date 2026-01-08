@@ -222,7 +222,6 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         UpdateUI();
     }
 
-
     public void SyncData(IGameEntity entity)
     {
         var data = entity as CardBattleEngine.Card;
@@ -393,6 +392,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
                            out string reason)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
+
         var player = gameManager.GetPlayerFor(Data.Owner);
 
         var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
@@ -497,9 +497,22 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
     }
 
+    public bool CanPreviewPlayOverBoard()
+    {
+        var gameManager = FindFirstObjectByType<GameManager>();
+        if (!gameManager.ActivePlayerTurn)
+        {
+            _ui.ShowMessage("Not your Turn");
+            return false;
+        }
+
+        return true;
+    }
+
     public void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
+
         var player = gameManager.GetPlayerFor(Data.Owner);
         var minionPlayPreview = FindFirstObjectByType<GameInteractionHandler>().MinionPlayPreview;
         var index = player.Board.Minions
@@ -526,6 +539,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public void CancelDrag()
     {
+        Dragging = false;
         CastIndicator.gameObject.SetActive(false);
 
         var gameManager = FindFirstObjectByType<GameManager>();

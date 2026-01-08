@@ -76,6 +76,15 @@ public class GameInteractionHandler : MonoBehaviour
 		{
 			currentDraggable.DragObject.transform.position = mousePos;
 			var isMouseOverBoard = MouseOverBoard(mousePos).collider != null;
+
+			if (isMouseOverBoard && !currentDraggable.CanPreviewPlayOverBoard())
+			{
+				currentDraggable.CancelDrag();
+				currentDraggable.EndAim();
+				EndAim();
+				return;
+			}
+
 			currentDraggable.PreviewPlayOverBoard(mousePos, isMouseOverBoard);
 
 			if (isMouseOverBoard)
@@ -246,10 +255,6 @@ public class GameInteractionHandler : MonoBehaviour
 				{
 					currentAimable = targetOrigin;
 				}
-				else
-				{
-					//currentAimable.ResolveTarget(null);
-				}
 			}
 		}
 	}
@@ -345,6 +350,7 @@ public interface IDraggable
 	bool Dragging { get; set; }
 
 	bool CanStartDrag();
+	bool CanPreviewPlayOverBoard();
 	void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard);
 	bool CanResolve(Vector3 mousePos, out (IGameAction action, ActionContext context) current, out string reason);
 	void Resolve(Vector3 mousePos, (IGameAction action, ActionContext context) current);

@@ -214,6 +214,12 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public bool CanStartAiming()
     {
         var gameManager = FindFirstObjectByType<GameManager>();
+
+        if (!gameManager.ActivePlayerTurn)
+		{
+            return false;
+		}
+
         if (this.Data.Owner != gameManager.Player.Data)
         {
             return false;

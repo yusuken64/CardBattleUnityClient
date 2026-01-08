@@ -26,6 +26,8 @@ public class UI : MonoBehaviour
     public Color DamagedTextColor;
     public Color BuffedTextColor;
 
+    public AudioClip ErrorSound;
+
 	private void Start()
 	{
         Message.gameObject.SetActive(false);
@@ -44,6 +46,12 @@ public class UI : MonoBehaviour
         // Start new message coroutine
         messageCoroutine = StartCoroutine(ShowMessageCoroutine(message));
     }
+
+    public void WarnEnemyTurn()
+	{
+        Common.Instance.AudioManager.PlayUISound(ErrorSound);
+		ShowMessage("Not your Turn");
+	}
 
 	internal IEnumerator DoGameEndRoutine(bool isWin)
     {

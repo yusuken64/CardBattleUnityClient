@@ -170,6 +170,12 @@ public class GameManager : MonoBehaviour
 
 	public bool CheckIsValid(IGameAction action, ActionContext context, out string reason)
 	{
+		if (!ActivePlayerTurn)
+		{
+			reason = "Not your Turn";
+			return false;
+		}
+
 		return action.IsValid(_gameState, context, out reason);
 	}
 
