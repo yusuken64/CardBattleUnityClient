@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -50,7 +51,7 @@ public class BattlePreview : MonoBehaviour
 
 			Common.Instance.SaveManager.Save();
 
-			yield return null;
+			yield return new WaitUntil(() => AnyInput());
 		}
 
 		GameManager.ReturnScreenName = "StoryMode";
@@ -59,5 +60,13 @@ public class BattlePreview : MonoBehaviour
 		{
 			SceneManager.LoadScene("GameScene");
 		});
+	}
+
+	private bool AnyInput()
+	{
+		return
+			Mouse.current?.leftButton.wasPressedThisFrame == true ||
+			Keyboard.current?.anyKey.wasPressedThisFrame == true ||
+			Touchscreen.current?.primaryTouch.press.wasPressedThisFrame == true;
 	}
 }

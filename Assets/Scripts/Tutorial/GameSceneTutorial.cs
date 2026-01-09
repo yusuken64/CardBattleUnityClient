@@ -85,8 +85,7 @@ public class GameSceneTutorial : MonoBehaviour
 			.Join(tutorial.transform
 			.DOScale(Vector3.one, 0.5f)
 			.SetEase(Ease.OutBack)
-			.SetDelay(0.05f)
-	);
+			.SetDelay(0.05f));
 	}
 
 	public void TutorialFinished(string tutorialName)

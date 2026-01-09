@@ -118,11 +118,6 @@ public class GameResultScreen : MonoBehaviour
 		if (gameResultRoutine != null)
 		{
 			yield return gameResultRoutine(isWin);
-			yield return new WaitUntil(() =>
-				Mouse.current?.leftButton.wasPressedThisFrame == true ||
-				Keyboard.current?.anyKey.wasPressedThisFrame == true ||
-				Touchscreen.current?.primaryTouch.press.wasPressedThisFrame == true
-			);
 		}
 
 		ExitScene();
