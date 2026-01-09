@@ -23,15 +23,22 @@ public class SceneTransition : MonoBehaviour
 
 	public void DoTransition(Action action)
 	{
+		DoTransition(action != null ? () => WrapAction(action) : null);
+	}
+
+	public void DoTransition(Func<IEnumerator> action)
+	{
 		if (transitionInProgress)
+		{
 			return;
+		}
 
 		gameObject.SetActive(true);
 		HintText.text = Hints[UnityEngine.Random.Range(0, Hints.Count)];
 		StartCoroutine(DoTransitionRoutine(action));
 	}
 
-	private IEnumerator DoTransitionRoutine(Action action)
+	private IEnumerator DoTransitionRoutine(Func<IEnumerator> action)
 	{
 		transitionInProgress = true;
 
@@ -42,7 +49,10 @@ public class SceneTransition : MonoBehaviour
 			.SetUpdate(true)
 			.WaitForCompletion();
 
-		action?.Invoke();
+		if (action != null)
+		{
+			yield return action();
+		}
 
 		yield return null;
 
@@ -53,5 +63,11 @@ public class SceneTransition : MonoBehaviour
 
 		transitionInProgress = false;
 		gameObject.SetActive(false);
+	}
+
+	private IEnumerator WrapAction(Action action)
+	{
+		action.Invoke();
+		yield break;
 	}
 }

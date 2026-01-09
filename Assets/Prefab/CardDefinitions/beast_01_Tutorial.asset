@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
-  m_Name: beast_02
+  m_Name: beast_01_Tutorial
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Beast 02
-  ID: beast_02
-  Sprite: {fileID: 21300000, guid: bbd45832e75a86644b1efc7347ed1005, type: 3}
+  CardName: Beast 01
+  ID: beast_01_Tutorial
+  Sprite: {fileID: 21300000, guid: d67121c3754a110429ba5138110f5d88, type: 3}
   Cost: 1
   TriggeredEffects: []
   Attack: 2

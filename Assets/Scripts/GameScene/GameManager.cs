@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
 	public static string ReturnScreenName;
 	public static Func<bool, IEnumerator> GameResultRoutine;
+	public static GameStartParams GameStartParams;
+
 	public Player Player;
 	public Player Opponent;
 
@@ -76,14 +78,14 @@ public class GameManager : MonoBehaviour
 
 		UnityRNG rng = new UnityRNG();
 
-		_gameState = CreateTestGame(deck, enemyDeck, rng);
+		_gameState = CreateGame(deck, enemyDeck, rng);
 		SetupPlayer(deck, Player, _gameState.Players[0]);
 		SetupPlayer(enemyDeck, Opponent, _gameState.Players[1]);
 
 		_opponentAgent = new RandomAI(Opponent.Data, rng);
 
-		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
-		_engine.ActionResolvedCallback = ActionResolvedCallback;
+		_engine.ActionPlaybackCallback += ActionPlaybackCallback;
+		_engine.ActionResolvedCallback += ActionResolvedCallback;
 
 		Player.HeroPortrait.gameObject.SetActive(false);
 		Opponent.HeroPortrait.gameObject.SetActive(false);
@@ -93,8 +95,21 @@ public class GameManager : MonoBehaviour
 		{
 			Player.HeroPortrait.gameObject.SetActive(true);
 			Opponent.HeroPortrait.gameObject.SetActive(true);
-			_engine.StartGame(_gameState);
+
+			StartCoroutine(WaitToStartRoutine());
 		});
+	}
+
+	private IEnumerator WaitToStartRoutine()
+	{
+		while(GameStartParams != null &&
+			  GameStartParams.BlockStart)
+		{
+			yield return null;
+		}
+
+		_engine.StartGame(_gameState);
+		GameStartParams = null;
 	}
 
 	private void SetupPlayer(Deck deck, Player player, CardBattleEngine.Player data)
@@ -106,7 +121,7 @@ public class GameManager : MonoBehaviour
 		player.RefreshData();
 	}
 
-	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck, UnityRNG rng)
+	private GameState CreateGame(Deck playerDeck, Deck enemyDeck, UnityRNG rng)
 	{
 		var cardManager = Common.Instance.CardManager;
 
@@ -122,7 +137,17 @@ public class GameManager : MonoBehaviour
 
 		List<CardBattleEngine.Card> cardDB = Common.Instance.CardManager.AllCards()
 			.Select(x => x.CreateCard()).ToList();
-		return new GameState(p1, p2, rng, cardDB);
+
+		var gameState =  new GameState(p1, p2, rng, cardDB);
+
+		if (GameStartParams != null)
+		{
+			gameState.SkipShuffle = GameStartParams.SkipShuffle;
+			gameState.SkipMulligan = GameStartParams.SkipMulligan;
+			gameState.InitialCards = GameStartParams.InitialCards;
+		}
+
+		return gameState;
 	}
 
 	internal GameObject GetObjectFor(IGameEntity entity)
@@ -319,6 +344,14 @@ public class GameManager : MonoBehaviour
 			throw new Exception($"Validation exception: {a} != {b}");
 		}
 	}
+}
+
+public class GameStartParams
+{
+	public bool BlockStart = false;	//the game will not start until this is true
+	public bool SkipMulligan = false;
+	public bool SkipShuffle = false;
+	public int InitialCards = 3;
 }
 
 internal class UnityRNG : IRNG

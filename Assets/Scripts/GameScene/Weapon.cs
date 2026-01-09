@@ -27,7 +27,7 @@ public class Weapon : MonoBehaviour
 		}
 
 		var cardManager = Common.Instance.CardManager;
-		WeaponImage.sprite = cardManager.GetSpriteByCardName(weapon.Name);
+		WeaponImage.sprite = cardManager.GetSpriteByCardID(weapon.Name);
 
 		RefreshData();
 	}

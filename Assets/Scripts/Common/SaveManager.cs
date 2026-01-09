@@ -76,6 +76,12 @@ public class SaveManager : MonoBehaviour
 	[ContextMenu("Reset Data")]
 	public void ResetData()
 	{
-		SaveData = new SaveData();
+		//SaveData = new SaveData();
+		SaveData.GameSaveData = new();
+	}
+
+	internal void ResetTutorialData()
+	{
+		SaveData.TutorialSaveData = new();
 	}
 }

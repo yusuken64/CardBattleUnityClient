@@ -10,6 +10,8 @@ public class SaveData
 	public AppSaveData AppSaveData = new();
 	[SerializeReference]
 	public GameSaveData GameSaveData = new();
+	[SerializeReference]
+	public TutorialSaveData TutorialSaveData = new();
 }
 
 [Serializable]
@@ -18,6 +20,19 @@ public class AppSaveData
 	public float MASTERVolume = 1f;
 	public float MUSICVolume = 1f;
 	public float GAMEVolume = 1f;
+}
+
+[Serializable]
+public class TutorialSaveData
+{
+	public bool BattleTutorialCompleted;
+
+	public List<string> CompletedTutorials = new();
+
+	internal bool IsCompleted(string tutorialName)
+	{
+		return CompletedTutorials.Contains(tutorialName);
+	}
 }
 
 [Serializable]
@@ -139,8 +154,8 @@ public class DeckSaveData
 	{
 		var deck = new Deck();
 		deck.Title = Title;
-		deck.HeroCard = Common.Instance.CardManager.GetCardByName(HeroCard);
-		deck.Cards = CardIDs.Select(x => Common.Instance.CardManager.GetCardByName(x)).ToList();
+		deck.HeroCard = Common.Instance.CardManager.GetCardByID(HeroCard);
+		deck.Cards = CardIDs.Select(x => Common.Instance.CardManager.GetCardByID(x)).ToList();
 
 		return deck;
 	}
@@ -150,8 +165,8 @@ public class DeckSaveData
 		return new DeckSaveData()
 		{
 			Title = deck.Title,
-			HeroCard = deck.HeroCard.CardName,
-			CardIDs = deck.Cards.Select(x => x.CardName).ToList()
+			HeroCard = deck.HeroCard.ID,
+			CardIDs = deck.Cards.Select(x => x.ID).ToList()
 		};
 	}
 }

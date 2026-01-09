@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +8,9 @@ public class MainMenu : MonoBehaviour
 	public GameObject startobect;
 	public GameObject SettingsObject;
 	public GameObject DataObject;
+
+	public DeckDefinition TutorialPlayerDeck;
+	public DeckDefinition TutorialOpponentDeck;
 
 	private void Start()
 	{
@@ -19,10 +24,58 @@ public class MainMenu : MonoBehaviour
 		DeckSaveData firstDeck = Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas[0];
 		Common.Instance.SaveManager.SaveData.GameSaveData.CombatDeck = firstDeck;
 
-		Common.Instance.SceneTransition.DoTransition(() =>
+		if (ShouldRunTutorial())
 		{
-			SceneManager.LoadScene("StoryMode");
-		});
+			Common.Instance.SceneTransition.DoTransition(LoadGameWithTutorial);
+		}
+		else
+		{
+			Common.Instance.SceneTransition.DoTransition(() =>
+			{
+				SceneManager.LoadScene("StoryMode");
+			});
+		}
+	}
+
+	private bool ShouldRunTutorial()
+	{
+		return !Common.Instance.SaveManager.SaveData.TutorialSaveData.BattleTutorialCompleted;
+	}
+
+	private IEnumerator LoadGameWithTutorial()
+	{
+		GameManager.GameStartParams = new()
+		{
+			BlockStart = true,
+			SkipMulligan = true,
+			SkipShuffle = true,
+			InitialCards = 0
+		};
+		GameManager.GameResultRoutine = GameResult;
+
+		IEnumerator GameResult(bool isWin)
+		{
+			if (isWin)
+			{
+				Common.Instance.SaveManager.SaveData.TutorialSaveData.BattleTutorialCompleted = true;
+			}
+
+			yield return null;
+		}
+
+		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
+		gameSaveData.CombatDeck = TutorialPlayerDeck.ToDeckData();
+		gameSaveData.CombatDeckEnemy = TutorialOpponentDeck.ToDeckData();
+
+		yield return SceneManager.LoadSceneAsync(
+			"GameScene",
+			LoadSceneMode.Single
+		);
+
+		yield return SceneManager.LoadSceneAsync(
+			"GameSceneTutorial",
+			LoadSceneMode.Additive
+		);
 	}
 
 	public void Adventure_Click()
@@ -63,6 +116,17 @@ public class MainMenu : MonoBehaviour
 	public void Reset_Click()
 	{
 		Common.Instance.SaveManager.ResetData();
+		Common.Instance.SaveManager.EnsureData();
+		Common.Instance.SaveManager.Save();
+		SettingsObject.gameObject.SetActive(false);
+		DataObject.gameObject.SetActive(false);
+
+		SceneManager.LoadScene("Main");
+	}
+
+	public void ResetTutorial_Click()
+	{
+		Common.Instance.SaveManager.ResetTutorialData();
 		Common.Instance.SaveManager.EnsureData();
 		Common.Instance.SaveManager.Save();
 		SettingsObject.gameObject.SetActive(false);

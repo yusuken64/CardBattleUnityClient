@@ -25,16 +25,16 @@ public class CardManager : MonoBehaviour
 
 		foreach (var card in AllCards())
 		{
-			if (card == null || string.IsNullOrEmpty(card.CardName))
+			if (card == null || string.IsNullOrEmpty(card.ID))
 			{
 				Debug.LogWarning("CardManager: A card entry is null or missing a name.");
 				continue;
 			}
 
-			if (_cardLookup.ContainsKey(card.CardName))
+			if (_cardLookup.ContainsKey(card.ID))
 			{
 				Debug.LogWarning(
-					$"CardManager: Duplicate card name '{card.CardName}' found. " +
+					$"CardManager: Duplicate card ID '{card.ID}' found. " +
 					$"Keeping the first one and ignoring the duplicate.");
 				continue;
 			}
@@ -64,14 +64,14 @@ public class CardManager : MonoBehaviour
 			.ToList();
 	}
 
-	public CardDefinition GetCardByName(string name)
+	public CardDefinition GetCardByID(string id)
     {
-		if (string.IsNullOrWhiteSpace(name)) { return null; }
-        return _cardLookup.TryGetValue(name, out var card) ? card : null;
+		if (string.IsNullOrWhiteSpace(id)) { return null; }
+        return _cardLookup.TryGetValue(id, out var card) ? card : null;
     }
 
-    public Sprite GetSpriteByCardName(string name)
+    public Sprite GetSpriteByCardID(string id)
     {
-        return GetCardByName(name)?.Sprite ?? DefaultMissingSprite;
+        return GetCardByID(id)?.Sprite ?? DefaultMissingSprite;
     }
 }

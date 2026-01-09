@@ -103,7 +103,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     internal void Setup(CardBattleEngine.Card cardData)
     {
         var cardManager = Common.Instance.CardManager;
-        this.CardImage.sprite = cardManager.GetSpriteByCardName(cardData.Name);
+        this.CardImage.sprite = cardManager.GetSpriteByCardID(cardData.Name);//TODO fix
 
         this.Data = cardData;
         RefreshData();
