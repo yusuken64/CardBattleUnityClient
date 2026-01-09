@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
 	public GameEngine _engine { get; private set; }
 
-	private RandomAI _opponentAgent;
+	private IGameAgent _opponentAgent;
 	public GameState _gameState { get; private set; }
 	public bool ActivePlayerTurn { get; internal set; } //based on client animation timing 
 	public bool OpponentTurn { get; internal set; }
@@ -82,7 +82,8 @@ public class GameManager : MonoBehaviour
 		SetupPlayer(deck, Player, _gameState.Players[0]);
 		SetupPlayer(enemyDeck, Opponent, _gameState.Players[1]);
 
-		_opponentAgent = new RandomAI(Opponent.Data, rng);
+		_opponentAgent = new BasicAI(Opponent.Data, rng);
+		//_opponentAgent = new RandomAI(Opponent.Data, rng);
 
 		_engine.ActionPlaybackCallback += ActionPlaybackCallback;
 		_engine.ActionResolvedCallback += ActionResolvedCallback;
