@@ -67,7 +67,7 @@ public class SaveManager : MonoBehaviour
 
 			foreach (var card in startingDeck.Cards)
 			{
-				SaveData.GameSaveData.CardCollection.Add(card.CardName, 1);
+				SaveData.GameSaveData.CardCollection.Add(card.ID, 1);
 			}
 			Save();
 		}

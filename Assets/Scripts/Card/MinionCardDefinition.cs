@@ -30,6 +30,7 @@ public class MinionCardDefinition : CardDefinition
     {
         MinionCard card = new MinionCard(CardName, Cost, Attack, Health)
         {
+            SpriteID = ID,
             MinionTribes = new List<MinionTribe>(MinionTribes),
             IsStealth = this.IsStealth,
             HasCharge = this.HasCharge,

@@ -39,7 +39,7 @@ public class CardManager : MonoBehaviour
 				continue;
 			}
 
-			_cardLookup.Add(card.CardName, card);
+			_cardLookup.Add(card.ID, card);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class CardManager : MonoBehaviour
 		}
 
 		return cardsToAdd
-			.GroupBy(c => c.CardName)
+			.GroupBy(c => c.ID)
 			.Select(g => g.First())
 			.ToList();
 	}

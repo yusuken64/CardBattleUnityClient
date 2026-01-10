@@ -20,6 +20,7 @@ public class SpellCardDefinition : CardDefinition
     public override CardBattleEngine.Card CreateCard()
 	{
         var spellCard = new SpellCard(CardName, Cost);
+        spellCard.SpriteID = ID;
         spellCard.TargetingType = TargetingType;
         spellCard.SpellCastEffects.AddRange(SpellCastEffects.Select(x => x.Create()));
         spellCard.Description = string.Join(Environment.NewLine, SpellCastEffects.Select(ToDescription));

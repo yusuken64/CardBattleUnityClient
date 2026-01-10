@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4950950267531856875}
   - component: {fileID: 4799656728850876911}
   m_Layer: 5
-  m_Name: Popup_01_Topbar_Demo
+  m_Name: TutorialPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

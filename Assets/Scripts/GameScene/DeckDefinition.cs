@@ -29,8 +29,8 @@ public class DeckDefinition : ScriptableObject
         return new DeckSaveData()
 		{
             Title = Title,
-            HeroCard = HeroCard.CardName,
-            CardIDs = Cards.Select(x => x.CardName).ToList()
+            HeroCard = HeroCard.ID,
+            CardIDs = Cards.Select(x => x.ID).ToList()
 		};
 	}
 }

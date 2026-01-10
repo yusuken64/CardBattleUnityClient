@@ -91,7 +91,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
     internal void Setup(CardBattleEngine.Minion minionData)
     {
-        CardImage.sprite = Common.Instance.CardManager.GetSpriteByCardID(minionData.Name);
+        CardImage.sprite = Common.Instance.CardManager.GetSpriteByCardID(minionData.OriginalCard.SpriteID);
 
         this.Data = minionData;
         RefreshData();
@@ -195,7 +195,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         Attack = data.Attack;
         Health = data.Health;
 
-        CardImage.sprite = Common.Instance.CardManager.GetSpriteByCardID(data.Name);
+        CardImage.sprite = Common.Instance.CardManager.GetSpriteByCardID(data.SpriteID);
 
         Attack = SummonedCard.Attack;
         Health = SummonedCard.Health;

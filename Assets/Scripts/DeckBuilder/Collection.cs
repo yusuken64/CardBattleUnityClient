@@ -64,7 +64,7 @@ public class Collection : MonoBehaviour
         }
 
         var cardCollection = Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection;
-        CardsToShow = CardsToShow.Where(x => cardCollection.Has(x.CardName));
+        CardsToShow = CardsToShow.Where(x => cardCollection.Has(x.ID));
     }
 
 	public void SetToPage(int page)
@@ -88,7 +88,7 @@ public class Collection : MonoBehaviour
         foreach (var item in itemsToShow)
         {
             var cardCollection = Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection;
-			OwnedCardData ownedCardData = cardCollection.Cards[item.CardName];
+			OwnedCardData ownedCardData = cardCollection.Cards[item.ID];
             var newGridItem = Instantiate(CardGridItemPrefab, CardGridTransform);
             newGridItem.Setup(item, owner, ownedCardData);
 

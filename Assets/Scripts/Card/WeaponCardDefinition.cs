@@ -18,6 +18,7 @@ public class WeaponCardDefinition : CardDefinition
 	public override CardBattleEngine.Card CreateCard()
 	{
 		var weapon = new WeaponCard(WeaponName, Cost, Attack, Durability);
+		weapon.SpriteID = ID;
 		weapon.TriggeredEffects.AddRange(WeaponTriggeredEffects.Select(x => x.CreateEffect()));
 
 		return weapon;

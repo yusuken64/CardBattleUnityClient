@@ -50,7 +50,7 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 		if (verticalDeckViewer == null) { return; }
 
 		var deck = verticalDeckViewer.GetDeck();
-		var usedCount = deck.Cards.Count(x => x.CardName == CardDefinition.CardName);
+		var usedCount = deck.Cards.Count(x => x.ID == CardDefinition.ID);
 		if (usedCount < OwnedCardData.Count)
 		{
 			verticalDeckViewer?.AddCardToDeck(CardDefinition, false);
@@ -100,7 +100,7 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 
 	public void SetToDeckView(Deck deck)
 	{
-		var usedCount = deck.Cards.Count(x => x.CardName == CardDefinition.CardName);
+		var usedCount = deck.Cards.Count(x => x.ID == CardDefinition.ID);
 		NoCardsLeftIndicator.gameObject.SetActive(usedCount >= OwnedCardData.Count);
 		CountObject.gameObject.SetActive(true);
 		CountText.text = (OwnedCardData.Count - usedCount).ToString();

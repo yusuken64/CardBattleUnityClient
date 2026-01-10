@@ -179,7 +179,7 @@ public class OpenPackScene : MonoBehaviour
 	{
 		foreach(var card in CardsCollected)
 		{
-			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(card.CardName);
+			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(card.ID);
 		}
 
 		ResetChest();

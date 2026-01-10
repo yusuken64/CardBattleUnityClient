@@ -124,8 +124,6 @@ public class GameManager : MonoBehaviour
 
 	private GameState CreateGame(Deck playerDeck, Deck enemyDeck, UnityRNG rng)
 	{
-		var cardManager = Common.Instance.CardManager;
-
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
 		p1.Deck.AddRange(playerDeck.Cards.Select(x => x.CreateCard()).ToList());
 		p1.Deck.ForEach(x => x.Owner = p1);
