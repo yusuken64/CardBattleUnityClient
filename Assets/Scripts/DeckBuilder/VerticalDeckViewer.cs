@@ -67,7 +67,7 @@ public class VerticalDeckViewer : MonoBehaviour
         _spawnedCards.Add(newDeckItem);
 
         GetDeck();
-        DeckChanged(editingDeck);
+        DeckChanged?.Invoke(editingDeck);
         SortAndReorder();
     }
 
