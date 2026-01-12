@@ -1,3 +1,5 @@
+using CardBattleEngine;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -10,4 +12,7 @@ public class StoryModeBattleDefinition : ScriptableObject
 	public Sprite BattleImage;
 	public string Description;
 	public DeckDefinition Deck;
+
+	[SerializeReference]
+	public List<StoryBattleModifier> StoryBattleModifiers;
 }

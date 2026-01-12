@@ -79,6 +79,15 @@ public class GameManager : MonoBehaviour
 		UnityRNG rng = new UnityRNG();
 
 		_gameState = CreateGame(deck, enemyDeck, rng);
+		if (GameStartParams != null &&
+			GameStartParams.OpponentExtraEffects != null)
+		{
+			foreach (var opponentEffect in GameStartParams.OpponentExtraEffects)
+			{
+				_gameState.Players[1].TriggeredEffects.Add(opponentEffect.CreateEffect());
+			}
+		}
+
 		SetupPlayer(deck, Player, _gameState.Players[0]);
 		SetupPlayer(enemyDeck, Opponent, _gameState.Players[1]);
 
@@ -351,6 +360,8 @@ public class GameStartParams
 	public bool SkipMulligan = false;
 	public bool SkipShuffle = false;
 	public int InitialCards = 3;
+
+	public List<TriggeredEffectWrapper> OpponentExtraEffects;
 }
 
 internal class UnityRNG : IRNG

@@ -17,3 +17,144 @@ MonoBehaviour:
   Description: A 6/7 dragonkin whose power far exceeds her modest mana cost. Though
     she appears young, ancient records claim she has lived for over five centuries.
   Deck: {fileID: 11400000, guid: 1d3afb2a9809a764cbf904977a5c3d11, type: 2}
+  StoryBattleModifiers:
+  - rid: 2140584485233098876
+  - rid: 2140584485233098889
+  - rid: 2140584485233098895
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2140584485233098876
+      type: {class: StoryBattleModifier, ns: , asm: Assembly-CSharp}
+      data:
+        ModifierText: Minions Get +1/+0
+        TriggeredEffects:
+        - Description: 
+          EffectTrigger: 7
+          EffectTiming: 2
+          TargetType: 0
+          GameActions:
+          - rid: 2140584485233098880
+          Condition:
+            rid: -2
+          AffectedEntitySelectorWrapper:
+            rid: 2140584485233098878
+    - rid: 2140584485233098878
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584485233098879
+        ResolutionTiming: 0
+    - rid: 2140584485233098879
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+        Group: 0
+        ExcludeSelf: 1
+    - rid: 2140584485233098880
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: 2140584485233098881
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584485233098881
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 2140584485233098889
+      type: {class: StoryBattleModifier, ns: , asm: Assembly-CSharp}
+      data:
+        ModifierText: Minions Get +0/+1
+        TriggeredEffects:
+        - Description: 
+          EffectTrigger: 7
+          EffectTiming: 2
+          TargetType: 0
+          GameActions:
+          - rid: 2140584485233098890
+          Condition:
+            rid: -2
+          AffectedEntitySelectorWrapper:
+            rid: 2140584485233098891
+    - rid: 2140584485233098890
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: 2140584485233098894
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584485233098891
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584485233098893
+        ResolutionTiming: 0
+    - rid: 2140584485233098893
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+        Group: 0
+        ExcludeSelf: 1
+    - rid: 2140584485233098894
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 2140584485233098895
+      type: {class: StoryBattleModifier, ns: , asm: Assembly-CSharp}
+      data:
+        ModifierText: Minions Cost 1 less
+        TriggeredEffects:
+        - Description: 
+          EffectTrigger: 7
+          EffectTiming: 2
+          TargetType: 0
+          GameActions:
+          - rid: 2140584485233098896
+          Condition:
+            rid: -2
+          AffectedEntitySelectorWrapper:
+            rid: 2140584485233098897
+    - rid: 2140584485233098896
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: 2140584485233098900
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584485233098897
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584485233098899
+        ResolutionTiming: 0
+    - rid: 2140584485233098899
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+        Group: 2
+        ExcludeSelf: 1
+    - rid: 2140584485233098900
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: -1

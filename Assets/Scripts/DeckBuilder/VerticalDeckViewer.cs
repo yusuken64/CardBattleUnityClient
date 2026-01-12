@@ -113,7 +113,7 @@ public class VerticalDeckViewer : MonoBehaviour
             SortAndReorder();
         }
         GetDeck();
-        DeckChanged(editingDeck);
+        DeckChanged?.Invoke(editingDeck);
     }
 
     public void Title_Click()

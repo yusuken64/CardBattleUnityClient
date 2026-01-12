@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,12 +12,16 @@ public class BattlePreview : MonoBehaviour
 	public TextMeshProUGUI DescriptionText;
 	private StoryModeBattleDefinition _data;
 
+	public Rondel Rondel;
+
 	internal void Setup(StoryModeBattleDefinition data)
 	{
 		this._data = data;
 
 		BattleImage.sprite = data.BattleImage;
 		DescriptionText.text = data.Description;
+
+		Rondel.Setup(data);
 	}
 
 	public void Fight_Clicked()
@@ -27,6 +32,12 @@ public class BattlePreview : MonoBehaviour
 		gameSaveData.CombatDeck = firstDeck;
 		gameSaveData.CombatDeckEnemy = _data.Deck.ToDeckData();
 		var levelId = _data.LevelID;
+
+		var activeEffects = Rondel.GetActiveEffects();
+		GameManager.GameStartParams = new()
+		{
+			OpponentExtraEffects = activeEffects.SelectMany(x => x.TriggeredEffects).ToList()
+		};
 
 		GameManager.GameResultRoutine = GameResult;
 

@@ -137,7 +137,7 @@ public class DeckCard : MonoBehaviour,
 	{
 		Debug.Log("Show preview");
 
-		FloatingCardPreview.PreviewStart(this.CardDefinition, lastPointerPosition);
+		FloatingCardPreview?.PreviewStart(this.CardDefinition, lastPointerPosition);
 		hoverStartTime = Time.unscaledTime;
 	}
 
@@ -145,6 +145,6 @@ public class DeckCard : MonoBehaviour,
 	{
 		Debug.Log("Hide preview");
 
-		FloatingCardPreview.PreviewEnd();
+		FloatingCardPreview?.PreviewEnd();
 	}
 }
