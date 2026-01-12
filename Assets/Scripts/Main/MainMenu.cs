@@ -164,4 +164,12 @@ public class MainMenu : MonoBehaviour
 		Common.Instance.SaveManager.Save();
 		Application.Quit();
 	}
+
+	public void CutScene_Click()
+	{
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("StoryIntro");
+		});
+	}
 }
