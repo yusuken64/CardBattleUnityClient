@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: NewMinionCard 2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 1
+  Collectable: 0
   CardName: SummonTest
   ID: SummonTest
   Sprite: {fileID: 21300000, guid: eaa0690ae3b17fd45b44cba2c3cdc93d, type: 3}
@@ -29,6 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 1
   HasReborn: 1
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
@@ -51,3 +52,4 @@ MonoBehaviour:
         Card: {fileID: 11400000, guid: fa7f6848699ec1540ab21e18ef75fd4b, type: 2}
         IndexOffset: 1
         Canceled: 0
+        CustomSFX: {fileID: 0}

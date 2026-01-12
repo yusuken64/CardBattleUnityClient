@@ -73,6 +73,16 @@ public class AudioManager : MonoBehaviour
 		source.Play();
 	}
 
+	internal void PlayUISoundWithRandomPitch(AudioClip clip, float minPitch = 0.5f, float maxPitch = 1.5f)
+	{
+		_index = (_index + 1) % UISounds.Count;
+		var source = UISounds[_index];
+		source.clip = clip;
+		source.loop = false;
+		source.pitch = UnityEngine.Random.Range(minPitch, maxPitch);
+		source.Play();
+	}
+
 	internal void PlaySoundWithRandomPitch(AudioClip clip, float minPitch = 0.5f, float maxPitch = 1.5f)
 	{
 		_index = (_index + 1) % Sounds.Count;

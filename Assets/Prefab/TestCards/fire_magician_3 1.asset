@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: fire_magician_3 1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 1
+  Collectable: 0
   CardName: fire magician 3 test
   ID: fire_magician_3test
   Sprite: {fileID: 21300000, guid: 598391d1cb85dab46a5b5cf510ab49b3, type: 3}

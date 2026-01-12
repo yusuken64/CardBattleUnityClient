@@ -1,22 +1,34 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-	public GameObject startobect;
 	public GameObject SettingsObject;
 	public GameObject DataObject;
 
 	public DeckDefinition TutorialPlayerDeck;
 	public DeckDefinition TutorialOpponentDeck;
 
+	public Image Gradient;
+
 	private void Start()
 	{
-		startobect.gameObject.SetActive(true);
 		SettingsObject.gameObject.SetActive(false);
 		DataObject.gameObject.SetActive(false);
+		
+		Flicker();
+	}
+
+	void Flicker()
+	{
+		Gradient
+			.DOFade(UnityEngine.Random.Range(0f, 0.02f), 0.06f)
+			.SetEase(Ease.InOutSine)
+			.OnComplete(Flicker);
 	}
 
 	public void Play_Click()
