@@ -18,3 +18,7 @@ MonoBehaviour:
     the no oversight funding loophole. Will not learn the native language and demands
     you follow sharia law.
   Deck: {fileID: 11400000, guid: 925ed256ef2d26a4591cde5815260acc, type: 2}
+  StoryBattleModifiers: []
+  references:
+    version: 2
+    RefIds: []

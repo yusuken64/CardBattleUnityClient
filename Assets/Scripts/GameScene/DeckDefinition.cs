@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(
-    fileName = "NewCard",
+    fileName = "NewDeck",
     menuName = "Game/Cards/Deck Definition"
 )]
 public class DeckDefinition : ScriptableObject
@@ -33,4 +33,30 @@ public class DeckDefinition : ScriptableObject
             CardIDs = Cards.Select(x => x.ID).ToList()
 		};
 	}
+
+    [ContextMenu("SortDeck")]
+    public void SortDeck()
+	{
+        SortByManaThenName();
+    }
+
+    public void SortCards(Comparison<CardDefinition> comparison)
+    {
+        if (Cards == null || Cards.Count <= 1)
+            return;
+
+        Cards.Sort(comparison);
+    }
+
+    public void SortByManaThenName()
+    {
+        SortCards((a, b) =>
+        {
+            int manaCompare = a.Cost.CompareTo(b.Cost);
+            if (manaCompare != 0)
+                return manaCompare;
+
+            return string.Compare(a.CardName, b.CardName, StringComparison.Ordinal);
+        });
+    }
 }

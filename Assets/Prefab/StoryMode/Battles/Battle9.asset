@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Battle9
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeBattleDefinition
   LevelID: Level9
-  BattleImage: {fileID: 21300000, guid: eaa0690ae3b17fd45b44cba2c3cdc93d, type: 3}
+  BattleImage: {fileID: 21300000, guid: e91255b09feaf994eb39d491c3637310, type: 3}
   Description: A solitary woman who channels her feelings into tales of love between
     men, finding connection and expression only through her stories rather than the
     world around her.
   Deck: {fileID: 11400000, guid: 8134bba9f08f94e4889909c55608cebb, type: 2}
+  StoryBattleModifiers: []
+  references:
+    version: 2
+    RefIds: []

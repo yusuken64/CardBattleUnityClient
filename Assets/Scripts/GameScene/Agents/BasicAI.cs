@@ -18,7 +18,9 @@ public class BasicAI : IGameAgent
 	{
 		var validActions = game.GetValidActions(_player);
 
-		var attackActions = validActions.Where(x => x.Item1 is AttackAction attackAction).ToList();
+		var attackActions = validActions
+			.Where(x => x.Item1 is AttackAction attackAction ||
+						x.Item1 is PlayCardAction).ToList();
 		if (attackActions.Any())
 		{
 			return ChooseRandom(attackActions);
