@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
 	public AnimationQueue AnimationQueue;
 	public DeckDefinition TestDeck;
+	public DeckDefinition EnemyTestDeck;
 
 	public GameEngine _engine { get; private set; }
 
@@ -65,7 +66,14 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			enemyDeck = TestDeck.ToDeck();
+			if (EnemyTestDeck != null)
+			{
+				enemyDeck = EnemyTestDeck.ToDeck();
+			}
+			else
+			{
+				enemyDeck = TestDeck.ToDeck();
+			}
 		}
 
 		int seed = 0;

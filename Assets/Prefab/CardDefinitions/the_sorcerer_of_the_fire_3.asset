@@ -62,4 +62,4 @@ MonoBehaviour:
       type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
       data:
         TeamRelationship: 0
-        SourceType: 2
+        SourceType: 0

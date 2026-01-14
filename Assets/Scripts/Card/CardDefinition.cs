@@ -28,6 +28,7 @@ public abstract class CardDefinition : ScriptableObject
 			SummonMinionAction summon => $"Summon {summon.Card.Name}",
 			FreezeAction freeze => $"Freeze",
 			AddStatModifierAction addStat => DescribeStatMod(addStat),
+			GainCardAction gainCard => $"Gain {gainCard.Card.Name}",
 			//HealAction heal => $"Heal {heal.Target} for {heal.Amount} HP",
 			// Add more types as needed
 			_ => action.Create().GetType().Name.ToString() // fallback

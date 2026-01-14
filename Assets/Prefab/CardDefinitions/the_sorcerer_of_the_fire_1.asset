@@ -31,15 +31,15 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: When you cast a spell deal 2 damage
     EffectTrigger: 14
     EffectTiming: 1
     TargetType: 7
     GameActions:
     - rid: 867526235581055132
-    - rid: 867526235581055135
+    - rid: 2140584538619248720
     Condition:
-      rid: 867526235581055134
+      rid: 2140584538619248719
     AffectedEntitySelectorWrapper:
       rid: 867526235581055128
   references:
@@ -73,23 +73,24 @@ MonoBehaviour:
         Damage:
           rid: 867526235581055133
         Canceled: 0
-        CustomSFX: {fileID: 0}
+        CustomSFX: {fileID: 11400000, guid: 651a46974234afb40b456136270a1eb4, type: 2}
     - rid: 867526235581055133
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 1
-    - rid: 867526235581055134
-      type: {class: OriginalSourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+    - rid: 2140584538619248719
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
       data:
         TeamRelationship: 0
-    - rid: 867526235581055135
+        SourceType: 0
+    - rid: 2140584538619248720
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Damage:
-          rid: 867526235581055136
+          rid: 2140584538619248721
         Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 867526235581055136
+        CustomSFX: {fileID: 11400000, guid: 651a46974234afb40b456136270a1eb4, type: 2}
+    - rid: 2140584538619248721
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 1

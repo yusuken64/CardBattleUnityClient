@@ -29,6 +29,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 14
@@ -48,6 +49,7 @@ MonoBehaviour:
       data:
         Operations:
         - rid: 867525694638784579
+        ResolutionTiming: 0
     - rid: 867525694638784579
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -60,6 +62,7 @@ MonoBehaviour:
         Damage:
           rid: 867525694638784581
         Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: ee79a429569daf340a94751cdf9215f4, type: 2}
     - rid: 867525694638784581
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -68,3 +71,4 @@ MonoBehaviour:
       type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
       data:
         TeamRelationship: 0
+        SourceType: 0

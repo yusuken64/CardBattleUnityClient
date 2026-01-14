@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a87b73977c7f784297afa4ba9e9f8f0, type: 3}
+  m_Name: TestDeck 1
+  m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
+  Title: SpellTestDeck
+  HeroCard: {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
+  Cards:
+  - {fileID: 11400000, guid: 98f626ccfff2aaa4fb8d3be5ff8fc449, type: 2}
+  - {fileID: 11400000, guid: 98f626ccfff2aaa4fb8d3be5ff8fc449, type: 2}
+  - {fileID: 11400000, guid: 063d78916d235f54386e18849e15f63b, type: 2}
+  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
+  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
+  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
+  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
+  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
+  - {fileID: 11400000, guid: 063d78916d235f54386e18849e15f63b, type: 2}
+  - {fileID: 11400000, guid: d97709e3d2b5fc74d870ddaf82e407b9, type: 2}
+  - {fileID: 11400000, guid: d97709e3d2b5fc74d870ddaf82e407b9, type: 2}
+  - {fileID: 11400000, guid: b17bc3f41b315984ab88a71e867ae84b, type: 2}
+  - {fileID: 11400000, guid: b17bc3f41b315984ab88a71e867ae84b, type: 2}
+  - {fileID: 11400000, guid: a67c4a700d2cb694d9e1393dab6d1f11, type: 2}
+  - {fileID: 11400000, guid: a67c4a700d2cb694d9e1393dab6d1f11, type: 2}
+  - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
+  - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
+  - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}

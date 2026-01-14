@@ -24,6 +24,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public bool HasStealth;
     public bool HasLifeSteal;
     public bool HasReborn;
+    public bool HasDeathRattle;
+    public bool HasTrigger;
 
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
@@ -38,6 +40,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public GameObject StealthIndicator;
     public GameObject LifeStealIndicator;
     public GameObject RebornIndicator;
+    public GameObject TriggerIndicator;
 
 	#region Animation
 	public Vector2 TargetPosition { get; internal set; }
@@ -125,6 +128,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         StealthIndicator.gameObject.SetActive(HasStealth);
         LifeStealIndicator.gameObject.SetActive(HasLifeSteal);
         RebornIndicator.gameObject.SetActive(HasReborn);
+        DeathRattleIndicator.gameObject.SetActive(HasDeathRattle);
+        TriggerIndicator.gameObject.SetActive(HasTrigger);
     }
 
     internal void RefreshData()
@@ -144,6 +149,10 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         HasStealth = Data.IsStealth;
         HasLifeSteal = Data.HasLifeSteal;
         HasReborn = Data.HasReborn;
+        HasDeathRattle = Data.TriggeredEffects.Any(x => x.EffectTrigger == EffectTrigger.Deathrattle);
+        HasTrigger = Data.TriggeredEffects.Any(x =>
+            x.EffectTrigger != EffectTrigger.Deathrattle &&
+            x.EffectTrigger != EffectTrigger.Battlecry);
 
         UpdateUI();
     }
@@ -164,6 +173,10 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         HasStealth = data.IsStealth;
         HasLifeSteal = data.HasLifeSteal;
         HasReborn = data.HasReborn;
+        HasDeathRattle = data.TriggeredEffects.Any(x => x.EffectTrigger == EffectTrigger.Deathrattle);
+        HasTrigger = data.TriggeredEffects.Any(x =>
+            x.EffectTrigger != EffectTrigger.Deathrattle &&
+            x.EffectTrigger != EffectTrigger.Battlecry);
 
         UpdateUI();
     }
@@ -185,6 +198,10 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         HasStealth = data.IsStealth;
         HasLifeSteal = data.HasLifeSteal;
         HasReborn = data.HasReborn;
+        HasDeathRattle = data.TriggeredEffects.Any(x => x.EffectTrigger == EffectTrigger.Deathrattle);
+        HasTrigger = data.TriggeredEffects.Any(x =>
+            x.EffectTrigger != EffectTrigger.Deathrattle &&
+            x.EffectTrigger != EffectTrigger.Battlecry);
 
         UpdateUI();
     }
@@ -207,6 +224,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         IsFrozen = false;
         HasWindFury = false;
         HasStealth = false;
+        HasDeathRattle = false;
+        HasTrigger = false;
 
         UpdateUI();
     }
