@@ -67,7 +67,7 @@ MonoBehaviour:
         Damage:
           rid: 867526235581055097
         Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 0d898c30b67cde946a3620081bd1acc2, type: 2}
+        CustomSFX: {fileID: 11400000, guid: 7ec1f1fcab44cfb47967c6d66e9eaeb7, type: 2}
     - rid: 867526235581055097
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -78,7 +78,7 @@ MonoBehaviour:
         Damage:
           rid: 867526235581055108
         Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 0d898c30b67cde946a3620081bd1acc2, type: 2}
+        CustomSFX: {fileID: 11400000, guid: 7ec1f1fcab44cfb47967c6d66e9eaeb7, type: 2}
     - rid: 867526235581055107
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -111,7 +111,7 @@ MonoBehaviour:
         Damage:
           rid: 867526235581055114
         Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 0d898c30b67cde946a3620081bd1acc2, type: 2}
+        CustomSFX: {fileID: 11400000, guid: 7ec1f1fcab44cfb47967c6d66e9eaeb7, type: 2}
     - rid: 867526235581055113
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:

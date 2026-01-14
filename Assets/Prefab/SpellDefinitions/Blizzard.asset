@@ -26,7 +26,7 @@ MonoBehaviour:
     - rid: 867526235581055125
     AffectedEntitySelectorWrapper:
       rid: 867526235581055123
-  CustomSFX: {fileID: 0}
+  CustomSFX: {fileID: 11400000, guid: 16d501f7cfff6fe40b0379112b3b27d7, type: 2}
   references:
     version: 2
     RefIds:
@@ -53,7 +53,7 @@ MonoBehaviour:
         Damage:
           rid: 6533011738762674248
         Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 0d898c30b67cde946a3620081bd1acc2, type: 2}
+        CustomSFX: {fileID: 11400000, guid: 172961f1d2f9b164fb0de3f50ee013bf, type: 2}
     - rid: 6533011738762674248
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:

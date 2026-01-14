@@ -21,16 +21,16 @@ public class ProjectileSFX : CustomSFX
         }
         GameObject target = gameManager.GetObjectFor(context.Target);
 
-        if (source == null || target == null)
-            yield break;
+        //if (source == null && target == null)
+        //    yield break;
 
-        if (MuzzleObject != null)
+        if (MuzzleObject != null && source != null)
         {
             var muzzle = Instantiate(MuzzleObject, source.transform.position, Quaternion.identity);
             Destroy(muzzle, 1f);
         }
 
-        if (ProjectileObject == null)
+        if (ProjectileObject == null || target == null)
             yield break;
 
         var projectileInstance = Instantiate(ProjectileObject, source.transform.position, Quaternion.identity);

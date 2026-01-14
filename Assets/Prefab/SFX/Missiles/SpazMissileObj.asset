@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd85168f101763c44bee8b6dcb1f1ccb, type: 3}
+  m_Name: SpazMissileObj
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileSFX
+  MuzzleObject: {fileID: 160798, guid: 1a656d4b94d60c747a87c3f0a6dcb08d, type: 3}
+  ProjectileObject: {fileID: 169198, guid: c9acf6f154f631b4ea96d93bf7b5ffc7, type: 3}
+  ImpactObject: {fileID: 184032, guid: 1229c33baec599743a400832f68ecd62, type: 3}
+  ProjectileDuration: 0.5

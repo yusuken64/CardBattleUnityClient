@@ -25,7 +25,7 @@ MonoBehaviour:
     - rid: 867526235581055098
     AffectedEntitySelectorWrapper:
       rid: -2
-  CustomSFX: {fileID: 0}
+  CustomSFX: {fileID: 11400000, guid: 9a845f85616bb8c46a589a8b85ceefe6, type: 2}
   references:
     version: 2
     RefIds:
