@@ -121,6 +121,9 @@ public class AudioManager : MonoBehaviour
 			case "GAME":
 				Common.Instance.SaveManager.SaveData.AppSaveData.GAMEVolume = sliderValue;
 				break;
+			case "GUI":
+				Common.Instance.SaveManager.SaveData.AppSaveData.GAMEVolume = sliderValue;
+				break;
 			default:
 				break;
 		}
