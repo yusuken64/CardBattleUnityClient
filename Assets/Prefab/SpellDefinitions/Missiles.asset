@@ -22,119 +22,56 @@ MonoBehaviour:
   SpellCastEffects:
   - Description: 
     GameActions:
-    - rid: 867526235581055096
+    - rid: 2140584549964054599
     AffectedEntitySelectorWrapper:
-      rid: 867526235581055076
-  - Description: 
-    GameActions:
-    - rid: 867526235581055106
-    AffectedEntitySelectorWrapper:
-      rid: 867526235581055107
-  - Description: 
-    GameActions:
-    - rid: 867526235581055112
-    AffectedEntitySelectorWrapper:
-      rid: 867526235581055113
+      rid: 2140584549964054603
   CustomSFX: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 867526235581055076
+    - rid: 2140584549964054599
+      type: {class: RepeatActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Count:
+          rid: 2140584549964054600
+        ChildActions:
+        - rid: 2140584549964054601
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584549964054600
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 3
+    - rid: 2140584549964054601
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 2140584549964054602
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 7ec1f1fcab44cfb47967c6d66e9eaeb7, type: 2}
+    - rid: 2140584549964054602
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 2140584549964054603
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         Operations:
-        - rid: 867526235581055077
-        - rid: 867526235581055078
+        - rid: 2140584549964054604
+        - rid: 2140584549964054605
         ResolutionTiming: 1
-    - rid: 867526235581055077
+    - rid: 2140584549964054604
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Side: 1
         Group: 2
         ExcludeSelf: 0
-    - rid: 867526235581055078
+    - rid: 2140584549964054605
       type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Count:
-          rid: 867526235581055079
-    - rid: 867526235581055079
-      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Number: 1
-    - rid: 867526235581055096
-      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Damage:
-          rid: 867526235581055097
-        Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 7ec1f1fcab44cfb47967c6d66e9eaeb7, type: 2}
-    - rid: 867526235581055097
-      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Number: 1
-    - rid: 867526235581055106
-      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Damage:
-          rid: 867526235581055108
-        Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 7ec1f1fcab44cfb47967c6d66e9eaeb7, type: 2}
-    - rid: 867526235581055107
-      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Operations:
-        - rid: 867526235581055109
-        - rid: 867526235581055110
-        ResolutionTiming: 1
-    - rid: 867526235581055108
-      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Number: 1
-    - rid: 867526235581055109
-      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Side: 1
-        Group: 2
-        ExcludeSelf: 0
-    - rid: 867526235581055110
-      type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Count:
-          rid: 867526235581055111
-    - rid: 867526235581055111
-      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Number: 1
-    - rid: 867526235581055112
-      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Damage:
-          rid: 867526235581055114
-        Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 7ec1f1fcab44cfb47967c6d66e9eaeb7, type: 2}
-    - rid: 867526235581055113
-      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Operations:
-        - rid: 867526235581055115
-        - rid: 867526235581055116
-        ResolutionTiming: 1
-    - rid: 867526235581055114
-      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Number: 1
-    - rid: 867526235581055115
-      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Side: 1
-        Group: 2
-        ExcludeSelf: 0
-    - rid: 867526235581055116
-      type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Count:
-          rid: 867526235581055117
-    - rid: 867526235581055117
+          rid: 2140584549964054606
+    - rid: 2140584549964054606
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 1
