@@ -35,7 +35,7 @@ public class SpellCardDefinition : CardDefinition
             return spellCastEffect.Description;
         }
 
-        string actions = string.Join(Environment.NewLine, spellCastEffect.GameActions.Select(ActionToDescription));
+        string actions = string.Join(Environment.NewLine, spellCastEffect.GameActions.Select(ActionWrapperToDescription));
         string targeting = TargetingType switch
         {
             TargetingType.Any => " to any target",

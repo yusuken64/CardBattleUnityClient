@@ -17,10 +17,15 @@ public abstract class CardDefinition : ScriptableObject
 
 	public abstract CardBattleEngine.Card CreateCard();
 
-	public string ActionToDescription(IGameActionWrapperBase action, int arg2)
+	public string ActionWrapperToDescription(IGameActionWrapperBase action, int arg2)
 	{
 		IGameAction gameAction = action.Create();
 
+		return ActionToDescription(gameAction);
+	}
+
+	private string ActionToDescription(IGameAction gameAction)
+	{
 		return gameAction switch
 		{
 			DamageAction dealDamage => DescribeDamage(dealDamage),
@@ -29,9 +34,10 @@ public abstract class CardDefinition : ScriptableObject
 			FreezeAction freeze => $"Freeze",
 			AddStatModifierAction addStat => DescribeStatMod(addStat),
 			GainCardAction gainCard => $"Gain {gainCard.Card.Name}",
+			RepeatAction repeatAction => $"{string.Join(", ", repeatAction.ChildActions.Select(x => ActionToDescription(x)))} x {((ConstantValue)repeatAction.Count).Number}",
 			//HealAction heal => $"Heal {heal.Target} for {heal.Amount} HP",
 			// Add more types as needed
-			_ => action.Create().GetType().Name.ToString() // fallback
+			_ => gameAction.GetType().Name.ToString() // fallback
 		};
 	}
 
@@ -79,7 +85,7 @@ public abstract class CardDefinition : ScriptableObject
 			condition = text + ",";
 		}
 
-		string actions = string.Join(Environment.NewLine, triggeredEffect.GameActions.Select(ActionToDescription));
+		string actions = string.Join(Environment.NewLine, triggeredEffect.GameActions.Select(ActionWrapperToDescription));
 		string targeting = triggeredEffect.TargetType switch
 		{
 			TargetingType.Any => " to any target",
