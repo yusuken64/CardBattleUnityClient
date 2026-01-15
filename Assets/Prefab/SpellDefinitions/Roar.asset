@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
+  m_Name: Roar
+  m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 1
+  CardName: Roar
+  ID: Roar
+  Sprite: {fileID: 21300000, guid: 8ddb9369782c54cdc814044ad3dddcf1, type: 3}
+  Cost: 3
+  TriggeredEffects: []
+  TargetingType: 7
+  SpellCastEffects:
+  - Description: Minions get +2/+0 until end of turn
+    GameActions:
+    - rid: 2140584554682384472
+    AffectedEntitySelectorWrapper:
+      rid: 2140584554682384474
+  CustomSFX: {fileID: 11400000, guid: 7a5606c76d62e6142962a1629cc132de, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2140584554682384472
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: 2140584554682384473
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: 2140584554682384483
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584554682384473
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
+    - rid: 2140584554682384474
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584554682384475
+        ResolutionTiming: 0
+    - rid: 2140584554682384475
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+        Group: 0
+        ExcludeSelf: 0
+    - rid: 2140584554682384483
+      type: {class: ExpirationTriggerWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EffectTrigger: 12
+        EffectTiming: 1
+        TargetType: 7
+        Condition:
+          rid: -2

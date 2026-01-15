@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
+  m_Name: Health
+  m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 1
+  CardName: Health
+  ID: Health
+  Sprite: {fileID: 21300000, guid: 067eaff59dcdb4b8d8a75a8b57693b64, type: 3}
+  Cost: 1
+  TriggeredEffects: []
+  TargetingType: 1
+  SpellCastEffects:
+  - Description: 
+    GameActions:
+    - rid: 2140584554682384466
+    - rid: 2140584554682384469
+    AffectedEntitySelectorWrapper:
+      rid: 2140584554682384468
+  CustomSFX: {fileID: 11400000, guid: 10dc5ca51248ffd4e9299e5d11b20667, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2140584554682384466
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: 2140584554682384467
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584554682384467
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
+    - rid: 2140584554682384468
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 1
+        IncludeSource: 0
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 2140584554682384469
+      type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+        CustomSFX: {fileID: 0}

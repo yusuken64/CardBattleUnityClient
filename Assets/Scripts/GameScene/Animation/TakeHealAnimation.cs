@@ -7,6 +7,7 @@ public class TakeHealAnimation : GameActionAnimation<HealAction>
 	public override IEnumerator Play()
 	{
 		GameObject gameObject = GameManager.GetObjectFor(Context.Target);
+		if (gameObject == null) { yield break; }
 		Transform target = gameObject.transform;
 
 		Object.FindFirstObjectByType<UI>().ShowHeal(Context.HealedAmount, target);

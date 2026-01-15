@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a87b73977c7f784297afa4ba9e9f8f0, type: 3}
-  m_Name: TestDeck 1
+  m_Name: SpellSynergyDeck
   m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
-  Title: SpellTestDeck
+  Title: SpellSynergyDeck
   HeroCard: {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
   Cards:
   - {fileID: 11400000, guid: 98f626ccfff2aaa4fb8d3be5ff8fc449, type: 2}

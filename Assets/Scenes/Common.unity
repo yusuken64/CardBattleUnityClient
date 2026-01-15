@@ -8560,7 +8560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: Cards.Array.size
-      value: 316
+      value: 318
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: AdventureStartDeck
@@ -8638,6 +8638,14 @@ PrefabInstance:
       propertyPath: 'Cards.Array.data[315]'
       value: 
       objectReference: {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[316]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f727cac3d71400448934287caf26991c, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[317]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c84359235d98c049bf213b49a18fabd, type: 2}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: DebugCards.Array.size
       value: 5

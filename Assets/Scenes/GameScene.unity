@@ -5073,8 +5073,8 @@ MonoBehaviour:
   Player: {fileID: 1280333541}
   Opponent: {fileID: 568661103}
   AnimationQueue: {fileID: 984708922}
-  TestDeck: {fileID: 11400000, guid: e4b9948bf725af84c948eda9807851e5, type: 2}
-  EnemyTestDeck: {fileID: 11400000, guid: 68da05eb6bd22fa46a070f48ac3af180, type: 2}
+  TestDeck: {fileID: 11400000, guid: 111d863f9a5fc7c479de80b481a7f41d, type: 2}
+  EnemyTestDeck: {fileID: 11400000, guid: 5edb21c65864a074c8d5f00e18fa9777, type: 2}
   UseSeed: 1
   RandomSeed: 0
   BattleIntro: {fileID: 1320670705}
