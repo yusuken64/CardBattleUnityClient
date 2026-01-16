@@ -60,6 +60,18 @@ public static class WrapperGenerator
         },
         new PropertyReplacement
         {
+            OriginalType = typeof(CardBattleEngine.IGameAction),
+            GenerateField = p => $"    [SerializeReference] public IGameActionWrapperBase {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
+        {
+            OriginalType = typeof(CardBattleEngine.IAffectedEntitySelector),
+            GenerateField = p => $"    [SerializeReference] public IAffectedEntitySelectorWrapperBase {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
+        {
             OriginalType = typeof(CardBattleEngine.Weapon),
             GenerateField = p => $"    public {typeof(WeaponCardDefinition).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = ({p.Name}?.CreateCard() as WeaponCard)?.CreateWeapon();"

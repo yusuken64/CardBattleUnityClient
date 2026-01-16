@@ -62,6 +62,9 @@ public class AnimationQueue : MonoBehaviour
         }
 
         var instance = Instantiate(prefab, transform);
+        var newContext = current.context.ShallowCopy();
+        current.context = newContext;
+
         instance.Init(gm, state.Clone(), current);
         return instance;
     }
