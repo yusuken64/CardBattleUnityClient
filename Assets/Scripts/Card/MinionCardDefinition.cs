@@ -119,3 +119,22 @@ public class ExpirationTriggerWrapper
         return expirationTrigger;
     }
 }
+
+[Serializable]
+public class SequentialEffectWrapper
+{
+    [SerializeReference]
+    public List<IGameActionWrapperBase> GameActions = new List<IGameActionWrapperBase>();
+
+    [SerializeReference]
+    public IAffectedEntitySelectorWrapperBase AffectedEntitySelectorWrapper;
+
+    public SequentialEffect Create()
+    {
+        return new SequentialEffect()
+        {
+            GameActions = GameActions?.Select(x => x.Create()).ToList(),
+            AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create()
+        };
+    }
+}

@@ -48,6 +48,12 @@ public static class WrapperGenerator
         },
         new PropertyReplacement
         {
+            OriginalType = typeof(List<CardBattleEngine.SequentialEffect>),
+            GenerateField = p => $"    public List<SequentialEffectWrapper> {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Select(x => x.Create()).ToList();"
+        },
+        new PropertyReplacement
+        {
             OriginalType = typeof(CardBattleEngine.IValueProvider),
             GenerateField = p => $"    [SerializeReference] public {typeof(IValueProviderWrapperBase).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"

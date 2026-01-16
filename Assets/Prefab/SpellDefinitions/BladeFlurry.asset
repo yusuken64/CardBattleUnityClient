@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
+  m_Name: BladeFlurry
+  m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 1
+  CardName: Blade Flurry
+  ID: BladeFlurry
+  Sprite: {fileID: 21300000, guid: 9b76b0241f0cb4cd1abd5bf186b34fb3, type: 3}
+  Cost: 2
+  TriggeredEffects: []
+  TargetingType: 7
+  SpellCastEffects:
+  - Description: Deal Weapon Attack to all
+    GameActions:
+    - rid: 2140584576991101014
+    AffectedEntitySelectorWrapper:
+      rid: 2140584576991101010
+  CustomSFX: {fileID: 11400000, guid: 46f66c81415963d49a50be4be507265a, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2140584576991101010
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584576991101011
+        ResolutionTiming: 0
+    - rid: 2140584576991101011
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 2
+        Group: 2
+        ExcludeSelf: 0
+    - rid: 2140584576991101014
+      type: {class: SequentialActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Effects:
+        - GameActions:
+          - rid: 2140584583388463169
+          AffectedEntitySelectorWrapper:
+            rid: 2140584583388463172
+        - GameActions:
+          - rid: 2140584583388463173
+          AffectedEntitySelectorWrapper:
+            rid: 2140584583388463175
+        - GameActions:
+          - rid: 2140584583388463177
+          AffectedEntitySelectorWrapper:
+            rid: 2140584583388463178
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584583388463169
+      type: {class: AssignVariableActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        VariableName: WeaponAttack
+        Value:
+          rid: 2140584583388463171
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584583388463171
+      type: {class: WeaponValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+    - rid: 2140584583388463172
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 2140584583388463173
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 2140584583388463174
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584583388463174
+      type: {class: VariableValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        VariableName: WeaponAttack
+    - rid: 2140584583388463175
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584583388463176
+        ResolutionTiming: 0
+    - rid: 2140584583388463176
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 1
+        Group: 2
+        ExcludeSelf: 0
+    - rid: 2140584583388463177
+      type: {class: DestroyWeaponActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584583388463178
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
