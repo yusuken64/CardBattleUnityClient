@@ -15,22 +15,11 @@ MonoBehaviour:
   Title: Level0 Deck
   HeroCard: {fileID: 11400000, guid: 76db7e6340ae4c84cb9981a72fa05c16, type: 2}
   Cards:
-  - {fileID: 11400000, guid: 29fb3f28dd4ae2f42b74d7f179906595, type: 2}
-  - {fileID: 11400000, guid: 7c1b167ad7ed4404f92822d0442b652e, type: 2}
-  - {fileID: 11400000, guid: 9fc27ac11f4da0b4289d57f315fc5f40, type: 2}
-  - {fileID: 11400000, guid: 85cc56d8f19d72747b0215b77571da13, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: 58eb135ae85e23f4ca68e14667acac7b, type: 2}
-  - {fileID: 11400000, guid: 58eb135ae85e23f4ca68e14667acac7b, type: 2}
-  - {fileID: 11400000, guid: d0d526ca8b6101c49b6101f19f662845, type: 2}
-  - {fileID: 11400000, guid: d0d526ca8b6101c49b6101f19f662845, type: 2}
-  - {fileID: 11400000, guid: 5eff3b7d555e8b543a7c81157843181e, type: 2}
-  - {fileID: 11400000, guid: 5eff3b7d555e8b543a7c81157843181e, type: 2}
-  - {fileID: 11400000, guid: 5eff3b7d555e8b543a7c81157843181e, type: 2}
-  - {fileID: 11400000, guid: 5eff3b7d555e8b543a7c81157843181e, type: 2}
+  - {fileID: 11400000, guid: e50c0350f04a13449b6312723d01eed6, type: 2}
+  - {fileID: 11400000, guid: e50c0350f04a13449b6312723d01eed6, type: 2}
+  - {fileID: 11400000, guid: e50c0350f04a13449b6312723d01eed6, type: 2}
+  - {fileID: 11400000, guid: 6668746a80b9adf44a10190ac074b684, type: 2}
+  - {fileID: 11400000, guid: 6668746a80b9adf44a10190ac074b684, type: 2}
   - {fileID: 11400000, guid: 4122a11671b88704c8d5f6921f66c27c, type: 2}
   - {fileID: 11400000, guid: 4122a11671b88704c8d5f6921f66c27c, type: 2}
   - {fileID: 11400000, guid: 4122a11671b88704c8d5f6921f66c27c, type: 2}
@@ -38,3 +27,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c833a3b4f33676649ace7a5518392438, type: 2}
   - {fileID: 11400000, guid: c833a3b4f33676649ace7a5518392438, type: 2}
   - {fileID: 11400000, guid: c833a3b4f33676649ace7a5518392438, type: 2}
+  - {fileID: 11400000, guid: 76db7e6340ae4c84cb9981a72fa05c16, type: 2}

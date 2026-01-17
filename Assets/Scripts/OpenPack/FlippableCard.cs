@@ -15,6 +15,7 @@ public class FlippableCard : MonoBehaviour
 	public bool CanFlip;
 	private bool flipped;
 
+	public Action FlipMidPoint;
 	public Action FlipComplete;
 
 	public Card DisplayCard;
@@ -51,6 +52,7 @@ public class FlippableCard : MonoBehaviour
 		).SetEase(FlipEase)
 		.OnComplete(() =>
 		{
+			FlipMidPoint?.Invoke();
 			// Swap visible side at midpoint
 			Back.SetActive(false);
 			Front.SetActive(true);
