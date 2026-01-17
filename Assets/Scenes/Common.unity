@@ -8560,7 +8560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: Cards.Array.size
-      value: 318
+      value: 321
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: AdventureStartDeck
@@ -8646,6 +8646,18 @@ PrefabInstance:
       propertyPath: 'Cards.Array.data[317]'
       value: 
       objectReference: {fileID: 11400000, guid: 1c84359235d98c049bf213b49a18fabd, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[318]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 35669ca59e0a46847ad7bb824c6d22dd, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[319]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c905a31aec6f60e4aa71a3faee3361e8, type: 2}
+    - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
+      propertyPath: 'Cards.Array.data[320]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 4642d105eb22ebc47a067538c9533f5b, type: 2}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: DebugCards.Array.size
       value: 5

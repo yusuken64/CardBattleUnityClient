@@ -24,23 +24,16 @@ MonoBehaviour:
     GameActions:
     - rid: 2140584576991101014
     AffectedEntitySelectorWrapper:
-      rid: 2140584576991101010
+      rid: 2140584583940800588
+  - Description: Destroy Weapon
+    GameActions:
+    - rid: 2140584583940800580
+    AffectedEntitySelectorWrapper:
+      rid: 2140584583940800587
   CustomSFX: {fileID: 11400000, guid: 46f66c81415963d49a50be4be507265a, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 2140584576991101010
-      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Operations:
-        - rid: 2140584576991101011
-        ResolutionTiming: 0
-    - rid: 2140584576991101011
-      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Side: 2
-        Group: 2
-        ExcludeSelf: 0
     - rid: 2140584576991101014
       type: {class: SequentialActionWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -53,10 +46,6 @@ MonoBehaviour:
           - rid: 2140584583388463173
           AffectedEntitySelectorWrapper:
             rid: 2140584583388463175
-        - GameActions:
-          - rid: 2140584583388463177
-          AffectedEntitySelectorWrapper:
-            rid: 2140584583388463178
         Canceled: 0
         CustomSFX: {fileID: 0}
     - rid: 2140584583388463169
@@ -102,12 +91,37 @@ MonoBehaviour:
         Side: 1
         Group: 2
         ExcludeSelf: 0
-    - rid: 2140584583388463177
+    - rid: 2140584583940800578
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 2140584583940800579
       type: {class: DestroyWeaponActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
         CustomSFX: {fileID: 0}
-    - rid: 2140584583388463178
+    - rid: 2140584583940800580
+      type: {class: DeferredResolveActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Action:
+          rid: 2140584583940800579
+        AffectedEntitySelector:
+          rid: 2140584583940800578
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584583940800587
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 2140584583940800588
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         IncludeTarget: 0
