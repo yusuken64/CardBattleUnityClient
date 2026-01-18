@@ -15,7 +15,7 @@ MonoBehaviour:
   Collectable: 0
   CardName: warrior 4
   ID: warrior_4
-  Sprite: {fileID: 21300000, guid: 4395594ae98764b47a71747e023b4519, type: 3}
+  Sprite: {fileID: 21300000, guid: 655ac5c0b932b1c4eb288d2e4d9770f1, type: 3}
   Cost: 1
   TriggeredEffects: []
   Attack: 1

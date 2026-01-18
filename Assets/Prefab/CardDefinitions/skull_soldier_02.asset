@@ -12,23 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: skull_soldier_02
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Skull soldier 02
   ID: skull_soldier_02
   Sprite: {fileID: 21300000, guid: 4efdc022370bd1241a9011795dce0a9d, type: 3}
-  Cost: 1
+  Cost: 2
   TriggeredEffects: []
   Attack: 1
-  Health: 1
+  Health: 2
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
-  HasTaunt: 0
+  HasTaunt: 1
   HasPoisonous: 0
   HasWindFury: 0
   HasLifeSteal: 0
-  HasReborn: 0
+  HasReborn: 1
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2
