@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffbc4880184b03d4d946937f43e2faf4, type: 3}
-  m_Name: BigAxe
+  m_Name: AggieDagger
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCardDefinition
   Collectable: 1
-  CardName: BigAxe
-  ID: BigAxe
-  Sprite: {fileID: 21300000, guid: e4dea24325f0ed74d97198738278646f, type: 3}
+  CardName: AggieDagger
+  ID: AggieDagger
+  Sprite: {fileID: 21300000, guid: dd01c4356fc7d414aa497f1cee464a96, type: 3}
   Cost: 5
   TriggeredEffects: []
-  WeaponName: BigAxe
-  Attack: 5
-  Durability: 2
+  WeaponName: v
+  Attack: 3
+  Durability: 4
   WeaponTriggeredEffects: []
   references:
     version: 2

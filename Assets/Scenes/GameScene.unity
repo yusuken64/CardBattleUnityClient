@@ -4844,6 +4844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e230cad5a5edf6747a3ae89e210b51c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerEffectActionAnimation
+  TriggerSound: {fileID: 8300000, guid: 7faf1ccc763b046c389914bda7731574, type: 3}
 --- !u!1 &1132939049
 GameObject:
   m_ObjectHideFlags: 0
