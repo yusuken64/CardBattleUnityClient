@@ -15,7 +15,7 @@ MonoBehaviour:
   Collectable: 1
   CardName: Roar
   ID: Roar
-  Sprite: {fileID: 21300000, guid: 8ddb9369782c54cdc814044ad3dddcf1, type: 3}
+  Sprite: {fileID: 21300000, guid: 24b76e7c8f97f6344906b676e7b79916, type: 3}
   Cost: 3
   TriggeredEffects: []
   TargetingType: 7

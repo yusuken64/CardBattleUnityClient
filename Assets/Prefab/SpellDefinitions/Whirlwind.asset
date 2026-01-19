@@ -15,7 +15,7 @@ MonoBehaviour:
   Collectable: 1
   CardName: Whirlwind
   ID: Whirlwind
-  Sprite: {fileID: 21300000, guid: 6e96b59585c1c473e8572067c9d9046a, type: 3}
+  Sprite: {fileID: 21300000, guid: b3d2d9b82844bdf4ab0bd3841788a311, type: 3}
   Cost: 1
   TriggeredEffects: []
   TargetingType: 7

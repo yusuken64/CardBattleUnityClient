@@ -15,7 +15,7 @@ MonoBehaviour:
   Collectable: 1
   CardName: Buff
   ID: Buff
-  Sprite: {fileID: 21300000, guid: bafa600642d7b46f2814c4425c05ea5e, type: 3}
+  Sprite: {fileID: 21300000, guid: 5deffc167defbef4b942d590cbbe8916, type: 3}
   Cost: 4
   TriggeredEffects: []
   TargetingType: 1

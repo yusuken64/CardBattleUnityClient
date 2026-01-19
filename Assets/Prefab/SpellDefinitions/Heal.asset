@@ -15,7 +15,7 @@ MonoBehaviour:
   Collectable: 1
   CardName: Health
   ID: Health
-  Sprite: {fileID: 21300000, guid: e32b15c87c6ea4f9a8ac568930463717, type: 3}
+  Sprite: {fileID: 21300000, guid: aa6b44e4da5332c4d8c066cacb33823c, type: 3}
   Cost: 6
   TriggeredEffects: []
   TargetingType: 0

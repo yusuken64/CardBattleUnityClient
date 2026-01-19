@@ -15,7 +15,7 @@ MonoBehaviour:
   Collectable: 1
   CardName: Fireball 2
   ID: Fireball2
-  Sprite: {fileID: 21300000, guid: 285948c4f66a0544c8136249f0bcfef0, type: 3}
+  Sprite: {fileID: 21300000, guid: 2b68767919ee6114da020270e987f6f0, type: 3}
   Cost: 10
   TriggeredEffects: []
   TargetingType: 0

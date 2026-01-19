@@ -15,7 +15,7 @@ MonoBehaviour:
   Collectable: 1
   CardName: GainMana
   ID: GainMana
-  Sprite: {fileID: 21300000, guid: 0918ab6964eb6451b8ebc28257b289ce, type: 3}
+  Sprite: {fileID: 21300000, guid: ea0feba82d4457f4c8174fa9fe36fb65, type: 3}
   Cost: 0
   TriggeredEffects: []
   TargetingType: 7
