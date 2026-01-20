@@ -246,7 +246,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
             return false;
         }
 
-        if (this.Data.HasSummoningSickness)
+        if (this.Data.HasSummoningSickness && !CanAttack)
         {
             _ui.ShowWarningMessage("Cannot attack right away");
             return false;

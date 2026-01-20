@@ -11,5 +11,5 @@ public class Deck
 	public CardDefinition HeroCard;
 
 	[SerializeReference]
-	public List<CardDefinition> Cards;
+	public List<CardDefinition> Cards = new();
 }

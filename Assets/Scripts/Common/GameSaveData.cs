@@ -141,6 +141,9 @@ public class StorySaveData
 public class AdventureSaveData
 {
 	public DeckSaveData CurrentDeck { get; internal set; }
+	public int PicksLeft { get; set; }
+	public int Wins { get; set; }
+	public int Lives { get; set; }
 }
 
 [Serializable]
@@ -165,7 +168,7 @@ public class DeckSaveData
 		return new DeckSaveData()
 		{
 			Title = deck.Title,
-			HeroCard = deck.HeroCard.ID,
+			HeroCard = deck.HeroCard?.ID,
 			CardIDs = deck.Cards.Select(x => x.ID).ToList()
 		};
 	}
