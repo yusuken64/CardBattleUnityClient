@@ -34,7 +34,7 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 2
     EffectTiming: 1
-    TargetType: 0
+    TargetType: 7
     GameActions:
     - rid: 867526235581054982
     Condition:

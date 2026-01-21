@@ -16,24 +16,25 @@ public class DeckCard : MonoBehaviour,
 	public Image CardImage;
 
 	public CardDefinition CardDefinition;
-	public Action<DeckCard> RemoveCardFromDeckAction;
+	public Action<DeckCard> CardClickAction;
 	public Action<DeckCard> SetAsHeroAction;
 
 	public HeroIndicator HeroIndicator;
 
 	public void Setup(
 		CardDefinition cardDefinition,
-		Action<DeckCard> removeCardFromDeck,
+		Action<DeckCard> cardClickAction,
 		Action<DeckCard> setAsHeroAction)
 	{
 		this.CardDefinition = cardDefinition;
-		this.RemoveCardFromDeckAction = removeCardFromDeck;
+		this.CardClickAction = cardClickAction;
 		this.SetAsHeroAction = setAsHeroAction;
 
 		ManaText.text = cardDefinition.Cost.ToString();
 		NameText.text = cardDefinition.CardName.ToString();
 		CardImage.sprite = cardDefinition.Sprite;
 
+		HeroIndicator.gameObject.SetActive(cardDefinition is MinionCardDefinition);
 		HeroIndicator.SetAsHeroAction = setAsHeroAction;
 		HeroIndicator.DeckCard = this;
 		
@@ -42,7 +43,7 @@ public class DeckCard : MonoBehaviour,
 
 	public void OnClick()
 	{
-		RemoveCardFromDeckAction?.Invoke(this);
+		CardClickAction?.Invoke(this);
 		HidePreview();
 	}
 

@@ -98,6 +98,14 @@ public class MainMenu : MonoBehaviour
 		});
 	}
 
+	public void Arena_Click()
+	{
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("Arena");
+		});
+	}
+
 	public void Deck_Click()
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
@@ -144,6 +152,12 @@ public class MainMenu : MonoBehaviour
 		SettingsObject.gameObject.SetActive(false);
 		DataObject.gameObject.SetActive(false);
 
+		SceneManager.LoadScene("Main");
+	}
+
+	public void PacksPlus10_Click()
+	{
+		Common.Instance.SaveManager.SaveData.GameSaveData.PackCount += 10;
 		SceneManager.LoadScene("Main");
 	}
 

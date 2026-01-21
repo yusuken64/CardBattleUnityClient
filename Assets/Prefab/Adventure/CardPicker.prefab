@@ -52,7 +52,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3885186187491051336}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 5341017303546920200}
   - component: {fileID: 1457264247901106497}
   - component: {fileID: 5593583709993350872}
+  - component: {fileID: 7806796886464193382}
   m_Layer: 5
   m_Name: CardPicker
   m_TagString: Untagged
@@ -184,6 +185,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7806796886464193382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094660515166790640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98453637d345914c958cb51e4e5ff46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSounds
+  HoverSound: {fileID: 0}
+  ClickSound: {fileID: 8300000, guid: 41e518340deb349dab6b54958242cf66, type: 3}
+  UnclickableSound: {fileID: 0}
 --- !u!1001 &7948748242643450928
 PrefabInstance:
   m_ObjectHideFlags: 0

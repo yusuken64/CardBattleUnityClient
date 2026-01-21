@@ -9,12 +9,14 @@ public class ArenaPage : MonoBehaviour
 {
 	public GameObject NewAdventurePrompt;
 	public VerticalDeckViewer DeckViewer;
+	public DeckToggle DeckToggle;
 	public GameObject Encouter;
 	public AdventureCardPicker CardPicker;
 	public GameObject BattlePrompt;
 
 	public TextMeshProUGUI ArenaText;
 	public TextMeshProUGUI BattleText;
+	public GameObject BattleButton;
 
 	public List<DeckDefinition> EnemyDecks;
 
@@ -51,6 +53,7 @@ public class ArenaPage : MonoBehaviour
 
 	private void SetToEncounter()
 	{
+		DeckViewer.RemoveCardOnClick = false;
 		NewAdventurePrompt.gameObject.SetActive(false);
 		Encouter.gameObject.SetActive(true);
 
@@ -64,6 +67,7 @@ public class ArenaPage : MonoBehaviour
 		{
 			PromptToBattle();
 		}
+		DeckToggle.OpenDeck();
 	}
 
 	private void PromptToBattle()
@@ -76,6 +80,28 @@ public class ArenaPage : MonoBehaviour
 
 		BattleText.text = $@"Battles: {adventureSaveData.Wins}/3
 Lives: {adventureSaveData.Lives}";
+
+		if (adventureSaveData.Wins == 3 ||
+			adventureSaveData.Lives <= 0)
+		{
+			BattleButton.gameObject.SetActive(false);
+		}
+		else
+		{
+			BattleButton.gameObject.SetActive(true);
+		}
+	}
+
+	public void EndArena_Clicked()
+	{
+		//reset arena
+		Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = null;
+		Common.Instance.SaveManager.Save();
+
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("Main");
+		});
 	}
 
 	public void Battle_Clicked()
@@ -125,7 +151,9 @@ Lives: {adventureSaveData.Lives}";
 		Encouter.gameObject.SetActive(true);
 		BattlePrompt.gameObject.SetActive(false);
 		CardPicker.gameObject.SetActive(true);
-		CardPicker.Setup();
+
+		var isHeroSet = DeckViewer.HeroCard == null;
+		CardPicker.Setup(!isHeroSet);
 		CardPicker.CardPickedCallback = (cardDefinition) =>
 		{
 			AdventureSaveData adventureSaveData = Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData;
@@ -134,5 +162,13 @@ Lives: {adventureSaveData.Lives}";
 			CardPicker.gameObject.SetActive(false);
 			SetToEncounter();
 		};
+	}
+
+	public void GoBackToMain_Clicked()
+	{
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("Main");
+		});
 	}
 }

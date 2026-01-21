@@ -10,7 +10,7 @@ public class AdventureCardPicker : MonoBehaviour
 
 	public Action<CardDefinition> CardPickedCallback;
 
-	public void Setup()
+	public void Setup(bool isHeroSet = true)
 	{
 		foreach(Transform child in Container)
 		{
@@ -18,6 +18,11 @@ public class AdventureCardPicker : MonoBehaviour
 		}
 
 		List<CardDefinition> allCards = Common.Instance.CardManager.CollectableCards();
+		if (!isHeroSet)
+		{
+			allCards.RemoveAll(x => x is not MinionCardDefinition);
+		}
+
 		//randomly take 3 cards
 		var choices = allCards
 			.OrderBy(_ => UnityEngine.Random.Range(0, int.MaxValue))
