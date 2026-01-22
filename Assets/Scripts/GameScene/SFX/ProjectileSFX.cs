@@ -1,6 +1,8 @@
 ﻿using CardBattleEngine;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "CustomSFX/Projectile")]
@@ -19,35 +21,45 @@ public class ProjectileSFX : CustomSFX
 		{
             source = gameManager.GetObjectFor(context.SourcePlayer);
         }
-        GameObject target = gameManager.GetObjectFor(context.Target);
 
-        //if (source == null && target == null)
-        //    yield break;
-
-        if (MuzzleObject != null && source != null)
+		List<IGameEntity> targets = context.AffectedEntities.Select(x => x.Item1).ToList();
+        if (!targets.Any())
         {
-            var muzzle = Instantiate(MuzzleObject, source.transform.position, Quaternion.identity);
-            Destroy(muzzle, 1f);
+            targets = new() { context.Target };
         }
 
-        if (ProjectileObject == null || target == null)
-            yield break;
+        foreach (var targetData in targets)
+        {
+            GameObject target = gameManager.GetObjectFor(targetData);
 
-        var projectileInstance = Instantiate(ProjectileObject, source.transform.position, Quaternion.identity);
+            //if (source == null && target == null)
+            //    yield break;
 
-        Tween moveTween = projectileInstance.transform.DOMove(target.transform.position, ProjectileDuration)
-            .SetEase(Ease.Linear)
-            .OnComplete(() =>
+            if (MuzzleObject != null && source != null)
             {
-                if (ImpactObject != null)
+                var muzzle = Instantiate(MuzzleObject, source.transform.position, Quaternion.identity);
+                Destroy(muzzle, 1f);
+            }
+
+            if (ProjectileObject == null || target == null)
+                yield break;
+
+            var projectileInstance = Instantiate(ProjectileObject, source.transform.position, Quaternion.identity);
+
+            Tween moveTween = projectileInstance.transform.DOMove(target.transform.position, ProjectileDuration)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
                 {
-                    var impact = Instantiate(ImpactObject, target.transform.position, Quaternion.identity);
-                    Destroy(impact, 1f);
-                }
+                    if (ImpactObject != null)
+                    {
+                        var impact = Instantiate(ImpactObject, target.transform.position, Quaternion.identity);
+                        Destroy(impact, 1f);
+                    }
 
-                Destroy(projectileInstance);
-            });
+                    Destroy(projectileInstance);
+                });
 
-        yield return moveTween.WaitForCompletion();
+            yield return moveTween.WaitForCompletion();
+        }
     }
 }

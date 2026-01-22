@@ -31,47 +31,58 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: Cleave
     EffectTrigger: 5
     EffectTiming: 0
     TargetType: 7
     GameActions:
     - rid: 2140584399319859265
-    - rid: 6533011672544051275
     Condition:
       rid: 867526235581054991
     AffectedEntitySelectorWrapper:
-      rid: 6533011672544051276
+      rid: 2140584715829903448
   references:
     version: 2
     RefIds:
     - rid: 867526235581054991
       type: {class: OriginalSourceConditionWrapper, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 867526235581055067
+    - rid: 2140584399319859265
+      type: {class: DeferredResolveActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Action:
+          rid: 2140584715829903434
+        AffectedEntitySelector:
+          rid: 2140584715829903436
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584715829903434
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 2140584715829903435
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 463c76813486cf44abba48bb0c46e9b8, type: 2}
+    - rid: 2140584715829903435
       type: {class: StatValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         EntityStat: 1
         EntityContextProvider: 1
-    - rid: 2140584399319859265
-      type: {class: DeferredResolveActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 6533011672544051275
-      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Damage:
-          rid: 867526235581055067
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 6533011672544051276
+    - rid: 2140584715829903436
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         Operations:
-        - rid: 6533011672544051277
+        - rid: 2140584715829903437
         ResolutionTiming: 0
-    - rid: 6533011672544051277
+    - rid: 2140584715829903437
       type: {class: CleaveOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         IncludeCenter: 0
+    - rid: 2140584715829903448
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 1
+        IncludeSource: 0
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0

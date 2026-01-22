@@ -106,22 +106,6 @@ public class MainMenu : MonoBehaviour
 		});
 	}
 
-	public void Deck_Click()
-	{
-		Common.Instance.SceneTransition.DoTransition(() =>
-		{
-			SceneManager.LoadScene("DeckBuilder");
-		});
-	}
-
-	public void OpenPacks_Click()
-	{
-		Common.Instance.SceneTransition.DoTransition(() =>
-		{
-			SceneManager.LoadScene("OpenPacks");
-		});
-	}
-
 	public void Settings_Click()
 	{
 		SettingsObject.gameObject.SetActive(true);

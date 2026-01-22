@@ -25,6 +25,8 @@ public class OpenPackScene : MonoBehaviour
 	public int CardsOpened { get; private set; }
 	public List<CardDefinition> CardsCollected = new();
 
+	public static string ReturnScreenName;
+
 	public void Start()
 	{
 		ResetChest();
@@ -199,9 +201,8 @@ public class OpenPackScene : MonoBehaviour
 
 	public void Return_Clicked()
 	{
-		Common.Instance.SceneTransition.DoTransition(() =>
-		{
-			SceneManager.LoadScene("Main");
-		});
+		string returnScreenName = OpenPackScene.ReturnScreenName;
+		OpenPackScene.ReturnScreenName = null;
+		Common.Instance.SceneTransition.TransitionToOrMain(returnScreenName);
 	}
 }

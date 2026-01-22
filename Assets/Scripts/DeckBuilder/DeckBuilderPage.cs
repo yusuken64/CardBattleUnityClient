@@ -14,6 +14,8 @@ public class DeckBuilderPage : MonoBehaviour
 	public GameObject ErrorMessageCanvas;
 	public TextMeshProUGUI ErrorMessageText;
 
+	public static string ReturnScreenName;
+
 	private void Start()
 	{
 		DeckPicker.gameObject.SetActive(true);
@@ -56,10 +58,9 @@ public class DeckBuilderPage : MonoBehaviour
 
 	public void ReturnToMain()
 	{
-		Common.Instance.SceneTransition.DoTransition(() =>
-		{
-			SceneManager.LoadScene("Main");
-		});
+		string returnScreenName = DeckBuilderPage.ReturnScreenName;
+		DeckBuilderPage.ReturnScreenName = null;
+		Common.Instance.SceneTransition.TransitionToOrMain(returnScreenName);
 	}
 
 	public void ShowMessage(string message)

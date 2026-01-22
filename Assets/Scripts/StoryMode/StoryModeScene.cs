@@ -41,6 +41,24 @@ public class StoryModeScene : MonoBehaviour
         }
     }
 
+    public void Deck_Click()
+    {
+        DeckBuilderPage.ReturnScreenName = "StoryMode";
+        Common.Instance.SceneTransition.DoTransition(() =>
+        {
+            SceneManager.LoadScene("DeckBuilder");
+        });
+    }
+
+    public void OpenPacks_Click()
+    {
+        OpenPackScene.ReturnScreenName = "StoryMode";
+        Common.Instance.SceneTransition.DoTransition(() =>
+        {
+            SceneManager.LoadScene("OpenPacks");
+        });
+    }
+
     public void Back_Clicked()
     {
         Common.Instance.SceneTransition.DoTransition(() =>

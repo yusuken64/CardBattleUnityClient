@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
@@ -69,5 +70,17 @@ public class SceneTransition : MonoBehaviour
 	{
 		action.Invoke();
 		yield break;
+	}
+
+	public void TransitionToOrMain(string returnScreenName)
+	{
+		string targetScene = string.IsNullOrWhiteSpace(returnScreenName)
+			? "Main"
+			: returnScreenName;
+
+		DoTransition(() =>
+		{
+			SceneManager.LoadScene(targetScene);
+		});
 	}
 }
