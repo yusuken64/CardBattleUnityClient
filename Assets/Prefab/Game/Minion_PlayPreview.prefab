@@ -12,12 +12,24 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 550873810008712730, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 573821743097142389, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 646703675034116681, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 724474439325374942, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
       propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039581806088525889, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1155631449834054438, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
@@ -72,6 +84,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4798859995770105108, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4888060627706576455, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -94,6 +110,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6432403512388027235, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520560875707807997, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
+      propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6672353278230405714, guid: 0dd7fd9254325934e89c3b31e1b128a3, type: 3}
