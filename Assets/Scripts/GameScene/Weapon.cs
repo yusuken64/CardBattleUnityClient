@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviour, IHoverable
 {
 	public GameObject AttackObject;
 	public TextMeshProUGUI AttackText;
@@ -27,7 +27,7 @@ public class Weapon : MonoBehaviour
 		}
 
 		var cardManager = Common.Instance.CardManager;
-		WeaponImage.sprite = cardManager.GetSpriteByCardID(weapon.Name);
+		WeaponImage.sprite = cardManager.GetSpriteByCardID(Data.OriginalCard.SpriteID);
 
 		RefreshData();
 	}
@@ -63,5 +63,19 @@ public class Weapon : MonoBehaviour
 		}
 
 		UpdateUI();
+	}
+
+	public CardBattleEngine.Card DisplayCard => Data.OriginalCard;
+
+	public void HoverStart()
+	{
+		var ui = FindFirstObjectByType<UI>();
+		ui.PreviewStart(this);
+	}
+
+	public void HoverEnd()
+	{
+		var ui = FindFirstObjectByType<UI>();
+		ui.PreviewEnd();
 	}
 }

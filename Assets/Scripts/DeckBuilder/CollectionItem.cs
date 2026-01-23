@@ -57,10 +57,7 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 		}
 	}
 
-	public CardBattleEngine.Card GetDisplayCard()
-	{
-		return CardDefinition.CreateCard();
-	}
+	public CardBattleEngine.Card DisplayCard => CardDefinition.CreateCard();
 
 	public void HoverStart()
 	{

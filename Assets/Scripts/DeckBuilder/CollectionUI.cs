@@ -14,7 +14,7 @@ public class CollectionUI : MonoBehaviour
 	internal void PreviewStart(CollectionItem collectionItem)
 	{
 		PreviewObject.SetActive(true);
-		PreviewCard.Setup(collectionItem.GetDisplayCard());
+		PreviewCard.Setup(collectionItem.DisplayCard);
 	}
 
 	internal void PreviewStart(CardDefinition cardDefinition)

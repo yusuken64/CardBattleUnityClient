@@ -77,10 +77,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		return gameManager.CheckIsValid(action, context, out reason);
 	}
 
-	public CardBattleEngine.Card GetDisplayCard()
-	{
-		return OriginalCard;
-	}
+	public CardBattleEngine.Card DisplayCard => OriginalCard;
 
 	public void OnClick()
 	{

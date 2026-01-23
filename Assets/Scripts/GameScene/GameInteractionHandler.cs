@@ -363,7 +363,8 @@ public interface IDraggable
 
 public interface IHoverable
 {
-	CardBattleEngine.Card GetDisplayCard();
+	CardBattleEngine.Card DisplayCard { get; }
+
 	void HoverStart();
 	void HoverEnd();
 }

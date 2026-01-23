@@ -142,7 +142,7 @@ public class UI : MonoBehaviour
 
     internal void PreviewStart(IHoverable hoverable)
     {
-        var card = hoverable.GetDisplayCard();
+        var card = hoverable.DisplayCard;
         if (card == null) { return; }
         CardPreview.Setup(card);
         CardPreview.CanPlayIndicator.gameObject.SetActive(false);

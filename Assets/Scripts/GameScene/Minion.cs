@@ -330,12 +330,9 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 	public AimIntent AimIntent { get; set; } = AimIntent.Attack;
 
     public GameObject DragObject => this.gameObject;
-    public CardBattleEngine.Card GetDisplayCard()
-    {
-        return Data?.OriginalCard;
-    }
+	public CardBattleEngine.Card DisplayCard => Data?.OriginalCard;
 
-    public void HoverStart()
+	public void HoverStart()
     {
         _ui.PreviewStart(this);
     }

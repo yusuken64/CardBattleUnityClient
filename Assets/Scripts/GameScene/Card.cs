@@ -553,12 +553,9 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         player.Hand.UpdateCardPositions();
     }
 
-    public CardBattleEngine.Card GetDisplayCard()
-    {
-        return this.Data;
-    }
+	public CardBattleEngine.Card DisplayCard => this.Data;
 
-    public void HoverStart()
+	public void HoverStart()
     {
         _ui.PreviewStart(this);
     }
