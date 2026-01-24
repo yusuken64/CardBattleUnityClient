@@ -6002,6 +6002,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TakeDamageAnimation
   DamageSound: {fileID: 8300000, guid: 048c79bf7a6134ae38e7883600c586cf, type: 3}
   DamageParticles: {fileID: 105348336549748525, guid: 311f721c13ea8074a832bf554e4877d5, type: 3}
+  AttackTiers:
+  - MinAttack: 1
+    MaxAttack: 1
+    ShakeStrength: 0
+    ShakeDuration: 0
+    AttackSound: {fileID: 8300000, guid: 09b2221f5d02242a291ea91b5046b2df, type: 3}
+  - MinAttack: 2
+    MaxAttack: 3
+    ShakeStrength: 0.16
+    ShakeDuration: 0.22
+    AttackSound: {fileID: 8300000, guid: 048c79bf7a6134ae38e7883600c586cf, type: 3}
+  - MinAttack: 4
+    MaxAttack: 5
+    ShakeStrength: 0.3
+    ShakeDuration: 0.53
+    AttackSound: {fileID: 8300000, guid: d3980ad18d795fc4da35b3557970df80, type: 3}
+  - MinAttack: 6
+    MaxAttack: 7
+    ShakeStrength: 0.47
+    ShakeDuration: 0.68
+    AttackSound: {fileID: 8300000, guid: d3980ad18d795fc4da35b3557970df80, type: 3}
+  - MinAttack: 8
+    MaxAttack: -1
+    ShakeStrength: 1.6
+    ShakeDuration: 1
+    AttackSound: {fileID: 8300000, guid: 47796a84d51db3a49a4d3dab901636a0, type: 3}
 --- !u!224 &1568871633 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2444314604437109126, guid: 363cfcfb37569eb428811f26be6c993c, type: 3}
@@ -7338,6 +7364,32 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   AttackParticlePrefab: {fileID: 8666321515539931435, guid: bdac6052ad414614fa94e0e996d9e200, type: 3}
+  AttackTiers:
+  - MinAttack: 1
+    MaxAttack: 1
+    ShakeStrength: 0.25
+    ShakeDuration: 0.5
+    AttackSound: {fileID: 8300000, guid: 922480d80d9c0b94da9c60c75638fdd4, type: 3}
+  - MinAttack: 2
+    MaxAttack: 3
+    ShakeStrength: 0.5
+    ShakeDuration: 1
+    AttackSound: {fileID: 8300000, guid: 2d9c7491e38fd5d42b8fd2ccce97eed0, type: 3}
+  - MinAttack: 4
+    MaxAttack: 5
+    ShakeStrength: 2
+    ShakeDuration: 1
+    AttackSound: {fileID: 8300000, guid: d3980ad18d795fc4da35b3557970df80, type: 3}
+  - MinAttack: 6
+    MaxAttack: 7
+    ShakeStrength: 3
+    ShakeDuration: 1
+    AttackSound: {fileID: 8300000, guid: d3980ad18d795fc4da35b3557970df80, type: 3}
+  - MinAttack: 8
+    MaxAttack: -1
+    ShakeStrength: 4
+    ShakeDuration: 1
+    AttackSound: {fileID: 8300000, guid: 47796a84d51db3a49a4d3dab901636a0, type: 3}
 --- !u!114 &1995981154 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5146108261924859069, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
