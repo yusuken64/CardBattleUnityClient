@@ -279,22 +279,7 @@ public class GameManager : MonoBehaviour
 			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
 		{
 			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(_gameState);
-			((IGameAgent)_opponentAgent).SetTarget(nextAction, (x) =>
-			{
-				var triggerSource = nextAction.Item2?.Source as ITriggerSource;
-
-				if (triggerSource == null) { return null; }
-				var targets = _gameState.GetValidTargets(triggerSource, x);
-
-				if (!targets.Any()) { return null; }
-
-				if (targets.Contains(triggerSource))
-				{
-					targets.Remove(triggerSource);
-				}
-
-				return targets[UnityEngine.Random.Range(0, targets.Count())];
-			});
+			((IGameAgent)_opponentAgent).SetTarget(nextAction, _gameState);
 
 			string actionString = nextAction.Item1.ToString();
 			IGameAction item1 = nextAction.Item1;

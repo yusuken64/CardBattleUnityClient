@@ -10,8 +10,6 @@ using UnityEngine;
 )]
 public class SpellCardDefinition : CardDefinition
 {
-    public TargetingType TargetingType;
-
     [Header("SpellCast Effects")]
     public List<SpellCastEffectWrapper> SpellCastEffects = new();
 
@@ -21,7 +19,6 @@ public class SpellCardDefinition : CardDefinition
 	{
         var spellCard = new SpellCard(CardName, Cost);
         spellCard.SpriteID = ID;
-        spellCard.TargetingType = TargetingType;
         spellCard.SpellCastEffects.AddRange(SpellCastEffects.Select(x => x.Create()));
         spellCard.Description = string.Join(Environment.NewLine, SpellCastEffects.Select(ToDescription));
         spellCard.CustomSFX = CustomSFX;
@@ -39,20 +36,7 @@ public class SpellCardDefinition : CardDefinition
         }
 
         string actions = string.Join(Environment.NewLine, spellCastEffect.GameActions.Select(ActionWrapperToDescription));
-        string targeting = TargetingType switch
-        {
-            TargetingType.Any => " to any target",
-            TargetingType.FriendlyMinion => " to friendly minion",
-            TargetingType.FriendlyHero => " to hero",
-            TargetingType.EnemyMinion => " to minion",
-            TargetingType.EnemyHero => " to opponent",
-            TargetingType.AnyEnemy => " to target enemy",
-            TargetingType.Self => " to self",
-            TargetingType.None => "",
-            TargetingType.AnyMinion => " to a minion",
-            _ => throw new NotImplementedException(),
-        };
-        string description = $"{actions}{targeting}.";
+        string description = $"{actions}.";
 
         return description;
     }

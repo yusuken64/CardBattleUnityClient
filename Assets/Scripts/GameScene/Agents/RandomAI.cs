@@ -32,7 +32,7 @@ public class RandomAI : IGameAgent
 	{
 	}
 
-	public void SetTarget((IGameAction, ActionContext) nextAction, Func<TargetingType, ITriggerSource> targetSelector)
+	public void SetTarget((IGameAction, ActionContext) nextAction, GameState gameState)
 	{
 		var action = nextAction.Item1;
 		var context = nextAction.Item2;
@@ -44,26 +44,9 @@ public class RandomAI : IGameAgent
 		}
 
 		card = playCardAction.Card;
-
-		TargetingType targetingType = TargetingType.None;
-		if (card is MinionCard minionCard)
-		{
-			if (minionCard.MinionTriggeredEffects.Any())
-			{
-				targetingType = minionCard.MinionTriggeredEffects[0].TargetType;
-			}
-		}
-		else if (card is SpellCard spellCard)
-		{
-			targetingType = spellCard.TargetingType;
-		}
-		else if (card is WeaponCard weaponCard)
-		{
-			targetingType = TargetingType.FriendlyHero;
-		}
+		var validTargets = card.ValidTargetSelector.Select(gameState, _player, card);
 
 		context.Source = card;
-		var target = targetSelector?.Invoke(targetingType);
-		context.Target = target?.Entity;
+		context.Target = ChooseRandom(validTargets);
 	}
 }

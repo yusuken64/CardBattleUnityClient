@@ -87,99 +87,99 @@ public static class MinionMigration
     [MenuItem("Data/Cards/MigrateTargetSelector")]
     public static void MigrateTargetSelector()
     {
-        // Find all assets of type CardDefinition in the project
-        string[] guids = AssetDatabase.FindAssets("t:CardDefinition");
+   //     // Find all assets of type CardDefinition in the project
+   //     string[] guids = AssetDatabase.FindAssets("t:CardDefinition");
 
-        foreach (var guid in guids)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            var card = AssetDatabase.LoadAssetAtPath<CardDefinition>(path);
+   //     foreach (var guid in guids)
+   //     {
+   //         string path = AssetDatabase.GUIDToAssetPath(guid);
+   //         var card = AssetDatabase.LoadAssetAtPath<CardDefinition>(path);
 
-            CardBattleEngine.TargetingType? originalTargetType = null;
-            if (card is MinionCardDefinition minionCardDefinition)
-			{
-                var effect = minionCardDefinition.MinionTriggeredEffects.FirstOrDefault();
-				originalTargetType = effect?.TargetType;
-			}
-            else if(card is SpellCardDefinition spellCardDefinition)
-			{
-                originalTargetType = spellCardDefinition.TargetingType;
-			}
-            else if (card is WeaponCardDefinition weaponCardDefinition)
-			{
-                var effect = weaponCardDefinition.TriggeredEffects.FirstOrDefault();
-                originalTargetType = effect?.TargetType;
-			}
+   //         CardBattleEngine.TargetingType? originalTargetType = null;
+   //         if (card is MinionCardDefinition minionCardDefinition)
+			//{
+   //             var effect = minionCardDefinition.MinionTriggeredEffects.FirstOrDefault();
+			//	originalTargetType = effect?.TargetType;
+			//}
+   //         else if(card is SpellCardDefinition spellCardDefinition)
+			//{
+   //             originalTargetType = spellCardDefinition.TargetingType;
+			//}
+   //         else if (card is WeaponCardDefinition weaponCardDefinition)
+			//{
+   //             var effect = weaponCardDefinition.TriggeredEffects.FirstOrDefault();
+   //             originalTargetType = effect?.TargetType;
+			//}
 
-            IValidTargetSelectorWrapperBase targetSelector = null;
-            switch (originalTargetType)
-			{
-				case CardBattleEngine.TargetingType.Any:
-                    targetSelector = new EntityTypeSelectorWrapper()
-                    {
-                        EntityTypes = CardBattleEngine.EntityType.Player |
-                                      CardBattleEngine.EntityType.Minion,
-                        TeamRelationship = CardBattleEngine.TeamRelationship.Any
-                    };
-                    break;
-				case CardBattleEngine.TargetingType.FriendlyMinion:
-                    targetSelector = new EntityTypeSelectorWrapper()
-                    {
-                        EntityTypes = CardBattleEngine.EntityType.Minion,
-                        TeamRelationship = CardBattleEngine.TeamRelationship.Friendly
-                    };
-                    break;
-				case CardBattleEngine.TargetingType.FriendlyHero:
-                    targetSelector = new EntityTypeSelectorWrapper()
-                    {
-                        EntityTypes = CardBattleEngine.EntityType.Player,
-                        TeamRelationship = CardBattleEngine.TeamRelationship.Friendly
-                    };
-                    break;
-				case CardBattleEngine.TargetingType.EnemyMinion:
-                    targetSelector = new EntityTypeSelectorWrapper()
-                    {
-                        EntityTypes = CardBattleEngine.EntityType.Minion,
-                        TeamRelationship = CardBattleEngine.TeamRelationship.Enemy
-                    };
-                    break;
-				case CardBattleEngine.TargetingType.EnemyHero:
-                    targetSelector = new EntityTypeSelectorWrapper()
-                    {
-                        EntityTypes = CardBattleEngine.EntityType.Player,
-                        TeamRelationship = CardBattleEngine.TeamRelationship.Enemy
-                    };
-                    break;
-				case CardBattleEngine.TargetingType.AnyEnemy:
-                    targetSelector = new EntityTypeSelectorWrapper()
-                    {
-                        EntityTypes = CardBattleEngine.EntityType.Player |
-                                      CardBattleEngine.EntityType.Minion,
-                        TeamRelationship = CardBattleEngine.TeamRelationship.Enemy
-                    };
-                    break;
-				case CardBattleEngine.TargetingType.Self:
-                    targetSelector = new EntityTypeSelectorWrapper()
-                    {
-                        EntityTypes = CardBattleEngine.EntityType.Player,
-                        TeamRelationship = CardBattleEngine.TeamRelationship.Friendly
-                    };
-                    break;
-				case CardBattleEngine.TargetingType.None:
-                    targetSelector = null;
-                    break;
-				case CardBattleEngine.TargetingType.AnyMinion:
-                    targetSelector = new EntityTypeSelectorWrapper()
-                    {
-                        EntityTypes = CardBattleEngine.EntityType.Minion,
-                        TeamRelationship = CardBattleEngine.TeamRelationship.Any
-                    };
-                    break;
-			}
+   //         IValidTargetSelectorWrapperBase targetSelector = null;
+   //         switch (originalTargetType)
+			//{
+			//	case CardBattleEngine.TargetingType.Any:
+   //                 targetSelector = new EntityTypeSelectorWrapper()
+   //                 {
+   //                     EntityTypes = CardBattleEngine.EntityType.Player |
+   //                                   CardBattleEngine.EntityType.Minion,
+   //                     TeamRelationship = CardBattleEngine.TeamRelationship.Any
+   //                 };
+   //                 break;
+			//	case CardBattleEngine.TargetingType.FriendlyMinion:
+   //                 targetSelector = new EntityTypeSelectorWrapper()
+   //                 {
+   //                     EntityTypes = CardBattleEngine.EntityType.Minion,
+   //                     TeamRelationship = CardBattleEngine.TeamRelationship.Friendly
+   //                 };
+   //                 break;
+			//	case CardBattleEngine.TargetingType.FriendlyHero:
+   //                 targetSelector = new EntityTypeSelectorWrapper()
+   //                 {
+   //                     EntityTypes = CardBattleEngine.EntityType.Player,
+   //                     TeamRelationship = CardBattleEngine.TeamRelationship.Friendly
+   //                 };
+   //                 break;
+			//	case CardBattleEngine.TargetingType.EnemyMinion:
+   //                 targetSelector = new EntityTypeSelectorWrapper()
+   //                 {
+   //                     EntityTypes = CardBattleEngine.EntityType.Minion,
+   //                     TeamRelationship = CardBattleEngine.TeamRelationship.Enemy
+   //                 };
+   //                 break;
+			//	case CardBattleEngine.TargetingType.EnemyHero:
+   //                 targetSelector = new EntityTypeSelectorWrapper()
+   //                 {
+   //                     EntityTypes = CardBattleEngine.EntityType.Player,
+   //                     TeamRelationship = CardBattleEngine.TeamRelationship.Enemy
+   //                 };
+   //                 break;
+			//	case CardBattleEngine.TargetingType.AnyEnemy:
+   //                 targetSelector = new EntityTypeSelectorWrapper()
+   //                 {
+   //                     EntityTypes = CardBattleEngine.EntityType.Player |
+   //                                   CardBattleEngine.EntityType.Minion,
+   //                     TeamRelationship = CardBattleEngine.TeamRelationship.Enemy
+   //                 };
+   //                 break;
+			//	case CardBattleEngine.TargetingType.Self:
+   //                 targetSelector = new EntityTypeSelectorWrapper()
+   //                 {
+   //                     EntityTypes = CardBattleEngine.EntityType.Player,
+   //                     TeamRelationship = CardBattleEngine.TeamRelationship.Friendly
+   //                 };
+   //                 break;
+			//	case CardBattleEngine.TargetingType.None:
+   //                 targetSelector = null;
+   //                 break;
+			//	case CardBattleEngine.TargetingType.AnyMinion:
+   //                 targetSelector = new EntityTypeSelectorWrapper()
+   //                 {
+   //                     EntityTypes = CardBattleEngine.EntityType.Minion,
+   //                     TeamRelationship = CardBattleEngine.TeamRelationship.Any
+   //                 };
+   //                 break;
+			//}
 
-			card.ValidTargetSelector = targetSelector;
-            EditorUtility.SetDirty(card);
-        }
-        AssetDatabase.SaveAssets();
+			//card.ValidTargetSelector = targetSelector;
+   //         EditorUtility.SetDirty(card);
+   //     }
+   //     AssetDatabase.SaveAssets();
     }
 }

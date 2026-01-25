@@ -12,8 +12,6 @@ public class HeroPowerDefinition : CardDefinition
 {
 	public string HeroPowerName;
 
-	public TargetingType TargetingType;
-
 	[SerializeReference]
 	public List<IGameActionWrapperBase> GameActions = new List<IGameActionWrapperBase>();
 
@@ -31,7 +29,8 @@ public class HeroPowerDefinition : CardDefinition
 		{
 			Name = HeroPowerName,
 			ManaCost = Cost,
-			TargetingType = TargetingType,
+			ValidTargetSelector = ValidTargetSelector.Create(),
+			CastRestriction = CastRestriction.Create(),
 			GameActions = GameActions.Select(x => x.Create()),
 			AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create(),
 			UsedThisTurn = false
@@ -49,7 +48,8 @@ public class HeroPowerDefinition : CardDefinition
 			return new CardBattleEngine.HeroPower()
 			{
 				Name = $"Invoke {minionCard.CardName}",
-				TargetingType = triggeredEffectWrapper.TargetType,
+				ValidTargetSelector = minionCard.ValidTargetSelector?.Create(),
+				CastRestriction = minionCard.CastRestriction?.Create(),
 				AffectedEntitySelector = minionTriggeredEffects[0].AffectedEntitySelectorWrapper?.Create(),
 				GameActions = minionTriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
 				ManaCost = minionCard.Cost,

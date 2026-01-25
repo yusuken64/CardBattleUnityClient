@@ -71,7 +71,6 @@ public class TriggeredEffectWrapper
     public string Description;
     public EffectTrigger EffectTrigger;
     public EffectTiming EffectTiming;
-    public TargetingType TargetType;
 
     [SerializeReference]
     public List<IGameActionWrapperBase> GameActions = new List<IGameActionWrapperBase>();
@@ -89,7 +88,6 @@ public class TriggeredEffectWrapper
         {
             EffectTrigger = this.EffectTrigger,
             EffectTiming = this.EffectTiming,
-            TargetType = this.TargetType,
             GameActions = GameActions?.Select(x => x.Create()).ToList(),
             Condition = Condition?.Create(),
             AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create()
@@ -104,7 +102,6 @@ public class ExpirationTriggerWrapper
 {
     public EffectTrigger EffectTrigger;
     public EffectTiming EffectTiming;
-    public TargetingType TargetType;
 
     [SerializeReference]
     public ITriggerConditionWrapperBase Condition;

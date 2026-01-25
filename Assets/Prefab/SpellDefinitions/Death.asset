@@ -22,7 +22,6 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: 2140584782446198867
   TriggeredEffects: []
-  TargetingType: 7
   SpellCastEffects:
   - Description: Destroy Minion with 5 or more Attack
     GameActions:
@@ -48,7 +47,7 @@ MonoBehaviour:
       type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         EntityTypes: 2
-        TeamRelationship: 2
+        TeamRelationship: 1
     - rid: 2140584782446198869
       type: {class: StatSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:

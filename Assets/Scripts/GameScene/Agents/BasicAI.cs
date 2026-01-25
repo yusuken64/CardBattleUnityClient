@@ -39,7 +39,8 @@ public class BasicAI : IGameAgent
 	{
 	}
 
-	public void SetTarget((IGameAction, ActionContext) nextAction, Func<TargetingType, ITriggerSource> targetSelector)
+
+	public void SetTarget((IGameAction, ActionContext) nextAction, GameState gameState)
 	{
 		var action = nextAction.Item1;
 		var context = nextAction.Item2;
@@ -51,26 +52,15 @@ public class BasicAI : IGameAgent
 		}
 
 		card = playCardAction.Card;
+		context.Source = card;
 
-		TargetingType targetingType = TargetingType.None;
-		if (card is MinionCard minionCard)
+		if (card.ValidTargetSelector != null)
 		{
-			if (minionCard.MinionTriggeredEffects.Any())
+			var validTargets = card.ValidTargetSelector.Select(gameState, _player, card);
+			if (validTargets.Any())
 			{
-				targetingType = minionCard.MinionTriggeredEffects[0].TargetType;
+				context.Target = ChooseRandom(validTargets);
 			}
 		}
-		else if (card is SpellCard spellCard)
-		{
-			targetingType = spellCard.TargetingType;
-		}
-		else if (card is WeaponCard weaponCard)
-		{
-			targetingType = TargetingType.FriendlyHero;
-		}
-
-		context.Source = card;
-		var target = targetSelector?.Invoke(targetingType);
-		context.Target = target?.Entity;
 	}
 }

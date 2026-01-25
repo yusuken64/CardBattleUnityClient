@@ -91,20 +91,7 @@ public abstract class CardDefinition : ScriptableObject
 		}
 
 		string actions = string.Join(Environment.NewLine, triggeredEffect.GameActions.Select(ActionWrapperToDescription));
-		string targeting = triggeredEffect.TargetType switch
-		{
-			TargetingType.Any => " to any target",
-			TargetingType.FriendlyMinion => " to friendly minion",
-			TargetingType.FriendlyHero => " to hero",
-			TargetingType.EnemyMinion => " to minion",
-			TargetingType.EnemyHero => " to opponent",
-			TargetingType.AnyEnemy => " to target enemy",
-			TargetingType.Self => " to self",
-			TargetingType.None => "",
-			TargetingType.AnyMinion => " to a minion",
-			_ => throw new NotImplementedException(),
-		};
-		string description = $"{trigger}: {condition}{actions}{targeting}.";
+		string description = $"{trigger}: {condition}{actions}.";
 
 		return description;
 	}

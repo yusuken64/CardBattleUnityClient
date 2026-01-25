@@ -1,4 +1,5 @@
 using CardBattleEngine;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,8 +43,25 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 			return false;
 		}
 
-		return Data.TargetingType != TargetingType.None &&
-				!Data.UsedThisTurn;//TODO heropoweraction.isvalid
+		if (Data.ValidTargetSelector != null)
+		{
+			var validTargets = Data.ValidTargetSelector.Select(gameManager._gameState, Player.Data, OriginalCard);
+			if (!validTargets.Any())
+			{
+				return false;
+			}
+		}
+
+		if (Data.CastRestriction != null)
+		{
+			var canPlay = Data.CastRestriction.CanPlay(gameManager._gameState, Player.Data, OriginalCard, out _);
+			if (!canPlay)
+			{
+				return false;
+			}
+		}
+
+		return !Data.UsedThisTurn;//TODO heropoweraction.isvalid
 	}
 
 	public IGameEntity GetData()
@@ -81,8 +99,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 
 	public void OnClick()
 	{
-		if (Data.TargetingType != TargetingType.None &&
-			!Data.UsedThisTurn)
+		if (!Data.UsedThisTurn)
 		{
 			return;
 		}
