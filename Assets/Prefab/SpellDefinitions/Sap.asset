@@ -10,51 +10,44 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
-  m_Name: Pain
+  m_Name: Sap
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: Pain
-  ID: Pain
-  Sprite: {fileID: 21300000, guid: 12c7502b1ac7cfb4ebfd2dc7df9bea2a, type: 3}
+  CardName: Sap
+  ID: Sap
+  Sprite: {fileID: 21300000, guid: 783e5a61ee41c1f4d9e9b6a053de3629, type: 3}
   Cost: 2
   CastRestriction:
-    rid: 2140584782446198866
+    rid: 2140584787384729674
   ValidTargetSelector:
-    rid: 2140584782446198867
+    rid: 2140584787384729675
   TriggeredEffects: []
   SpellCastEffects:
-  - Description: Destroy Minion with 3 or less Attack
+  - Description: 
     GameActions:
-    - rid: 2140584782446198871
+    - rid: 2140584787384729676
     AffectedEntitySelectorWrapper:
-      rid: 2140584782446198870
+      rid: 2140584787384729677
   CustomSFX: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 2140584782446198866
+    - rid: 2140584787384729674
       type: {class: ValidTargetRestrictionWrapper, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 2140584782446198867
-      type: {class: CombinedTargetSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Left:
-          rid: 2140584782446198868
-        Operation: 0
-        Right:
-          rid: 2140584782446198869
-    - rid: 2140584782446198868
+    - rid: 2140584787384729675
       type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         EntityTypes: 2
-        TeamRelationship: 2
-    - rid: 2140584782446198869
-      type: {class: StatSelectorWrapper, ns: , asm: Assembly-CSharp}
+        TeamRelationship: 1
+    - rid: 2140584787384729676
+      type: {class: ReturnMinionToCardWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Stat: 1
-        Comparison: 0
-        Value: 4
-    - rid: 2140584782446198870
+        TeamRelationship: 0
+        ZoneType: 1
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 3d5ef7a2d949e984baeebb1ea9fde80e, type: 2}
+    - rid: 2140584787384729677
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         IncludeTarget: 1
@@ -62,8 +55,3 @@ MonoBehaviour:
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0
         ResolutionTiming: 0
-    - rid: 2140584782446198871
-      type: {class: DeathActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 8c9a1d740b840af49aa4a6ed8220f363, type: 2}

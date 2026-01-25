@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
-  m_Name: Health
+  m_Name: FlashHeal
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: Health
-  ID: Health
-  Sprite: {fileID: 21300000, guid: d81dfad78a9a65e4787dc138b9712a98, type: 3}
+  CardName: FlashHeal
+  ID: FlashHeal
+  Sprite: {fileID: 21300000, guid: fa1417999582cb941a2bf9b53a2b44ef, type: 3}
   Cost: 1
   CastRestriction:
     rid: -2
   ValidTargetSelector:
-    rid: 2140584782446198851
+    rid: 2140584782446198854
   TriggeredEffects: []
   SpellCastEffects:
   - Description: 
     GameActions:
-    - rid: 2140584554682384466
+    - rid: 2140584554682384470
     - rid: 2140584554682384469
     AffectedEntitySelectorWrapper:
       rid: 2140584554682384468
@@ -35,23 +35,6 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 2140584554682384466
-      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        AttackChange:
-          rid: -2
-        HealthChange:
-          rid: 2140584554682384467
-        CostChange:
-          rid: -2
-        ExpirationTrigger:
-          rid: -2
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 2140584554682384467
-      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Number: 2
     - rid: 2140584554682384468
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -65,8 +48,19 @@ MonoBehaviour:
       data:
         Canceled: 0
         CustomSFX: {fileID: 0}
-    - rid: 2140584782446198851
+    - rid: 2140584554682384470
+      type: {class: HealActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Amount:
+          rid: 2140584554682384471
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584554682384471
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 5
+    - rid: 2140584782446198854
       type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
-        EntityTypes: 2
-        TeamRelationship: 0
+        EntityTypes: 3
+        TeamRelationship: 2

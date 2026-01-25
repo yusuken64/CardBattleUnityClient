@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class CardManager : MonoBehaviour
 {
     [Header("Card Data")]
@@ -74,4 +78,24 @@ public class CardManager : MonoBehaviour
     {
         return GetCardByID(id)?.Sprite ?? DefaultMissingSprite;
     }
+
+#if UNITY_EDITOR
+	[ContextMenu("RebuildCardList")]
+	public void RebuildCardList()
+	{
+		Cards.Clear();
+		string[] guids = AssetDatabase.FindAssets("t:CardDefinition");
+
+		foreach (var guid in guids)
+		{
+			string path = AssetDatabase.GUIDToAssetPath(guid);
+			var card = AssetDatabase.LoadAssetAtPath<CardDefinition>(path);
+			if (card != null)
+			{
+				Cards.Add(card);
+			}
+		}
+		EditorUtility.SetDirty(this);
+	}
+#endif
 }

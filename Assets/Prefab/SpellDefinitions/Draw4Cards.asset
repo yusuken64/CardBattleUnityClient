@@ -10,50 +10,57 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
-  m_Name: Explosion
+  m_Name: Draw4Cards
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: Explosion
-  ID: Explosion
-  Sprite: {fileID: 21300000, guid: e25d5d7b921362e4692ef22e40d39d56, type: 3}
-  Cost: 2
+  CardName: Sprint
+  ID: Sprint
+  Sprite: {fileID: 21300000, guid: ad53422af0187a842be7f086f0a98d39, type: 3}
+  Cost: 5
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
   SpellCastEffects:
-  - Description: Deal 1 Damage to enemy minions
+  - Description: Draw 4 Cards
     GameActions:
-    - rid: 867525919145459776
+    - rid: 2140584787384729601
     AffectedEntitySelectorWrapper:
-      rid: 867525924825071616
-  CustomSFX: {fileID: 11400000, guid: e63f3f952c7f3364bba66f1790a33051, type: 2}
+      rid: 6533011592832090114
+  CustomSFX: {fileID: 11400000, guid: 9b453d7f8297bd047a1baa43fd3e32c5, type: 2}
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 867525919145459776
-      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+    - rid: 2140584787384729601
+      type: {class: RepeatActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Damage:
-          rid: 867525919145459787
+        Count:
+          rid: 2140584787384729602
+        ChildActions:
+        - rid: 2140584787384729604
         Canceled: 0
         CustomSFX: {fileID: 0}
-    - rid: 867525919145459787
+    - rid: 2140584787384729602
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Number: 1
-    - rid: 867525924825071616
+        Number: 4
+    - rid: 2140584787384729604
+      type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 6533011592832090114
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         Operations:
-        - rid: 867525924825071617
+        - rid: 6533011592832090115
         ResolutionTiming: 0
-    - rid: 867525924825071617
+    - rid: 6533011592832090115
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Side: 1
-        Group: 0
+        Side: 0
+        Group: 1
         ExcludeSelf: 0

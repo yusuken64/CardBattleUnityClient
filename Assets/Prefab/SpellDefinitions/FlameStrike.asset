@@ -10,50 +10,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
-  m_Name: Explosion
+  m_Name: FlameStrike
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: Explosion
-  ID: Explosion
-  Sprite: {fileID: 21300000, guid: e25d5d7b921362e4692ef22e40d39d56, type: 3}
-  Cost: 2
+  CardName: FlameStrike
+  ID: FlameStrike
+  Sprite: {fileID: 21300000, guid: 06ecb2a32ac6b914591f1ef5664478e8, type: 3}
+  Cost: 7
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
   SpellCastEffects:
-  - Description: Deal 1 Damage to enemy minions
+  - Description: 
     GameActions:
-    - rid: 867525919145459776
+    - rid: 6533011575016521996
     AffectedEntitySelectorWrapper:
-      rid: 867525924825071616
-  CustomSFX: {fileID: 11400000, guid: e63f3f952c7f3364bba66f1790a33051, type: 2}
+      rid: 867526235581055123
+  CustomSFX: {fileID: 11400000, guid: 16d501f7cfff6fe40b0379112b3b27d7, type: 2}
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 867525919145459776
-      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Damage:
-          rid: 867525919145459787
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 867525919145459787
-      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Number: 1
-    - rid: 867525924825071616
+    - rid: 867526235581055123
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         Operations:
-        - rid: 867525924825071617
+        - rid: 867526235581055124
         ResolutionTiming: 0
-    - rid: 867525924825071617
+    - rid: 867526235581055124
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Side: 1
         Group: 0
         ExcludeSelf: 0
+    - rid: 6533011575016521996
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 6533011738762674248
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 172961f1d2f9b164fb0de3f50ee013bf, type: 2}
+    - rid: 6533011738762674248
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 5

@@ -18,12 +18,12 @@ public class BasicAI : IGameAgent
 	{
 		var validActions = game.GetValidActions(_player);
 
-		var attackActions = validActions
+		var actions = validActions
 			.Where(x => x.Item1 is AttackAction attackAction ||
 						x.Item1 is PlayCardAction).ToList();
-		if (attackActions.Any())
+		if (actions.Any())
 		{
-			return ChooseRandom(attackActions);
+			return ChooseRandom(actions);
 		}
 
 		return ChooseRandom(validActions);
@@ -57,6 +57,7 @@ public class BasicAI : IGameAgent
 		if (card.ValidTargetSelector != null)
 		{
 			var validTargets = card.ValidTargetSelector.Select(gameState, _player, card);
+
 			if (validTargets.Any())
 			{
 				context.Target = ChooseRandom(validTargets);

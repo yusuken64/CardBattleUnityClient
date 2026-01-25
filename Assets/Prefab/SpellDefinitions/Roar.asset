@@ -22,7 +22,6 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  TargetingType: 7
   SpellCastEffects:
   - Description: Minions get +2/+0 until end of turn
     GameActions:
@@ -69,6 +68,5 @@ MonoBehaviour:
       data:
         EffectTrigger: 12
         EffectTiming: 1
-        TargetType: 7
         Condition:
           rid: -2

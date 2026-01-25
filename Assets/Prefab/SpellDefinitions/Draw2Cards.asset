@@ -22,7 +22,6 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  TargetingType: 7
   SpellCastEffects:
   - Description: Draw 2 Cards
     GameActions:
@@ -55,6 +54,6 @@ MonoBehaviour:
     - rid: 6533011592832090115
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Side: 1
+        Side: 0
         Group: 1
         ExcludeSelf: 0

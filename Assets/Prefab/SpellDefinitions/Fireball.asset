@@ -22,7 +22,6 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: 2140584782446198855
   TriggeredEffects: []
-  TargetingType: 0
   SpellCastEffects:
   - Description: 
     GameActions:

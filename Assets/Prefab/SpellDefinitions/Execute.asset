@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
-  m_Name: Pain
+  m_Name: Execute
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: Pain
-  ID: Pain
-  Sprite: {fileID: 21300000, guid: 12c7502b1ac7cfb4ebfd2dc7df9bea2a, type: 3}
+  CardName: Execute
+  ID: Execute
+  Sprite: {fileID: 21300000, guid: d9831e31e2ee0da4ca2015b925a24865, type: 3}
   Cost: 2
   CastRestriction:
     rid: 2140584782446198866
@@ -23,7 +23,7 @@ MonoBehaviour:
     rid: 2140584782446198867
   TriggeredEffects: []
   SpellCastEffects:
-  - Description: Destroy Minion with 3 or less Attack
+  - Description: Destroy Target Damanged Minion
     GameActions:
     - rid: 2140584782446198871
     AffectedEntitySelectorWrapper:
@@ -42,18 +42,12 @@ MonoBehaviour:
           rid: 2140584782446198868
         Operation: 0
         Right:
-          rid: 2140584782446198869
+          rid: 2140584787384729670
     - rid: 2140584782446198868
       type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         EntityTypes: 2
         TeamRelationship: 2
-    - rid: 2140584782446198869
-      type: {class: StatSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Stat: 1
-        Comparison: 0
-        Value: 4
     - rid: 2140584782446198870
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -66,4 +60,8 @@ MonoBehaviour:
       type: {class: DeathActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 8c9a1d740b840af49aa4a6ed8220f363, type: 2}
+        CustomSFX: {fileID: 11400000, guid: 31cfc4d30fdd3dc43ad89b0833252b67, type: 2}
+    - rid: 2140584787384729670
+      type: {class: HealthStatusSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        HealthStatus: 1

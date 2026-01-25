@@ -22,7 +22,6 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  TargetingType: 7
   SpellCastEffects:
   - Description: Deal 1 Damage to all minions
     GameActions:
