@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: beast_01_Tutorial
   Sprite: {fileID: 21300000, guid: d67121c3754a110429ba5138110f5d88, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 2
   Health: 1
@@ -33,4 +37,6 @@ MonoBehaviour:
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

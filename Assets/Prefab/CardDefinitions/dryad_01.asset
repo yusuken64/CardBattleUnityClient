@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: dryad_01
   Sprite: {fileID: 21300000, guid: 25c8b34cab9677a49a258fd57d686069, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: 2140584782446198860
   TriggeredEffects: []
   Attack: 1
   Health: 3
@@ -50,6 +54,11 @@ MonoBehaviour:
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 2
+    - rid: 2140584782446198860
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 3
+        TeamRelationship: 2
     - rid: 6533011735244963905
       type: {class: HealActionWrapper, ns: , asm: Assembly-CSharp}
       data:

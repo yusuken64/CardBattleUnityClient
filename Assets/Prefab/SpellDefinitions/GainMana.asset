@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: GainMana
   Sprite: {fileID: 21300000, guid: ea0feba82d4457f4c8174fa9fe36fb65, type: 3}
   Cost: 0
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
@@ -29,6 +33,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 867526305074118656
       type: {class: GainManaActionWrapper, ns: , asm: Assembly-CSharp}
       data:

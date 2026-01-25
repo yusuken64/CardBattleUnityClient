@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: big_monkey_2
   Sprite: {fileID: 21300000, guid: 5177b097f88f8fe4bab2d673a5b4a366, type: 3}
   Cost: 20
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects:
   - rid: 867525694638784703
   Attack: 8
@@ -57,6 +61,7 @@ MonoBehaviour:
         IncludeSource: 1
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0
+        ResolutionTiming: 0
     - rid: 867526061311393879
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:

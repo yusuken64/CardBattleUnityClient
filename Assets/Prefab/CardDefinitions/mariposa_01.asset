@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: mariposa_01
   Sprite: {fileID: 21300000, guid: 0fb7d806bd87dca478509992cfc2719d, type: 3}
   Cost: 4
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 3
   Health: 5

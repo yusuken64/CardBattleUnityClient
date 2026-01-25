@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: Fireball2
   Sprite: {fileID: 21300000, guid: 2b68767919ee6114da020270e987f6f0, type: 3}
   Cost: 10
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: 2140584782446198862
   TriggeredEffects: []
   TargetingType: 0
   SpellCastEffects:
@@ -31,6 +35,11 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2140584782446198862
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 3
+        TeamRelationship: 2
     - rid: 6533011575016521996
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:

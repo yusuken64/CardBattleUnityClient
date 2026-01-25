@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: archer_02
   Sprite: {fileID: 21300000, guid: 2b28699e663e7744887b174825ba6789, type: 3}
   Cost: 3
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: 2140584782446198853
   TriggeredEffects: []
   Attack: 3
   Health: 3
@@ -57,3 +61,8 @@ MonoBehaviour:
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 2
+    - rid: 2140584782446198853
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 3
+        TeamRelationship: 1

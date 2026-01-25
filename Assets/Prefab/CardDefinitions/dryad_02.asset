@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: dryad_02
   Sprite: {fileID: 21300000, guid: b9e41065dcae78e418694b37c43a530e, type: 3}
   Cost: 3
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 8
@@ -44,6 +48,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 2140584554682384449
       type: {class: HealActionWrapper, ns: , asm: Assembly-CSharp}
       data:

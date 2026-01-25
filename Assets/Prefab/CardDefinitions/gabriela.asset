@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: gabriela
   Sprite: {fileID: 21300000, guid: a6c523dd48e517244ad5d9e3c7042bb6, type: 3}
   Cost: 8
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 8
   Health: 8

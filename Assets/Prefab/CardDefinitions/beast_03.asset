@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: beast_03
   Sprite: {fileID: 21300000, guid: 2e6bf4ade6747f24fb87c53c42b1872f, type: 3}
   Cost: 3
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 2
   Health: 4
@@ -44,6 +48,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 867526235581054991
       type: {class: OriginalSourceConditionWrapper, ns: , asm: Assembly-CSharp}
       data: 

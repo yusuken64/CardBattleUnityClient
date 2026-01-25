@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: spider_02
   Sprite: {fileID: 21300000, guid: fe8877eedd153d94a8634e74f2e96217, type: 3}
   Cost: 4
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 3
   Health: 3
@@ -29,6 +33,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
@@ -49,3 +54,4 @@ MonoBehaviour:
       type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
+        CustomSFX: {fileID: 0}

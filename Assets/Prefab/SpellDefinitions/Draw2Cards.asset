@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: DrawCard
   Sprite: {fileID: 21300000, guid: 9ef381b09cf32cc4681abfcfd0dc1e25, type: 3}
   Cost: 3
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
@@ -30,6 +34,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 867526235581055073
       type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
       data:

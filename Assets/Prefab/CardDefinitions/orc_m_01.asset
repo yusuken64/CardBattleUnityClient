@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: orc_m_01
   Sprite: {fileID: 21300000, guid: 9bb4c568aa26a9549b18490494a001b0, type: 3}
   Cost: 12
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects:
   - rid: 867525694638784673
   Attack: 8
@@ -30,6 +34,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2
@@ -56,20 +61,17 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0
+        ResolutionTiming: 0
     - rid: 867525694638784675
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        AttackChange: 0
-        HealthChange: 0
-        CostChange: 0
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
         ExpirationTrigger:
-          Description: 
-          EffectTrigger: 0
-          EffectTiming: 0
-          TargetType: 0
-          GameActions: []
-          Condition:
-            rid: -2
-          AffectedEntitySelectorWrapper:
-            rid: -2
+          rid: -2
         Canceled: 0
+        CustomSFX: {fileID: 0}

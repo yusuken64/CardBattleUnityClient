@@ -7,9 +7,9 @@ using CardBattleEngine;
 [Serializable]
 public class CombinedTargetSelectorWrapper : IValidTargetSelectorWrapperBase
 {
-    public IValidTargetSelectorWrapperBase Left;
+    [SerializeReference] public IValidTargetSelectorWrapperBase Left;
     public CardBattleEngine.CombinationOperation Operation;
-    public IValidTargetSelectorWrapperBase Right;
+    [SerializeReference] public IValidTargetSelectorWrapperBase Right;
 
     public override CardBattleEngine.IValidTargetSelector Create()
     {

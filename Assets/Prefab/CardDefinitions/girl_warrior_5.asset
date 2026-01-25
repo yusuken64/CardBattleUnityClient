@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: girl_warrior_5
   Sprite: {fileID: 21300000, guid: bba2440f2bf4f6f4487fe6d84201c355, type: 3}
   Cost: 4
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 4
   Health: 4

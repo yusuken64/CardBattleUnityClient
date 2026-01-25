@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: SummonTest
   Sprite: {fileID: 21300000, guid: eaa0690ae3b17fd45b44cba2c3cdc93d, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 2
   Health: 2

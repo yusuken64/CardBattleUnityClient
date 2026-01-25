@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: sword_girl_2
   Sprite: {fileID: 21300000, guid: 58840ee6f4b6d804296314ae72a25d56, type: 3}
   Cost: 3
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 4
@@ -29,6 +33,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 6
@@ -43,10 +48,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 867525712731439199
       type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 867525712731439200
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -54,6 +62,7 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        ResolutionTiming: 0
     - rid: 867525712731439220
       type: {class: SourceIsTargetConditionWrapper, ns: , asm: Assembly-CSharp}
       data: 

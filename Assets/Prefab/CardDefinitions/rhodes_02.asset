@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: rhodes_02
   Sprite: {fileID: 21300000, guid: 1aa5ecee124f2ba428ef572cb677cabe, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 1
@@ -29,7 +33,10 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

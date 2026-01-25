@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: rockman_1
   Sprite: {fileID: 21300000, guid: bb525cf3643b50544b25fa859d87f9f8, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: 2140584782446198861
   TriggeredEffects: []
   Attack: 1
   Health: 2
@@ -29,6 +33,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
@@ -45,19 +50,21 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2140584782446198861
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 0
     - rid: 6533011735244963923
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        AttackChange: 0
-        HealthChange: 2
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
         ExpirationTrigger:
-          Description: 
-          EffectTrigger: 0
-          EffectTiming: 0
-          TargetType: 0
-          GameActions: []
-          Condition:
-            rid: -2
-          AffectedEntitySelectorWrapper:
-            rid: -2
+          rid: -2
         Canceled: 0
+        CustomSFX: {fileID: 0}

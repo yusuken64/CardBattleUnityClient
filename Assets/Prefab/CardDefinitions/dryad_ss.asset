@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: dryad_ss
   Sprite: {fileID: 21300000, guid: 9b43655f16ef28b458fb43e9a087ff0f, type: 3}
   Cost: 8
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 12
   Health: 12
@@ -33,4 +37,6 @@ MonoBehaviour:
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

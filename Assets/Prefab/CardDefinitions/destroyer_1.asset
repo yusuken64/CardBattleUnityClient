@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: destroyer_1
   Sprite: {fileID: 21300000, guid: cb37fb195bfd0c149aba6ad7ad1ec754, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: 2140584782446198852
   TriggeredEffects: []
   Attack: 1
   Health: 1
@@ -58,6 +62,11 @@ MonoBehaviour:
         TargetType: 7
         Condition:
           rid: -2
+    - rid: 2140584782446198852
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 0
     - rid: 6533011735244963900
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:

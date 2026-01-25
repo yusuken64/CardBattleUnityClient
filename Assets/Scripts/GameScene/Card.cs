@@ -51,6 +51,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     private Minion _pendingMinion;
     public int _pendingIndex;
 	private UI _ui;
+	private GameManager _gameManager;
 	#endregion
 
 	public CardBattleEngine.IGameEntity Entity => GetData();
@@ -58,6 +59,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     private void Start()
     {
         _ui = FindFirstObjectByType<UI>();
+        _gameManager = FindFirstObjectByType<GameManager>();
     }
 
     public void ResetVisuals()
@@ -166,11 +168,10 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         //description = Data.CardText;
         DescriptionText.text = description;
 
-        GameManager gameManager = FindFirstObjectByType<GameManager>();
-		if (gameManager != null)
+		if (_gameManager != null)
 		{
-			var activePlayer = Data.Owner == gameManager.Player.Data;
-			CanPlayIndicator.gameObject.SetActive(gameManager.ActivePlayerTurn && activePlayer && CanPlay);
+			var activePlayer = Data.Owner == _gameManager.Player.Data;
+			CanPlayIndicator.gameObject.SetActive(_gameManager.ActivePlayerTurn && activePlayer && CanPlay);
 		}
 		else
 		{
@@ -197,7 +198,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
         else
         {
-            CanPlay = this.Data.Owner.Mana >= Cost;
+            CanPlay = !IsCastRestricted();
         }
 
         if (this.Data is MinionCard minionCard)
@@ -232,7 +233,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
         else
         {
-            CanPlay = data.Owner.Mana >= Cost;
+            CanPlay = !IsCastRestricted();
         }
 
         if (data is MinionCard minionCard)
@@ -271,28 +272,16 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public static bool RequiresTarget(CardBattleEngine.Card data)
     {
-        if (data is MinionCard minionCard)
-        {
-            if (minionCard.MinionTriggeredEffects.Count() == 0)
-            {
-                return false;
-            }
+        if (data.ValidTargetSelector == null)
+		{
+            return false;
+		}
 
-            return minionCard.MinionTriggeredEffects[0].TargetType != TargetingType.None;
-        }
-        else if (data is SpellCard spellCard)
-        {
-            if (spellCard.TargetingType == TargetingType.None)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+        var gameManager = FindFirstObjectByType<GameManager>();
+        var player = gameManager.GetPlayerFor(data.Owner);
 
-        return false;
+        var validTargets = data.ValidTargetSelector.Select(gameManager._gameState, player.Data, data);
+        return validTargets.Any();
     }
 
     public GameObject TransitionToAim(Vector3 mousePos)
@@ -300,8 +289,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         var animator = GetComponent<Animator>();
         animator.Play("CardCast", 0, 0f);
 
-        var gameManager = FindFirstObjectByType<GameManager>();
-        var player = gameManager.GetPlayerFor(this.Data.Owner);
+        var player = _gameManager.GetPlayerFor(this.Data.Owner);
         if (this.Data is MinionCard minionCard)
         {
             //summon pending minion
@@ -338,8 +326,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         _pendingMinion = null;
         CastIndicator.gameObject.SetActive(false);
 
-        var gameManager = FindFirstObjectByType<GameManager>();
-        var player = gameManager.GetPlayerFor(this.Data.Owner);
+        var player = _gameManager.GetPlayerFor(this.Data.Owner);
         player.Board.UpdateMinionPositions();
         player.Hand.UpdateCardPositions();
 
@@ -353,8 +340,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
         CastIndicator.gameObject.SetActive(false);
 
-        var gameManager = FindFirstObjectByType<GameManager>();
-        var player = gameManager.GetPlayerFor(this.Data.Owner);
+        var player = _gameManager.GetPlayerFor(this.Data.Owner);
 
         if (_pendingMinion != null)
         {
@@ -391,9 +377,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
                            out (IGameAction action, ActionContext context) current,
                            out string reason)
     {
-        var gameManager = FindFirstObjectByType<GameManager>();
-
-        var player = gameManager.GetPlayerFor(Data.Owner);
+        var player = _gameManager.GetPlayerFor(Data.Owner);
 
         var index = player.Board.Minions.Count(x => x.transform.position.x < mousePos.x);
 
@@ -445,13 +429,12 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             };
         }
         current = (action, context);
-        return gameManager.CheckIsValid(action, context, out reason);
+        return _gameManager.CheckIsValid(action, context, out reason);
     }
 
     public void Resolve(Vector3 mousePos, (IGameAction action, ActionContext context) current)
     {
-        var gameManager = FindFirstObjectByType<GameManager>();
-        var player = gameManager.GetPlayerFor(Data.Owner);
+        var player = _gameManager.GetPlayerFor(Data.Owner);
         GameInteractionHandler cardInteractionController = FindFirstObjectByType<GameInteractionHandler>();
         cardInteractionController.MinionPlayPreview.gameObject.SetActive(false);
         var minionPrefab = cardInteractionController.MinionPrefab;
@@ -481,26 +464,50 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
             if (!RequiresTarget(this.Data))
             {
-                gameManager.ResolveAction(current.action, current.context);
+                _gameManager.ResolveAction(current.action, current.context);
             }
             Destroy(card.gameObject, 2f);
         }
         else if (card.CardType == CardBattleEngine.CardType.Weapon)
         {
-            gameManager.ResolveAction(current.action, current.context);
+            _gameManager.ResolveAction(current.action, current.context);
             Destroy(card.gameObject, 2f);
         }
         else
         {
-            gameManager.ResolveAction(current.action, current.context);
+            _gameManager.ResolveAction(current.action, current.context);
             Destroy(card.gameObject, 2f);
         }
     }
 
+    public bool IsCastRestricted()
+	{
+        if (_gameManager == null)
+		{
+            _gameManager = FindFirstObjectByType<GameManager>();
+        }
+
+        if (!_gameManager.ActivePlayerTurn)
+        {
+            return true;
+        }
+        else if (Data.Owner.Mana < Data.ManaCost)
+        {
+            return true;
+        }
+        else if (
+            Data.CastRestriction != null &&
+            !Data.CastRestriction.CanPlay(_gameManager._gameState, Data.Owner, Data, out string reason))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public bool CanPreviewPlayOverBoard()
     {
-        var gameManager = FindFirstObjectByType<GameManager>();
-        if (!gameManager.ActivePlayerTurn)
+        if (!_gameManager.ActivePlayerTurn)
         {
             _ui.WarnEnemyTurn();
             return false;
@@ -510,15 +517,20 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             _ui.ShowWarningMessage("Not enough Mana");
             return false;
         }
+        else if (
+            Data.CastRestriction != null &&
+            !Data.CastRestriction.CanPlay(_gameManager._gameState, Data.Owner, Data, out string reason))
+        {
+            _ui.ShowWarningMessage(reason);
+            return false;
+        }
 
         return true;
     }
 
     public void PreviewPlayOverBoard(Vector3 mousePos, bool mouseOverBoard)
     {
-        var gameManager = FindFirstObjectByType<GameManager>();
-
-        var player = gameManager.GetPlayerFor(Data.Owner);
+        var player = _gameManager.GetPlayerFor(Data.Owner);
         var minionPlayPreview = FindFirstObjectByType<GameInteractionHandler>().MinionPlayPreview;
         var index = player.Board.Minions
             .Where(x => x)
@@ -547,8 +559,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         Dragging = false;
         CastIndicator.gameObject.SetActive(false);
 
-        var gameManager = FindFirstObjectByType<GameManager>();
-        var player = gameManager.GetPlayerFor(Data.Owner);
+        var player = _gameManager.GetPlayerFor(Data.Owner);
         player.Board.UpdateMinionPositions();
         player.Hand.UpdateCardPositions();
     }

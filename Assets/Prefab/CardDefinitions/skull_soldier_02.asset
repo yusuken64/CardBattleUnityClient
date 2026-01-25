@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: skull_soldier_02
   Sprite: {fileID: 21300000, guid: 4efdc022370bd1241a9011795dce0a9d, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 2
@@ -33,4 +37,6 @@ MonoBehaviour:
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

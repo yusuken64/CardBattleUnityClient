@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: aileen_01
   Sprite: {fileID: 21300000, guid: 2c8fb92718ac38d49930bf882cb885d0, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 2
   Health: 1
@@ -33,4 +37,6 @@ MonoBehaviour:
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

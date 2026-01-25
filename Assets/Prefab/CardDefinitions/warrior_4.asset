@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: warrior_4
   Sprite: {fileID: 21300000, guid: 655ac5c0b932b1c4eb288d2e4d9770f1, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 1
@@ -33,4 +37,6 @@ MonoBehaviour:
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

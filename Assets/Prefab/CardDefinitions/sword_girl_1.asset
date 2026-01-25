@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: sword_girl_1
   Sprite: {fileID: 21300000, guid: 2216c26d04fe20a45acf7aeb19dd6c2d, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: 2140584782446198863
   TriggeredEffects: []
   Attack: 2
   Health: 1
@@ -50,6 +54,11 @@ MonoBehaviour:
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 2
+    - rid: 2140584782446198863
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 0
     - rid: 6533011672544051267
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:

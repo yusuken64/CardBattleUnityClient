@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: snake_of_temptation_2
   Sprite: {fileID: 21300000, guid: a90f3c03e8ed7fb4ea0431816d1548ea, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 1
@@ -29,7 +33,10 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

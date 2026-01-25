@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: chain_warrior_1
   Sprite: {fileID: 21300000, guid: 2d20a5ec4e1975b499aeafe688fe0346, type: 3}
   Cost: 3
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 3
   Health: 3
@@ -29,6 +33,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
@@ -51,11 +56,13 @@ MonoBehaviour:
         Damage:
           rid: 6533011729798922311
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 6533011672544051265
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         Operations:
         - rid: 6533011672544051266
+        ResolutionTiming: 0
     - rid: 6533011672544051266
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:

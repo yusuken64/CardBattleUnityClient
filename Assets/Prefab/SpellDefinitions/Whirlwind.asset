@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: Whirlwind
   Sprite: {fileID: 21300000, guid: b3d2d9b82844bdf4ab0bd3841788a311, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
@@ -29,6 +33,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 867525919145459776
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:

@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: tactician_1
   Sprite: {fileID: 21300000, guid: 9ec61547fadc2134b9d9abbaeb4e8464, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 1
@@ -29,6 +33,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
@@ -49,6 +54,7 @@ MonoBehaviour:
       type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 867525712731439174
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -56,3 +62,4 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        ResolutionTiming: 0

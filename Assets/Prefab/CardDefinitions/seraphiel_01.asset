@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: seraphiel_01
   Sprite: {fileID: 21300000, guid: bd4e4a34bfdffa140813420745cb1c03, type: 3}
   Cost: 8
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 6
   Health: 6
@@ -53,6 +57,7 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        ResolutionTiming: 0
     - rid: 867525924129079370
       type: {class: AcquireWeaponActionWrapper, ns: , asm: Assembly-CSharp}
       data:

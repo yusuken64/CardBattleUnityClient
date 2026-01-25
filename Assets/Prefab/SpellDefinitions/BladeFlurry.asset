@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: BladeFlurry
   Sprite: {fileID: 21300000, guid: b8dc17119fddc6c4389074fe500c8118, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: 2140584782446198891
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
@@ -34,6 +38,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 2140584576991101014
       type: {class: SequentialActionWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -129,3 +135,7 @@ MonoBehaviour:
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
         ResolutionTiming: 0
+    - rid: 2140584782446198891
+      type: {class: WeaponCastRestrictionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0

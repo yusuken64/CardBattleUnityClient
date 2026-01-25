@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: sybila_01
   Sprite: {fileID: 21300000, guid: 1d7d6420555634e4d937efec460daf0d, type: 3}
   Cost: 6
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 4
   Health: 8

@@ -21,6 +21,9 @@ public class WeaponCardDefinition : CardDefinition
 		weapon.SpriteID = ID;
 		weapon.TriggeredEffects.AddRange(WeaponTriggeredEffects.Select(x => x.CreateEffect()));
 
+		weapon.ValidTargetSelector = ValidTargetSelector?.Create();
+		weapon.CastRestriction = CastRestriction?.Create();
+
 		return weapon;
 	}
 }

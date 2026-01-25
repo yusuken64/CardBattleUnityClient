@@ -81,7 +81,7 @@ public static class WrapperGenerator
         new PropertyReplacement
 		{
             OriginalType = typeof(CardBattleEngine.IValidTargetSelector),
-            GenerateField = p => $"    public {typeof(IValidTargetSelectorWrapperBase).FullName} {p.Name};",
+            GenerateField = p => $"    [SerializeReference] public {typeof(IValidTargetSelectorWrapperBase).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
         },
         new PropertyReplacement

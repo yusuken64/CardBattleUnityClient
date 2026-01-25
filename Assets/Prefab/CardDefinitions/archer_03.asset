@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: archer_03
   Sprite: {fileID: 21300000, guid: 39c49d8e411f01c469f792b630be0ea3, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 3
   Health: 2
@@ -29,6 +33,7 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: Knife juggler
     EffectTrigger: 4
@@ -43,12 +48,15 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 6533011647806046268
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Damage:
           rid: 6533011711507038268
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 6533011711507038268
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -65,6 +73,7 @@ MonoBehaviour:
         Operations:
         - rid: 6533011711507038272
         - rid: 6533011711507038273
+        ResolutionTiming: 0
     - rid: 6533011711507038272
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:

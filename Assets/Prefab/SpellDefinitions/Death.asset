@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
+  m_Name: Death
+  m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 1
+  CardName: Death
+  ID: Death
+  Sprite: {fileID: 21300000, guid: 0d560e17aac718f49b3be3600caee8bf, type: 3}
+  Cost: 3
+  CastRestriction:
+    rid: 2140584782446198866
+  ValidTargetSelector:
+    rid: 2140584782446198867
+  TriggeredEffects: []
+  TargetingType: 7
+  SpellCastEffects:
+  - Description: Destroy Minion with 5 or more Attack
+    GameActions:
+    - rid: 2140584782446198871
+    AffectedEntitySelectorWrapper:
+      rid: 2140584782446198870
+  CustomSFX: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2140584782446198866
+      type: {class: ValidTargetRestrictionWrapper, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2140584782446198867
+      type: {class: CombinedTargetSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Left:
+          rid: 2140584782446198868
+        Operation: 0
+        Right:
+          rid: 2140584782446198869
+    - rid: 2140584782446198868
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 2
+    - rid: 2140584782446198869
+      type: {class: StatSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Stat: 1
+        Comparison: 3
+        Value: 5
+    - rid: 2140584782446198870
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 1
+        IncludeSource: 0
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 2140584782446198871
+      type: {class: DeathActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: da05560b47150b6429182ba1ce380bb5, type: 2}

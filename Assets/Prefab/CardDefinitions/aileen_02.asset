@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: aileen_02
   Sprite: {fileID: 21300000, guid: b4885aa188590df438fb6a201df30bc9, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 2
   Health: 2

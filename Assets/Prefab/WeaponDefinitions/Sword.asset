@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: Sword
   Sprite: {fileID: 21300000, guid: b6c2d2f68c807f442b3f8b000a35ec40, type: 3}
   Cost: 4
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   WeaponName: Sword
   Attack: 4
@@ -24,4 +28,6 @@ MonoBehaviour:
   WeaponTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

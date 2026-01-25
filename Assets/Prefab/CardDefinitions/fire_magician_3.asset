@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: fire_magician_3
   Sprite: {fileID: 21300000, guid: 598391d1cb85dab46a5b5cf510ab49b3, type: 3}
   Cost: 8
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 8
   Health: 8
@@ -44,6 +48,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 867525922271264768
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:

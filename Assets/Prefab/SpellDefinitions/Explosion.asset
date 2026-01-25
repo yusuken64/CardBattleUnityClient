@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: Explosion
   Sprite: {fileID: 21300000, guid: e25d5d7b921362e4692ef22e40d39d56, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
@@ -29,6 +33,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 867525919145459776
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:

@@ -17,10 +17,14 @@ MonoBehaviour:
   ID: DeadlyPoison
   Sprite: {fileID: 21300000, guid: ee090193f9632f545a11f09b2a152565, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: 2140584782446198890
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
-  - Description: 
+  - Description: Give your weapon +2/+0
     GameActions:
     - rid: 2140584558364983361
     AffectedEntitySelectorWrapper:
@@ -52,6 +56,10 @@ MonoBehaviour:
       type: {class: SelectWeaponOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Side: 0
+    - rid: 2140584782446198890
+      type: {class: WeaponCastRestrictionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
     - rid: 6533011592832090114
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:

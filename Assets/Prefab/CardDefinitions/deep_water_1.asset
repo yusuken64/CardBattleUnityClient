@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: deep_water_1
   Sprite: {fileID: 21300000, guid: 0de505f4141a67244917ecfa986d69c9, type: 3}
   Cost: 4
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 3
   Health: 6
@@ -44,6 +48,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 6533011672544051271
       type: {class: FreezeActionWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -54,6 +60,7 @@ MonoBehaviour:
       data:
         Operations:
         - rid: 6533011672544051274
+        ResolutionTiming: 0
     - rid: 6533011672544051274
       type: {class: ContextOperationWrapper, ns: , asm: Assembly-CSharp}
       data:

@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: kitty_03
   Sprite: {fileID: 21300000, guid: deebb54375cfa2348b93665d3f80fb57, type: 3}
   Cost: 6
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 6
   Health: 5

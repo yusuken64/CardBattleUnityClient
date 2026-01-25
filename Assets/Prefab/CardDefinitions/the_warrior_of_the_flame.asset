@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: the_warrior_of_the_flame
   Sprite: {fileID: 21300000, guid: fa80981d3b2da9145b0c633a7bcc155e, type: 3}
   Cost: 3
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 2
   Health: 4

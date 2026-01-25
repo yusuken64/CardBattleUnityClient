@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: exorcist_1
   Sprite: {fileID: 21300000, guid: 7518edada618d624fa8dbb31697878ef, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 2

@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: entin_1
   Sprite: {fileID: 21300000, guid: ab32a934efa3e224593668d5980d1323, type: 3}
   Cost: 4
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 4
   Health: 5
@@ -29,7 +33,10 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: AggieDagger
   Sprite: {fileID: 21300000, guid: dd01c4356fc7d414aa497f1cee464a96, type: 3}
   Cost: 5
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   WeaponName: v
   Attack: 3
@@ -24,4 +28,6 @@ MonoBehaviour:
   WeaponTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

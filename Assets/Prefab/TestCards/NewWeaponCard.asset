@@ -12,14 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbc4880184b03d4d946937f43e2faf4, type: 3}
   m_Name: NewWeaponCard
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCardDefinition
+  Collectable: 0
   CardName: TestWeapon
   ID: TestWeapon
   Sprite: {fileID: 21300000, guid: 7d4b95149f02b784a8f279fbe479351e, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
+  TriggeredEffects: []
   WeaponName: TestWeapon
   Attack: 3
   Durability: 2
-  TriggeredEffectWrappers: []
+  WeaponTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

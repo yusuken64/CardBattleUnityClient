@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: Win
   Sprite: {fileID: 21300000, guid: 62a484bbf0c98a0418eb566aabae3ceb, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   WeaponName: Win Axe
   Attack: 3
@@ -24,4 +28,6 @@ MonoBehaviour:
   WeaponTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

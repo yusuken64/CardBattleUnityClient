@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: chloe_01
   Sprite: {fileID: 21300000, guid: 62af6aeec35b91048a6c4643cba3e33a, type: 3}
   Cost: 5
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 5
   Health: 5
@@ -33,4 +37,6 @@ MonoBehaviour:
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

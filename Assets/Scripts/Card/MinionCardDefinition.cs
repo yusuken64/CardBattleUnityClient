@@ -45,6 +45,8 @@ public class MinionCardDefinition : CardDefinition
 
 		try
 		{
+            card.ValidTargetSelector = ValidTargetSelector?.Create();
+            card.CastRestriction = CastRestriction?.Create();
 			card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
 			card.MinionTriggeredEffects.AddRange(MinionTriggeredEffects.Select(x => x.CreateEffect()));
 

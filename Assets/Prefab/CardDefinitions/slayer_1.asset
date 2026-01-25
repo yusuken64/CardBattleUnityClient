@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: slayer_1
   Sprite: {fileID: 21300000, guid: bc14b8645d41a1741bc74a1cebc23346, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 2

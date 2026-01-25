@@ -26,6 +26,9 @@ public class SpellCardDefinition : CardDefinition
         spellCard.Description = string.Join(Environment.NewLine, SpellCastEffects.Select(ToDescription));
         spellCard.CustomSFX = CustomSFX;
 
+        spellCard.ValidTargetSelector = ValidTargetSelector?.Create();
+        spellCard.CastRestriction = CastRestriction?.Create();
+
         return spellCard;
     }
     public string ToDescription(SpellCastEffectWrapper spellCastEffect, int arg2)
