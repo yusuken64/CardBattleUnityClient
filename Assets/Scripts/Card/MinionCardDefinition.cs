@@ -22,7 +22,7 @@ public class MinionCardDefinition : CardDefinition
     public bool HasLifeSteal;
     public bool HasReborn;
     public bool CannotAttack;
-
+    
     public List<TriggeredEffectWrapper> MinionTriggeredEffects = new List<TriggeredEffectWrapper>();
 
     // Creates a runtime MinionCard from this definition

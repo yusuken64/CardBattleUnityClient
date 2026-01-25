@@ -13,6 +13,11 @@ public abstract class CardDefinition : ScriptableObject
 	public int Cost = 1;
 
 	[SerializeReference]
+	public ICastRestrictionWrapperBase CastRestriction;
+	[SerializeReference]
+	public IValidTargetSelectorWrapperBase ValidTargetSelector;
+
+	[SerializeReference]
 	public List<TriggeredEffectWrapper> TriggeredEffects = new List<TriggeredEffectWrapper>();
 
 	public abstract CardBattleEngine.Card CreateCard();

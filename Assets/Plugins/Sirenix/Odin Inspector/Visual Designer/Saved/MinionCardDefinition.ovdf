@@ -57,7 +57,7 @@ Position: $YZ6bgLeuwWupM5XZ4PRK2D:3
 Position: $85xZi2y1YJnyaBSJDK6UZT:2
 
 # TriggeredEffects
-Position: $root:5
+Position: $root:6
 
 # HasWindFury
 Position: $YTgoJejBh7uaWZBzfcgn97:0
@@ -76,3 +76,6 @@ Position: $85xZi2y1YJnyaBSJDK6UZT:0
 
 # CannotAttack
 Position: $XGG13EC3yefb8XbDu7M2Vy:0
+
+# ValidTargetSelector
+Position: $root:5

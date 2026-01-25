@@ -6010,8 +6010,8 @@ MonoBehaviour:
     AttackSound: {fileID: 8300000, guid: 09b2221f5d02242a291ea91b5046b2df, type: 3}
   - MinAttack: 2
     MaxAttack: 3
-    ShakeStrength: 0.16
-    ShakeDuration: 0.22
+    ShakeStrength: 0.1
+    ShakeDuration: 0.18
     AttackSound: {fileID: 8300000, guid: 048c79bf7a6134ae38e7883600c586cf, type: 3}
   - MinAttack: 4
     MaxAttack: 5

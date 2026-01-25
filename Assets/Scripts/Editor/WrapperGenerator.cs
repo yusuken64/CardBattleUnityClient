@@ -14,7 +14,9 @@ public static class WrapperGenerator
         typeof(CardBattleEngine.IGameAction),
         typeof(CardBattleEngine.IAffectedEntitySelector),
         typeof(CardBattleEngine.ITargetOperation),
-        typeof(CardBattleEngine.IValueProvider)
+        typeof(CardBattleEngine.IValueProvider),
+        typeof(CardBattleEngine.ICastRestriction),
+        typeof(CardBattleEngine.IValidTargetSelector)
     };
 
     private static readonly List<PropertyReplacement> PropertyReplacements = new()
@@ -75,6 +77,12 @@ public static class WrapperGenerator
             OriginalType = typeof(CardBattleEngine.Weapon),
             GenerateField = p => $"    public {typeof(WeaponCardDefinition).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = ({p.Name}?.CreateCard() as WeaponCard)?.CreateWeapon();"
+        },
+        new PropertyReplacement
+		{
+            OriginalType = typeof(CardBattleEngine.IValidTargetSelector),
+            GenerateField = p => $"    public {typeof(IValidTargetSelectorWrapperBase).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
         },
         new PropertyReplacement
         {
