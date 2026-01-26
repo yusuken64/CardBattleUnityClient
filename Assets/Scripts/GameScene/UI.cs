@@ -127,14 +127,14 @@ public class UI : MonoBehaviour
 
     internal Color GetColor(int current, int baseValue, int maxValue)
     {
-        if (current > baseValue)
-        {
-            return BuffedTextColor;
-        }
-
         if (current < maxValue)
         {
             return DamagedTextColor;
+        }
+
+        if (current > baseValue)
+        {
+            return BuffedTextColor;
         }
 
         return DefaultTextColor;

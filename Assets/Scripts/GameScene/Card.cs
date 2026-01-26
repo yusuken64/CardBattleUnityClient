@@ -50,11 +50,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     public float rotateSpeed;
     private Minion _pendingMinion;
     public int _pendingIndex;
-	private UI _ui;
-	private GameManager _gameManager;
-	#endregion
+    private UI _ui;
+    private GameManager _gameManager;
+    #endregion
 
-	public CardBattleEngine.IGameEntity Entity => GetData();
+    public CardBattleEngine.IGameEntity Entity => GetData();
 
     private void Start()
     {
@@ -168,16 +168,16 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         //description = Data.CardText;
         DescriptionText.text = description;
 
-		if (_gameManager != null)
-		{
-			var activePlayer = Data.Owner == _gameManager.Player.Data;
-			CanPlayIndicator.gameObject.SetActive(_gameManager.ActivePlayerTurn && activePlayer && CanPlay);
-		}
-		else
-		{
+        if (_gameManager != null)
+        {
+            var activePlayer = Data.Owner == _gameManager.Player.Data;
+            CanPlayIndicator.gameObject.SetActive(_gameManager.ActivePlayerTurn && activePlayer && CanPlay);
+        }
+        else
+        {
             CanPlayIndicator.gameObject.SetActive(false);
         }
-		if (AttackText != null) AttackText.text = Attack.ToString();
+        if (AttackText != null) AttackText.text = Attack.ToString();
         if (HealthText != null) HealthText.text = Health.ToString();
         CostText.text = Cost.ToString();
 
@@ -273,9 +273,9 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     public static bool RequiresTarget(CardBattleEngine.Card data)
     {
         if (data.ValidTargetSelector == null)
-		{
+        {
             return false;
-		}
+        }
 
         var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(data.Owner);
@@ -384,50 +384,19 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         PlayCardAction action = null;
         ActionContext context = null;
         var card = this;
-        if (card.CardType == CardBattleEngine.CardType.Minion)
+
+        action = new CardBattleEngine.PlayCardAction()
         {
-            if (RequiresTarget(this.Data))
-            {
-                //CardInteractionController.StartAiming(newMinion.transform);
-            }
-            else
-            {
-                action = new CardBattleEngine.PlayCardAction()
-                {
-                    Card = card.Data,
-                };
-                context = new CardBattleEngine.ActionContext()
-                {
-                    SourcePlayer = player.Data,
-                    PlayIndex = index
-                };
-            }
-        }
-        else if (card.CardType == CardBattleEngine.CardType.Weapon)
+            Card = card.Data,
+        };
+        context = new CardBattleEngine.ActionContext()
         {
-            action = new CardBattleEngine.PlayCardAction()
-            {
-                Card = card.Data,
-            };
-            context = new CardBattleEngine.ActionContext()
-            {
-                SourcePlayer = player.Data,
-                PlayIndex = index,
-                Target = player.Data
-            };
-        }
-        else
-        {
-            action = new CardBattleEngine.PlayCardAction()
-            {
-                Card = card.Data,
-            };
-            context = new CardBattleEngine.ActionContext()
-            {
-                SourcePlayer = player.Data,
-                PlayIndex = index
-            };
-        }
+            SourcePlayer = player.Data,
+            PlayIndex = index,
+            Source = player.Data,
+            SourceCard = card.Data,
+        };
+
         current = (action, context);
         return _gameManager.CheckIsValid(action, context, out reason);
     }

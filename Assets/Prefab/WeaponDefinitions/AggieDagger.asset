@@ -22,7 +22,7 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  WeaponName: v
+  WeaponName: AggieDagger
   Attack: 3
   Durability: 4
   WeaponTriggeredEffects: []

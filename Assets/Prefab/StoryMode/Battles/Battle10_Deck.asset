@@ -15,33 +15,32 @@ MonoBehaviour:
   Title: Level10 Deck
   HeroCard: {fileID: 11400000, guid: bfb5008dd25c447489abd4d34cfedea2, type: 2}
   Cards:
-  - {fileID: 11400000, guid: 14acbd6229b78f242bcb531a09cbe286, type: 2}
   - {fileID: 11400000, guid: fa7f6848699ec1540ab21e18ef75fd4b, type: 2}
-  - {fileID: 11400000, guid: 68897f92ba9f4ee41a73e6ef37f34679, type: 2}
-  - {fileID: 11400000, guid: c38580a8e8bfe0a4082a0b24ad6851b9, type: 2}
-  - {fileID: 11400000, guid: 4122a11671b88704c8d5f6921f66c27c, type: 2}
   - {fileID: 11400000, guid: 29fb3f28dd4ae2f42b74d7f179906595, type: 2}
-  - {fileID: 11400000, guid: 5eff3b7d555e8b543a7c81157843181e, type: 2}
   - {fileID: 11400000, guid: 29fb3f28dd4ae2f42b74d7f179906595, type: 2}
-  - {fileID: 11400000, guid: 9e791f2753082d0479c8957f3e90b0b8, type: 2}
+  - {fileID: 11400000, guid: 42ccf2f5a716cea47af28ff3dc9ada5a, type: 2}
+  - {fileID: 11400000, guid: 42ccf2f5a716cea47af28ff3dc9ada5a, type: 2}
   - {fileID: 11400000, guid: 9fc27ac11f4da0b4289d57f315fc5f40, type: 2}
-  - {fileID: 11400000, guid: 58eb135ae85e23f4ca68e14667acac7b, type: 2}
-  - {fileID: 11400000, guid: 76db7e6340ae4c84cb9981a72fa05c16, type: 2}
-  - {fileID: 11400000, guid: 9e791f2753082d0479c8957f3e90b0b8, type: 2}
-  - {fileID: 11400000, guid: 962d514673ff2294dade3adf3bda983c, type: 2}
-  - {fileID: 11400000, guid: 6668746a80b9adf44a10190ac074b684, type: 2}
-  - {fileID: 11400000, guid: 60684215ca70d5b4ca57af45e3bf49c5, type: 2}
   - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
-  - {fileID: 11400000, guid: 1ffdd72eda4cab24c8fd86318c68862e, type: 2}
+  - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
+  - {fileID: 11400000, guid: c38580a8e8bfe0a4082a0b24ad6851b9, type: 2}
   - {fileID: 11400000, guid: 85cc56d8f19d72747b0215b77571da13, type: 2}
-  - {fileID: 11400000, guid: 42ccf2f5a716cea47af28ff3dc9ada5a, type: 2}
-  - {fileID: 11400000, guid: d0d526ca8b6101c49b6101f19f662845, type: 2}
-  - {fileID: 11400000, guid: 39134ca7c0407f64ebe835f7eeb34714, type: 2}
-  - {fileID: 11400000, guid: b5144268bcabb084fb5dfc70865ebde0, type: 2}
-  - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
-  - {fileID: 11400000, guid: f75bba3d54f903a44b57ce3c1f9f7ebc, type: 2}
-  - {fileID: 11400000, guid: 39134ca7c0407f64ebe835f7eeb34714, type: 2}
-  - {fileID: 11400000, guid: 39134ca7c0407f64ebe835f7eeb34714, type: 2}
-  - {fileID: 11400000, guid: 3ccf6f06c6114e349a7ea55d2ac5b444, type: 2}
   - {fileID: 11400000, guid: 6e057e1a74d62a345955a555233161b1, type: 2}
-  - {fileID: 11400000, guid: 42ccf2f5a716cea47af28ff3dc9ada5a, type: 2}
+  - {fileID: 11400000, guid: 39134ca7c0407f64ebe835f7eeb34714, type: 2}
+  - {fileID: 11400000, guid: 39134ca7c0407f64ebe835f7eeb34714, type: 2}
+  - {fileID: 11400000, guid: 39134ca7c0407f64ebe835f7eeb34714, type: 2}
+  - {fileID: 11400000, guid: 58eb135ae85e23f4ca68e14667acac7b, type: 2}
+  - {fileID: 11400000, guid: 68897f92ba9f4ee41a73e6ef37f34679, type: 2}
+  - {fileID: 11400000, guid: d0d526ca8b6101c49b6101f19f662845, type: 2}
+  - {fileID: 11400000, guid: 5eff3b7d555e8b543a7c81157843181e, type: 2}
+  - {fileID: 11400000, guid: b5144268bcabb084fb5dfc70865ebde0, type: 2}
+  - {fileID: 11400000, guid: f75bba3d54f903a44b57ce3c1f9f7ebc, type: 2}
+  - {fileID: 11400000, guid: 9e791f2753082d0479c8957f3e90b0b8, type: 2}
+  - {fileID: 11400000, guid: 9e791f2753082d0479c8957f3e90b0b8, type: 2}
+  - {fileID: 11400000, guid: 14acbd6229b78f242bcb531a09cbe286, type: 2}
+  - {fileID: 11400000, guid: 6668746a80b9adf44a10190ac074b684, type: 2}
+  - {fileID: 11400000, guid: 4122a11671b88704c8d5f6921f66c27c, type: 2}
+  - {fileID: 11400000, guid: 1ffdd72eda4cab24c8fd86318c68862e, type: 2}
+  - {fileID: 11400000, guid: 3ccf6f06c6114e349a7ea55d2ac5b444, type: 2}
+  - {fileID: 11400000, guid: 962d514673ff2294dade3adf3bda983c, type: 2}
+  - {fileID: 11400000, guid: 76db7e6340ae4c84cb9981a72fa05c16, type: 2}

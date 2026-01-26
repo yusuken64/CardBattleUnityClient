@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: manticore
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Manticore
   ID: manticore
   Sprite: {fileID: 21300000, guid: b47b0d7dfa5ffa046a693722362c2770, type: 3}
-  Cost: 1
+  Cost: 8
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 7
+  Health: 7
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -34,9 +34,47 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 12
+    EffectTiming: 1
+    GameActions:
+    - rid: 2140584803152167075
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 2140584803152167074
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2140584803152167074
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 1
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        ResolutionTiming: 0
+    - rid: 2140584803152167075
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: 2140584803152167076
+        HealthChange:
+          rid: 2140584803152167077
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584803152167076
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 2140584803152167077
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1

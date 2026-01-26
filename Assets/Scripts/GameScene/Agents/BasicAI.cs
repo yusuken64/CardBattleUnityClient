@@ -51,6 +51,16 @@ public class BasicAI : IGameAgent
 			return;
 		}
 
+		if (playCardAction.Card is WeaponCard weaponCard)
+		{
+			context = new CardBattleEngine.ActionContext()
+			{
+				SourcePlayer = context.SourcePlayer,
+				Target = context.SourcePlayer
+			};
+			return;
+		}
+
 		card = playCardAction.Card;
 		context.Source = card;
 

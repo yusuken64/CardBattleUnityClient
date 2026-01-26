@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: tactician_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: tactician 2
   ID: tactician_2
   Sprite: {fileID: 21300000, guid: 39d0321c80fe1b54384869d1c2c9a3ba, type: 3}
-  Cost: 1
+  Cost: 6
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 4
+  Health: 4
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -34,9 +34,50 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: When you cast a spell draw a card
+    EffectTrigger: 14
+    EffectTiming: 1
+    GameActions:
+    - rid: 2140584803152167036
+    Condition:
+      rid: 2140584803152167029
+    AffectedEntitySelectorWrapper:
+      rid: 2140584803152167030
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2140584803152167029
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+        SourceType: 0
+    - rid: 2140584803152167030
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584803152167033
+        - rid: 2140584803152167034
+        ResolutionTiming: 1
+    - rid: 2140584803152167033
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 1
+        Group: 2
+        ExcludeSelf: 0
+    - rid: 2140584803152167034
+      type: {class: RandomOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Count:
+          rid: 2140584803152167035
+    - rid: 2140584803152167035
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 2140584803152167036
+      type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Canceled: 0
+        CustomSFX: {fileID: 0}

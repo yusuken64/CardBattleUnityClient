@@ -100,6 +100,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         RefreshData();
 	}
 
+    [ContextMenu("UpdateUI")]
 	public void UpdateUI()
 	{
         if (!this) return;
@@ -163,6 +164,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
         Attack = data.Attack;
         Health = data.Health;
+        MaxHealth = data.MaxHealth;
         CanAttack = data.CanAttack();
         HasDivineShield = data.HasDivineShield;
         HasTaunt = data.Taunt;
@@ -188,6 +190,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
         Attack = data.Attack;
         Health = data.Health;
+        MaxHealth = data.MaxHealth;
         CanAttack = data.CanAttack();
         HasDivineShield = data.HasDivineShield;
         HasTaunt = data.Taunt;

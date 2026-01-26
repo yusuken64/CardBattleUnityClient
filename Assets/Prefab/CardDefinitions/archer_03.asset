@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: Knife juggler
     EffectTrigger: 4
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 6533011647806046268
     Condition:
@@ -56,7 +55,7 @@ MonoBehaviour:
         Damage:
           rid: 6533011711507038268
         Canceled: 0
-        CustomSFX: {fileID: 0}
+        CustomSFX: {fileID: 11400000, guid: 2b6fbdafdda49d945872600b09d4c3be, type: 2}
     - rid: 6533011711507038268
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:

@@ -22,21 +22,53 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 5
-  Health: 5
+  Attack: 4
+  Health: 4
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
-  HasDivineShield: 1
+  HasDivineShield: 0
   HasTaunt: 1
   HasPoisonous: 0
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 2
+    EffectTiming: 1
+    GameActions:
+    - rid: 2140584803152167063
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 2140584803152167065
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2140584803152167063
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 2140584803152167064
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584803152167064
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
+    - rid: 2140584803152167065
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584803152167066
+        ResolutionTiming: 0
+    - rid: 2140584803152167066
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 2
+        Group: 2
+        ExcludeSelf: 0
