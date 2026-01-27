@@ -4506,6 +4506,7 @@ Transform:
   - {fileID: 181613471}
   - {fileID: 704603125}
   - {fileID: 1738033817}
+  - {fileID: 2009112250}
   m_Father: {fileID: 1153458583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &984708922
@@ -4547,6 +4548,7 @@ MonoBehaviour:
   - {fileID: 181613472}
   - {fileID: 704603126}
   - {fileID: 1738033818}
+  - {fileID: 2009112251}
 --- !u!1 &1045255049
 GameObject:
   m_ObjectHideFlags: 0
@@ -5076,8 +5078,8 @@ MonoBehaviour:
   Player: {fileID: 1280333541}
   Opponent: {fileID: 568661103}
   AnimationQueue: {fileID: 984708922}
-  TestDeck: {fileID: 11400000, guid: c9252af192c208f4dafff57811201e70, type: 2}
-  EnemyTestDeck: {fileID: 11400000, guid: fc752d3c539bcd24c88a4363301258b0, type: 2}
+  TestDeck: {fileID: 11400000, guid: 01dd0ba828e31d940b9a2108460aa802, type: 2}
+  EnemyTestDeck: {fileID: 11400000, guid: 01dd0ba828e31d940b9a2108460aa802, type: 2}
   UseSeed: 1
   RandomSeed: 0
   BattleIntro: {fileID: 1320670705}
@@ -7560,6 +7562,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 363cfcfb37569eb428811f26be6c993c, type: 3}
+--- !u!1 &2009112249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2009112250}
+  - component: {fileID: 2009112251}
+  m_Layer: 0
+  m_Name: ChangeKeywordAnimation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2009112250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009112249}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 984708921}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2009112251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009112249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12d147fbda2e9042afefd2e848827f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChangeKeywordAnimation
 --- !u!1 &2033462270
 GameObject:
   m_ObjectHideFlags: 0

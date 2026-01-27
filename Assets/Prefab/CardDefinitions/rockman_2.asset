@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: rockman_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: rockman 2
   ID: rockman_2
   Sprite: {fileID: 21300000, guid: 3333d9e4b4c5ceb42aa95e3a66d088c4, type: 3}
-  Cost: 1
+  Cost: 4
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 2
+  Health: 3
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -34,9 +34,65 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: Battlecry give adjacent minion Taunt and +1/+1
+    EffectTrigger: 1
+    EffectTiming: 1
+    GameActions:
+    - rid: 2140584809053814889
+    - rid: 2140584809053814893
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 2140584809053814890
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2140584809053814889
+      type: {class: ChangeKeywordActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        ChangeType: 0
+        Keyword: 256
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 4b75bf6cdc1933b41864eaaa8ef9e20a, type: 2}
+    - rid: 2140584809053814890
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 2140584809053814891
+        - rid: 2140584809053814892
+        ResolutionTiming: 0
+    - rid: 2140584809053814891
+      type: {class: ContextOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSummonedMinion: 1
+    - rid: 2140584809053814892
+      type: {class: AdjacentOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        UsePlayIndexInstead: 1
+        IncludeCenter: 0
+    - rid: 2140584809053814893
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        AttackChange:
+          rid: 2140584809053814894
+        HealthChange:
+          rid: 2140584809053814895
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 2140584809053814894
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 2140584809053814895
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1

@@ -13,24 +13,17 @@ MonoBehaviour:
   m_Name: TestDeck 4
   m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
   Title: TestDeck
-  HeroCard: {fileID: 11400000, guid: 432e35414a26a5c45a69345bd91327f9, type: 2}
+  HeroCard: {fileID: 11400000, guid: 49ecf7bd70558bb48be7b0a180c294ac, type: 2}
   Cards:
-  - {fileID: 11400000, guid: 4ada559b766c7ca489dd2d36dd14f2bf, type: 2}
-  - {fileID: 11400000, guid: e2bbdc79357dc5e42aa8f371756f9e7a, type: 2}
-  - {fileID: 11400000, guid: e2bbdc79357dc5e42aa8f371756f9e7a, type: 2}
-  - {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}
-  - {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}
-  - {fileID: 11400000, guid: 274869e1769f146448a4bcf59ae0028b, type: 2}
-  - {fileID: 11400000, guid: 274869e1769f146448a4bcf59ae0028b, type: 2}
-  - {fileID: 11400000, guid: 5398ac78c913a6744b9b4fb1fb0b7b71, type: 2}
-  - {fileID: 11400000, guid: 5398ac78c913a6744b9b4fb1fb0b7b71, type: 2}
-  - {fileID: 11400000, guid: 7a83d7686970c154da23205eff8e30c1, type: 2}
-  - {fileID: 11400000, guid: 7a83d7686970c154da23205eff8e30c1, type: 2}
-  - {fileID: 11400000, guid: 415a46ba368370545b0fe143c3c8f0a7, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
-  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
-  - {fileID: 11400000, guid: e44a5ab3b96511f419352cf483da626c, type: 2}
-  - {fileID: 11400000, guid: e44a5ab3b96511f419352cf483da626c, type: 2}
+  - {fileID: 11400000, guid: 49ecf7bd70558bb48be7b0a180c294ac, type: 2}
+  - {fileID: 11400000, guid: 49ecf7bd70558bb48be7b0a180c294ac, type: 2}
+  - {fileID: 11400000, guid: 49ecf7bd70558bb48be7b0a180c294ac, type: 2}
+  - {fileID: 11400000, guid: 49ecf7bd70558bb48be7b0a180c294ac, type: 2}
+  - {fileID: 11400000, guid: 49ecf7bd70558bb48be7b0a180c294ac, type: 2}
+  - {fileID: 11400000, guid: e15b748f9c33b8647af2b6a6658668a2, type: 2}
+  - {fileID: 11400000, guid: e15b748f9c33b8647af2b6a6658668a2, type: 2}
+  - {fileID: 11400000, guid: e15b748f9c33b8647af2b6a6658668a2, type: 2}
+  - {fileID: 11400000, guid: 72654caad3c75be4b88a3b97303d28d6, type: 2}
+  - {fileID: 11400000, guid: 765e4fe2ec2ba0b48819408381995ee5, type: 2}
+  - {fileID: 11400000, guid: 765e4fe2ec2ba0b48819408381995ee5, type: 2}
+  - {fileID: 11400000, guid: 765e4fe2ec2ba0b48819408381995ee5, type: 2}

@@ -16,14 +16,14 @@ MonoBehaviour:
   CardName: Shaolin monk 1
   ID: shaolin_monk_1
   Sprite: {fileID: 21300000, guid: f210db37b744b0749be5608a728cdc0e, type: 3}
-  Cost: 1
+  Cost: 2
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 2
+  Health: 2
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0

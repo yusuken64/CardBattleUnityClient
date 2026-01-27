@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: orc_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Orc 01
   ID: orc_01
   Sprite: {fileID: 21300000, guid: f1db248f9becdb54096032184969614f, type: 3}
-  Cost: 1
+  Cost: 2
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 2
+  Health: 2
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
-  HasTaunt: 0
+  HasTaunt: 1
   HasPoisonous: 0
   HasWindFury: 0
   HasLifeSteal: 0
