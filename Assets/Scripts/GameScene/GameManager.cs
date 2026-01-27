@@ -188,6 +188,19 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
+		if (entity is CardBattleEngine.Card card)
+		{
+			var allCards = new List<Card>();
+			allCards.AddRange(Player.Hand.Cards);
+			allCards.AddRange(Opponent.Hand.Cards);
+
+			var first = allCards.FirstOrDefault(x => x.Data.Id == card.Id);
+			if (first != null)
+			{
+				return first.gameObject;
+			}
+		}
+
 		//Debug.LogError($"Source for {entity} {entity.Id} invalid");
 		return null;
 	}

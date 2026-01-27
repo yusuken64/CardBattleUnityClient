@@ -50,6 +50,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     public float rotateSpeed;
     private Minion _pendingMinion;
     public int _pendingIndex;
+    public int _originalHandIndex;
     private UI _ui;
     private GameManager _gameManager;
     #endregion
@@ -290,6 +291,9 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         animator.Play("CardCast", 0, 0f);
 
         var player = _gameManager.GetPlayerFor(this.Data.Owner);
+        var card = _gameManager.GetObjectFor(this.Data).GetComponent<Card>();
+        _originalHandIndex = player.Hand.Cards.IndexOf(card);
+
         if (this.Data is MinionCard minionCard)
         {
             //summon pending minion
@@ -360,6 +364,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
         Dragging = false;
         player.Board.UpdateMinionPositions();
+        //player.Hand.Cards.Insert(_originalHandIndex, this);
         player.Hand.UpdateCardPositions();
         this.transform.localPosition = this.TargetPosition;
 
