@@ -128,11 +128,13 @@ Lives: {adventureSaveData.Lives}";
 
 		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
 		gameSaveData.AdventureSaveData.CurrentDeck = DeckSaveData.FromDeck(DeckViewer.GetDeck());
-		gameSaveData.CombatDeck = gameSaveData.AdventureSaveData.CurrentDeck;
-		gameSaveData.CombatDeckEnemy = GenerateEnemyDeck();
 		GameManager.ReturnScreenName = "Arena";
 		Common.Instance.SaveManager.Save();
 
+		GameStartParams gameStartParams = new();
+		gameStartParams.CombatDeck = gameSaveData.AdventureSaveData.CurrentDeck.ToDeck();
+		gameStartParams.CombatDeckEnemy = GenerateEnemyDeck().ToDeck();
+		GameManager.GameStartParams = gameStartParams;
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
 			SceneManager.LoadScene("GameScene");

@@ -63,7 +63,6 @@ public class SaveManager : MonoBehaviour
 		{
 			var startingDeck = Common.Instance.StartingDeck;
 			SaveData.GameSaveData.DeckSaveDatas.Add(startingDeck.ToDeckData());
-			SaveData.GameSaveData.CurrentDeckIndex = 0;
 
 			foreach (var card in startingDeck.Cards)
 			{

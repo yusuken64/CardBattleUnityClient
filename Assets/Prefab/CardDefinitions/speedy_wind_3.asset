@@ -36,8 +36,8 @@ MonoBehaviour:
   CannotAttack: 0
   MinionTriggeredEffects:
   - Description: Give friendly minion Windfury
-    EffectTrigger: 0
-    EffectTiming: 0
+    EffectTrigger: 1
+    EffectTiming: 1
     GameActions:
     - rid: 2140584809053814904
     Condition:

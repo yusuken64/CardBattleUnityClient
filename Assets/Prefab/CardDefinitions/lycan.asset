@@ -38,13 +38,12 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 2
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867526235581054982
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
-      rid: -2
+      rid: 2140584827133362247
   references:
     version: 2
     RefIds:
@@ -57,3 +56,12 @@ MonoBehaviour:
         IndexOffset: 0
         Canceled: 0
         CustomSFX: {fileID: 0}
+    - rid: 2140584827133362247
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 1
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
+        ResolutionTiming: 0

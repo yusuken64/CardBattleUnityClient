@@ -46,11 +46,10 @@ public class GameManager : MonoBehaviour
 		_engine = new GameEngine();
 
 		Deck deck;
-		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
-		if (gameSaveData.CombatDeck != null)
+		if (GameStartParams?.CombatDeck != null)
 		{
-			deck = gameSaveData.CombatDeck.ToDeck();
-			gameSaveData.CombatDeck = null;
+			deck = GameStartParams.CombatDeck;
+			GameStartParams.CombatDeck = null;
 		}
 		else
 		{
@@ -58,11 +57,11 @@ public class GameManager : MonoBehaviour
 		}
 
 		Deck enemyDeck;
-		if (gameSaveData.CombatDeckEnemy != null &&
-			gameSaveData.CombatDeckEnemy.CardIDs.Any())
+		if (GameStartParams?.CombatDeckEnemy != null &&
+			GameStartParams.CombatDeckEnemy.Cards.Any())
 		{
-			enemyDeck = gameSaveData.CombatDeckEnemy.ToDeck();
-			gameSaveData.CombatDeckEnemy = null;
+			enemyDeck = GameStartParams.CombatDeckEnemy;
+			GameStartParams.CombatDeckEnemy = null;
 		}
 		else
 		{
@@ -368,6 +367,9 @@ public class GameStartParams
 	public int InitialCards = 3;
 
 	public List<TriggeredEffectWrapper> OpponentExtraEffects;
+
+	public Deck CombatDeck;
+	public Deck CombatDeckEnemy;
 }
 
 internal class UnityRNG : IRNG

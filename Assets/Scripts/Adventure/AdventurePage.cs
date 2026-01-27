@@ -66,10 +66,11 @@ public class AdventurePage : MonoBehaviour
 		DeckSaveData deckSaveData = DeckSaveData.FromDeck(DeckViewer.GetDeck());
 		Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = deckSaveData;
 
-		Common.Instance.SaveManager.SaveData.GameSaveData.CombatDeck = deckSaveData;
-		Common.Instance.SaveManager.SaveData.GameSaveData.CombatDeckEnemy = 
-			DeckSaveData.FromDeck(Common.Instance.CardManager.AdventureStartDeck.ToDeck());
-
+		GameStartParams gameStartParams = new();
+		GameManager.GameStartParams = gameStartParams;
+		//gameStartParams.CombatDeck = deckSaveData;
+		//gameStartParams.CombatDeckEnemy = 
+		//	DeckSaveData.FromDeck(Common.Instance.CardManager.AdventureStartDeck.ToDeck());
 		GameManager.ReturnScreenName = "Adventure";
 		SceneManager.LoadScene("GameScene");
 	}

@@ -29,8 +29,11 @@ public class BattlePreview : MonoBehaviour
 		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
 
 		DeckSaveData firstDeck = gameSaveData.DeckSaveDatas[0];
-		gameSaveData.CombatDeck = firstDeck;
-		gameSaveData.CombatDeckEnemy = _data.Deck.ToDeckData();
+		GameStartParams gameStartParams = new();
+		gameStartParams.CombatDeck = firstDeck.ToDeck();
+		gameStartParams.CombatDeckEnemy = _data.Deck.ToDeck();
+		GameManager.GameStartParams = gameStartParams;
+
 		var levelId = _data.LevelID;
 
 		var activeEffects = Rondel.GetActiveEffects();

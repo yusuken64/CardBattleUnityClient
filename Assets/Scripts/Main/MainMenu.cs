@@ -33,9 +33,6 @@ public class MainMenu : MonoBehaviour
 
 	public void Play_Click()
 	{
-		DeckSaveData firstDeck = Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas[0];
-		Common.Instance.SaveManager.SaveData.GameSaveData.CombatDeck = firstDeck;
-
 		if (ShouldRunTutorial())
 		{
 			Common.Instance.SceneTransition.DoTransition(LoadGameWithTutorial);
@@ -56,13 +53,6 @@ public class MainMenu : MonoBehaviour
 
 	private IEnumerator LoadGameWithTutorial()
 	{
-		GameManager.GameStartParams = new()
-		{
-			BlockStart = true,
-			SkipMulligan = true,
-			SkipShuffle = true,
-			InitialCards = 0
-		};
 		GameManager.GameResultRoutine = GameResult;
 
 		IEnumerator GameResult(bool isWin)
@@ -75,9 +65,16 @@ public class MainMenu : MonoBehaviour
 			yield return null;
 		}
 
-		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
-		gameSaveData.CombatDeck = TutorialPlayerDeck.ToDeckData();
-		gameSaveData.CombatDeckEnemy = TutorialOpponentDeck.ToDeckData();
+		GameStartParams gameStartParams = new()
+		{
+			BlockStart = true,
+			SkipMulligan = true,
+			SkipShuffle = true,
+			InitialCards = 0
+		};
+		gameStartParams.CombatDeck = TutorialPlayerDeck.ToDeckData().ToDeck();
+		gameStartParams.CombatDeckEnemy = TutorialOpponentDeck.ToDeckData().ToDeck(); ;
+		GameManager.GameStartParams = gameStartParams;
 
 		yield return SceneManager.LoadSceneAsync(
 			"GameScene",

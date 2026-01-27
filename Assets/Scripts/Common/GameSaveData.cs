@@ -38,7 +38,6 @@ public class TutorialSaveData
 [Serializable]
 public class GameSaveData
 {
-	public int CurrentDeckIndex = -1;
 	[SerializeReference]
 	public List<DeckSaveData> DeckSaveDatas = new();
 
@@ -47,10 +46,6 @@ public class GameSaveData
 
 	[SerializeReference]
 	public AdventureSaveData AdventureSaveData = new();
-
-	[SerializeReference]
-	public DeckSaveData CombatDeck;
-	public DeckSaveData CombatDeckEnemy;
 
 	public CardCollection CardCollection = new();
 

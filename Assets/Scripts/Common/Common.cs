@@ -10,6 +10,7 @@ public class Common : MonoBehaviour
 	public SaveManager SaveManager;
 	public AudioManager AudioManager;
 	public GlobalSettings GlobalSettings;
+	public VideoSettingsManager VideoSettingsManager;
 	public SceneTransition SceneTransition;
 
 	public DeckDefinition StartingDeck;
@@ -39,6 +40,8 @@ public class Common : MonoBehaviour
 		Debug.Log("AudioManager Initializing");
 		AudioManager.ApplicationInitialized(SaveManager.SaveData);
 		Debug.Log("AudioManager Initialized");
+
+		VideoSettingsManager.InitializeVideo();
 	}
 }
 

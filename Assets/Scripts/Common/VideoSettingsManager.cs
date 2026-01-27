@@ -51,10 +51,67 @@ public class VideoSettingsManager : MonoBehaviour
 
 		PopulateResolutionOptions();
 		PopulateDisplayModes();
-		LoadSettings();
+		InitializeVideo();
 
 		resolutionDropdown.onValueChanged.AddListener(Changed);
 		displayModeDropdown.onValueChanged.AddListener(Changed);
+	}
+
+	public void InitializeVideo()
+	{
+		if (HasSavedSettings())
+		{
+			LoadSettings(false);              // UI + Screen reflect player choice
+		}
+		else
+		{
+			DetectCurrentSystemState();  // UI reflects OS state
+		}
+	}
+
+	bool HasSavedSettings()
+	{
+		return PlayerPrefs.HasKey("ResolutionIndex") &&
+			   PlayerPrefs.HasKey("DisplayMode");
+	}
+
+	void DetectCurrentSystemState()
+	{
+		// Match current resolution
+		int resIndex = System.Array.FindIndex(
+			availableResolutions,
+			r => r.width == Screen.width &&
+				 r.height == Screen.height &&
+				 r.refreshRate == Screen.currentResolution.refreshRate
+		);
+
+		if (resIndex < 0)
+		{
+			// Fallback: match by width/height only
+			resIndex = System.Array.FindIndex(
+				availableResolutions,
+				r => r.width == Screen.width && r.height == Screen.height
+			);
+		}
+
+		if (resIndex < 0)
+			resIndex = 0;
+
+		resolutionDropdown.SetValueWithoutNotify(resIndex);
+
+		// Match fullscreen mode
+		int modeIndex = Screen.fullScreenMode switch
+		{
+			FullScreenMode.ExclusiveFullScreen => 0,
+			FullScreenMode.Windowed => 1,
+			FullScreenMode.FullScreenWindow => 2,
+			_ => 0
+		};
+
+		displayModeDropdown.SetValueWithoutNotify(modeIndex);
+
+		resolutionDropdown.RefreshShownValue();
+		displayModeDropdown.RefreshShownValue();
 	}
 
 	void PopulateResolutionOptions()
@@ -157,7 +214,7 @@ public class VideoSettingsManager : MonoBehaviour
 		PlayerPrefs.Save();
 	}
 
-	public void LoadSettings()
+	public void LoadSettings(bool applySettings = true)
 	{
 		if (!PlayerPrefs.HasKey("ResolutionIndex") || !PlayerPrefs.HasKey("DisplayMode"))
 		{
@@ -171,7 +228,10 @@ public class VideoSettingsManager : MonoBehaviour
 		resolutionDropdown.value = resIndex;
 		displayModeDropdown.value = modeIndex;
 
-		ApplySettings();
+		if (applySettings)
+		{
+			ApplySettings();
+		}
 	}
 
 	public void ResetToDefaults()
