@@ -459,6 +459,10 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         if (_gameManager == null)
 		{
             _gameManager = FindFirstObjectByType<GameManager>();
+            if (_gameManager == null)
+			{
+                return true;
+			}
         }
 
         if (!_gameManager.ActivePlayerTurn)

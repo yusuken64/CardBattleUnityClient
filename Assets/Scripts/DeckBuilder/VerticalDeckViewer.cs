@@ -55,7 +55,7 @@ public class VerticalDeckViewer : MonoBehaviour
     public void AddCardToDeck(CardDefinition cardDefinition, bool isHero)
     {
         var newDeckItem = Instantiate(DeckItemPrefab, VerticalContainer);
-        newDeckItem.Setup(cardDefinition, CardClicked, SetCardAsHero);
+        newDeckItem.Setup(cardDefinition, CardClicked, CardRightClicked, SetCardAsHero);
 
         if (_spawnedCards.Count == 0 || isHero)
         {
@@ -72,7 +72,7 @@ public class VerticalDeckViewer : MonoBehaviour
         SortAndReorder();
     }
 
-    private void SortAndReorder()
+	private void SortAndReorder()
     {
         // Sort by ManaCost then Name
         _spawnedCards.Sort((a, b) =>
@@ -105,6 +105,10 @@ public class VerticalDeckViewer : MonoBehaviour
 
     public void CardClicked(DeckCard deckCard)
     {
+    }
+
+    private void CardRightClicked(DeckCard deckCard)
+    {
         if (deckCard == null)
             return;
 
@@ -116,6 +120,24 @@ public class VerticalDeckViewer : MonoBehaviour
                 SortAndReorder();
             }
         }
+
+        GetDeck();
+        DeckChanged?.Invoke(editingDeck);
+    }
+
+    internal void RemoveCardFromDeck(CardDefinition cardDefinition)
+    {
+        var deckCard = _spawnedCards.FirstOrDefault(x => x.CardDefinition == cardDefinition);
+        if (RemoveCardOnClick &&
+            deckCard != null)
+        {
+            if (_spawnedCards.Remove(deckCard))
+            {
+                Destroy(deckCard.gameObject);
+                SortAndReorder();
+            }
+        }
+
         GetDeck();
         DeckChanged?.Invoke(editingDeck);
     }

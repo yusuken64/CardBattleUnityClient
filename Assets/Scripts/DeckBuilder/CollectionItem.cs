@@ -2,8 +2,10 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CollectionItem : MonoBehaviour, IClickable, IHoverable
+public class CollectionItem : MonoBehaviour, IClickable, IHoverable,
+	IPointerClickHandler
 {
 	public Card Card;
 	public CardDefinition CardDefinition;
@@ -43,8 +45,38 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 		}
 		Card.Setup(cardData);
 	}
+	
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		if (eventData.button == PointerEventData.InputButton.Left)
+		{
+			AddToDeck();
+		}
+		else if (eventData.button == PointerEventData.InputButton.Right)
+		{
+			RemoveFromDeck();
+		}
+	}
+
+	private void RemoveFromDeck()
+	{
+		var verticalDeckViewer = FindFirstObjectByType<VerticalDeckViewer>();
+		if (verticalDeckViewer == null) { return; }
+
+		var deck = verticalDeckViewer.GetDeck();
+		var usedCount = deck.Cards.Count(x => x.ID == CardDefinition.ID);
+		if (usedCount > 0)
+		{
+			verticalDeckViewer?.RemoveCardFromDeck(CardDefinition);
+		}
+	}
 
 	public void OnClick()
+	{
+		AddToDeck();
+	}
+
+	private void AddToDeck()
 	{
 		var verticalDeckViewer = FindFirstObjectByType<VerticalDeckViewer>();
 		if (verticalDeckViewer == null) { return; }

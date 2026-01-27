@@ -9,25 +9,30 @@ public class DeckCard : MonoBehaviour,
 	IPointerExitHandler,
 	IBeginDragHandler,
 	IDragHandler,
-	IEndDragHandler
+	IEndDragHandler,
+	IPointerClickHandler
 {
 	public TextMeshProUGUI ManaText;
 	public TextMeshProUGUI NameText;
 	public Image CardImage;
 
 	public CardDefinition CardDefinition;
-	public Action<DeckCard> CardClickAction;
 	public Action<DeckCard> SetAsHeroAction;
 
 	public HeroIndicator HeroIndicator;
 
+	public event Action<DeckCard> CardClickAction;
+	public event Action<DeckCard> CardRightClickAction;
+
 	public void Setup(
 		CardDefinition cardDefinition,
 		Action<DeckCard> cardClickAction,
+		Action<DeckCard> cardRightClickAction,
 		Action<DeckCard> setAsHeroAction)
 	{
 		this.CardDefinition = cardDefinition;
 		this.CardClickAction = cardClickAction;
+		this.CardRightClickAction = cardRightClickAction;
 		this.SetAsHeroAction = setAsHeroAction;
 
 		ManaText.text = cardDefinition.Cost.ToString();
@@ -41,10 +46,23 @@ public class DeckCard : MonoBehaviour,
 		FloatingCardPreview = FindFirstObjectByType<FloatingCardPreview>(FindObjectsInactive.Include);
 	}
 
-	public void OnClick()
+	//public void OnClick()
+	//{
+	//	CardClickAction?.Invoke(this);
+	//	HidePreview();
+	//}
+
+	public void OnPointerClick(PointerEventData eventData)
 	{
-		CardClickAction?.Invoke(this);
 		HidePreview();
+		if (eventData.button == PointerEventData.InputButton.Left)
+		{
+			CardClickAction?.Invoke(this);
+		}
+		else if (eventData.button == PointerEventData.InputButton.Right)
+		{
+			CardRightClickAction?.Invoke(this);
+		}
 	}
 
 	public void SetAsHero_Click()
