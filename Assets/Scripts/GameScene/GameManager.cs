@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
 			allMinions.AddRange(Player.Board.Minions);
 			allMinions.AddRange(Opponent.Board.Minions);
 
-			var first = allMinions.FirstOrDefault(x => x.Data.Id == minion.Id);
+			var first = allMinions.FirstOrDefault(x => x?.Data?.Id == minion.Id);
 			if (first != null)
 			{
 				return first.gameObject;
@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
 			allCards.AddRange(Player.Hand.Cards);
 			allCards.AddRange(Opponent.Hand.Cards);
 
-			var first = allCards.FirstOrDefault(x => x.Data.Id == card.Id);
+			var first = allCards.FirstOrDefault(x => x?.Data?.Id == card.Id);
 			if (first != null)
 			{
 				return first.gameObject;

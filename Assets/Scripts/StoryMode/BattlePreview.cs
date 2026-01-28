@@ -28,19 +28,16 @@ public class BattlePreview : MonoBehaviour
 	{
 		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
 
+		var activeEffects = Rondel.GetActiveEffects();
+
 		DeckSaveData firstDeck = gameSaveData.DeckSaveDatas[0];
 		GameStartParams gameStartParams = new();
 		gameStartParams.CombatDeck = firstDeck.ToDeck();
 		gameStartParams.CombatDeckEnemy = _data.Deck.ToDeck();
+		gameStartParams.OpponentExtraEffects = activeEffects.SelectMany(x => x.TriggeredEffects).ToList();
 		GameManager.GameStartParams = gameStartParams;
 
 		var levelId = _data.LevelID;
-
-		var activeEffects = Rondel.GetActiveEffects();
-		GameManager.GameStartParams = new()
-		{
-			OpponentExtraEffects = activeEffects.SelectMany(x => x.TriggeredEffects).ToList()
-		};
 
 		GameManager.GameResultRoutine = GameResult;
 

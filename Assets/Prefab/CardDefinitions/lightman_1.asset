@@ -20,7 +20,7 @@ MonoBehaviour:
   CastRestriction:
     rid: -2
   ValidTargetSelector:
-    rid: -2
+    rid: 2140584830301110343
   TriggeredEffects: []
   Attack: 2
   Health: 2
@@ -65,3 +65,8 @@ MonoBehaviour:
         Keyword: 4
         Canceled: 0
         CustomSFX: {fileID: 0}
+    - rid: 2140584830301110343
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 0
