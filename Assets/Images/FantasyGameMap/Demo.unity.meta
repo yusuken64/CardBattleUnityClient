@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f94dd928c906b9343b9ddd292a225348
+timeCreated: 1507984892
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 102590
+  packageName: Fantasy Game Map
+  packageVersion: 1.0
+  assetPath: Assets/FantasyGameMap/Demo.unity
+  uploadId: 206047
