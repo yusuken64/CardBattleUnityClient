@@ -130,6 +130,18 @@ public class OwnedCardData
 public class StorySaveData
 {
 	public List<string> CompletedLevels = new();
+
+	public DungeonSaveData CurrentDungeon { get; set; }
+}
+
+[Serializable]
+public class DungeonSaveData
+{
+	public string Title { get; set; }
+	public int Wins { get; set; }
+	public int Lives { get; set; }
+	public int MaxWins { get; set; }
+	public bool Exited { get; set; }
 }
 
 [Serializable]

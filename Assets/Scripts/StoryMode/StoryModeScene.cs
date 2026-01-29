@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,24 +12,52 @@ public class StoryModeScene : MonoBehaviour
 
     public List<StoryModeBattleDefinition> Datas;
 
+    public Map Map;
+
     void Start()
-    {
-        foreach (Transform child in Container)
-        {
-            Destroy(child.gameObject);
+	{
+        //InitializeGridButtons();
+
+        //Reload Dungeon State
+        ReloadDungeonState();
+	}
+
+	private void ReloadDungeonState()
+	{
+        var currentDungeon = Common.Instance.SaveManager.SaveData.GameSaveData.StorySaveData.CurrentDungeon;
+        if (currentDungeon == null ||
+            currentDungeon.Exited)
+		{
+            //normal
+            Map.gameObject.SetActive(false);
+            Map.Dungeon.gameObject.SetActive(false);
         }
+		else
+		{
+            //restore dungeon
+            Map.Dungeon.gameObject.SetActive(true);
+            Map.Dungeon.Setup();
+		}
+	}
 
-        foreach (var data in Datas)
-        {
-            var newButton = Instantiate(BattleGridButtonPrefab, Container);
-            newButton.Setup(data);
-            newButton.ClickAction = BattleGridButton_Clicked;
-        }
+	private void InitializeGridButtons()
+	{
+		foreach (Transform child in Container)
+		{
+			Destroy(child.gameObject);
+		}
 
-        BattleGridButton_Clicked(null);
-    }
+		foreach (var data in Datas)
+		{
+			var newButton = Instantiate(BattleGridButtonPrefab, Container);
+			newButton.Setup(data);
+			newButton.ClickAction = BattleGridButton_Clicked;
+		}
 
-    public void BattleGridButton_Clicked(StoryModeBattleDefinition data)
+		BattleGridButton_Clicked(null);
+	}
+
+	public void BattleGridButton_Clicked(StoryModeBattleDefinition data)
     {
         if (data == null)
         {
@@ -56,6 +85,15 @@ public class StoryModeScene : MonoBehaviour
         Common.Instance.SceneTransition.DoTransition(() =>
         {
             SceneManager.LoadScene("OpenPacks");
+        });
+    }
+
+    public void Map_Click()
+    {
+        Common.Instance.SceneTransition.DoTransition(() =>
+        {
+            Map.gameObject.SetActive(true);
+            Map.Setup();
         });
     }
 
