@@ -18,6 +18,7 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable,
 	public GameObject NoCardsLeftIndicator;
 	public GameObject CountObject;
 	public TextMeshProUGUI CountText;
+	public Vector3 ToolTipOffset;
 
 	private void OnEnable()
 	{
@@ -133,5 +134,10 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable,
 		NoCardsLeftIndicator.gameObject.SetActive(usedCount >= OwnedCardData.Count);
 		CountObject.gameObject.SetActive(true);
 		CountText.text = (OwnedCardData.Count - usedCount).ToString();
+	}
+
+	public Vector3 GetPosition()
+	{
+		return this.transform.position + ToolTipOffset;
 	}
 }

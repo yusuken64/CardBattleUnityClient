@@ -16,6 +16,8 @@ public class UI : MonoBehaviour
     public DamageNumber DamageNumberPrefab;
     public DamageNumber HealNumberPrefab;
     public Card CardPreview;
+    public GameObject HoverCardPreviewObject;
+    public Card HoverCardPreview;
     public GameObject TriggeredEffectParticlePrefab;
 
     public GameResultScreen GameResultScreen;
@@ -33,6 +35,8 @@ public class UI : MonoBehaviour
         Message.gameObject.SetActive(false);
         GameResultScreen.gameObject.SetActive(false);
         GameSettingsScreen.gameObject.SetActive(false);
+        CardPreview.gameObject.SetActive(false);
+        HoverCardPreviewObject.gameObject.SetActive(false);
     }
 
 	public void ShowMessage(string message)
@@ -149,9 +153,29 @@ public class UI : MonoBehaviour
         CardPreview.gameObject.SetActive(true);
     }
 
-	internal void PreviewEnd()
+    internal void PreviewEnd()
     {
         CardPreview.gameObject.SetActive(false);
+    }
+
+    internal void HoverPreviewStart(IHoverable hoverable)
+    {
+        var card = hoverable.DisplayCard;
+        if (card == null) { return; }
+        HoverCardPreviewObject.gameObject.SetActive(true);
+        HoverCardPreview.Setup(card);
+        HoverCardPreview.CanPlayIndicator.gameObject.SetActive(false);
+        HoverCardPreview.gameObject.SetActive(true);
+    }
+
+    internal void HoverPreviewMove(Minion minion)
+    {
+    }
+
+    internal void HoverPreviewEnd()
+    {
+        HoverCardPreviewObject.gameObject.SetActive(false);
+        HoverCardPreview.gameObject.SetActive(false);
     }
 
     public void OpenSettings_Clicked()

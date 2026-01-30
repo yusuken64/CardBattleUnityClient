@@ -1192,6 +1192,7 @@ MonoBehaviour:
   TriggerIndicator: {fileID: 4798859995770105108}
   moveSpeed: 10
   rotateSpeed: 0
+  ToolTipOffset: {x: -3, y: 0, z: 0}
 --- !u!61 &5510742083154282500
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour, IHoverable
 
 	public int Attack;
 	public int Durability;
+	public Vector3 ToolTipOffset;
 
 	internal void Setup(CardBattleEngine.Weapon weapon)
 	{
@@ -70,12 +71,17 @@ public class Weapon : MonoBehaviour, IHoverable
 	public void HoverStart()
 	{
 		var ui = FindFirstObjectByType<UI>();
-		ui.PreviewStart(this);
+		ui.HoverPreviewStart(this);
 	}
 
 	public void HoverEnd()
 	{
 		var ui = FindFirstObjectByType<UI>();
-		ui.PreviewEnd();
+		ui.HoverPreviewEnd();
+	}
+
+	public Vector3 GetPosition()
+	{
+		return this.transform.position + ToolTipOffset;
 	}
 }

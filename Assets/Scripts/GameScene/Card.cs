@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
@@ -546,11 +547,22 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
 	public void HoverStart()
     {
-        _ui.PreviewStart(this);
+        _ui.HoverPreviewStart(this);
     }
 
     public void HoverEnd()
     {
-        _ui.PreviewEnd();
+        _ui.HoverPreviewEnd();
+    }
+
+	public Vector3 GetPosition()
+    {
+        var mouse = Mouse.current;
+
+        Vector2 mousePos = mouse.position.ReadValue();
+        Vector3 world = Camera.main.ScreenToWorldPoint(mousePos);
+        world.z = 1;
+
+        return world;
     }
 }

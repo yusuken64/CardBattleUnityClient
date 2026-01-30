@@ -334,13 +334,25 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public GameObject DragObject => this.gameObject;
 	public CardBattleEngine.Card DisplayCard => Data?.OriginalCard;
 
+    public Vector3 ToolTipOffset;
+
 	public void HoverStart()
     {
-        _ui.PreviewStart(this);
+        _ui.HoverPreviewStart(this);
+    }
+
+    public void HoverMove()
+    {
+        _ui.HoverPreviewMove(this);
     }
 
     public void HoverEnd()
     {
-        _ui.PreviewEnd();
+        _ui.HoverPreviewEnd();
     }
+
+	public Vector3 GetPosition()
+	{
+        return this.transform.position + ToolTipOffset;
+	}
 }

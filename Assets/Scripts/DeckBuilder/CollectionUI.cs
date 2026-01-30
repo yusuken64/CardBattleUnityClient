@@ -17,6 +17,11 @@ public class CollectionUI : MonoBehaviour
 		PreviewCard.Setup(collectionItem.DisplayCard);
 	}
 
+	internal void PreviewMove(CollectionItem collectionItem)
+	{
+		//throw new NotImplementedException();
+	}
+
 	internal void PreviewStart(CardDefinition cardDefinition)
 	{
 		PreviewObject.SetActive(true);

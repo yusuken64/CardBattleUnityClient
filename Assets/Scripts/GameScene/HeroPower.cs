@@ -11,6 +11,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 	public GameObject HeroPowerExpiredObject;
 	public GameObject HeroPowerCostObject;
 	public TextMeshProUGUI HeroPowerCostText;
+	public Vector3 ToolTipOffset;
 
 	public CardBattleEngine.HeroPower Data { get; set; }
 	internal void RefreshData()
@@ -123,12 +124,17 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 	public void HoverStart()
 	{
 		var ui = FindFirstObjectByType<UI>();
-		ui.PreviewStart(this);
+		ui.HoverPreviewStart(this);
 	}
 
 	public void HoverEnd()
 	{
 		var ui = FindFirstObjectByType<UI>();
-		ui.PreviewEnd();
+		ui.HoverPreviewEnd();
+	}
+
+	public Vector3 GetPosition()
+	{
+		return this.transform.position + ToolTipOffset;
 	}
 }

@@ -11,6 +11,7 @@ public class StoryModeBattleDefinition : ScriptableObject
 	public string LevelID;
 	public Sprite BattleImage;
 	public string Description;
+	public int Health = 30;
 	public DeckDefinition Deck;
 
 	[SerializeReference]

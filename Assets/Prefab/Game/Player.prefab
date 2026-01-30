@@ -126,6 +126,7 @@ MonoBehaviour:
   HeroPowerExpiredObject: {fileID: 912690753255121788}
   HeroPowerCostObject: {fileID: 4516407825578326163}
   HeroPowerCostText: {fileID: 6367251877649033275}
+  ToolTipOffset: {x: 0, y: 3, z: 0}
 --- !u!61 &5507249390431509539
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2053,6 +2054,7 @@ MonoBehaviour:
   WeaponImage: {fileID: 8127614363833727808}
   Attack: 0
   Durability: 0
+  ToolTipOffset: {x: 0, y: 3, z: 0}
 --- !u!61 &8898408522739348481
 BoxCollider2D:
   m_ObjectHideFlags: 0

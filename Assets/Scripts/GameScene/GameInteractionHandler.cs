@@ -7,6 +7,7 @@ public class GameInteractionHandler : MonoBehaviour
 	public Card CardPrefab;
 	public Minion MinionPrefab;
 	public Minion MinionPlayPreview;
+	public KeepInScreen KeepInScreen;
 
 	public PointerInput PointerInput;
 	public LayerMask ClickableMask;
@@ -28,6 +29,7 @@ public class GameInteractionHandler : MonoBehaviour
 		PointerInput.OnClick += PointerInput_OnClick;
 		PointerInput.OnHoverStart += PointerInput_OnHoldStart;
 		PointerInput.OnHoverEnd += PointerInput_OnHoldEnd;
+		PointerInput.OnHoverMove += PointerInput_OnHoldMove;
 		PointerInput.OnDragStart += PointerInput_OnDragStart;
 		PointerInput.OnDrag += PointerInput_OnDrag;
 		PointerInput.OnDragEnd += PointerInput_OnDragEnd;
@@ -38,6 +40,7 @@ public class GameInteractionHandler : MonoBehaviour
 		PointerInput.OnClick -= PointerInput_OnClick;
 		PointerInput.OnHoverStart -= PointerInput_OnHoldStart;
 		PointerInput.OnHoverEnd -= PointerInput_OnHoldEnd;
+		PointerInput.OnHoverMove -= PointerInput_OnHoldMove;
 		PointerInput.OnDragStart -= PointerInput_OnDragStart;
 		PointerInput.OnDrag -= PointerInput_OnDrag;
 		PointerInput.OnDragEnd -= PointerInput_OnDragEnd;
@@ -187,7 +190,7 @@ public class GameInteractionHandler : MonoBehaviour
 			pendingDraggable?.CancelAim();
 		}
 		var ui = FindFirstObjectByType<UI>();
-		ui.PreviewEnd();
+		ui.HoverPreviewEnd();
 
 		EndAim();
 	}
@@ -214,18 +217,37 @@ public class GameInteractionHandler : MonoBehaviour
 
 	private void PointerInput_OnHoldStart(Vector2 obj)
 	{
+		HandleHover(obj);
+	}
+
+	private void PointerInput_OnHoldMove(Vector2 obj)
+	{
+		HandleHover(obj);
+	}
+
+	private void HandleHover(Vector2 obj)
+	{
 		var mousePos = GetMouseWorldPosition2D(obj);
 
-			RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
+		RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
 		if (hit.collider != null)
 		{
 			var hoverable = hit.collider.GetComponent<IHoverable>();
 			if (hoverable != null)
 			{
 				//show info
-				currentHolding = hoverable;
-				currentHolding.HoverStart();
+				if (currentHolding != hoverable)
+				{
+					currentHolding = hoverable;
+					currentHolding.HoverStart();
+				}
+				KeepInScreen.SetPosition(currentHolding.GetPosition());
 			}
+		}
+		else
+		{
+			currentHolding?.HoverEnd();
+			currentHolding = null;
 		}
 	}
 
@@ -367,6 +389,7 @@ public interface IHoverable
 
 	void HoverStart();
 	void HoverEnd();
+	Vector3 GetPosition();
 }
 
 public interface IClickable

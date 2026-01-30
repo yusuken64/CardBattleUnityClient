@@ -8,6 +8,7 @@ public class PointerInput : MonoBehaviour
     public event Action<Vector2> OnClick;
     public event Action<Vector2> OnHoverStart;
     public event Action<Vector2> OnHoverEnd;
+    public event Action<Vector2> OnHoverMove;
     public event Action<Vector2> OnDragStart;
     public event Action<Vector2> OnDrag;
     public event Action<Vector2> OnDragEnd;
@@ -111,11 +112,11 @@ public class PointerInput : MonoBehaviour
         }
         
         // ---------------- HOVER END (mouse stopped / left area) ----------------
-        if (!mouse.leftButton.isPressed && hovering && moved)
+        if (hovering && moved)
         {
-            hovering = false;
-            hoverCooldown = 0;
-            OnHoverEnd?.Invoke(pos);
+            //hovering = false;
+            //hoverCooldown = 0;
+            OnHoverMove?.Invoke(pos);
         }
 
         lastPos = pos;
