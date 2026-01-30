@@ -1,4 +1,5 @@
 ﻿using CardBattleEngine;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,10 @@ public class GameInteractionHandler : MonoBehaviour
 
 	public AudioClip DragStartClip, DraggingClip;
 
+	public GameObject TargetReticle;
+	private GameManager gameManager;
+	private GameObject targetingObject;
+
 	private void OnEnable()
 	{
 		PointerInput.OnClick += PointerInput_OnClick;
@@ -33,6 +38,8 @@ public class GameInteractionHandler : MonoBehaviour
 		PointerInput.OnDragStart += PointerInput_OnDragStart;
 		PointerInput.OnDrag += PointerInput_OnDrag;
 		PointerInput.OnDragEnd += PointerInput_OnDragEnd;
+
+		gameManager = FindFirstObjectByType<GameManager>();
 	}
 
 	private void OnDisable()
@@ -84,7 +91,7 @@ public class GameInteractionHandler : MonoBehaviour
 			{
 				currentDraggable.CancelDrag();
 				currentDraggable.EndAim();
-				EndAim();
+				EndAim(false);
 				return;
 			}
 
@@ -162,7 +169,7 @@ public class GameInteractionHandler : MonoBehaviour
 				if (currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current, mousePos, out string reason))
 				{
 					currentAimable.ResolveAim(current, pendingDraggable?.DragObject);
-					EndAim();
+					EndAim(true);
 				}
 				else
 				{
@@ -192,10 +199,10 @@ public class GameInteractionHandler : MonoBehaviour
 		var ui = FindFirstObjectByType<UI>();
 		ui.HoverPreviewEnd();
 
-		EndAim();
+		EndAim(false);
 	}
 
-	private void EndAim()
+	private void EndAim(bool targetAcquired)
 	{
 		if (pendingDraggable != null)
 		{
@@ -207,6 +214,21 @@ public class GameInteractionHandler : MonoBehaviour
 		currentDraggable = null;
 
 		EndLine();
+
+		if (targetAcquired)
+		{
+			TargetReticle.transform.DOKill();
+			TargetReticle.transform.DOScale(0, 0.2f).SetEase(Ease.InBack);
+			TargetReticle.transform.DORotate(
+				new Vector3(0, 0, 360),
+				0.2f,
+				RotateMode.FastBeyond360
+			);
+		}
+		else
+		{
+			TargetReticle.gameObject.SetActive(false);
+		}
 	}
 
 	private void PointerInput_OnHoldEnd(Vector2 obj)
@@ -319,6 +341,36 @@ public class GameInteractionHandler : MonoBehaviour
 
 		LineRenderer.positionCount = points.Length;
 		LineRenderer.SetPositions(points);
+
+		RaycastHit2D hit = Physics2D.Raycast(end, Vector2.zero, Mathf.Infinity, ClickableMask);
+		ITargetable target = null;
+		TargetReticle.gameObject.SetActive(false);
+		if (hit.collider != null)
+		{
+			target = hit.collider.GetComponent<ITargetable>();
+			if (target == null)
+			{
+				target = hit.collider.GetComponentInParent<ITargetable>();
+			}
+
+			if (target != null &&
+				target != pendingDraggable &&
+				target != currentAimable)
+			{
+				var gameObject = gameManager.GetObjectFor(target.GetData());
+				if (gameObject != null)
+				{
+					TargetReticle.gameObject.SetActive(true);
+					TargetReticle.gameObject.transform.position = gameObject.transform.position;
+					TargetReticle.transform.localScale = Vector3.one;
+					if (gameObject != targetingObject)
+					{
+						TargetReticle.transform.DOPunchScale(Vector3.one * 1.1f, 0.1f);
+					}
+					targetingObject = gameObject;
+				}
+			}
+		}
 	}
 
 	private void UpdateArrowHead()
