@@ -4,7 +4,7 @@ using UnityEngine;
 public class MapLocation : MonoBehaviour
 {
 	public GameObject FocusObject;
-	public string LocationName;
+	public MapRegionDefinition MapRegionDefinition;
 
 	public Action<MapLocation> ClickAction { get; internal set; }
 

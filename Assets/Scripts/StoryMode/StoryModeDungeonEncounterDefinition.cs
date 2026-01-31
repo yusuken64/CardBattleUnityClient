@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(
-	fileName = "NewBattle",
-	menuName = "Game/Story/Battle"
+	fileName = "NewDungeon",
+	menuName = "Game/Story/StoryModeDungeonEncounter"
 )]
-public class StoryModeBattleDefinition : ScriptableObject
+public class StoryModeDungeonEncounterDefinition : ScriptableObject
 {
 	public string LevelID;
 	public Sprite BattleImage;

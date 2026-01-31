@@ -13,9 +13,9 @@ public class Rondel : MonoBehaviour
 	public List<DifficultyDot> Dots;
 
 	private int currentPage;
-	private StoryModeBattleDefinition _data;
+	private StoryModeDungeonEncounterDefinition _data;
 
-	public void Setup(StoryModeBattleDefinition data)
+	public void Setup(StoryModeDungeonEncounterDefinition data)
 	{
 		this._data = data;
 		foreach (Transform child in DotsContainer)

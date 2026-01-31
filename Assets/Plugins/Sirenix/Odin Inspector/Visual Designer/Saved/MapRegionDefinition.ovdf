@@ -1,0 +1,7 @@
+OVDF v1.0
+MapRegionDefinition, Assembly-CSharp
+
+# Description
++ [UnityEngine.TextAreaAttribute]
+	maxLines = 10
+	minLines = 10

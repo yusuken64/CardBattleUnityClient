@@ -51,12 +51,12 @@ Acquired 1 Pack";
 	public void Fight_Clicked()
 	{
 		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
-		var storyData = StoryModeScene.Datas[UnityEngine.Random.Range(0, StoryModeScene.Datas.Count)];
+		//var storyData = StoryModeScene.Datas[UnityEngine.Random.Range(0, StoryModeScene.Datas.Count)];
 
 		DeckSaveData firstDeck = gameSaveData.DeckSaveDatas[0];
 		GameStartParams gameStartParams = new();
 		gameStartParams.CombatDeck = firstDeck.ToDeck();
-		gameStartParams.CombatDeckEnemy = storyData.Deck.ToDeck();
+		//gameStartParams.CombatDeckEnemy = storyData.Deck.ToDeck();
 		//gameStartParams.OpponentExtraEffects = activeEffects.SelectMany(x => x.TriggeredEffects).ToList();
 		GameManager.GameStartParams = gameStartParams;
 

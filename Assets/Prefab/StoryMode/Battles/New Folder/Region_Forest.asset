@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
+  m_Name: Region_Forest
+  m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
+  RegionID: Forest
+  Name: Forest Region
+  Description: A dense magical forest where the trees themselves seem to watch your
+    every step. Some are alive, shifting and whispering when no one is looking, while
+    strange beasts prowl beneath the canopy. Paths twist without warning, and travelers
+    who wander too far often find themselves hopelessly lost.
+  Dungeons:
+  - {fileID: 11400000, guid: 8583c1c727f246a4da4ccbaacd2283c4, type: 2}
+  - {fileID: 11400000, guid: 71cc71526b0a3784f8ca76947a4543ac, type: 2}

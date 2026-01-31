@@ -5,11 +5,21 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
+	[Header("Map")]
+	public GameObject MapObject;
 	public List<MapLocation> MapLocations;
 	public MapLocation SelectedLocation;
 
 	// location preview
-	public TextMeshProUGUI DungeonText;
+	public TextMeshProUGUI RegionText;
+	public TextMeshProUGUI RegionDescriptionText;
+
+	[Header("Dungeon Picker")]
+	public GameObject LocationObject;
+	public Transform Container;
+	public BattleGridButton BattleGridButtonPrefab;
+
+	public BattlePreview BattlePreview;
 
 	public Dungeon Dungeon;
 
@@ -21,8 +31,10 @@ public class Map : MonoBehaviour
 		}
 	}
 
-	internal void Setup()
+	internal void ShowRegionPicker()
 	{
+		MapObject.gameObject.SetActive(true);
+		LocationObject.gameObject.SetActive(false);
 		SelectLocation(MapLocations[0]);
 	}
 
@@ -35,26 +47,17 @@ public class Map : MonoBehaviour
 			location.SetSelected(location == SelectedLocation);
 		}
 
-		DungeonText.text = mapLocation.LocationName;
+		RegionText.text = mapLocation.MapRegionDefinition.Name;
+		RegionDescriptionText.text = mapLocation.MapRegionDefinition.Description;
 	}
 
 	public void Enter_Clicked()
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
-			GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
-			gameSaveData.StorySaveData.CurrentDungeon = new DungeonSaveData()
-			{
-				Title = $"{SelectedLocation.LocationName} Dungeon",
-				Lives = 1,
-				Wins = 0,
-				MaxWins = 2,
-				Exited = false,
-			};
-
-			this.gameObject.SetActive(false);
-			Dungeon.gameObject.SetActive(true);
-			Dungeon.Setup();
+			MapObject.gameObject.SetActive(false);
+			LocationObject.gameObject.SetActive(true);
+			InitializeGridButtons();
 		});
 	}
 
@@ -73,4 +76,67 @@ public class Map : MonoBehaviour
 		MapLocations = new List<MapLocation>(GetComponentsInChildren<MapLocation>(true));
 	}
 #endif
+
+	private void InitializeGridButtons()
+	{
+		foreach (Transform child in Container)
+		{
+			Destroy(child.gameObject);
+		}
+
+		var dungeons = SelectedLocation.MapRegionDefinition.Dungeons;
+		foreach (var data in dungeons)
+		{
+			var newButton = Instantiate(BattleGridButtonPrefab, Container);
+			newButton.Setup(data);
+			newButton.ClickAction = BattleGridButton_Clicked;
+		}
+
+		BattleGridButton_Clicked(null);
+	}
+
+	public void BattleGridButton_Clicked(StoryModeDungeonDefinition data)
+	{
+		if (data == null)
+		{
+			BattlePreview.gameObject.SetActive(false);
+		}
+		else
+		{
+			BattlePreview.gameObject.SetActive(true);
+			BattlePreview.Setup(data);
+		}
+	}
+
+	public void DungeonBack_Clicked()
+	{
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			MapObject.gameObject.SetActive(true);
+			LocationObject.gameObject.SetActive(false);
+		});
+	}
+
+	public void DungeonEnter_Clicked()
+	{
+
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			MapObject.gameObject.SetActive(false);
+			LocationObject.gameObject.SetActive(false);
+
+			GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
+			gameSaveData.StorySaveData.CurrentDungeon = new DungeonSaveData()
+			{
+				Title = $"{SelectedLocation.MapRegionDefinition.Name} Dungeon",
+				Lives = 1,
+				Wins = 0,
+				MaxWins = 2,
+				Exited = false,
+			};
+
+			Dungeon.gameObject.SetActive(true);
+			Dungeon.Setup();
+		});
+	}
 }

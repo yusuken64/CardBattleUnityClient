@@ -1,17 +1,9 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StoryModeScene : MonoBehaviour
 {
-    public Transform Container;
-    public BattleGridButton BattleGridButtonPrefab;
-
-    public BattlePreview BattlePreview;
-
-    public List<StoryModeBattleDefinition> Datas;
-
     public Map Map;
 
     void Start()
@@ -40,36 +32,6 @@ public class StoryModeScene : MonoBehaviour
 		}
 	}
 
-	private void InitializeGridButtons()
-	{
-		foreach (Transform child in Container)
-		{
-			Destroy(child.gameObject);
-		}
-
-		foreach (var data in Datas)
-		{
-			var newButton = Instantiate(BattleGridButtonPrefab, Container);
-			newButton.Setup(data);
-			newButton.ClickAction = BattleGridButton_Clicked;
-		}
-
-		BattleGridButton_Clicked(null);
-	}
-
-	public void BattleGridButton_Clicked(StoryModeBattleDefinition data)
-    {
-        if (data == null)
-        {
-            BattlePreview.gameObject.SetActive(false);
-        }
-        else
-        {
-            BattlePreview.gameObject.SetActive(true);
-            BattlePreview.Setup(data);
-        }
-    }
-
     public void Deck_Click()
     {
         DeckBuilderPage.ReturnScreenName = "StoryMode";
@@ -93,7 +55,7 @@ public class StoryModeScene : MonoBehaviour
         Common.Instance.SceneTransition.DoTransition(() =>
         {
             Map.gameObject.SetActive(true);
-            Map.Setup();
+            Map.ShowRegionPicker();
         });
     }
 

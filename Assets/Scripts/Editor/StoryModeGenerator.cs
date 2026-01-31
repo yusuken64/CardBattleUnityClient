@@ -43,7 +43,7 @@ public static class StoryModeGenerator
         {
             string battleFilePath = Path.Combine(StoryDefinitionFolder, $"Battle{i}.asset");
             string battleDeckFilePath = Path.Combine(StoryDefinitionFolder, $"Battle{i}_Deck.asset");
-            var newBattleDefinition = EnsureObjectExists<StoryModeBattleDefinition>(battleFilePath);
+            var newBattleDefinition = EnsureObjectExists<StoryModeDungeonEncounterDefinition>(battleFilePath);
             var newBattleDeckDefinition = EnsureObjectExists<DeckDefinition>(battleDeckFilePath);
             var hero = heroPool[i];
 
