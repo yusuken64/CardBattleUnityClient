@@ -26,6 +26,9 @@ public class VerticalDeckViewer : MonoBehaviour
     public Action<Deck> DeckClosedAction { get; internal set; }
     public bool RemoveCardOnClick = true;
 
+    public event Action<DeckCard> CardAdded;
+    public event Action<DeckCard> CardRemoved;
+
 	private void Start()
     {
         TitleInput.gameObject.SetActive(false);
@@ -66,6 +69,7 @@ public class VerticalDeckViewer : MonoBehaviour
             newDeckItem.SetAsHero(false);
         }
         _spawnedCards.Add(newDeckItem);
+        CardAdded?.Invoke(newDeckItem);
 
         GetDeck();
         DeckChanged?.Invoke(editingDeck);
@@ -116,6 +120,7 @@ public class VerticalDeckViewer : MonoBehaviour
         {
             if (_spawnedCards.Remove(deckCard))
             {
+                CardRemoved?.Invoke(deckCard);
                 Destroy(deckCard.gameObject);
                 SortAndReorder();
             }
@@ -133,6 +138,7 @@ public class VerticalDeckViewer : MonoBehaviour
         {
             if (_spawnedCards.Remove(deckCard))
             {
+                CardRemoved?.Invoke(deckCard);
                 Destroy(deckCard.gameObject);
                 SortAndReorder();
             }
