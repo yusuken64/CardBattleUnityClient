@@ -18,9 +18,8 @@ public class Map : MonoBehaviour
 	public GameObject LocationObject;
 	public Transform Container;
 	public BattleGridButton BattleGridButtonPrefab;
-
 	public BattlePreview BattlePreview;
-
+	public TextMeshProUGUI DungeonText;
 	public Dungeon Dungeon;
 
 	private void Awake()
@@ -93,6 +92,7 @@ public class Map : MonoBehaviour
 		}
 
 		BattleGridButton_Clicked(null);
+		DungeonText.text = $"{SelectedLocation.MapRegionDefinition.Name} Dungeons";
 	}
 
 	public void BattleGridButton_Clicked(StoryModeDungeonDefinition data)
@@ -119,7 +119,7 @@ public class Map : MonoBehaviour
 
 	public void DungeonEnter_Clicked()
 	{
-		Common.Instance.SceneTransition.DoTransition(() =>
+		Common.Instance.SceneTransition.DoDoorTransition(() =>
 		{
 			var data = BattlePreview.GetData();
 			MapObject.gameObject.SetActive(false);
