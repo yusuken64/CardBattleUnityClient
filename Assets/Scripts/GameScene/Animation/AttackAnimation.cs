@@ -19,9 +19,10 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 		Transform attacker = GameManager.GetObjectFor(Context.Source).transform;
 		Transform target = GameManager.GetObjectFor(Context.Target).transform;
 
-		Vector3 startPos = attacker.position;
+		Vector3 startPos = attacker.position + new Vector3(0, 0, -0.5f);
+		attacker.transform.position = startPos;
 		Vector3 dir = (target.position - attacker.position).normalized;
-		Vector3 bumpPos = target.position - dir * 0.4f; // distance of bump
+		Vector3 bumpPos = target.position - (dir * 0.4f) + new Vector3(0, 0, -0.1f); // distance of bump
 
 		// forward bump
 		Tween forward = attacker.DOMove(bumpPos, Duration).SetEase(AttackCurve)

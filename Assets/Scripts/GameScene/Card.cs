@@ -91,11 +91,13 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             if (Vector3.Distance(transform.localPosition, TargetPosition) < 0.05f &&
                 Quaternion.Angle(transform.localRotation, TargetAngle) < 0.5f)
             {
+                transform.localPosition = new Vector3(TargetPosition.x, TargetPosition.y, 0);
                 Moving = false;
             }
         }
         else if (Dragging)
         {
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -1);
             transform.localRotation = Quaternion.RotateTowards(
                 transform.localRotation,
                 Quaternion.Euler(0, 0, 0),

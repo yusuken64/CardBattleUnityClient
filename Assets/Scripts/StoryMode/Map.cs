@@ -119,7 +119,6 @@ public class Map : MonoBehaviour
 
 	public void DungeonEnter_Clicked()
 	{
-
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
 			MapObject.gameObject.SetActive(false);
