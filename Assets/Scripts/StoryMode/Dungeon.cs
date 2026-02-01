@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,8 @@ public class Dungeon : MonoBehaviour
 	public TextMeshProUGUI ProgressText;
 	public TextMeshProUGUI ResultText;
 
-	public StoryModeScene StoryModeScene; //TODO replace with biomedata
+	public StoryModeScene StoryModeScene;
+	public Map Map;
 
 	public Button BattleButton;
 	public Button FinishButton;
@@ -51,12 +53,18 @@ Acquired 1 Pack";
 	public void Fight_Clicked()
 	{
 		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
-		//var storyData = StoryModeScene.Datas[UnityEngine.Random.Range(0, StoryModeScene.Datas.Count)];
+		DungeonSaveData currentDungeonSaveData = gameSaveData.StorySaveData.CurrentDungeon;
+		var currentDungeon = Map.MapLocations
+			.SelectMany(x => x.MapRegionDefinition.Dungeons)
+			.FirstOrDefault(x => x.DungeonID == currentDungeonSaveData.ID);
+
+		var encounter = currentDungeon.StoryModeDungeonEncounterDefinition[UnityEngine.Random.Range(0, currentDungeon.StoryModeDungeonEncounterDefinition.Count())];
+		//TODO handle boss, if defined and wins == maxwins - 1;
 
 		DeckSaveData firstDeck = gameSaveData.DeckSaveDatas[0];
 		GameStartParams gameStartParams = new();
 		gameStartParams.CombatDeck = firstDeck.ToDeck();
-		//gameStartParams.CombatDeckEnemy = storyData.Deck.ToDeck();
+		gameStartParams.CombatDeckEnemy = encounter.Deck.ToDeck();
 		//gameStartParams.OpponentExtraEffects = activeEffects.SelectMany(x => x.TriggeredEffects).ToList();
 		GameManager.GameStartParams = gameStartParams;
 
@@ -69,6 +77,7 @@ Acquired 1 Pack";
 			if (isWin)
 			{
 				save.StorySaveData.CurrentDungeon.Wins++;
+				save.StorySaveData.SetToComplete(save.StorySaveData.CurrentDungeon.ID);
 				if (save.StorySaveData.CurrentDungeon.Wins >=
 					save.StorySaveData.CurrentDungeon.MaxWins)
 				{
@@ -102,7 +111,16 @@ Acquired 1 Pack";
 			Common.Instance.SaveManager.Save();
 
 			this.gameObject.SetActive(false);
-			StoryModeScene.Map.gameObject.SetActive(true); //TODO select this dungeon on map
+			StoryModeScene.ReloadDungeonState();
 		});
+	}
+
+	[ContextMenu("Finish Dungeon")]
+	public void Debug_FinishDungeon()
+	{
+		var save = Common.Instance.SaveManager.SaveData.GameSaveData;
+		save.StorySaveData.CurrentDungeon.Wins = save.StorySaveData.CurrentDungeon.MaxWins;
+		save.StorySaveData.SetToComplete(save.StorySaveData.CurrentDungeon.ID);
+		Setup();
 	}
 }

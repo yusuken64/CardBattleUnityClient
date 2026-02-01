@@ -121,17 +121,19 @@ public class Map : MonoBehaviour
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
+			var data = BattlePreview.GetData();
 			MapObject.gameObject.SetActive(false);
 			LocationObject.gameObject.SetActive(false);
 
 			GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
 			gameSaveData.StorySaveData.CurrentDungeon = new DungeonSaveData()
 			{
-				Title = $"{SelectedLocation.MapRegionDefinition.Name} Dungeon",
+				Title = $"{SelectedLocation.MapRegionDefinition.Name} {data.Description} Dungeon",
 				Lives = 1,
 				Wins = 0,
 				MaxWins = 2,
 				Exited = false,
+				ID = data.DungeonID,
 			};
 
 			Dungeon.gameObject.SetActive(true);

@@ -13,8 +13,13 @@ public class GameSceneTutorial : MonoBehaviour
 	public List<TutorialPopup> Tutorials;
 	private GameManager _gameManager;
 
+	public Card DisplayCard1;
+	public MinionCardDefinition MinionCardDefinition;
+
 	private void Start()
 	{
+		DisplayCard1.Setup(MinionCardDefinition.CreateCard());
+
 		HideTutorials();
 
 		HookIntoGame();
@@ -46,6 +51,11 @@ public class GameSceneTutorial : MonoBehaviour
 			{
 				ShowTutorialMessage("Basic1");
 			}
+			else if(state.turn == 1 &&
+				current.action is PlayCardAction)
+			{
+				ShowTutorialMessage("EndTurn");
+			}
 			else if (state.turn == 3 &&
 				current.action is StartTurnAction)
 			{
@@ -61,6 +71,11 @@ public class GameSceneTutorial : MonoBehaviour
 			{
 				ShowTutorialMessage("Basic4");
 			}
+			else if (state.turn == 9 &&
+				current.action is StartTurnAction)
+			{
+				ShowTutorialMessage("Basic5");
+			}
 		}
 	}
 
@@ -72,6 +87,8 @@ public class GameSceneTutorial : MonoBehaviour
 			Debug.LogError($"Tutorial {tutorialName} not found");
 			return;
 		}
+
+		FindFirstObjectByType<AnimationQueue>().IsStopped = true;
 
 		TutorialCanvas.gameObject.SetActive(true);
 		tutorial.Action = TutorialFinished;
@@ -94,5 +111,7 @@ public class GameSceneTutorial : MonoBehaviour
 		TutorialCanvas.gameObject.SetActive(false);
 		Common.Instance.SaveManager.SaveData.TutorialSaveData
 			.CompletedTutorials.Add(tutorialName);
+
+		FindFirstObjectByType<AnimationQueue>().IsStopped = false;
 	}
 }

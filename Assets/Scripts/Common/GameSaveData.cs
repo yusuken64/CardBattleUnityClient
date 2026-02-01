@@ -132,6 +132,14 @@ public class StorySaveData
 	public List<string> CompletedLevels = new();
 
 	public DungeonSaveData CurrentDungeon { get; set; }
+
+	public void SetToComplete(string id)
+	{
+		if (!CompletedLevels.Contains(id))
+		{
+			CompletedLevels.Add(id);
+		}
+	}
 }
 
 [Serializable]
@@ -142,6 +150,7 @@ public class DungeonSaveData
 	public int Lives { get; set; }
 	public int MaxWins { get; set; }
 	public bool Exited { get; set; }
+	public string ID { get; set; } //Used for determining complete status
 }
 
 [Serializable]

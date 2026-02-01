@@ -136,6 +136,27 @@ public class MainMenu : MonoBehaviour
 		SceneManager.LoadScene("Main");
 	}
 
+	public void SkipTutorial_Click()
+	{
+		Common.Instance.SaveManager.SkipTutorialData();
+		Common.Instance.SaveManager.EnsureData();
+		Common.Instance.SaveManager.Save();
+		SettingsObject.gameObject.SetActive(false);
+		DataObject.gameObject.SetActive(false);
+
+		SceneManager.LoadScene("Main");
+	}
+
+	public void AllCards_Click()
+	{
+		var allCards = Common.Instance.CardManager.CollectableCards();
+		foreach (var cardData in allCards)
+		{
+			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(cardData.ID, 1);
+		}
+		SceneManager.LoadScene("Main");
+	}
+
 	public void PacksPlus10_Click()
 	{
 		Common.Instance.SaveManager.SaveData.GameSaveData.PackCount += 10;

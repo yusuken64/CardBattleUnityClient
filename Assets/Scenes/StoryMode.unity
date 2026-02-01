@@ -9455,7 +9455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1352401590
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9497,6 +9497,7 @@ MonoBehaviour:
   ProgressText: {fileID: 1359507788}
   ResultText: {fileID: 1181615722}
   StoryModeScene: {fileID: 938256839}
+  Map: {fileID: 686163516}
   BattleButton: {fileID: 2054520370}
   FinishButton: {fileID: 1967276979}
 --- !u!1 &1359507786
@@ -9599,7 +9600,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -11569,7 +11570,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -13374,9 +13375,9 @@ RectTransform:
   - {fileID: 1825233975}
   m_Father: {fileID: 421139109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 614.125, y: -257.1295}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 320, y: 161}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1967276979
@@ -13798,9 +13799,9 @@ RectTransform:
   - {fileID: 1411186483}
   m_Father: {fileID: 421139109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1842.375, y: -257.1295}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 320, y: 161}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2054520368

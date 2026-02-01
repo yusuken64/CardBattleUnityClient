@@ -83,4 +83,9 @@ public class SaveManager : MonoBehaviour
 	{
 		SaveData.TutorialSaveData = new();
 	}
+
+	internal void SkipTutorialData()
+	{
+		SaveData.TutorialSaveData.BattleTutorialCompleted = true;
+	}
 }

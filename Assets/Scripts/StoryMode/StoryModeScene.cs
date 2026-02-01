@@ -14,7 +14,7 @@ public class StoryModeScene : MonoBehaviour
         ReloadDungeonState();
 	}
 
-	private void ReloadDungeonState()
+	public void ReloadDungeonState()
 	{
         var currentDungeon = Common.Instance.SaveManager.SaveData.GameSaveData.StorySaveData.CurrentDungeon;
         if (currentDungeon == null ||

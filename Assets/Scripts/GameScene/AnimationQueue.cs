@@ -9,6 +9,8 @@ public class AnimationQueue : MonoBehaviour
 {
     public List<GameActionAnimationBase> GameActionAnimations;
 
+    public bool IsStopped; // used in tutorial to stop animations
+
     private Dictionary<Type, GameActionAnimationBase> animationMap;
     private Queue<IAnimation> queue = new();
     private bool isPlaying = false;
@@ -75,6 +77,11 @@ public class AnimationQueue : MonoBehaviour
 
         while (queue.Count > 0)
         {
+            while (IsStopped)
+            {
+                yield return null;
+            }
+
             IAnimation anim = queue.Dequeue();
             var sfxRoutine = anim.CustomSFX();
             if (sfxRoutine != null)
@@ -88,12 +95,12 @@ public class AnimationQueue : MonoBehaviour
 #if UNITY_EDITOR
             var animation = (GameActionAnimationBase)anim;
             Debug.Log($"Validate {animation.Action.GetType().Name}");
-            
+
             if (animation.Context.SourcePlayer == null)
-			{
+            {
                 Debug.Log($"Source player null for {animation.Action.GetType().Name}");
                 continue;
-			}
+            }
             var playerData = animation.ClonedState.Players.First(x => x.Id == animation.Context.SourcePlayer.Id);
             var player = animation.GameManager.GetPlayerFor(playerData);
             GameManager.ValidateState(playerData, player);
