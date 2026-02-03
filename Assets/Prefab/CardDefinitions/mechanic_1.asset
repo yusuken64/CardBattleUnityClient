@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: mechanic_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: mechanic 1
   ID: mechanic_1
   Sprite: {fileID: 21300000, guid: f0c68c7d013fdd84196b1ac7cbe03ecf, type: 3}
@@ -35,7 +35,7 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: Give your weapon +1/+1
     EffectTrigger: 1
     EffectTiming: 1
     GameActions:
@@ -62,6 +62,7 @@ MonoBehaviour:
     - rid: 2140584803152167070
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 2140584803152167071
         HealthChange:

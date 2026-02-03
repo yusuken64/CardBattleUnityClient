@@ -16,7 +16,7 @@ MonoBehaviour:
   CardName: exorcist 2
   ID: exorcist_2
   Sprite: {fileID: 21300000, guid: 126e6ff9aa1c62649a27c1c155a12343, type: 3}
-  Cost: 1
+  Cost: 4
   CastRestriction:
     rid: -2
   ValidTargetSelector:

@@ -26,6 +26,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public bool HasReborn;
     public bool HasDeathRattle;
     public bool HasTrigger;
+    public bool IsSilenced;
 
     public TextMeshProUGUI AttackText;
     public TextMeshProUGUI HealthText;
@@ -41,6 +42,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public GameObject LifeStealIndicator;
     public GameObject RebornIndicator;
     public GameObject TriggerIndicator;
+    public GameObject SilenceIndicator;
 
 	#region Animation
 	public Vector2 TargetPosition { get; internal set; }
@@ -131,6 +133,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         RebornIndicator.gameObject.SetActive(HasReborn);
         DeathRattleIndicator.gameObject.SetActive(HasDeathRattle);
         TriggerIndicator.gameObject.SetActive(HasTrigger);
+        SilenceIndicator.gameObject.SetActive(IsSilenced);
     }
 
     internal void RefreshData()

@@ -16,13 +16,13 @@ MonoBehaviour:
   CardName: Princess Devis 0
   ID: princess_devis_0
   Sprite: {fileID: 21300000, guid: 68221c4c64c6ebe46b79b72907fa2baf, type: 3}
-  Cost: 1
+  Cost: 4
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
+  Attack: 4
   Health: 1
   MinionTribes: 
   IsStealth: 0
@@ -34,9 +34,45 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: Gain Helath for each card in hand
+    EffectTrigger: 1
+    EffectTiming: 1
+    GameActions:
+    - rid: 7726824629604450384
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 7726824629604450383
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 7726824629604450383
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        IncludeSummonedMinion: 1
+        ResolutionTiming: 0
+    - rid: 7726824629604450384
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        StatModifierType: 0
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: 7726824629604450385
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 7726824629604450385
+      type: {class: NumberOfCardsInHandWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0

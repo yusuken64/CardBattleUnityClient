@@ -16,19 +16,20 @@ MonoBehaviour:
   CardName: vagabond 1
   ID: vagabond_1
   Sprite: {fileID: 21300000, guid: 31ec9085f1e7ad84dba1b12eea663a28, type: 3}
-  Cost: 1
+  Cost: 4
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
-  TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  TriggeredEffects:
+  - rid: 7726824629604450372
+  Attack: 3
+  Health: 3
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
   HasDivineShield: 0
-  HasTaunt: 0
+  HasTaunt: 1
   HasPoisonous: 0
   HasWindFury: 0
   HasLifeSteal: 0
@@ -40,3 +41,47 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 7726824629604450372
+      type: {class: TriggeredEffectWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Cost 1 less for each attack of your weapon
+        EffectTrigger: 7
+        EffectTiming: 2
+        GameActions:
+        - rid: 7726824629604450373
+        Condition:
+          rid: -2
+        AffectedEntitySelectorWrapper:
+          rid: 7726824629604450376
+    - rid: 7726824629604450373
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        StatModifierType: 0
+        AttackChange:
+          rid: -2
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: 7726824629604450374
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 7726824629604450374
+      type: {class: NegativeValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        OriginalValue:
+          rid: 7726824629604450375
+    - rid: 7726824629604450375
+      type: {class: WeaponValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+    - rid: 7726824629604450376
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 1
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
+        ResolutionTiming: 0
