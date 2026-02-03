@@ -4922,6 +4922,7 @@ MonoBehaviour:
   - {fileID: 704603126}
   - {fileID: 1738033818}
   - {fileID: 2009112251}
+  IsStopped: 0
 --- !u!1 &1045255049
 GameObject:
   m_ObjectHideFlags: 0
@@ -5453,8 +5454,8 @@ MonoBehaviour:
   Player: {fileID: 1280333541}
   Opponent: {fileID: 568661103}
   AnimationQueue: {fileID: 984708922}
-  TestDeck: {fileID: 11400000, guid: 01dd0ba828e31d940b9a2108460aa802, type: 2}
-  EnemyTestDeck: {fileID: 11400000, guid: 01dd0ba828e31d940b9a2108460aa802, type: 2}
+  TestDeck: {fileID: 11400000, guid: 722c3447ebc0200419df98e6dffd85a6, type: 2}
+  EnemyTestDeck: {fileID: 11400000, guid: 722c3447ebc0200419df98e6dffd85a6, type: 2}
   UseSeed: 1
   RandomSeed: 0
   BattleIntro: {fileID: 1320670705}

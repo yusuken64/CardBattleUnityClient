@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: luna_girl_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Luna girl 01
   ID: luna_girl_01
   Sprite: {fileID: 21300000, guid: deb2d22812fb83646ba8aeff810b77d5, type: 3}
-  Cost: 1
+  Cost: 3
   CastRestriction:
     rid: -2
   ValidTargetSelector:
-    rid: -2
+    rid: 7726824627959496770
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 3
+  Health: 3
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -34,9 +34,50 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: Set a target minions attack to 1
+    EffectTrigger: 0
+    EffectTiming: 0
+    GameActions:
+    - rid: 7726824627959496771
+    Condition:
+      rid: -2
+    AffectedEntitySelectorWrapper:
+      rid: 7726824627959496777
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 7726824627959496770
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 1
+    - rid: 7726824627959496771
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        StatModifierType: 1
+        AttackChange:
+          rid: 7726824627959496772
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 7726824627959496772
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 7726824627959496777
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 1
+        IncludeSource: 0
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
+        ResolutionTiming: 0

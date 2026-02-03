@@ -35,10 +35,9 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: When a friendly minion dies +1/+1
     EffectTrigger: 8
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867525712731439229
     Condition:
@@ -57,10 +56,12 @@ MonoBehaviour:
         IncludeSource: 1
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0
     - rid: 867525712731439229
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 867526330764230802
         HealthChange:

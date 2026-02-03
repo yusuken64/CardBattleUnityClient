@@ -35,10 +35,9 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: Destroy All Minions
     EffectTrigger: 1
     EffectTiming: 0
-    TargetType: 7
     GameActions:
     - rid: 867525924129079298
     Condition:
