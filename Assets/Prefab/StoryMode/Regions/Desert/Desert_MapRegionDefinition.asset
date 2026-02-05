@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
+  m_Name: Desert_MapRegionDefinition
+  m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
+  RegionID: Desert
+  Name: Desert
+  Description: 
+  Dungeons:
+  - {fileID: 11400000, guid: 991051a6a3296b343b395557bbb907c7, type: 2}
+  - {fileID: 11400000, guid: 05823471867493b4a9aabc3a5fd5374e, type: 2}

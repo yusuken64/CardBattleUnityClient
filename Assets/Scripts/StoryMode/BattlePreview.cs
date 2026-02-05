@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class BattlePreview : MonoBehaviour
 {
 	public Image BattleImage;
+	public TextMeshProUGUI NameText;
 	public TextMeshProUGUI DescriptionText;
 	private StoryModeDungeonDefinition _data;
 
@@ -20,6 +21,7 @@ public class BattlePreview : MonoBehaviour
 		this._data = data;
 
 		BattleImage.sprite = data.BattleImage;
+		NameText.text = data.DungeonName;
 		DescriptionText.text = data.Description;
 	}
 

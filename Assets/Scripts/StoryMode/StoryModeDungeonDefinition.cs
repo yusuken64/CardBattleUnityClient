@@ -9,9 +9,12 @@ public class StoryModeDungeonDefinition : ScriptableObject
 {
 	public string DungeonID;
 	public Sprite BattleImage;
+	public string DungeonName;
 	public string Description;
 
+	public int MaxWins;
+
 	[SerializeReference]
-	public List<StoryModeDungeonEncounterDefinition> StoryModeDungeonEncounterDefinition;
+	public List<StoryModeDungeonEncounterDefinition> StoryModeDungeonEncounterDefinitions;
 }
 

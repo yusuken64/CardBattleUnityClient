@@ -86,12 +86,18 @@ public class GameManager : MonoBehaviour
 		UnityRNG rng = new UnityRNG();
 
 		_gameState = CreateGame(deck, enemyDeck, rng);
-		if (GameStartParams != null &&
-			GameStartParams.OpponentExtraEffects != null)
+		if (GameStartParams != null)
 		{
-			foreach (var opponentEffect in GameStartParams.OpponentExtraEffects)
+			_gameState.Players[0].MaxHealth = GameStartParams.Health;
+			_gameState.Players[0].Health = GameStartParams.Health;
+			_gameState.Players[1].MaxHealth = GameStartParams.OpponentHealth;
+			_gameState.Players[1].Health = GameStartParams.OpponentHealth;
+			if (GameStartParams.OpponentExtraEffects != null)
 			{
-				_gameState.Players[1].TriggeredEffects.Add(opponentEffect.CreateEffect());
+				foreach (var opponentEffect in GameStartParams.OpponentExtraEffects)
+				{
+					_gameState.Players[1].TriggeredEffects.Add(opponentEffect.CreateEffect());
+				}
 			}
 		}
 
@@ -369,7 +375,9 @@ public class GameStartParams
 	public List<TriggeredEffectWrapper> OpponentExtraEffects;
 
 	public Deck CombatDeck;
+	public int Health = 30;
 	public Deck CombatDeckEnemy;
+	public int OpponentHealth = 30;
 }
 
 internal class UnityRNG : IRNG

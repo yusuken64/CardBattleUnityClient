@@ -1,9 +1,11 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BattleGridButton : MonoBehaviour
 {
+	public TextMeshProUGUI NameText;
 	public Image BattleImage;
 	public GameObject CompletedIndicator;
 
@@ -19,7 +21,8 @@ public class BattleGridButton : MonoBehaviour
 	internal void Setup(StoryModeDungeonDefinition data)
 	{
 		this._data = data;
-		BattleImage.sprite = data.BattleImage;
+		//BattleImage.sprite = data.BattleImage;
+		NameText.text = data.DungeonName;
 
 		bool completed = Common.Instance.SaveManager.SaveData.GameSaveData.StorySaveData.CompletedLevels.Contains(data.DungeonID);
 		CompletedIndicator.SetActive(completed);

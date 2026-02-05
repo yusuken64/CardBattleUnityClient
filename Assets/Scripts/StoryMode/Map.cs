@@ -131,7 +131,7 @@ public class Map : MonoBehaviour
 				Title = $"{SelectedLocation.MapRegionDefinition.Name} {data.Description} Dungeon",
 				Lives = 1,
 				Wins = 0,
-				MaxWins = 2,
+				MaxWins = data.MaxWins,
 				Exited = false,
 				ID = data.DungeonID,
 			};

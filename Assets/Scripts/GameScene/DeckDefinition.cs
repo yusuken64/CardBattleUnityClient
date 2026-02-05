@@ -59,4 +59,11 @@ public class DeckDefinition : ScriptableObject
             return string.Compare(a.CardName, b.CardName, StringComparison.Ordinal);
         });
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Randomize Cards")]
+    public void RandomizeCards()
+    {
+    }
+#endif
 }

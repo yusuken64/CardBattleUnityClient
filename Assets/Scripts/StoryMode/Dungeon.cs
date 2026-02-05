@@ -58,16 +58,19 @@ Acquired 1 Pack";
 			.SelectMany(x => x.MapRegionDefinition.Dungeons)
 			.FirstOrDefault(x => x.DungeonID == currentDungeonSaveData.ID);
 
-		var encounter = currentDungeon.StoryModeDungeonEncounterDefinition[UnityEngine.Random.Range(0, currentDungeon.StoryModeDungeonEncounterDefinition.Count())];
+		var encounter = currentDungeon.StoryModeDungeonEncounterDefinitions[UnityEngine.Random.Range(0, currentDungeon.StoryModeDungeonEncounterDefinitions.Count())];
 		//TODO handle boss, if defined and wins == maxwins - 1;
 
 		DeckSaveData firstDeck = gameSaveData.DeckSaveDatas[0];
-		GameStartParams gameStartParams = new();
-		gameStartParams.CombatDeck = firstDeck.ToDeck();
-		gameStartParams.CombatDeckEnemy = encounter.Deck.ToDeck();
-		//gameStartParams.OpponentExtraEffects = activeEffects.SelectMany(x => x.TriggeredEffects).ToList();
-		GameManager.GameStartParams = gameStartParams;
+		GameStartParams gameStartParams = new()
+		{
+			CombatDeck = firstDeck.ToDeck(),
+			Health = 30,
+			CombatDeckEnemy = encounter.Deck.ToDeck(),
+			OpponentHealth = encounter.Health,
+		};
 
+		GameManager.GameStartParams = gameStartParams;
 		GameManager.GameResultRoutine = GameResult;
 
 		IEnumerator GameResult(bool isWin)

@@ -63,7 +63,7 @@ public static class StoryModeGenerator
         AssetDatabase.Refresh();
     }
 
-    private static List<CardDefinition> LoadAllCards()
+    public static List<CardDefinition> LoadAllCards()
     {
         var guids = AssetDatabase.FindAssets("t:CardDefinition");
         var cards = new List<CardDefinition>(guids.Length);
@@ -79,7 +79,7 @@ public static class StoryModeGenerator
         return cards;
     }
 
-    private static List<T> PickRandomWithoutReplacement<T>(IList<T> list, int count)
+    public static List<T> PickRandomWithoutReplacement<T>(IList<T> list, int count)
     {
         if (list == null || list.Count == 0)
             throw new ArgumentException("PickRandom called with null or empty list");
@@ -99,7 +99,7 @@ public static class StoryModeGenerator
         return copy.GetRange(0, count);
     }
 
-    private static List<T> PickRandomWithReplacement<T>(IList<T> list, int count = 1)
+    public static List<T> PickRandomWithReplacement<T>(IList<T> list, int count = 1)
     {
         if (list == null || list.Count == 0)
             throw new ArgumentException("PickRandom called with null or empty list");
@@ -111,7 +111,7 @@ public static class StoryModeGenerator
         return result;
     }
 
-    private static T EnsureObjectExists<T>(string filePath) where T : ScriptableObject
+    public static T EnsureObjectExists<T>(string filePath) where T : ScriptableObject
     {
         var existing = AssetDatabase.LoadAssetAtPath<T>(filePath);
         if (existing != null)
