@@ -24,8 +24,9 @@ public class BattleIntro : MonoBehaviour
 
     public Transform Hero1Target;
     public Transform Hero2Target;
+    public ScrollingBackground ScrollingBackground;
 
-	public void Setup(Deck playerDeck, Deck enemyDeck)
+    public void Setup(Deck playerDeck, Deck enemyDeck)
 	{
         HeroPortrait1.sprite = playerDeck.HeroCard.Sprite;
         Hero1NameText.text = "Player";
@@ -80,6 +81,7 @@ public class BattleIntro : MonoBehaviour
         {
             startGameCallback?.Invoke();
             this.gameObject.SetActive(false);
+            ScrollingBackground.StopScrolling();
         });
 
     }

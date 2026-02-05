@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	public static string ReturnScreenName;
 	public static Func<bool, IEnumerator> GameResultRoutine;
 	public static GameStartParams GameStartParams;
+	public static string BackgroundName;
 
 	public Player Player;
 	public Player Opponent;
