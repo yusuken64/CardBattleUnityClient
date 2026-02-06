@@ -32,7 +32,7 @@ public class OpenPackScene : MonoBehaviour
 		ResetChest();
 	}
 
-	private static List<T> PickRandomWithReplacement<T>(IList<T> list, int count = 1)
+	public static List<T> PickRandomWithReplacement<T>(IList<T> list, int count = 1)
 	{
 		if (list == null || list.Count == 0)
 			throw new ArgumentException("PickRandom called with null or empty list");

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,8 +18,6 @@ public class ArenaPage : MonoBehaviour
 	public TextMeshProUGUI ArenaText;
 	public TextMeshProUGUI BattleText;
 	public GameObject BattleButton;
-
-	public List<DeckDefinition> EnemyDecks;
 
 	private void Start()
 	{
@@ -94,14 +93,23 @@ Lives: {adventureSaveData.Lives}";
 
 	public void EndArena_Clicked()
 	{
-		//reset arena
-		Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = null;
-		Common.Instance.SaveManager.Save();
+		Common.Instance.YesNoConfirmation.Setup(
+			"End Arena?",
+			"End Arena?",
+			"End",
+			() =>
+			{
+				//reset arena
+				Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck = null;
+				Common.Instance.SaveManager.Save();
 
-		Common.Instance.SceneTransition.DoTransition(() =>
-		{
-			SceneManager.LoadScene("Main");
-		});
+				Common.Instance.SceneTransition.DoTransition(() =>
+				{
+					SceneManager.LoadScene("Main");
+				});
+			},
+			"Cancel",
+			() => { });
 	}
 
 	public void Battle_Clicked()
@@ -133,7 +141,8 @@ Lives: {adventureSaveData.Lives}";
 
 		GameStartParams gameStartParams = new();
 		gameStartParams.CombatDeck = gameSaveData.AdventureSaveData.CurrentDeck.ToDeck();
-		gameStartParams.CombatDeckEnemy = GenerateEnemyDeck().ToDeck();
+		gameStartParams.CombatDeckEnemy = GenerateEnemyDeck(gameSaveData.AdventureSaveData.Wins).ToDeck();
+		gameStartParams.OpponentHealth = 30 + (gameSaveData.AdventureSaveData.Wins * 15);
 		GameManager.GameStartParams = gameStartParams;
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
@@ -142,10 +151,18 @@ Lives: {adventureSaveData.Lives}";
 
 	}
 
-	private DeckSaveData GenerateEnemyDeck()
+	private DeckSaveData GenerateEnemyDeck(int wins)
 	{
-		var deck = EnemyDecks[UnityEngine.Random.Range(0, EnemyDecks.Count)];
-		return deck.ToDeckData();
+		List<CardDefinition> allCards = Common.Instance.CardManager.CollectableCards();
+
+		var heroPool = OpenPackScene.PickRandomWithReplacement(allCards.OfType<MinionCardDefinition>().ToList());
+
+		Deck encounterDeck = new();
+		encounterDeck.Title = $"Deck {wins + 1}";
+		encounterDeck.HeroCard = heroPool[0];
+		encounterDeck.Cards = OpenPackScene.PickRandomWithReplacement(allCards, 50);
+
+		return DeckSaveData.FromDeck(encounterDeck);
 	}
 
 	public void PromptToPickCard()
