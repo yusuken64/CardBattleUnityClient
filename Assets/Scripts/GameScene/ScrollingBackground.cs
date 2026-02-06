@@ -8,12 +8,6 @@ public class ScrollingBackground : MonoBehaviour
     public List<ScrollingBackgroundCtrl> backgrounds;
     private ScrollingBackgroundCtrl _selected;
 
-    public void Start()
-    {
-        ActivateBackgroundByName(GameManager.BackgroundName);
-        GameManager.BackgroundName = null;
-    }
-
     public void ActivateBackgroundByName(string id)
     {
         // Always disable everything first

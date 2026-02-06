@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
   m_Name: Temple_StoryModeDungeonDefinition_1
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
-  DungeonID: 
+  DungeonID: Temple_Dungeon1
   BattleImage: {fileID: 0}
-  DungeonName: 
+  DungeonName: Temple Dungeon lv.2
   Description: 
-  MaxWins: 0
-  StoryModeDungeonEncounterDefinitions: []
+  MaxWins: 5
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: 361236cf444729c429874c5d3ca0d45b, type: 2}
+  - {fileID: 11400000, guid: 97effa6ab3ed8bc4cb347b86cd0df96a, type: 2}
+  - {fileID: 11400000, guid: f65f4c18aa69b5b4e897c55dadd746c6, type: 2}
+  - {fileID: 11400000, guid: 37ab5ec53cddcd74f9616a553180ca1a, type: 2}

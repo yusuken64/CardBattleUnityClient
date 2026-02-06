@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
   m_Name: Ice_StoryModeDungeonEncounterDefinition_2_1
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonEncounterDefinition
-  LevelID: 
+  LevelID: Ice_StoryModeDungeonEncounterDefinition_2
   BattleImage: {fileID: 0}
   Description: 
-  Health: 30
-  Deck: {fileID: 0}
+  BackgroundName: IceField
+  Health: 60
+  Deck: {fileID: 11400000, guid: cc228501b534145448c895aa2ca86022, type: 2}
   StoryBattleModifiers: []
   references:
     version: 2

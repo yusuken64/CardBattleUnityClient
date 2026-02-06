@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
   m_Name: Woods_MapRegionDefinition
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
-  RegionID: 
-  Name: 
+  RegionID: Woods
+  Name: Woods
   Description: 
-  Dungeons: []
+  Dungeons:
+  - {fileID: 11400000, guid: 4d1e3317d85c5f74b9db433e9dd877fb, type: 2}
+  - {fileID: 11400000, guid: 8469d896add491f40b4b7847191b2952, type: 2}
+  - {fileID: 11400000, guid: 99535824862dfa54caa48e60322f2d1d, type: 2}

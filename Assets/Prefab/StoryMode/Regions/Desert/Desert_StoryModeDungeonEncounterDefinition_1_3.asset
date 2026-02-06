@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
   m_Name: Desert_StoryModeDungeonEncounterDefinition_1_3
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonEncounterDefinition
-  LevelID: 
+  LevelID: Desert_StoryModeDungeonEncounterDefinition_1
   BattleImage: {fileID: 0}
   Description: 
-  Health: 30
-  Deck: {fileID: 0}
+  BackgroundName: Desert
+  Health: 45
+  Deck: {fileID: 11400000, guid: 202d9fc77eb946144aaff72eb597d02e, type: 2}
   StoryBattleModifiers: []
   references:
     version: 2

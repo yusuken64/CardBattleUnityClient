@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
   m_Name: Ice_MapRegionDefinition
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
-  RegionID: 
-  Name: 
+  RegionID: Ice
+  Name: Ice
   Description: 
-  Dungeons: []
+  Dungeons:
+  - {fileID: 11400000, guid: a7f1749c774f48a42a0749ea7fa0cbc2, type: 2}
+  - {fileID: 11400000, guid: aa66d1c36feeabc42a806f1360c7cebd, type: 2}
+  - {fileID: 11400000, guid: 7e18f4baeabd0ae4bb1a2f7f51591d11, type: 2}

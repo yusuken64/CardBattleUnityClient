@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
   m_Name: Woods_StoryModeDungeonDefinition_1
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
-  DungeonID: 
+  DungeonID: Woods_Dungeon1
   BattleImage: {fileID: 0}
-  DungeonName: 
+  DungeonName: Woods Dungeon lv.2
   Description: 
-  MaxWins: 0
-  StoryModeDungeonEncounterDefinitions: []
+  MaxWins: 5
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: e8ded7e2b1961644bb11ea67d3b6f82a, type: 2}
+  - {fileID: 11400000, guid: 6e3ce1fc5f079d84c9c8176982c5db71, type: 2}
+  - {fileID: 11400000, guid: 04108633168a7cb4586060e923c9b477, type: 2}
+  - {fileID: 11400000, guid: 1960d49dd53988144bb63750cac52882, type: 2}

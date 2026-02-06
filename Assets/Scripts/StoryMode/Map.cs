@@ -128,7 +128,7 @@ public class Map : MonoBehaviour
 			GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
 			gameSaveData.StorySaveData.CurrentDungeon = new DungeonSaveData()
 			{
-				Title = $"{SelectedLocation.MapRegionDefinition.Name} {data.Description} Dungeon",
+				Title = data.DungeonName,
 				Lives = 1,
 				Wins = 0,
 				MaxWins = data.MaxWins,

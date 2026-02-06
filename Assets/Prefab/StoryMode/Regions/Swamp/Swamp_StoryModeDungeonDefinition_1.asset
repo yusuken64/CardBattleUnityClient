@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
   m_Name: Swamp_StoryModeDungeonDefinition_1
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
-  DungeonID: 
+  DungeonID: Swamp_Dungeon1
   BattleImage: {fileID: 0}
-  DungeonName: 
+  DungeonName: Swamp Dungeon lv.2
   Description: 
-  MaxWins: 0
-  StoryModeDungeonEncounterDefinitions: []
+  MaxWins: 5
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: b81e0ff8bb3ed744983c5102187bf896, type: 2}
+  - {fileID: 11400000, guid: def162aef66cd314f9ce0ed675379def, type: 2}
+  - {fileID: 11400000, guid: a7b25ca12e98456488338f9c39f8f3b4, type: 2}
+  - {fileID: 11400000, guid: 5328a4b061050694eaa01b7ebfdc0893, type: 2}

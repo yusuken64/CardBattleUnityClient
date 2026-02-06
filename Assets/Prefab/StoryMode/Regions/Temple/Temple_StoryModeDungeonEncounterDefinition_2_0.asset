@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
   m_Name: Temple_StoryModeDungeonEncounterDefinition_2_0
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonEncounterDefinition
-  LevelID: 
+  LevelID: Temple_StoryModeDungeonEncounterDefinition_2
   BattleImage: {fileID: 0}
   Description: 
-  Health: 30
-  Deck: {fileID: 0}
+  BackgroundName: Ruins
+  Health: 60
+  Deck: {fileID: 11400000, guid: 133ebee117aaab9439bb89f6e9babc2f, type: 2}
   StoryBattleModifiers: []
   references:
     version: 2

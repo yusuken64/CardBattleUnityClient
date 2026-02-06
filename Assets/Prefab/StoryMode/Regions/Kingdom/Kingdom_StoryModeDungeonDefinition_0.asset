@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
   m_Name: Kingdom_StoryModeDungeonDefinition_0
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
-  DungeonID: 
+  DungeonID: Kingdom_Dungeon0
   BattleImage: {fileID: 0}
-  DungeonName: 
+  DungeonName: Kingdom Dungeon lv.1
   Description: 
-  MaxWins: 0
-  StoryModeDungeonEncounterDefinitions: []
+  MaxWins: 3
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: 60890451b0c72744ca3b6be238bca961, type: 2}
+  - {fileID: 11400000, guid: f9ee99b039841814e8d33a46c047a6b0, type: 2}
+  - {fileID: 11400000, guid: 1ef6597a63e84ac4e90bd5f752b51166, type: 2}
+  - {fileID: 11400000, guid: a371b05fa74a44e4f99a3a460c11561b, type: 2}

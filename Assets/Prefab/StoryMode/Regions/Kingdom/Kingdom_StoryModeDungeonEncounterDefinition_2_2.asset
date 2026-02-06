@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
   m_Name: Kingdom_StoryModeDungeonEncounterDefinition_2_2
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonEncounterDefinition
-  LevelID: 
+  LevelID: Kingdom_StoryModeDungeonEncounterDefinition_2
   BattleImage: {fileID: 0}
   Description: 
-  Health: 30
-  Deck: {fileID: 0}
+  BackgroundName: ElfCity
+  Health: 60
+  Deck: {fileID: 11400000, guid: 17711638dd6ea0c45a5ed4b9d2ebb5d3, type: 2}
   StoryBattleModifiers: []
   references:
     version: 2

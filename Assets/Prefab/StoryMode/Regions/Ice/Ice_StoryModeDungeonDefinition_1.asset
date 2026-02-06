@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
   m_Name: Ice_StoryModeDungeonDefinition_1
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
-  DungeonID: 
+  DungeonID: Ice_Dungeon1
   BattleImage: {fileID: 0}
-  DungeonName: 
+  DungeonName: Ice Dungeon lv.2
   Description: 
-  MaxWins: 0
-  StoryModeDungeonEncounterDefinitions: []
+  MaxWins: 5
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: 4b9d3ef7521a74e43b9af02479c45599, type: 2}
+  - {fileID: 11400000, guid: 8b316544ddff83b4892b181d493c1cb4, type: 2}
+  - {fileID: 11400000, guid: 747f3e884a495b1419fce55cfde8d969, type: 2}
+  - {fileID: 11400000, guid: 8aa0178b04a538142bf0557bdad4a41e, type: 2}

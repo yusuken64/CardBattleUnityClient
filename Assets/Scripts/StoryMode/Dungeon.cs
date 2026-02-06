@@ -17,6 +17,8 @@ public class Dungeon : MonoBehaviour
 	public Button BattleButton;
 	public Button FinishButton;
 
+	public bool GameOver;
+
 	public void Setup()
 	{
 		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
@@ -35,6 +37,7 @@ public class Dungeon : MonoBehaviour
 			//game over
 			ResultText.text = "Failed";
 			BattleButton.interactable = false;
+			GameOver = true;
 		}
 		else if (currentDungeon.Wins >= currentDungeon.MaxWins)
 		{
@@ -42,11 +45,13 @@ public class Dungeon : MonoBehaviour
 			ResultText.text = @"Complete
 Acquired 1 Pack";
 			BattleButton.interactable = false;
+			GameOver = true;
 		}
 		else
 		{
 			ResultText.text = "";
 			BattleButton.interactable = true;
+			GameOver = false;
 		}
 	}
 
@@ -68,6 +73,7 @@ Acquired 1 Pack";
 			Health = 30,
 			CombatDeckEnemy = encounter.Deck.ToDeck(),
 			OpponentHealth = encounter.Health,
+			BackgroundName = encounter.BackgroundName
 		};
 
 		GameManager.GameStartParams = gameStartParams;
@@ -80,10 +86,10 @@ Acquired 1 Pack";
 			if (isWin)
 			{
 				save.StorySaveData.CurrentDungeon.Wins++;
-				save.StorySaveData.SetToComplete(save.StorySaveData.CurrentDungeon.ID);
 				if (save.StorySaveData.CurrentDungeon.Wins >=
 					save.StorySaveData.CurrentDungeon.MaxWins)
 				{
+					save.StorySaveData.SetToComplete(save.StorySaveData.CurrentDungeon.ID);
 					save.PackCount++;
 				}
 			}
@@ -106,6 +112,27 @@ Acquired 1 Pack";
 	}
 
 	public void Exit_Clicked()
+	{
+		if (GameOver)
+		{
+			ExitDungeon();
+		}
+		else
+		{
+			Common.Instance.YesNoConfirmation.Setup(
+				"Exit Dungeon?",
+				"You haven't finished this dungeon yet. Leaving now will reset your progress.",
+				"Continue Run",
+				() => { },
+				"Leave Dungeon",
+				() =>
+				{
+					ExitDungeon();
+				});
+		}
+	}
+
+	private void ExitDungeon()
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{

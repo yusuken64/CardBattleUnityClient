@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
   m_Name: Woods_StoryModeDungeonEncounterDefinition_2_0
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonEncounterDefinition
-  LevelID: 
+  LevelID: Woods_StoryModeDungeonEncounterDefinition_2
   BattleImage: {fileID: 0}
   Description: 
-  Health: 30
-  Deck: {fileID: 0}
+  BackgroundName: Forest
+  Health: 60
+  Deck: {fileID: 11400000, guid: 8d2f82528ec10d54f81f6299f992137a, type: 2}
   StoryBattleModifiers: []
   references:
     version: 2

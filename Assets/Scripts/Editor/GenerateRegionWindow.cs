@@ -162,10 +162,14 @@ public class GenerateRegionWindow : EditorWindow
                     EnsureScriptableObjectExists<DeckDefinition>($"{regionDecksFolderPath}/{safeRegionName}_StoryModeDungeonEncounterDeckDefinition_{j}.asset");
                 storyModeDungeonEncounterDefinition.Deck = encounterDeck;
                 storyModeDungeonEncounterDefinition.Health = 30 + (i * 15);
+                EditorUtility.SetDirty(storyModeDungeonEncounterDefinition);
+                EditorUtility.SetDirty(encounterDeck);
             }
+            EditorUtility.SetDirty(dungeon);
 
             mapRegion.Dungeons.Add(dungeon);
         }
+        EditorUtility.SetDirty(mapRegion);
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -207,6 +211,7 @@ public class GenerateRegionWindow : EditorWindow
             encounterDeck.Title = $"Deck{i}";
             encounterDeck.HeroCard = heroPool[i];
             encounterDeck.Cards = StoryModeGenerator.PickRandomWithReplacement(cards, 50);
+            EditorUtility.SetDirty(encounterDeck);
         }
 
         AssetDatabase.SaveAssets();

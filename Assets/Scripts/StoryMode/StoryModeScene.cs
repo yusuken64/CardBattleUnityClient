@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class StoryModeScene : MonoBehaviour
 {
+    public GameObject Main;
     public Map Map;
 
     void Start()
@@ -15,7 +16,8 @@ public class StoryModeScene : MonoBehaviour
 	}
 
 	public void ReloadDungeonState()
-	{
+    {
+        Main.gameObject.SetActive(true);
         var currentDungeon = Common.Instance.SaveManager.SaveData.GameSaveData.StorySaveData.CurrentDungeon;
         if (currentDungeon == null ||
             currentDungeon.Exited)

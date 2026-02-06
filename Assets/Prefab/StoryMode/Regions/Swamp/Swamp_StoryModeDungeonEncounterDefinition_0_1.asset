@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
   m_Name: Swamp_StoryModeDungeonEncounterDefinition_0_1
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonEncounterDefinition
-  LevelID: 
+  LevelID: Swamp_StoryModeDungeonEncounterDefinition_0
   BattleImage: {fileID: 0}
   Description: 
+  BackgroundName: Swamp
   Health: 30
-  Deck: {fileID: 0}
+  Deck: {fileID: 11400000, guid: 5ea45bae8e160fa498ca530691920401, type: 2}
   StoryBattleModifiers: []
   references:
     version: 2

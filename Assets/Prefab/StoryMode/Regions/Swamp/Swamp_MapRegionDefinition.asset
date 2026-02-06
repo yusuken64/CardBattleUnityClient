@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
   m_Name: Swamp_MapRegionDefinition
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
-  RegionID: 
-  Name: 
+  RegionID: Swamp
+  Name: Swamp
   Description: 
-  Dungeons: []
+  Dungeons:
+  - {fileID: 11400000, guid: 8481470ae007e7f4dbe739e7311f694d, type: 2}
+  - {fileID: 11400000, guid: f42f6a38cc034e340b14a703de899a00, type: 2}
+  - {fileID: 11400000, guid: b9ab78e08a3ecda4a810b6b0e719a5f8, type: 2}

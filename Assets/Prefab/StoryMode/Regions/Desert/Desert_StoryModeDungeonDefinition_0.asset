@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
   DungeonID: Desert_Dungeon0
   BattleImage: {fileID: 0}
+  DungeonName: Desert Dungeon lv.1
   Description: 
+  MaxWins: 3
   StoryModeDungeonEncounterDefinitions:
   - {fileID: 11400000, guid: 87164c858a609b242b5f44997ed396c7, type: 2}
   - {fileID: 11400000, guid: 5decaae31966eb0449c4c2160ac8c544, type: 2}
+  - {fileID: 11400000, guid: 5f948050cb4d3594b96925bf157ab492, type: 2}
+  - {fileID: 11400000, guid: 4ae30d4bf53d81545b8cf817ff1c98d7, type: 2}

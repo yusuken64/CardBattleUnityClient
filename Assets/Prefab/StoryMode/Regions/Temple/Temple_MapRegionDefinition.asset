@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
   m_Name: Temple_MapRegionDefinition
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
-  RegionID: 
-  Name: 
+  RegionID: Temple
+  Name: Temple
   Description: 
-  Dungeons: []
+  Dungeons:
+  - {fileID: 11400000, guid: 0328f3873f093a345923f4a0f9354be8, type: 2}
+  - {fileID: 11400000, guid: 5bd8b2472eeae1b4ea6e239cfd65b8c8, type: 2}
+  - {fileID: 11400000, guid: ea0db58cf8de68f458720c8e68b17075, type: 2}

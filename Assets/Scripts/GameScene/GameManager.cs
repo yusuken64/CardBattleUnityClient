@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
 	public static string ReturnScreenName;
 	public static Func<bool, IEnumerator> GameResultRoutine;
 	public static GameStartParams GameStartParams;
-	public static string BackgroundName;
 
 	public Player Player;
 	public Player Opponent;
@@ -44,6 +43,9 @@ public class GameManager : MonoBehaviour
 
 	private void InitializeGame()
 	{
+		FindFirstObjectByType<ScrollingBackground>(FindObjectsInactive.Include)?
+			.ActivateBackgroundByName(GameStartParams?.BackgroundName);
+		
 		_engine = new GameEngine();
 
 		Deck deck;
@@ -133,6 +135,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		_engine.StartGame(_gameState);
+
 		GameStartParams = null;
 	}
 
@@ -379,6 +382,8 @@ public class GameStartParams
 	public int Health = 30;
 	public Deck CombatDeckEnemy;
 	public int OpponentHealth = 30;
+
+	public string BackgroundName;
 }
 
 internal class UnityRNG : IRNG

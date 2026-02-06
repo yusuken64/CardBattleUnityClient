@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
   m_Name: Fire_StoryModeDungeonEncounterDefinition_1_0
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonEncounterDefinition
-  LevelID: 
+  LevelID: Fire_StoryModeDungeonEncounterDefinition_1
   BattleImage: {fileID: 0}
   Description: 
-  Health: 30
-  Deck: {fileID: 0}
+  BackgroundName: Lava
+  Health: 45
+  Deck: {fileID: 11400000, guid: b873e01a8d5e2054ab7272cc2d478ecf, type: 2}
   StoryBattleModifiers: []
   references:
     version: 2

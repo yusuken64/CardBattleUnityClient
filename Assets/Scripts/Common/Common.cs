@@ -12,6 +12,7 @@ public class Common : MonoBehaviour
 	public GlobalSettings GlobalSettings;
 	public VideoSettingsManager VideoSettingsManager;
 	public SceneTransition SceneTransition;
+	public YesNoConfirmation YesNoConfirmation;
 
 	public DeckDefinition StartingDeck;
 
@@ -42,6 +43,7 @@ public class Common : MonoBehaviour
 		Debug.Log("AudioManager Initialized");
 
 		VideoSettingsManager.InitializeVideo();
+		YesNoConfirmation.gameObject.SetActive(false);
 	}
 }
 

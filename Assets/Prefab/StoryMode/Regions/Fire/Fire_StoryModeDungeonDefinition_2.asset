@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
   m_Name: Fire_StoryModeDungeonDefinition_2
   m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
-  DungeonID: 
+  DungeonID: Fire_Dungeon2
   BattleImage: {fileID: 0}
-  DungeonName: 
+  DungeonName: Fire Dungeon lv.3
   Description: 
-  MaxWins: 0
-  StoryModeDungeonEncounterDefinitions: []
+  MaxWins: 7
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: fae0c1f04935bf244a9f3b9ad77377d7, type: 2}
+  - {fileID: 11400000, guid: f7fe4ed6099fcff48b3a0188696ccc1a, type: 2}
+  - {fileID: 11400000, guid: 30f3789ea2ab87746a2672c6b6f935cc, type: 2}
+  - {fileID: 11400000, guid: ddc34b27c45ce7443b3df3660156ec83, type: 2}

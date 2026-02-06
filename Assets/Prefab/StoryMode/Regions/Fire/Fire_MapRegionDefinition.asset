@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
   m_Name: Fire_MapRegionDefinition
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
-  RegionID: 
-  Name: 
+  RegionID: Fire
+  Name: Fire
   Description: 
-  Dungeons: []
+  Dungeons:
+  - {fileID: 11400000, guid: 1f00f2b7504fda844a86eb8e7aab7c5d, type: 2}
+  - {fileID: 11400000, guid: f2c92a94b05ec964fa0813e22a5a88f2, type: 2}
+  - {fileID: 11400000, guid: 8a1d5c6e9c5eec542900c58d73c37aa3, type: 2}
