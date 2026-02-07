@@ -36,8 +36,8 @@ MonoBehaviour:
   CannotAttack: 0
   MinionTriggeredEffects:
   - Description: Set a target minions attack to 1
-    EffectTrigger: 0
-    EffectTiming: 0
+    EffectTrigger: 1
+    EffectTiming: 1
     GameActions:
     - rid: 7726824627959496771
     Condition:

@@ -158,7 +158,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             HealthObject.SetActive(true);
             TribeObject.gameObject.SetActive(false);
             CardTypeText.text = "Weapon";
-            description += $"{Environment.NewLine}{weaponCard.Description}";
+            description += $"{weaponCard.Description}";
         }
         else if (this.Data is SpellCard spellCard)
         {
@@ -166,7 +166,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             HealthObject.SetActive(false);
             TribeObject.gameObject.SetActive(false);
             CardTypeText.text = "Spell";
-            description += $"{Environment.NewLine}{spellCard.Description}";
+            description += $"{spellCard.Description}";
         }
 
         //description = Data.CardText;

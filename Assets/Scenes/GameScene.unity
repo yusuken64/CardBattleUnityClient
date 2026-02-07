@@ -2970,15 +2970,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.8485
+      value: 2.449817
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.8485
+      value: 2.449817
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.8485
+      value: 2.449817
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3010,11 +3010,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000063449
+      value: -0.00010851
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.098813
+      value: 0.16883
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3606,7 +3606,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 2.5362, y: 0.1861}
-  m_SizeDelta: {x: 2.9943, y: 4.5502}
+  m_SizeDelta: {x: 3.98, y: 6.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &865343062
 GameObject:
@@ -5536,8 +5536,8 @@ MonoBehaviour:
   Player: {fileID: 1280333541}
   Opponent: {fileID: 568661103}
   AnimationQueue: {fileID: 984708922}
-  TestDeck: {fileID: 11400000, guid: 722c3447ebc0200419df98e6dffd85a6, type: 2}
-  EnemyTestDeck: {fileID: 11400000, guid: 722c3447ebc0200419df98e6dffd85a6, type: 2}
+  TestDeck: {fileID: 11400000, guid: 60f97f854a93a0e4d8fcc5d0da5ed602, type: 2}
+  EnemyTestDeck: {fileID: 11400000, guid: 60f97f854a93a0e4d8fcc5d0da5ed602, type: 2}
   UseSeed: 1
   RandomSeed: 0
   BattleIntro: {fileID: 1320670705}

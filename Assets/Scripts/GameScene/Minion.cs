@@ -180,6 +180,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         HasReborn = data.HasReborn;
         HasDeathRattle = data.TriggeredEffects.Any(x => x.EffectTrigger == EffectTrigger.Deathrattle);
         HasTrigger = data.TriggeredEffects.Any(x =>
+            x.EffectTrigger != EffectTrigger.Aura &&
             x.EffectTrigger != EffectTrigger.Deathrattle &&
             x.EffectTrigger != EffectTrigger.Battlecry);
 
@@ -206,6 +207,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         HasReborn = data.HasReborn;
         HasDeathRattle = data.TriggeredEffects.Any(x => x.EffectTrigger == EffectTrigger.Deathrattle);
         HasTrigger = data.TriggeredEffects.Any(x =>
+            x.EffectTrigger != EffectTrigger.Aura &&
             x.EffectTrigger != EffectTrigger.Deathrattle &&
             x.EffectTrigger != EffectTrigger.Battlecry);
 

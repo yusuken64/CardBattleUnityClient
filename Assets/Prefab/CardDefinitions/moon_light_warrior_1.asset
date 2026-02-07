@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 7
     EffectTiming: 2
-    TargetType: 7
     GameActions:
     - rid: 867526242224308301
     Condition:
@@ -53,6 +52,7 @@ MonoBehaviour:
     - rid: 867526242224308301
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 867526242224308302
         HealthChange:
@@ -82,4 +82,4 @@ MonoBehaviour:
       data:
         Side: 0
         Group: 0
-        ExcludeSelf: 0
+        ExcludeSelf: 1
