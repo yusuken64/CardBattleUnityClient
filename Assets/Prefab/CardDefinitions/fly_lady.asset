@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 2
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 2140584538619248737
     Condition:
@@ -57,10 +56,12 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0
     - rid: 2140584538619248737
       type: {class: GainCardActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Card: {fileID: 11400000, guid: 98f626ccfff2aaa4fb8d3be5ff8fc449, type: 2}
+        GenerateNewCard: 1
         Canceled: 0
         CustomSFX: {fileID: 0}

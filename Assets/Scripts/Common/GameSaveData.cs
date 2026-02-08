@@ -159,6 +159,7 @@ public class AdventureSaveData
 	public DeckSaveData CurrentDeck { get; internal set; }
 	public int PicksLeft { get; set; }
 	public int Wins { get; set; }
+	public int MaxWins { get; set; }
 	public int Lives { get; set; }
 }
 

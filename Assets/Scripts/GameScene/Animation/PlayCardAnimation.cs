@@ -14,7 +14,7 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 		var playCardAction = Action;
 		var player = this.GameManager.GetPlayerFor(playCardAction.Card.Owner);
 
-		var playedCard = player.Hand.Cards.FirstOrDefault(x => x.Data == playCardAction.Card);
+		var playedCard = player.Hand.Cards.FirstOrDefault(x => x.Data == Context.SourceCard);
 
 		if (playedCard != null)
 		{

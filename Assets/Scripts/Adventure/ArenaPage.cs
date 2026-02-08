@@ -45,6 +45,7 @@ public class ArenaPage : MonoBehaviour
 		adventureSaveData.CurrentDeck = DeckSaveData.FromDeck(deck);
 		adventureSaveData.PicksLeft = 30;
 		adventureSaveData.Wins = 0;
+		adventureSaveData.MaxWins = 5;
 		adventureSaveData.Lives = 1;
 		DeckViewer.Setup(deck);
 		SetToEncounter();
@@ -77,10 +78,10 @@ public class ArenaPage : MonoBehaviour
 
 		AdventureSaveData adventureSaveData = Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData;
 
-		BattleText.text = $@"Battles: {adventureSaveData.Wins}/3
+		BattleText.text = $@"Battles: {adventureSaveData.Wins}/{adventureSaveData.MaxWins}
 Lives: {adventureSaveData.Lives}";
 
-		if (adventureSaveData.Wins == 3 ||
+		if (adventureSaveData.Wins == adventureSaveData.MaxWins ||
 			adventureSaveData.Lives <= 0)
 		{
 			BattleButton.gameObject.SetActive(false);
