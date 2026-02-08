@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
-  m_Name: gabriela
+  m_Name: gabriela 1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 1
-  CardName: Gabriela
-  ID: gabriela
+  Collectable: 0
+  CardName: Gabriela Test
+  ID: gabrielatest
   Sprite: {fileID: 21300000, guid: a6c523dd48e517244ad5d9e3c7042bb6, type: 3}
-  Cost: 8
+  Cost: 1
   CastRestriction:
     rid: -2
   ValidTargetSelector:
@@ -39,7 +39,7 @@ MonoBehaviour:
     EffectTrigger: 1
     EffectTiming: 1
     GameActions:
-    - rid: 7726824745899917406
+    - rid: 7726824745899917391
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
@@ -49,20 +49,20 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 7726824745899917406
+    - rid: 7726824745899917391
       type: {class: RepeatActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Count:
-          rid: 7726824745899917407
+          rid: 7726824745899917392
         ChildActions:
-        - rid: 7726824745899917408
+        - rid: 7726824745899917393
         Canceled: 0
         CustomSFX: {fileID: 0}
-    - rid: 7726824745899917407
+    - rid: 7726824745899917392
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
         Number: 6
-    - rid: 7726824745899917408
+    - rid: 7726824745899917393
       type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}

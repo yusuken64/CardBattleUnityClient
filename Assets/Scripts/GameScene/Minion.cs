@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUnityGameEntity
 {
     public CardBattleEngine.Minion Data { get; private set; }
-	public MinionCard SummonedCard { get; set; }
+    public MinionCard SummonedCard { get; set; }
 
     public Image CardImage;
-	public int Attack;
+    public int Attack;
     public int Health;
     public int MaxHealth;
     public bool CanAttack;
@@ -44,24 +44,24 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public GameObject TriggerIndicator;
     public GameObject SilenceIndicator;
 
-	#region Animation
-	public Vector2 TargetPosition { get; internal set; }
-	public bool Moving { get; internal set; }
+    #region Animation
+    public Vector2 TargetPosition { get; internal set; }
+    public bool Moving { get; internal set; }
 
-	public float moveSpeed;
-	public float rotateSpeed;
-	private UI _ui;
-	#endregion
+    public float moveSpeed;
+    public float rotateSpeed;
+    private UI _ui;
+    #endregion
 
-	public CardBattleEngine.IGameEntity Entity => GetData();
+    public CardBattleEngine.IGameEntity Entity => GetData();
 
-	private void Start()
-	{
+    private void Start()
+    {
         _ui = FindFirstObjectByType<UI>();
-	}
+    }
 
-	// Update is called once per frame
-	void Update()
+    // Update is called once per frame
+    void Update()
     {
         if (Moving)
         {
@@ -88,8 +88,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         }
     }
 
-	internal void SetTargetPosition(Vector2 vector2)
-	{
+    internal void SetTargetPosition(Vector2 vector2)
+    {
         TargetPosition = vector2;
         Moving = true;
     }
@@ -100,11 +100,11 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
         this.Data = minionData;
         RefreshData();
-	}
+    }
 
     [ContextMenu("UpdateUI")]
-	public void UpdateUI()
-	{
+    public void UpdateUI()
+    {
         if (!this) return;
 
         AttackText.text = Attack.ToString();
@@ -215,7 +215,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     }
 
     internal void SetupWithCard(CardBattleEngine.MinionCard data)
-	{
+    {
         this.SummonedCard = data;
         Attack = data.Attack;
         Health = data.Health;
@@ -243,10 +243,10 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         var gameManager = FindFirstObjectByType<GameManager>();
 
         if (!gameManager.ActivePlayerTurn)
-		{
+        {
             _ui.WarnEnemyTurn();
             return false;
-		}
+        }
 
         if (this.Data.Owner != gameManager.Player.Data)
         {
@@ -268,15 +268,15 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         return CanAttack;
     }
 
-	public IGameEntity GetData()
-	{
+    public IGameEntity GetData()
+    {
         return this.Data;
-	}
+    }
 
-	public CardBattleEngine.Player GetPlayer()
-	{
+    public CardBattleEngine.Player GetPlayer()
+    {
         return this.Data.Owner;
-	}
+    }
 
     //doesn't know if it's resolving an attack or battlecry target
     public void ResolveAim((IGameAction action, ActionContext context) current, GameObject gameObject)
@@ -298,11 +298,11 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         {
             var targetData = target?.GetData();
             if (targetData == null)
-			{
+            {
                 reason = "Invalid target";
                 current = (null, null);
                 return false;
-			}
+            }
 ;
             var player = gameManager.GetPlayerFor(SummonedCard.Owner);
             var first = player.Hand.Cards.FirstOrDefault(x => x.Data == SummonedCard);
@@ -334,14 +334,14 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         return gameManager.CheckIsValid(current.Item1, current.Item2, out reason);
     }
 
-	public AimIntent AimIntent { get; set; } = AimIntent.Attack;
+    public AimIntent AimIntent { get; set; } = AimIntent.Attack;
 
     public GameObject DragObject => this.gameObject;
-	public CardBattleEngine.Card DisplayCard => Data?.OriginalCard;
+    public CardBattleEngine.Card DisplayCard => Data?.OriginalCard;
 
     public Vector3 ToolTipOffset;
 
-	public void HoverStart()
+    public void HoverStart()
     {
         _ui.HoverPreviewStart(this);
     }
@@ -356,8 +356,8 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         _ui.HoverPreviewEnd();
     }
 
-	public Vector3 GetPosition()
-	{
+    public Vector3 GetPosition()
+    {
         return this.transform.position + ToolTipOffset;
-	}
+    }
 }

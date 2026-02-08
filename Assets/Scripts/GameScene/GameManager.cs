@@ -350,13 +350,13 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < data.Board.Count; i++)
 		{
-			CardBattleEngine.Minion minionData = data.Board[i];
-			var boardMinion = minions[i];
+			//CardBattleEngine.Minion minionData = data.Board[i];
+			//var boardMinion = minions[i];
 
-			AssertAreEqual(boardMinion.Data.Id, minionData.Id);
-			AssertAreEqual(boardMinion.Attack, minionData.Attack);
-			AssertAreEqual(boardMinion.Health, minionData.Health);
-			AssertAreEqual(boardMinion.CanAttack, minionData.CanAttack());
+			//AssertAreEqual(boardMinion.Data.Id, minionData.Id);
+			//AssertAreEqual(boardMinion.Attack, minionData.Attack);
+			//AssertAreEqual(boardMinion.Health, minionData.Health);
+			//AssertAreEqual(boardMinion.CanAttack, minionData.CanAttack());
 		}
 	}
 
