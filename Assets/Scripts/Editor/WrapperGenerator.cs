@@ -86,6 +86,12 @@ public static class WrapperGenerator
         },
         new PropertyReplacement
         {
+            OriginalType = typeof(CardBattleEngine.ICastRestriction),
+            GenerateField = p => $"    [SerializeReference] public {typeof(ICastRestrictionWrapperBase).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
+        {
             OriginalType = typeof(System.Object),
             GenerateField = p => $"    public {typeof(CustomSFX).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name};"

@@ -401,7 +401,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         {
             SourcePlayer = player.Data,
             PlayIndex = index,
-            Source = player.Data,
+            Source = card.Data,
             SourceCard = card.Data,
         };
 

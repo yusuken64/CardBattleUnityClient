@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: rhodes_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Rhodes 01
   ID: rhodes_01
   Sprite: {fileID: 21300000, guid: f68b76fd3afe3cb4dbb4af89086e16d0, type: 3}
-  Cost: 1
+  Cost: 7
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 7
+  Health: 5
   MinionTribes: 
-  IsStealth: 0
+  IsStealth: 1
   HasCharge: 0
   HasDivineShield: 0
   HasTaunt: 0

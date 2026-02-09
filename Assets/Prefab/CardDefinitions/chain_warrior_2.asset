@@ -35,20 +35,18 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: Deal 2 Damage to all minions
+  - Description: 'Battlecry: Deal 2 Damage to all minions'
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867526101213118535
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
       rid: 867526101213118533
-  - Description: Deal 2 Damage to all minions
+  - Description: 'and Deathrattle:'
     EffectTrigger: 2
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867526101213118537
     Condition:

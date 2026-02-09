@@ -16,7 +16,7 @@ MonoBehaviour:
   CardName: Dagger
   ID: Dagger
   Sprite: {fileID: 21300000, guid: 14aa89ca3020831408670c0b84a33d8d, type: 3}
-  Cost: 2
+  Cost: 1
   CastRestriction:
     rid: -2
   ValidTargetSelector:
@@ -24,7 +24,7 @@ MonoBehaviour:
   TriggeredEffects: []
   WeaponName: Dagger
   Attack: 1
-  Durability: 2
+  Durability: 3
   WeaponTriggeredEffects: []
   references:
     version: 2

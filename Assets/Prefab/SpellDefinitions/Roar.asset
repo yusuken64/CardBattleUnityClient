@@ -18,7 +18,7 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 24b76e7c8f97f6344906b676e7b79916, type: 3}
   Cost: 3
   CastRestriction:
-    rid: -2
+    rid: 7726824766866981031
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
@@ -37,6 +37,7 @@ MonoBehaviour:
     - rid: 2140584554682384472
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 2140584554682384473
         HealthChange:
@@ -70,3 +71,20 @@ MonoBehaviour:
         EffectTiming: 1
         Condition:
           rid: -2
+    - rid: 7726824766866981031
+      type: {class: AffectedEntityRestrictionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IAffectedEntitySelector:
+          rid: 7726824766866981032
+    - rid: 7726824766866981032
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 7726824766866981033
+        ResolutionTiming: 0
+    - rid: 7726824766866981033
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 0
+        Group: 0
+        ExcludeSelf: 0

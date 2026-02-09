@@ -16,7 +16,7 @@ MonoBehaviour:
   CardName: Beholder 3
   ID: beholder_3
   Sprite: {fileID: 21300000, guid: 1fe9e5ec5363e6c459fc73cbeb073a1c, type: 3}
-  Cost: 1
+  Cost: 3
   CastRestriction:
     rid: -2
   ValidTargetSelector:
@@ -27,7 +27,7 @@ MonoBehaviour:
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
-  HasDivineShield: 0
+  HasDivineShield: 1
   HasTaunt: 0
   HasPoisonous: 0
   HasWindFury: 0

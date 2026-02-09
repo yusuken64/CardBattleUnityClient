@@ -23,7 +23,7 @@ MonoBehaviour:
     rid: 2140584787384729675
   TriggeredEffects: []
   SpellCastEffects:
-  - Description: 
+  - Description: Return Enemy Minion to Hand
     GameActions:
     - rid: 2140584787384729676
     AffectedEntitySelectorWrapper:
@@ -54,4 +54,5 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0

@@ -16,14 +16,14 @@ MonoBehaviour:
   CardName: shadow man 2
   ID: shadow_man_2
   Sprite: {fileID: 21300000, guid: c0f480aad4c01cd4fb972b4dcbbe2b75, type: 3}
-  Cost: 1
+  Cost: 6
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 5
+  Health: 5
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0

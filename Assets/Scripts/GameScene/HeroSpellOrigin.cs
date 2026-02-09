@@ -63,6 +63,7 @@ public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
 		};
 		ActionContext context = new()
 		{
+			Source = pendingCard.Data,
 			SourceCard = pendingCard.Data,
 			SourcePlayer = pendingCard.Data.Owner,
 			Target = target.GetData()

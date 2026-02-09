@@ -16,13 +16,13 @@ MonoBehaviour:
   CardName: Lanterns 02
   ID: lanterns_02
   Sprite: {fileID: 21300000, guid: 909340108a7b36a49845bd426a6fc968, type: 3}
-  Cost: 1
+  Cost: 2
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
+  Attack: 2
   Health: 1
   MinionTribes: 
   IsStealth: 0

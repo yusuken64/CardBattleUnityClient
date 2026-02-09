@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: WinAxe
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCardDefinition
   Collectable: 1
-  CardName: Win
-  ID: Win
+  CardName: War Axe
+  ID: WarAxe
   Sprite: {fileID: 21300000, guid: 62a484bbf0c98a0418eb566aabae3ceb, type: 3}
   Cost: 2
   CastRestriction:
@@ -22,7 +22,7 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  WeaponName: Win Axe
+  WeaponName: War Axe
   Attack: 3
   Durability: 2
   WeaponTriggeredEffects: []

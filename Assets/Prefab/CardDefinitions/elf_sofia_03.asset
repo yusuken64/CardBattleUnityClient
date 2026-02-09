@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: elf_sofia_03
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: Elf Sofia 03
   ID: elf_sofia_03
   Sprite: {fileID: 21300000, guid: 11f3b7ac1bc1e5941a5a611392934612, type: 3}
-  Cost: 1
+  Cost: 7
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 7
+  Health: 7
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -34,9 +34,46 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: 
+    EffectTrigger: 12
+    EffectTiming: 0
+    GameActions:
+    - rid: 7726824766866980960
+    Condition:
+      rid: 7726824766866980961
+    AffectedEntitySelectorWrapper:
+      rid: 7726824766866980962
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 7726824766866980960
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 7726824766866980963
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 88ca7725228c1b34c9099f893aaa7b5c, type: 2}
+    - rid: 7726824766866980961
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+        SourceType: 1
+    - rid: 7726824766866980962
+      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Operations:
+        - rid: 7726824766866980964
+        ResolutionTiming: 1
+    - rid: 7726824766866980963
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
+    - rid: 7726824766866980964
+      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Side: 2
+        Group: 2
+        ExcludeSelf: 0

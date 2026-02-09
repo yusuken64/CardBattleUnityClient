@@ -41,7 +41,7 @@ MonoBehaviour:
     GameActions:
     - rid: 2140584803152167046
     Condition:
-      rid: 2140584803152167105
+      rid: 7726824766866981046
     AffectedEntitySelectorWrapper:
       rid: 2140584803152167087
   references:
@@ -52,6 +52,7 @@ MonoBehaviour:
     - rid: 2140584803152167046
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 2140584803152167047
         HealthChange:
@@ -79,7 +80,8 @@ MonoBehaviour:
         IncludeTargetOwner: 0
         IncludeSummonedMinion: 0
         ResolutionTiming: 0
-    - rid: 2140584803152167105
-      type: {class: OriginalSourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+    - rid: 7726824766866981046
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
       data:
         TeamRelationship: 0
+        SourceType: 1

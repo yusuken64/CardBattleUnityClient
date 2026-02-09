@@ -34,6 +34,7 @@ public abstract class CardDefinition : ScriptableObject
 		return gameAction switch
 		{
 			DamageAction dealDamage => DescribeDamage(dealDamage),
+			HealAction heal => DescribeHeal(heal),
 			DrawCardFromDeckAction drawCard => $"Draw card",
 			SummonMinionAction summon => $"Summon {summon.Card.Name}",
 			FreezeAction freeze => $"Freeze",
@@ -69,6 +70,16 @@ public abstract class CardDefinition : ScriptableObject
 		return damageString;
 	}
 
+	string DescribeHeal(HealAction h)
+	{
+		var healString = h.Amount switch
+		{
+			ConstantValue value => $"Heal {value.Number}",
+			_ => h.GetType().Name,
+		};
+		return healString;
+	}
+
 	public virtual string ToDescription(TriggeredEffectWrapper triggeredEffect, int arg2)
 	{
 		if (!string.IsNullOrWhiteSpace(triggeredEffect.Description))
@@ -78,17 +89,17 @@ public abstract class CardDefinition : ScriptableObject
 
 		var trigger = triggeredEffect.EffectTrigger;
 		var condition = "";
-		if (triggeredEffect.Condition is not null)
-		{
-			string text = triggeredEffect.Condition.GetType().Name;
-			string suffix = "ConditionWrapper";
-			if (text.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
-			{
-				text = text.Substring(0, text.Length - suffix.Length);
-			}
+		//if (triggeredEffect.Condition is not null)
+		//{
+		//	string text = triggeredEffect.Condition.GetType().Name;
+		//	string suffix = "ConditionWrapper";
+		//	if (text.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+		//	{
+		//		text = text.Substring(0, text.Length - suffix.Length);
+		//	}
 
-			condition = text + ",";
-		}
+		//	condition = text + ",";
+		//}
 
 		string actions = string.Join(Environment.NewLine, triggeredEffect.GameActions.Select(ActionWrapperToDescription));
 		string description = $"{trigger}: {condition}{actions}.";

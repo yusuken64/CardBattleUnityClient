@@ -35,10 +35,9 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: 'On Attack: +1 Attack'
     EffectTrigger: 5
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 6533011735244963916
     Condition:
@@ -60,6 +59,7 @@ MonoBehaviour:
     - rid: 6533011735244963916
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 2140584399319859267
         HealthChange:
@@ -77,4 +77,5 @@ MonoBehaviour:
         IncludeSource: 1
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0

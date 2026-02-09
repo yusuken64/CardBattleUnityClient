@@ -35,7 +35,7 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: Knife juggler
+  - Description: Whenever you summon a minion deal 1 damage to ranndom enemy
     EffectTrigger: 4
     EffectTiming: 1
     GameActions:

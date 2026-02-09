@@ -252,7 +252,7 @@ public class GameManager : MonoBehaviour
 			}
 			catch (System.Exception exception)
 			{
-				Debug.LogError(reason);
+				Debug.LogError(action);
 				Debug.LogError(exception);
 			}
 		}
