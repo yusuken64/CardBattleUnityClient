@@ -36,7 +36,7 @@ MonoBehaviour:
   CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
-    EffectTrigger: 0
+    EffectTrigger: 1
     EffectTiming: 1
     GameActions:
     - rid: 7726824766866980957

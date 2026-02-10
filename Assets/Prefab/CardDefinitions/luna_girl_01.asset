@@ -67,7 +67,7 @@ MonoBehaviour:
         ExpirationTrigger:
           rid: -2
         Canceled: 0
-        CustomSFX: {fileID: 0}
+        CustomSFX: {fileID: 11400000, guid: f9823bae29bb4ea4eb4e95c372756bcf, type: 2}
     - rid: 7726824627959496772
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:

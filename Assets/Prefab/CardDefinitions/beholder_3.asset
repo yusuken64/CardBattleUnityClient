@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d957555eca4ea4b94d18defadd8e14, type: 3}
   m_Name: beholder_3
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
-  Collectable: 1
+  Collectable: 0
   CardName: Beholder 3
   ID: beholder_3
   Sprite: {fileID: 21300000, guid: 1fe9e5ec5363e6c459fc73cbeb073a1c, type: 3}

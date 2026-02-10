@@ -301,7 +301,7 @@ public class GameManager : MonoBehaviour
 			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
 		{
 			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(_gameState);
-			((IGameAgent)_opponentAgent).SetTarget(nextAction, _gameState);
+			//((IGameAgent)_opponentAgent).SetTarget(nextAction, _gameState);
 
 			string actionString = nextAction.Item1.ToString();
 			IGameAction item1 = nextAction.Item1;
@@ -316,7 +316,21 @@ public class GameManager : MonoBehaviour
 				actionString = $"Attack {attackSource} to {attackTarget}";
 			}
 			Debug.Log($"Enemy Action {actionString}");
-			ResolveAction(nextAction.Item1, nextAction.Item2);
+			if (nextAction.Item1.IsValid(_gameState, nextAction.Item2, out string reason))
+			{
+				ResolveAction(nextAction.Item1, nextAction.Item2);
+			}
+			else
+			{
+				Debug.LogError($"Invalid Action {reason}");
+				StartCoroutine(Fire());
+
+				IEnumerator Fire()
+				{
+					yield return null;
+					ProcessEnemyMove();
+				}
+			}
 		}
 	}
 

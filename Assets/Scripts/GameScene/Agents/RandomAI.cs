@@ -31,22 +31,4 @@ public class RandomAI : IGameAgent
 	public void OnGameEnd(GameState gamestate, bool win)
 	{
 	}
-
-	public void SetTarget((IGameAction, ActionContext) nextAction, GameState gameState)
-	{
-		var action = nextAction.Item1;
-		var context = nextAction.Item2;
-
-		CardBattleEngine.Card card;
-		if (!(action is PlayCardAction playCardAction))
-		{
-			return;
-		}
-
-		card = playCardAction.Card;
-		var validTargets = card.ValidTargetSelector.Select(gameState, _player, card);
-
-		context.Source = card;
-		context.Target = ChooseRandom(validTargets);
-	}
 }

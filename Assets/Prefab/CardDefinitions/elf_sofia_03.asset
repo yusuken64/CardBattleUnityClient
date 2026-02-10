@@ -23,7 +23,7 @@ MonoBehaviour:
     rid: -2
   TriggeredEffects: []
   Attack: 7
-  Health: 7
+  Health: 5
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
         Damage:
           rid: 7726824766866980963
         Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 88ca7725228c1b34c9099f893aaa7b5c, type: 2}
+        CustomSFX: {fileID: 0}
     - rid: 7726824766866980961
       type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -76,4 +76,4 @@ MonoBehaviour:
       data:
         Side: 2
         Group: 2
-        ExcludeSelf: 0
+        ExcludeSelf: 1

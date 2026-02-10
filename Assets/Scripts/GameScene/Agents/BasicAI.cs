@@ -38,40 +38,4 @@ public class BasicAI : IGameAgent
 	public void OnGameEnd(GameState gamestate, bool win)
 	{
 	}
-
-
-	public void SetTarget((IGameAction, ActionContext) nextAction, GameState gameState)
-	{
-		var action = nextAction.Item1;
-		var context = nextAction.Item2;
-
-		CardBattleEngine.Card card;
-		if (!(action is PlayCardAction playCardAction))
-		{
-			return;
-		}
-
-		if (playCardAction.Card is WeaponCard weaponCard)
-		{
-			context = new CardBattleEngine.ActionContext()
-			{
-				SourcePlayer = context.SourcePlayer,
-				Target = context.SourcePlayer
-			};
-			return;
-		}
-
-		card = playCardAction.Card;
-		context.Source = card;
-
-		if (card.ValidTargetSelector != null)
-		{
-			var validTargets = card.ValidTargetSelector.Select(gameState, _player, card);
-
-			if (validTargets.Any())
-			{
-				context.Target = ChooseRandom(validTargets);
-			}
-		}
-	}
 }
