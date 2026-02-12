@@ -57,7 +57,7 @@ MonoBehaviour:
     - rid: 7726824766866980956
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
-        IncludeTarget: 0
+        IncludeTarget: 1
         IncludeSource: 0
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0

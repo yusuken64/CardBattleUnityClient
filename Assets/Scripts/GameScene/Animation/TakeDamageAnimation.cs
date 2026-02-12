@@ -66,7 +66,7 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 
 		if (tier == null) return;
 
-		Debug.Log($"Tier {tier.MinAttack}~{tier.MaxAttack}");
+		//Debug.Log($"Tier {tier.MinAttack}~{tier.MaxAttack}");
 
 		// Shake camera safely
 		DoCameraShake(tier.ShakeStrength, tier.ShakeDuration);

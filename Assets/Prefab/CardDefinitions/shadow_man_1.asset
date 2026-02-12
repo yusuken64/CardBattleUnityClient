@@ -43,7 +43,7 @@ MonoBehaviour:
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
-      rid: -2
+      rid: 7726824833128071253
   references:
     version: 2
     RefIds:
@@ -56,3 +56,12 @@ MonoBehaviour:
         IndexOffset: 0
         Canceled: 0
         CustomSFX: {fileID: 0}
+    - rid: 7726824833128071253
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 1
+        IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
+        ResolutionTiming: 0

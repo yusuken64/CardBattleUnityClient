@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
 
 	public GameEngine _engine { get; private set; }
 
-	private IGameAgent _opponentAgent;
+	public IGameAgent _playerAgent;
+	public IGameAgent _opponentAgent;
 	public GameState _gameState { get; private set; }
 	public bool ActivePlayerTurn { get; internal set; } //based on client animation timing 
 	public bool OpponentTurn { get; internal set; }
@@ -107,7 +108,8 @@ public class GameManager : MonoBehaviour
 		SetupPlayer(deck, Player, _gameState.Players[0]);
 		SetupPlayer(enemyDeck, Opponent, _gameState.Players[1]);
 
-		_opponentAgent = new BasicAI(Opponent.Data, rng);
+		//_opponentAgent = new BasicAI(Opponent.Data, rng);
+		_opponentAgent = new AdvancedAI(Opponent.Data, rng);
 		//_opponentAgent = new RandomAI(Opponent.Data, rng);
 
 		_engine.ActionPlaybackCallback += ActionPlaybackCallback;
@@ -287,6 +289,7 @@ public class GameManager : MonoBehaviour
 
 	private void ActionResolvedCallback(GameState state)
 	{
+		ProcessPlayerMove();
 		ProcessEnemyMove();
 
 		Opponent.UpdatePlayableActions(false);
@@ -295,13 +298,38 @@ public class GameManager : MonoBehaviour
 			state.CurrentPlayer == Player.Data);
 	}
 
+	public void ProcessPlayerMove()
+	{
+		if (!OpponentTurn &&
+			_gameState.CurrentPlayer.Id == Player.Data.Id &&
+			_playerAgent != null)
+		{
+			(IGameAction, ActionContext) nextAction = ((IGameAgent)_playerAgent).GetNextAction(_gameState);
+
+			if (nextAction.Item1.IsValid(_gameState, nextAction.Item2, out string reason))
+			{
+				ResolveAction(nextAction.Item1, nextAction.Item2);
+			}
+			else
+			{
+					Debug.LogError($"Invalid Action {reason}");
+				StartCoroutine(Fire());
+
+				IEnumerator Fire()
+				{
+					yield return null;
+					ProcessPlayerMove();
+				}
+			}
+		}
+	}
+
 	public void ProcessEnemyMove()
 	{
 		if (OpponentTurn &&
 			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
 		{
 			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(_gameState);
-			//((IGameAgent)_opponentAgent).SetTarget(nextAction, _gameState);
 
 			string actionString = nextAction.Item1.ToString();
 			IGameAction item1 = nextAction.Item1;
@@ -315,7 +343,7 @@ public class GameManager : MonoBehaviour
 				var attackTarget = nextAction.Item2.Target;
 				actionString = $"Attack {attackSource} to {attackTarget}";
 			}
-			Debug.Log($"Enemy Action {actionString}");
+			//Debug.Log($"Enemy Action {actionString}");
 			if (nextAction.Item1.IsValid(_gameState, nextAction.Item2, out string reason))
 			{
 				ResolveAction(nextAction.Item1, nextAction.Item2);
@@ -400,7 +428,7 @@ public class GameStartParams
 	public string BackgroundName;
 }
 
-internal class UnityRNG : IRNG
+public class UnityRNG : IRNG
 {
 	public UnityRNG()
 	{

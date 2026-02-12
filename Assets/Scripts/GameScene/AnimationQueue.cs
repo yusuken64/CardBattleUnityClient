@@ -94,7 +94,7 @@ public class AnimationQueue : MonoBehaviour
             anim.SyncData();
 #if UNITY_EDITOR
             var animation = (GameActionAnimationBase)anim;
-            Debug.Log($"Validate {animation.Action.GetType().Name}");
+            //Debug.Log($"Validate {animation.Action.GetType().Name}");
 
             if (animation.Context.SourcePlayer == null)
             {

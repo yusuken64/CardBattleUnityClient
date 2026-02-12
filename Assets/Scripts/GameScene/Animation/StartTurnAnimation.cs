@@ -53,6 +53,8 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
 			GameManager.ActivePlayerTurn = true;
 			player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
+
+			GameManager.ProcessPlayerMove();
 		}
 		else
 		{
