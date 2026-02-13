@@ -29,7 +29,53 @@ public class AdvancedAI : IGameAgent
 	public (IGameAction, ActionContext) GetNextAction(GameState game)
 	{
 		var actionScores = GetTopActions(game);
-		return (actionScores[0].Action, actionScores[0].Context);
+		//return (actionScores[0].Action, actionScores[0].Context);
+
+		var bestScore = actionScores[0].Score;
+
+		// 1) discourage premature EndTurn
+		var filtered = actionScores
+			.Where(a => !(a.Action is EndTurnAction && a.Score < bestScore - 0.01f))
+			.ToList();
+
+		// 2) keep actions near best
+		const float percentThreshold = 0.15f;
+		float cutoff = bestScore * (1f - percentThreshold);
+		
+		const float scoreDeltaThreshold = 5f;
+		var contenders = filtered
+			.Where(a => bestScore - a.Score <= scoreDeltaThreshold)
+			.ToList();
+
+		// 3) stochastic selection
+		return WeightedPick(contenders);
+	}
+
+	private (IGameAction, ActionContext) WeightedPick(List<ActionScore> actions)
+	{
+		const float temperature = 0.25f; // lower = more greedy
+
+		// shift scores to be positive
+		float min = actions.Min(a => a.Score);
+
+		var weights = actions.Select(a => new
+		{
+			Action = a,
+			Weight = MathF.Exp((a.Score - min) / temperature)
+		}).ToList();
+
+		float total = weights.Sum(w => w.Weight);
+		float r = (float)_random.NextDouble() * total;
+
+		float cumulative = 0;
+		foreach (var w in weights)
+		{
+			cumulative += w.Weight;
+			if (r <= cumulative)
+				return (w.Action.Action, w.Action.Context);
+		}
+
+		return (weights.Last().Action.Action, weights.Last().Action.Context);
 	}
 
 	public List<ActionScore> GetTopActions(GameState game, int topN = 10)
@@ -273,6 +319,9 @@ public class AdvancedAI : IGameAgent
 		if (enemyTauntHealth <= 0)
 			score += myReadyAttack * 1.2f;
 
+		// Reward having extra mana next turn
+		float myFutureMana = me.MaxMana - enemy.MaxMana;
+		score += myFutureMana * 5f;
 
 		// --------------------------------------------------
 		// 8) Lethal checks (VERY IMPORTANT)
@@ -375,13 +424,20 @@ public class AdvancedAI : IGameAgent
 
 	private int GetBranchCount(int totalActions, int depth)
 	{
-		if (depth == 0) return totalActions; // full width root
+		// configurable knobs
+		const int rootWidth = 12;      // how many moves to consider at root
+		const int minWidth = 2;        // never go below this (until late)
+		const double decay = 0.6;      // how fast width shrinks
 
-		// exponential decay
-		double factor = Math.Pow(0.25, depth);
-		int count = (int)Math.Ceiling(totalActions * factor);
+		if (depth == 0)
+			return totalActions; // still search all root moves for scoring
 
-		return Math.Max(1, count);
+		int width = (int)Math.Ceiling(rootWidth * Math.Pow(decay, depth - 1));
+
+		width = Math.Max(minWidth, width);
+
+		// can't exceed available actions
+		return Math.Min(totalActions, width);
 	}
 
 	public void OnGameEnd(GameState gamestate, bool win)
