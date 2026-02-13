@@ -67,4 +67,4 @@ MonoBehaviour:
       type: {class: FreezeActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
-        CustomSFX: {fileID: 0}
+        CustomSFX: {fileID: 11400000, guid: 172961f1d2f9b164fb0de3f50ee013bf, type: 2}

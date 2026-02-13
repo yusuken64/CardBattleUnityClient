@@ -72,7 +72,7 @@ MonoBehaviour:
       type: {class: DeathActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
-        CustomSFX: {fileID: 0}
+        CustomSFX: {fileID: 11400000, guid: b6cc8395632daf14da84865121b3ff88, type: 2}
     - rid: 2140584803152167085
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:

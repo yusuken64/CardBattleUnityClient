@@ -312,7 +312,7 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-					Debug.LogError($"Invalid Action {reason}");
+				Debug.LogError($"Invalid Action {reason}");
 				StartCoroutine(Fire());
 
 				IEnumerator Fire()
