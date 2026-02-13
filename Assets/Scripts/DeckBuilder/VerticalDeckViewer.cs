@@ -34,7 +34,7 @@ public class VerticalDeckViewer : MonoBehaviour
         TitleInput.gameObject.SetActive(false);
     }
 
-    internal void Setup(Deck deck)
+    public void Setup(Deck deck)
     {
         editingDeck = deck;
         TitleText.text = deck.Title;

@@ -218,7 +218,7 @@ public class GenerateRegionWindow : EditorWindow
         AssetDatabase.Refresh();
     }
 
-    private static T EnsureScriptableObjectExists<T>(string filePath) where T : ScriptableObject
+    public static T EnsureScriptableObjectExists<T>(string filePath) where T : ScriptableObject
     {
         var existing = AssetDatabase.LoadAssetAtPath<T>(filePath);
         if (existing != null)

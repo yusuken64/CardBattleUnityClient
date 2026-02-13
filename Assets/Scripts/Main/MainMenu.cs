@@ -149,11 +149,7 @@ public class MainMenu : MonoBehaviour
 
 	public void AllCards_Click()
 	{
-		var allCards = Common.Instance.CardManager.CollectableCards();
-		foreach (var cardData in allCards)
-		{
-			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(cardData.ID, 1);
-		}
+		Common.Instance.CardManager.GiveAllCards();
 		SceneManager.LoadScene("Main");
 	}
 

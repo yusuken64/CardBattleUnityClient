@@ -97,5 +97,14 @@ public class CardManager : MonoBehaviour
 		}
 		EditorUtility.SetDirty(this);
 	}
+
+	public void GiveAllCards()
+	{
+		var allCards = Common.Instance.CardManager.CollectableCards();
+		foreach (var cardData in allCards)
+		{
+			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(cardData.ID, 1);
+		}
+	}
 #endif
 }
