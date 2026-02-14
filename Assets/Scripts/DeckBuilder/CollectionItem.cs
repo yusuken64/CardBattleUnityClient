@@ -74,7 +74,7 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable,
 
 	public void OnClick()
 	{
-		AddToDeck();
+		//AddToDeck();
 	}
 
 	private void AddToDeck()

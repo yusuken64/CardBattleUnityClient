@@ -6,8 +6,22 @@ public class DeckSaver : EditorWindow
 {
     private const string LastDeckSavePathKey = "DeckSaver_LastSavePath";
     private const string LastDeckLoadPathKey = "DeckSaver_LastLoadPath";
+    private const string InjectedDeckGuidKey = "DeckSaver_InjectedDeckGuid";
 
-    [MenuItem("Data/DeckSaver/Deck Dialog")]
+    private DeckDefinition injectedDeckDefinition;
+
+	private void OnEnable()
+	{
+        string guid = EditorPrefs.GetString(InjectedDeckGuidKey, "");
+
+        if (!string.IsNullOrEmpty(guid))
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            injectedDeckDefinition = AssetDatabase.LoadAssetAtPath<DeckDefinition>(path);
+        }
+    }
+
+	[MenuItem("Data/DeckSaver/Deck Dialog")]
     public static void ShowWindow()
     {
         GetWindow<DeckSaver>("DeckSaver");
@@ -25,19 +39,118 @@ public class DeckSaver : EditorWindow
     {
         GUILayout.Space(10);
 
-        if (GUILayout.Button("Save Current Deck", GUILayout.Height(40)))
+        EditorGUILayout.LabelField("Injected Deck Asset", EditorStyles.boldLabel);
+        var newInjected = (DeckDefinition)EditorGUILayout.ObjectField(
+            injectedDeckDefinition,
+            typeof(DeckDefinition),
+            false
+        );
+
+        if (newInjected != injectedDeckDefinition)
         {
-            SaveDeckToFile();
+            injectedDeckDefinition = newInjected;
+
+            if (injectedDeckDefinition != null)
+            {
+                string path = AssetDatabase.GetAssetPath(injectedDeckDefinition);
+                string guid = AssetDatabase.AssetPathToGUID(path);
+                EditorPrefs.SetString(InjectedDeckGuidKey, guid);
+            }
+            else
+            {
+                EditorPrefs.DeleteKey(InjectedDeckGuidKey);
+            }
         }
 
         GUILayout.Space(10);
 
-        if (GUILayout.Button("Load Deck From Asset", GUILayout.Height(40)))
+        if (GUILayout.Button("Load Injected Deck", GUILayout.Height(30)))
+        {
+            if (injectedDeckDefinition == null)
+                Debug.LogError("No DeckDefinition injected.");
+            else
+                LoadDeckFromDefinition(injectedDeckDefinition);
+        }
+
+        if (GUILayout.Button("Overwrite Injected Deck", GUILayout.Height(30)))
+        {
+            if (injectedDeckDefinition == null)
+                Debug.LogError("No DeckDefinition injected.");
+            else
+            {
+                bool confirm = EditorUtility.DisplayDialog(
+                    "Overwrite Deck Asset",
+                    $"Are you sure you want to overwrite:\n{injectedDeckDefinition.name}?\n\nThis cannot be undone.",
+                    "Overwrite",
+                    "Cancel"
+                );
+
+                if (confirm)
+                    SaveDeckToDefinition(injectedDeckDefinition);
+            }
+        }
+
+        GUILayout.Space(15);
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+        if (GUILayout.Button("Save Current Deck As New Asset", GUILayout.Height(40)))
+        {
+            SaveDeckToFile();
+        }
+
+        if (GUILayout.Button("Load Deck From Asset File Picker", GUILayout.Height(40)))
         {
             LoadDeckFromFile();
         }
     }
 
+    public static void SaveDeckToDefinition(DeckDefinition deckDefinition)
+    {
+        var deckViewer = FindFirstObjectByType<VerticalDeckViewer>();
+        var cardManager = FindFirstObjectByType<CardManager>();
+
+        if (deckViewer == null || cardManager == null)
+        {
+            Debug.LogError("Missing DeckViewer or CardManager.");
+            return;
+        }
+
+        var deck = deckViewer.GetDeck();
+
+        deckDefinition.Title = deck.Title;
+        deckDefinition.HeroCard = cardManager.GetCardByID(deck.HeroCard.ID);
+        deckDefinition.Cards = deck.Cards
+            .Select(x => cardManager.GetCardByID(x.ID))
+            .ToList();
+
+        EditorUtility.SetDirty(deckDefinition);
+        AssetDatabase.SaveAssets();
+
+        Debug.Log($"Deck overwritten: {deckDefinition.name}");
+    }
+
+    public static void LoadDeckFromDefinition(DeckDefinition deckDefinition)
+    {
+        var deckViewer = FindFirstObjectByType<VerticalDeckViewer>();
+        var cardManager = FindFirstObjectByType<CardManager>();
+
+        if (deckViewer == null || cardManager == null)
+        {
+            Debug.LogError("Missing DeckViewer or CardManager.");
+            return;
+        }
+
+        var runtimeDeck = new Deck();
+        runtimeDeck.Title = deckDefinition.Title;
+        runtimeDeck.HeroCard = cardManager.GetCardByID(deckDefinition.HeroCard.ID);
+        runtimeDeck.Cards = deckDefinition.Cards
+            .Select(c => cardManager.GetCardByID(c.ID))
+            .ToList();
+
+        deckViewer.Setup(runtimeDeck);
+
+        Debug.Log($"Deck loaded from injected asset: {deckDefinition.name}");
+    }
 
     public static void SaveDeckToFile()
     {
