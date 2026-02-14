@@ -16,14 +16,14 @@ MonoBehaviour:
   CardName: lightman 2
   ID: lightman_2
   Sprite: {fileID: 21300000, guid: 1d94a9bf06b52f74bb8a1d0a742da600, type: 3}
-  Cost: 6
+  Cost: 4
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 6
-  Health: 6
+  Attack: 2
+  Health: 4
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 7
     EffectTiming: 2
-    TargetType: 7
     GameActions:
     - rid: 867525924129079365
     Condition:
@@ -53,6 +52,7 @@ MonoBehaviour:
     - rid: 867525924129079365
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 2140584399319859266
         HealthChange:
@@ -74,7 +74,7 @@ MonoBehaviour:
       data:
         Side: 0
         Group: 0
-        ExcludeSelf: 0
+        ExcludeSelf: 1
     - rid: 2140584399319859266
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:

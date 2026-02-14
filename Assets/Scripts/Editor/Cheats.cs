@@ -17,6 +17,16 @@ public static class Cheats
         gameManager.ProcessPlayerMove();
     }
 
+    [MenuItem("Game/Auto/AutoPlayerTurn1")]
+    public static void AutoPlay1()
+    {
+        var gameManager = Object.FindFirstObjectByType<GameManager>();
+        //gameManager._opponentAgent = new AdvancedAI(gameManager.Opponent.Data, new UnityRNG());
+        gameManager._playerAgent = new AdvancedAI1(gameManager.Player.Data, new UnityRNG());
+        //_playerAgent = new BasicAI(Player.Data, new UnityRNG());
+        gameManager.ProcessPlayerMove();
+    }
+    
     [MenuItem("Game/Auto/AutoPlayerTurn_Stop")]
     public static void AutoPlay_Stop()
     {

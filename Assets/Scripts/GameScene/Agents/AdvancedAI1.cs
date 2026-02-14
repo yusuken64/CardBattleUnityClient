@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AdvancedAI : IGameAgent
+public class AdvancedAI1 : IGameAgent
 {
 	private readonly CardBattleEngine.Player _player;
 	private readonly IRNG _rng;
 	private GameEngine _engine;
 	private System.Random _random;
 
-	int MaxDepth = 3;
+	const int BEAM_WIDTH = 8;
+	const int MAX_DEPTH = 4;
 
-	public AdvancedAI(CardBattleEngine.Player player, IRNG rng)
+	public AdvancedAI1(CardBattleEngine.Player player, IRNG rng)
 	{
 		_player = player;
 		_rng = rng;
@@ -29,78 +30,21 @@ public class AdvancedAI : IGameAgent
 	public (IGameAction, ActionContext) GetNextAction(GameState game)
 	{
 		var actionScores = GetTopActions(game);
-		//return (actionScores[0].Action, actionScores[0].Context);
-
-		var bestScore = actionScores[0].Score;
-
-		// 1) discourage premature EndTurn
-		var filtered = actionScores
-			.Where(a => !(a.Action is EndTurnAction && a.Score < bestScore - 0.01f))
-			.ToList();
-
-		// 2) keep actions near best
-		const float percentThreshold = 0.15f;
-		float cutoff = bestScore * (1f - percentThreshold);
-		
-		const float scoreDeltaThreshold = 5f;
-		var contenders = filtered
-			.Where(a => bestScore - a.Score <= scoreDeltaThreshold)
-			.ToList();
-
-		// 3) stochastic selection
-		return WeightedPick(contenders);
+		return (actionScores[0].RootAction, actionScores[0].RootContext);
 	}
 
-	private (IGameAction, ActionContext) WeightedPick(List<ActionScore> actions)
+	public List<BeamNode> GetTopActions(GameState game)
 	{
-		const float temperature = 0.25f; // lower = more greedy
-
-		// shift scores to be positive
-		float min = actions.Min(a => a.Score);
-
-		var weights = actions.Select(a => new
-		{
-			Action = a,
-			Weight = MathF.Exp((a.Score - min) / temperature)
-		}).ToList();
-
-		float total = weights.Sum(w => w.Weight);
-		float r = (float)_random.NextDouble() * total;
-
-		float cumulative = 0;
-		foreach (var w in weights)
-		{
-			cumulative += w.Weight;
-			if (r <= cumulative)
-				return (w.Action.Action, w.Action.Context);
-		}
-
-		return (weights.Last().Action.Action, weights.Last().Action.Context);
-	}
-
-	public List<ActionScore> GetTopActions(GameState game, int topN = 10)
-	{
-		var totalStopwatch = System.Diagnostics.Stopwatch.StartNew();
-		_cloneStopwatch = new System.Diagnostics.Stopwatch();
-		_evalStopwatch = new System.Diagnostics.Stopwatch();
-
-		Debug.Log($"AI thinking for {_player.Name}");
-		_search = 0;
-
 		var statePlayer = (CardBattleEngine.Player)game.GetEntityById(_player.Id);
-		var actions = game.GetValidActions(statePlayer);
+		var rootActions = game.GetValidActions(statePlayer);
 
-		var results = new List<ActionScore>();
+		var beam = new List<BeamNode>();
 
-		foreach (var action in actions)
+		foreach (var action in rootActions)
 		{
-			_cloneStopwatch.Start();
 			var simState = game.LightClone();
-			_cloneStopwatch.Stop();
-
 			var clonedContext = CloneContextFor(simState, action.Item2);
 			var clonedAction = CloneActionFor(simState, action.Item1);
-
 			var simPlayer = (CardBattleEngine.Player)simState.GetEntityById(statePlayer.Id);
 
 			if (!clonedAction.IsValid(simState, clonedContext, out _))
@@ -108,28 +52,68 @@ public class AdvancedAI : IGameAgent
 
 			_engine.Resolve(simState, clonedContext, clonedAction);
 
-			float score;
-
-			if (action.Item1 is EndTurnAction)
-				score = Evaluate(simState, simPlayer);
-			else
-				score = SearchScore(simState, 1);
-
-			results.Add(new ActionScore
+			beam.Add(new BeamNode
 			{
-				Action = action.Item1,
-				Context = action.Item2,
-				Score = score
+				SimState = simState,
+				SimPlayer = simPlayer,
+				Depth = 1,
+				RootAction = action.Item1,
+				RootContext = action.Item2,
+				Score = Evaluate(simState, simPlayer)
 			});
 		}
 
-		totalStopwatch.Stop();
-		Debug.Log($"AI {totalStopwatch.ElapsedMilliseconds}ms, {_search} searches, eval {_evalStopwatch.ElapsedMilliseconds}ms, clone {_cloneStopwatch.ElapsedMilliseconds}ms");
+		for (int depth = 2; depth <= MAX_DEPTH; depth++)
+		{
+			var candidates = new List<BeamNode>();
 
-		return results
-			.OrderByDescending(r => r.Score)
-			.Take(topN)
-			.ToList();
+			foreach (var node in beam)
+			{
+				var actions = node.SimState.GetValidActions(node.SimPlayer);
+
+				foreach (var action in actions)
+				{
+					var simState = node.SimState.LightClone();
+					var clonedContext = CloneContextFor(simState, action.Item2);
+					var clonedAction = CloneActionFor(simState, action.Item1);
+					var simPlayer = (CardBattleEngine.Player)simState.GetEntityById(node.SimPlayer.Id);
+
+					if (!clonedAction.IsValid(simState, clonedContext, out _))
+						continue;
+
+					_engine.Resolve(simState, clonedContext, clonedAction);
+
+					float score = Evaluate(simState, simPlayer);
+
+					candidates.Add(new BeamNode
+					{
+						SimState = simState,
+						SimPlayer = simState.CurrentPlayer,
+						Depth = depth,
+						RootAction = node.RootAction,
+						RootContext = node.RootContext,
+						Score = score
+					});
+				}
+			}
+
+			if (candidates.Count == 0)
+				break;
+
+			// THE BEAM PRUNE (this is the core of beam search)
+			beam = candidates
+				.OrderByDescending(n => n.Score)
+				.Take(BEAM_WIDTH)
+				.ToList();
+		}
+
+		return beam;
+	}
+
+	bool AllSameRoot(List<BeamNode> beam)
+	{
+		var first = beam[0].RootAction;
+		return beam.All(n => n.RootAction == first);
 	}
 
 	private float SearchScore(GameState state, int depth)
@@ -139,7 +123,7 @@ public class AdvancedAI : IGameAgent
 		var statePlayer = (CardBattleEngine.Player)state.GetEntityById(_player.Id);
 		var actions = state.GetValidActions(statePlayer);
 
-		if (depth > MaxDepth || actions.Count == 0)
+		if (depth > MAX_DEPTH || actions.Count == 0)
 			return Evaluate(state, statePlayer);
 
 		float bestScore = float.NegativeInfinity;
@@ -444,9 +428,15 @@ public class AdvancedAI : IGameAgent
 	{
 	}
 }
-public class ActionScore
+
+public class BeamNode
 {
-	public CardBattleEngine.IGameAction Action;
-	public CardBattleEngine.ActionContext Context;
+	public GameState SimState;
+	public CardBattleEngine.Player SimPlayer;
 	public float Score;
+	public int Depth;
+
+	// Needed so we can return the best ROOT action at the end
+	public IGameAction RootAction;
+	public ActionContext RootContext;
 }
