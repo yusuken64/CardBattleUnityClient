@@ -314,6 +314,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
             {
                 SourcePlayer = SummonedCard.Owner,
                 SourceCard = this.SummonedCard,
+                Source = this.SummonedCard,
                 Target = target.GetData(),
                 PlayIndex = first._pendingIndex
             };
