@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
 		UnityRNG rng = new UnityRNG();
 
 		_gameState = CreateGame(deck, enemyDeck, rng);
+
 		if (GameStartParams != null)
 		{
 			_gameState.Players[0].MaxHealth = GameStartParams.Health;
@@ -103,8 +104,14 @@ public class GameManager : MonoBehaviour
 					_gameState.Players[1].TriggeredEffects.Add(opponentEffect.CreateEffect());
 				}
 			}
-		}
 
+			if (GameStartParams.AutoPlayer)
+			{
+				_playerAgent = new AdvancedAI(_gameState.Players[0], new UnityRNG());
+				FindFirstObjectByType<GameResultScreen>(FindObjectsInactive.Include)
+					.SetAutoAdvance(true);
+			}
+		}
 		SetupPlayer(deck, Player, _gameState.Players[0]);
 		SetupPlayer(enemyDeck, Opponent, _gameState.Players[1]);
 
@@ -426,6 +433,8 @@ public class GameStartParams
 	public int OpponentHealth = 30;
 
 	public string BackgroundName;
+
+	public bool AutoPlayer; //assign ai to player
 }
 
 public class UnityRNG : IRNG

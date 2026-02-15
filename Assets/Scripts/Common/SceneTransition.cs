@@ -21,7 +21,7 @@ public class SceneTransition : MonoBehaviour
 	public float DoorTime = 1f;
 	public float DoorDelayTime = 1f;
 
-	private bool transitionInProgress;
+	internal bool transitionInProgress;
 
 	private void Start()
 	{

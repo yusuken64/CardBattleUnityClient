@@ -20,6 +20,11 @@ public class GameResultScreen : MonoBehaviour
 		okClicked = true;
 	}
 
+	internal void SetAutoAdvance(bool autoAdvance)
+	{
+		okClicked = autoAdvance;
+	}
+
 	private static void ExitScene()
 	{
 		string returnScreenName = GameManager.ReturnScreenName;

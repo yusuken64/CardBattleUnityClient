@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a87b73977c7f784297afa4ba9e9f8f0, type: 3}
   m_Name: Kingdom_StoryModeDungeonEncounterDeckDefinition_2
   m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
-  Title: Deck2
+  Title: Armory
   HeroCard: {fileID: 11400000, guid: 007a78bb2919a6943a293a8b71e0bd1f, type: 2}
   Cards:
   - {fileID: 11400000, guid: 7377ee7c21badc74695ef944f46fef46, type: 2}
