@@ -38,9 +38,8 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 2
     EffectTiming: 1
-    TargetType: 7
     GameActions:
-    - rid: 867526242224308306
+    - rid: 7726824942739128440
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
@@ -50,13 +49,6 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 867526242224308306
-      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Card: {fileID: 11400000, guid: fa7f6848699ec1540ab21e18ef75fd4b, type: 2}
-        IndexOffset: 0
-        Canceled: 0
-        CustomSFX: {fileID: 0}
     - rid: 867526242224308307
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -64,4 +56,25 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0
+    - rid: 7726824942739128440
+      type: {class: RepeatActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Count:
+          rid: 7726824942739128441
+        ChildActions:
+        - rid: 7726824942739128442
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 7726824942739128441
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
+    - rid: 7726824942739128442
+      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Card: {fileID: 11400000, guid: b0b53c4456c5a894cbbbf894c6312849, type: 2}
+        IndexOffset: 0
+        Canceled: 0
+        CustomSFX: {fileID: 0}

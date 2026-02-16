@@ -77,15 +77,16 @@ public class SaveManager : MonoBehaviour
 	{
 		//SaveData = new SaveData();
 		SaveData.GameSaveData = new();
+		SaveData.GameSaveData.PackCount = 1;
 	}
 
 	internal void ResetTutorialData()
 	{
-		SaveData.TutorialSaveData = new();
+		SaveData.GameSaveData.TutorialSaveData = new();
 	}
 
 	internal void SkipTutorialData()
 	{
-		SaveData.TutorialSaveData.BattleTutorialCompleted = true;
+		SaveData.GameSaveData.TutorialSaveData.BattleTutorialCompleted = true;
 	}
 }

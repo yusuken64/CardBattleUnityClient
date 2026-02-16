@@ -16,7 +16,7 @@ MonoBehaviour:
   CardName: Orc 02
   ID: orc_02
   Sprite: {fileID: 21300000, guid: 23123c4ff9055ba4b904f54f9b660506, type: 3}
-  Cost: 1
+  Cost: 3
   CastRestriction:
     rid: -2
   ValidTargetSelector:

@@ -10,8 +10,6 @@ public class SaveData
 	public AppSaveData AppSaveData = new();
 	[SerializeReference]
 	public GameSaveData GameSaveData = new();
-	[SerializeReference]
-	public TutorialSaveData TutorialSaveData = new();
 }
 
 [Serializable]
@@ -38,6 +36,9 @@ public class TutorialSaveData
 [Serializable]
 public class GameSaveData
 {
+	[SerializeReference]
+	public TutorialSaveData TutorialSaveData = new();
+
 	[SerializeReference]
 	public List<DeckSaveData> DeckSaveDatas = new();
 

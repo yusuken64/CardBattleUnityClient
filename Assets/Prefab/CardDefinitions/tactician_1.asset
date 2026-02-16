@@ -22,7 +22,7 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
+  Attack: 2
   Health: 1
   MinionTribes: 
   IsStealth: 0
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867525712731439173
     Condition:
@@ -62,4 +61,5 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0

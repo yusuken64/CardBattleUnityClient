@@ -16,14 +16,14 @@ MonoBehaviour:
   CardName: Kitty 01
   ID: kitty_01
   Sprite: {fileID: 21300000, guid: eea83e6cd24c120489c174894df1affd, type: 3}
-  Cost: 1
+  Cost: 2
   CastRestriction:
     rid: -2
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 1
-  Health: 1
+  Attack: 2
+  Health: 2
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0

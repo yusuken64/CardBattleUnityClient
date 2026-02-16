@@ -109,7 +109,7 @@ public class GameSceneTutorial : MonoBehaviour
 	{
 		HideTutorials();
 		TutorialCanvas.gameObject.SetActive(false);
-		Common.Instance.SaveManager.SaveData.TutorialSaveData
+		Common.Instance.SaveManager.SaveData.GameSaveData.TutorialSaveData
 			.CompletedTutorials.Add(tutorialName);
 
 		FindFirstObjectByType<AnimationQueue>().IsStopped = false;
