@@ -6,24 +6,28 @@ using UnityEngine.SceneManagement;
 
 public class BattleTester : MonoBehaviour
 {
+	public bool SimualteInClient;
 	public static int battleCount = 0;
 
 	public List<DeckDefinition> Decks;
 
 	private void Start()
 	{
-		StartCoroutine(WaitToStart());
-
-		IEnumerator WaitToStart()
+		if (SimualteInClient)
 		{
-			var sceneTransition = Common.Instance.SceneTransition;
-			while (sceneTransition.transitionInProgress)
-			{
-				yield return null;
-			}
+			StartCoroutine(WaitToStart());
 
-			yield return null;
-			StartFight();
+			IEnumerator WaitToStart()
+			{
+				var sceneTransition = Common.Instance.SceneTransition;
+				while (sceneTransition.transitionInProgress)
+				{
+					yield return null;
+				}
+
+				yield return null;
+				StartFight();
+			}
 		}
 	}
 
