@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class TournamentRunner : MonoBehaviour
 {
-    public List<DeckDefinition> Decks;
+	public DeckDefinition P1Deck;
+	public DeckDefinition P2Deck;
+	public List<DeckDefinition> Decks;
 
 	public GameState RunFight()
 	{
-		DeckDefinition firstDeck = Decks[UnityEngine.Random.Range(0, Decks.Count())];
-		DeckDefinition secondDeck = Decks[UnityEngine.Random.Range(0, Decks.Count())];
+		DeckDefinition firstDeck = P1Deck != null ? P1Deck : Decks[UnityEngine.Random.Range(0, Decks.Count())];
+		DeckDefinition secondDeck = P2Deck != null ? P2Deck : Decks[UnityEngine.Random.Range(0, Decks.Count())];
 		GameState resultState = RunFight(firstDeck, secondDeck);
 		return resultState;
 	}

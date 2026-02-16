@@ -143,12 +143,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729129517}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6de2c7d5c35eab4cbae3b31af862b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleTester
   SimualteInClient: 1
+  AutoCount: 100
+  P1Deck: {fileID: 11400000, guid: dae8a0beb79adba408daad6599814298, type: 2}
+  P2Deck: {fileID: 0}
   Decks:
   - {fileID: 11400000, guid: bdaa4c01c81a657478e7d9f7c33074e9, type: 2}
   - {fileID: 11400000, guid: 8cdf326c93240164c8e04fb590e8a1d7, type: 2}
@@ -222,6 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86361f95dd2d1840819eeeb66ab4702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TournamentRunner
+  P1Deck: {fileID: 0}
+  P2Deck: {fileID: 0}
   Decks:
   - {fileID: 11400000, guid: bdaa4c01c81a657478e7d9f7c33074e9, type: 2}
   - {fileID: 11400000, guid: 8cdf326c93240164c8e04fb590e8a1d7, type: 2}
