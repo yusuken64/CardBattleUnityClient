@@ -11,8 +11,8 @@ public static class Cheats
     {
         var gameManager = Object.FindFirstObjectByType<GameManager>();
         //gameManager._opponentAgent = new RandomAI(gameManager.Opponent.Data, new UnityRNG());
-        gameManager._opponentAgent = new AdvancedAI(gameManager.Opponent.Data, new UnityRNG());
-        gameManager._playerAgent = new AdvancedAI(gameManager.Player.Data, new UnityRNG());
+        gameManager._opponentAgent = new AdvancedAI(gameManager.Opponent.Data, new SystemRNG());
+        gameManager._playerAgent = new AdvancedAI(gameManager.Player.Data, new SystemRNG());
         //_playerAgent = new BasicAI(Player.Data, new UnityRNG());
         gameManager.ProcessPlayerMove();
     }
@@ -22,7 +22,7 @@ public static class Cheats
     {
         var gameManager = Object.FindFirstObjectByType<GameManager>();
         //gameManager._opponentAgent = new AdvancedAI(gameManager.Opponent.Data, new UnityRNG());
-        gameManager._playerAgent = new AdvancedAI1(gameManager.Player.Data, new UnityRNG());
+        gameManager._playerAgent = new AdvancedAI1(gameManager.Player.Data, new SystemRNG());
         //_playerAgent = new BasicAI(Player.Data, new UnityRNG());
         gameManager.ProcessPlayerMove();
     }

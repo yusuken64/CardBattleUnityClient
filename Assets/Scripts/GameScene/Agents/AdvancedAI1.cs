@@ -24,12 +24,20 @@ public class AdvancedAI1 : IGameAgent
 	}
 
 	private int _search;
-	private System.Diagnostics.Stopwatch _cloneStopwatch;
-	private System.Diagnostics.Stopwatch _evalStopwatch;
+	private int _cacheHit;
+	private System.Diagnostics.Stopwatch _totalStopWatch = new();
+	private Dictionary<ulong, float> _gameState_Hash_Score_Cache = new();
 
 	public (IGameAction, ActionContext) GetNextAction(GameState game)
 	{
+		_search = 0;
+		_cacheHit = 0;
+		_gameState_Hash_Score_Cache.Clear();
+		_totalStopWatch.Start();
 		var actionScores = GetTopActions(game);
+		_totalStopWatch.Stop();
+
+		Debug.Log($"search {_search}, cached {_cacheHit}, {_totalStopWatch.ElapsedMilliseconds}ms");
 		return (actionScores[0].RootAction, actionScores[0].RootContext);
 	}
 
@@ -83,7 +91,8 @@ public class AdvancedAI1 : IGameAgent
 
 					_engine.Resolve(simState, clonedContext, clonedAction);
 
-					float score = Evaluate(simState, simPlayer);
+					float score = SearchScore(simState, depth + 1);
+					//float score = Evaluate(simState, simPlayer);
 
 					candidates.Add(new BeamNode
 					{
@@ -118,9 +127,15 @@ public class AdvancedAI1 : IGameAgent
 
 	private float SearchScore(GameState state, int depth)
 	{
+		var statePlayer = (CardBattleEngine.Player)state.GetEntityById(_player.Id);
+		var hash = GameStateHasher.HashState(state, statePlayer);
+		if (_gameState_Hash_Score_Cache.TryGetValue(hash, out float value))
+		{
+			_cacheHit++;
+			return value;
+		}
 		_search++;
 
-		var statePlayer = (CardBattleEngine.Player)state.GetEntityById(_player.Id);
 		var actions = state.GetValidActions(statePlayer);
 
 		if (depth > MAX_DEPTH || actions.Count == 0)
@@ -132,9 +147,7 @@ public class AdvancedAI1 : IGameAgent
 
 		foreach (var action in actions.OrderBy(x => _random.Next()).Take(k))
 		{
-			_cloneStopwatch.Start();
 			var simState = state.LightClone();
-			_cloneStopwatch.Stop();
 
 			var clonedContext = CloneContextFor(simState, action.Item2);
 			var clonedAction = CloneActionFor(simState, action.Item1);
@@ -148,10 +161,16 @@ public class AdvancedAI1 : IGameAgent
 			float score;
 
 			if (action.Item1 is EndTurnAction)
+			{
 				score = Evaluate(simState, simPlayer);
+			}
 			else
+			{
 				score = SearchScore(simState, depth + 1);
+			}
 
+			var simHash = GameStateHasher.HashState(simState, simPlayer);
+			_gameState_Hash_Score_Cache[simHash] = score;
 			bestScore = MathF.Max(bestScore, score);
 		}
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
 		}
 #endif
 
-		UnityRNG rng = new UnityRNG();
+		SystemRNG rng = new SystemRNG();
 
 		_gameState = CreateGame(deck, enemyDeck, rng);
 
@@ -107,7 +108,7 @@ public class GameManager : MonoBehaviour
 
 			if (GameStartParams.AutoPlayer)
 			{
-				_playerAgent = new AdvancedAI(_gameState.Players[0], new UnityRNG());
+				_playerAgent = new AdvancedAI(_gameState.Players[0], new SystemRNG());
 				FindFirstObjectByType<GameResultScreen>(FindObjectsInactive.Include)
 					.SetAutoAdvance(true);
 			}
@@ -157,7 +158,7 @@ public class GameManager : MonoBehaviour
 		player.RefreshData();
 	}
 
-	private GameState CreateGame(Deck playerDeck, Deck enemyDeck, UnityRNG rng)
+	private GameState CreateGame(Deck playerDeck, Deck enemyDeck, IRNG rng)
 	{
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
 		p1.Deck.AddRange(playerDeck.Cards.Select(x => x.CreateCard()).ToList());
@@ -305,13 +306,14 @@ public class GameManager : MonoBehaviour
 			state.CurrentPlayer == Player.Data);
 	}
 
-	public void ProcessPlayerMove()
+	public async void ProcessPlayerMove()
 	{
 		if (!OpponentTurn &&
 			_gameState.CurrentPlayer.Id == Player.Data.Id &&
 			_playerAgent != null)
 		{
-			(IGameAction, ActionContext) nextAction = ((IGameAgent)_playerAgent).GetNextAction(_gameState);
+			var nextAction = await Task.Run(() => ((IGameAgent)_playerAgent).GetNextAction(_gameState));
+			//(IGameAction, ActionContext) nextAction = ((IGameAgent)_playerAgent).GetNextAction(_gameState);
 
 			if (nextAction.Item1.IsValid(_gameState, nextAction.Item2, out string reason))
 			{
@@ -331,12 +333,13 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public void ProcessEnemyMove()
+	public async void ProcessEnemyMove()
 	{
 		if (OpponentTurn &&
 			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
 		{
-			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(_gameState);
+			var nextAction = await Task.Run(() => ((IGameAgent)_opponentAgent).GetNextAction(_gameState));
+			//(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(_gameState);
 
 			string actionString = nextAction.Item1.ToString();
 			IGameAction item1 = nextAction.Item1;
@@ -461,5 +464,39 @@ public class UnityRNG : IRNG
 	public int NextInt(int minInclusive, int maxExclusive)
 	{
 		return UnityEngine.Random.Range(minInclusive, maxExclusive);
+	}
+}
+public class SystemRNG : IRNG
+{
+	private readonly System.Random _rng;
+
+	// Optional: allow providing a seed
+	public SystemRNG(int? seed = null)
+	{
+		_rng = seed.HasValue ? new System.Random(seed.Value) : new System.Random();
+	}
+
+	// Clone creates a new RNG with a "randomized" seed based on current RNG state
+	public IRNG Clone()
+	{
+		// Generate a seed from the current RNG (so clone has independent sequence)
+		int newSeed = _rng.Next();
+		return new SystemRNG(newSeed);
+	}
+
+	public double NextDouble()
+	{
+		// Returns a double in [0,1)
+		return _rng.NextDouble();
+	}
+
+	public int NextInt(int maxExclusive)
+	{
+		return _rng.Next(maxExclusive); // [0, maxExclusive)
+	}
+
+	public int NextInt(int minInclusive, int maxExclusive)
+	{
+		return _rng.Next(minInclusive, maxExclusive); // [minInclusive, maxExclusive)
 	}
 }

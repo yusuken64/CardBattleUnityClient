@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a87b73977c7f784297afa4ba9e9f8f0, type: 3}
   m_Name: Desert_StoryModeDungeonEncounterDeckDefinition_2
   m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
-  Title: Deck2
+  Title: Skeletons
   HeroCard: {fileID: 11400000, guid: 7b690b6c22081874caa87794cfa9899c, type: 2}
   Cards:
   - {fileID: 11400000, guid: 18c93259020fc8344a81ee1f4477f755, type: 2}

@@ -23,13 +23,14 @@ public class AdvancedAI : IGameAgent
 	}
 
 	private int _search;
+	private int _cacheHit;
 	private System.Diagnostics.Stopwatch _cloneStopwatch;
 	private System.Diagnostics.Stopwatch _evalStopwatch;
+	private Dictionary<ulong, float> _gameState_Hash_Score_Cache = new();
 
 	public (IGameAction, ActionContext) GetNextAction(GameState game)
 	{
 		var actionScores = GetTopActions(game);
-		//return (actionScores[0].Action, actionScores[0].Context);
 
 		var bestScore = actionScores[0].Score;
 
@@ -85,6 +86,7 @@ public class AdvancedAI : IGameAgent
 		_evalStopwatch = new System.Diagnostics.Stopwatch();
 
 		Debug.Log($"AI thinking for {_player.Name}");
+		_cacheHit = 0;
 		_search = 0;
 
 		var statePlayer = (CardBattleEngine.Player)game.GetEntityById(_player.Id);
@@ -124,7 +126,7 @@ public class AdvancedAI : IGameAgent
 		}
 
 		totalStopwatch.Stop();
-		Debug.Log($"AI {totalStopwatch.ElapsedMilliseconds}ms, {_search} searches, eval {_evalStopwatch.ElapsedMilliseconds}ms, clone {_cloneStopwatch.ElapsedMilliseconds}ms");
+		Debug.Log($"AI {totalStopwatch.ElapsedMilliseconds}ms, {_search} searches, {_cacheHit} cached, eval {_evalStopwatch.ElapsedMilliseconds}ms, clone {_cloneStopwatch.ElapsedMilliseconds}ms");
 
 		return results
 			.OrderByDescending(r => r.Score)
@@ -134,9 +136,16 @@ public class AdvancedAI : IGameAgent
 
 	private float SearchScore(GameState state, int depth)
 	{
+		var statePlayer = (CardBattleEngine.Player)state.GetEntityById(_player.Id);
+
+		var hash = GameStateHasher.HashState(state, statePlayer);
+		if (_gameState_Hash_Score_Cache.TryGetValue(hash, out float value))
+		{
+			_cacheHit++;
+			return value;
+		}
 		_search++;
 
-		var statePlayer = (CardBattleEngine.Player)state.GetEntityById(_player.Id);
 		var actions = state.GetValidActions(statePlayer);
 
 		if (depth > MaxDepth || actions.Count == 0)
@@ -164,10 +173,16 @@ public class AdvancedAI : IGameAgent
 			float score;
 
 			if (action.Item1 is EndTurnAction)
+			{
 				score = Evaluate(simState, simPlayer);
+			}
 			else
+			{
 				score = SearchScore(simState, depth + 1);
+			}
 
+			var simHash = GameStateHasher.HashState(simState, simPlayer);
+			_gameState_Hash_Score_Cache[simHash] = score;
 			bestScore = MathF.Max(bestScore, score);
 		}
 

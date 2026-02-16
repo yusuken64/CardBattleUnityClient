@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fire_StoryModeDungeonEncounterDeckDefinition_2
   m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
   Title: Big Fire
-  HeroCard: {fileID: 11400000, guid: 4d2208ef075efd84eb7cd8dec811fbe1, type: 2}
+  HeroCard: {fileID: 11400000, guid: 89fe317515dd8ec4ead598d81e5eb44a, type: 2}
   Cards:
   - {fileID: 11400000, guid: 86075d31148184742b31c3cfee95849b, type: 2}
   - {fileID: 11400000, guid: 86075d31148184742b31c3cfee95849b, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Swamp_StoryModeDungeonEncounterDeckDefinition_0
   m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
   Title: Creatures
-  HeroCard: {fileID: 11400000, guid: d55ac871c5658d0458963e154e0e309f, type: 2}
+  HeroCard: {fileID: 11400000, guid: 64aa6ee18d7901a41b0ee101d267a49d, type: 2}
   Cards:
   - {fileID: 11400000, guid: d55ac871c5658d0458963e154e0e309f, type: 2}
   - {fileID: 11400000, guid: d55ac871c5658d0458963e154e0e309f, type: 2}
