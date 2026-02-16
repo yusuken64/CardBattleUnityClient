@@ -9,21 +9,21 @@ using UnityEditor;
 
 public class CardManager : MonoBehaviour
 {
-    [Header("Card Data")]
-    public List<CardDefinition> Cards;
+	[Header("Card Data")]
+	public List<CardDefinition> Cards;
 
-    public bool AddDebugCards;
-    [Header("Debug Cards")]
-    public List<CardDefinition> DebugCards;
+	public bool AddDebugCards;
+	[Header("Debug Cards")]
+	public List<CardDefinition> DebugCards;
 
 	public DeckDefinition AdventureStartDeck;
 
-    [Header("Fallbacks")]
-    public Sprite DefaultMissingSprite;
+	[Header("Fallbacks")]
+	public Sprite DefaultMissingSprite;
 
-    private Dictionary<string, CardDefinition> _cardLookup;
+	private Dictionary<string, CardDefinition> _cardLookup;
 
-    private void Awake()
+	private void Awake()
 	{
 		_cardLookup = new Dictionary<string, CardDefinition>();
 
@@ -69,15 +69,24 @@ public class CardManager : MonoBehaviour
 	}
 
 	public CardDefinition GetCardByID(string id)
-    {
+	{
 		if (string.IsNullOrWhiteSpace(id)) { return null; }
-        return _cardLookup.TryGetValue(id, out var card) ? card : null;
-    }
+		return _cardLookup.TryGetValue(id, out var card) ? card : null;
+	}
 
-    public Sprite GetSpriteByCardID(string id)
-    {
-        return GetCardByID(id)?.Sprite ?? DefaultMissingSprite;
-    }
+	public Sprite GetSpriteByCardID(string id)
+	{
+		return GetCardByID(id)?.Sprite ?? DefaultMissingSprite;
+	}
+
+	public void GiveAllCards()
+	{
+		var allCards = Common.Instance.CardManager.CollectableCards();
+		foreach (var cardData in allCards)
+		{
+			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(cardData.ID, 1);
+		}
+	}
 
 #if UNITY_EDITOR
 	[ContextMenu("RebuildCardList")]
@@ -96,15 +105,6 @@ public class CardManager : MonoBehaviour
 			}
 		}
 		EditorUtility.SetDirty(this);
-	}
-
-	public void GiveAllCards()
-	{
-		var allCards = Common.Instance.CardManager.CollectableCards();
-		foreach (var cardData in allCards)
-		{
-			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(cardData.ID, 1);
-		}
 	}
 #endif
 }
