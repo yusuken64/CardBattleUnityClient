@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
   RegionID: Swamp
   Name: Swamp
-  Description: 
+  Description: To the south lie the swamps, a maze of black water, twisted roots,
+    and endless mist. Croaking creatures and lurking tentacles stalk the murk, while
+    elementals and hungry oozes rise from mud and ruins. Hidden cultists practice
+    forbidden necromancy beneath flickering lanterns, their chants drifting across
+    the bog. Few who enter the swamps return unchanged, and fewer still return at
+    all.
   Dungeons:
   - {fileID: 11400000, guid: 8481470ae007e7f4dbe739e7311f694d, type: 2}
   - {fileID: 11400000, guid: f42f6a38cc034e340b14a703de899a00, type: 2}

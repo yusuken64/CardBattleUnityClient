@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
   RegionID: Fire
   Name: Fire
-  Description: 
+  Description: In the far reaches of the world, a volcanic mountain burns day and
+    night, its slopes split by rivers of lava and echoing caverns. Powerful dragons
+    rule the molten peaks, stirring ash storms with their wings. Beneath the surface,
+    fearless dwarves mine rare metals and forge deadly weapons in magma-lit forges,
+    treasures as feared as they are coveted.
   Dungeons:
   - {fileID: 11400000, guid: 1f00f2b7504fda844a86eb8e7aab7c5d, type: 2}
   - {fileID: 11400000, guid: f2c92a94b05ec964fa0813e22a5a88f2, type: 2}

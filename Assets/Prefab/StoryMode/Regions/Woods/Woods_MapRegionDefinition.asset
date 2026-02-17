@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
   RegionID: Woods
   Name: Woods
-  Description: 
+  Description: The great woods stretch in endless green twilight, where towering
+    canopies swallow the sun and ancient magic hums through the air. Giant spiders
+    and prowling beasts stalk the shadows, while dryads living trees with leaf-crowned
+    forms guard the forest. Fiercely hostile to humans, the woods are dangerous yet
+    balanced, every predator and whisper of mana moving in strange, sacred harmony.
   Dungeons:
   - {fileID: 11400000, guid: 4d1e3317d85c5f74b9db433e9dd877fb, type: 2}
   - {fileID: 11400000, guid: 8469d896add491f40b4b7847191b2952, type: 2}

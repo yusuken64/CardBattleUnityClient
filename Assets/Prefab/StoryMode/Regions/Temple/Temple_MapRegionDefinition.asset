@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
   RegionID: Temple
   Name: Temple
-  Description: 
+  Description: Far from any settlement, a lonely pale-stone temple rises, half-buried
+    by time. Mechanical constructs patrol its halls, endlessly evolving into more
+    complex forms. Mana leaks from the temple, corrupting the nearby entins, once
+    gentle guardians, now twisted and wary protectors of a place even they no longer
+    understand.
   Dungeons:
   - {fileID: 11400000, guid: 0328f3873f093a345923f4a0f9354be8, type: 2}
   - {fileID: 11400000, guid: 5bd8b2472eeae1b4ea6e239cfd65b8c8, type: 2}

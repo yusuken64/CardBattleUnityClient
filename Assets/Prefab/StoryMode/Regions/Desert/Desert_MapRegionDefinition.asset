@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
   RegionID: Desert
   Name: Desert
-  Description: 
+  Description: Beyond the kingdom lies a vast desert of rolling dunes and wind-carved
+    stone beneath a merciless sun. Giant scorpions stalk the sands while scattered
+    orc encampments cling to rocky outcrops. Travelers whisper of hidden oases that
+    promise life and shade to those who survive long enough to find them.
   Dungeons:
   - {fileID: 11400000, guid: 991051a6a3296b343b395557bbb907c7, type: 2}
   - {fileID: 11400000, guid: 05823471867493b4a9aabc3a5fd5374e, type: 2}
