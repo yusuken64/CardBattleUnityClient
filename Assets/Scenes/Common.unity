@@ -170,18 +170,11 @@ MonoBehaviour:
       rid: -2
     GameSaveData:
       rid: -2
-    TutorialSaveData:
-      rid: 2140584534428876865
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 2140584534428876865
-      type: {class: TutorialSaveData, ns: , asm: Assembly-CSharp}
-      data:
-        BattleTutorialCompleted: 0
-        CompletedTutorials: []
 --- !u!114 &18950028 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
@@ -9879,7 +9872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: Cards.Array.size
-      value: 344
+      value: 343
       objectReference: {fileID: 0}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: AdventureStartDeck
@@ -11224,11 +11217,11 @@ PrefabInstance:
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: 'Cards.Array.data[341]'
       value: 
-      objectReference: {fileID: 11400000, guid: 45dd6fe5b09c5174593ea838b3f9d13b, type: 2}
+      objectReference: {fileID: 11400000, guid: 46f536ca86614da488b3e26799c2f3b5, type: 2}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: 'Cards.Array.data[342]'
       value: 
-      objectReference: {fileID: 11400000, guid: 46f536ca86614da488b3e26799c2f3b5, type: 2}
+      objectReference: {fileID: 11400000, guid: 39134ca7c0407f64ebe835f7eeb34714, type: 2}
     - target: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
       propertyPath: 'Cards.Array.data[343]'
       value: 

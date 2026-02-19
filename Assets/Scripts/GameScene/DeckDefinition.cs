@@ -14,8 +14,24 @@ public class DeckDefinition : ScriptableObject
     //public HeroPowerDefinition HeroPower;
     public List<CardDefinition> Cards;
 
+    public bool RandomCards = false;
+
 	internal Deck ToDeck()
     {
+        if (RandomCards)
+        {
+            List<CardDefinition> allCards = Common.Instance.CardManager.CollectableCards();
+
+            var heroPool = OpenPackScene.PickRandomWithReplacement(allCards.OfType<MinionCardDefinition>().ToList());
+
+            Deck randomDeck = new();
+            randomDeck.Title = "Random Deck";
+            randomDeck.HeroCard = heroPool[0];
+            randomDeck.Cards = OpenPackScene.PickRandomWithReplacement(allCards, 50);
+
+            return randomDeck;
+        }
+
         return new Deck()
         {
             Title = Title,

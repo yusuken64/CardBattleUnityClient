@@ -15,10 +15,6 @@ MonoBehaviour:
   Title: Christine
   HeroCard: {fileID: 11400000, guid: 063d78916d235f54386e18849e15f63b, type: 2}
   Cards:
-  - {fileID: 11400000, guid: d55ac871c5658d0458963e154e0e309f, type: 2}
-  - {fileID: 11400000, guid: d55ac871c5658d0458963e154e0e309f, type: 2}
-  - {fileID: 11400000, guid: d55ac871c5658d0458963e154e0e309f, type: 2}
-  - {fileID: 11400000, guid: d55ac871c5658d0458963e154e0e309f, type: 2}
   - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
   - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
   - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
@@ -35,8 +31,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
   - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
   - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
-  - {fileID: 11400000, guid: 9c40acd76f2b6c4419602e1ea65e921f, type: 2}
-  - {fileID: 11400000, guid: 9c40acd76f2b6c4419602e1ea65e921f, type: 2}
   - {fileID: 11400000, guid: 9c40acd76f2b6c4419602e1ea65e921f, type: 2}
   - {fileID: 11400000, guid: 9c40acd76f2b6c4419602e1ea65e921f, type: 2}
   - {fileID: 11400000, guid: bf151d0725b4fe24baeab9714aa2d4e9, type: 2}
@@ -61,11 +55,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 063d78916d235f54386e18849e15f63b, type: 2}
   - {fileID: 11400000, guid: 0ac07bb2f2cf2554b8585ce5ba131bfe, type: 2}
   - {fileID: 11400000, guid: 0ac07bb2f2cf2554b8585ce5ba131bfe, type: 2}
-  - {fileID: 11400000, guid: 0ac07bb2f2cf2554b8585ce5ba131bfe, type: 2}
-  - {fileID: 11400000, guid: 0ac07bb2f2cf2554b8585ce5ba131bfe, type: 2}
-  - {fileID: 11400000, guid: 7dcfa0b1064a1044da9584f9740aa4c5, type: 2}
-  - {fileID: 11400000, guid: 7dcfa0b1064a1044da9584f9740aa4c5, type: 2}
   - {fileID: 11400000, guid: e2bbdc79357dc5e42aa8f371756f9e7a, type: 2}
   - {fileID: 11400000, guid: e2bbdc79357dc5e42aa8f371756f9e7a, type: 2}
   - {fileID: 11400000, guid: e2bbdc79357dc5e42aa8f371756f9e7a, type: 2}
   - {fileID: 11400000, guid: e2bbdc79357dc5e42aa8f371756f9e7a, type: 2}
+  - {fileID: 11400000, guid: a67c4a700d2cb694d9e1393dab6d1f11, type: 2}
+  - {fileID: 11400000, guid: a67c4a700d2cb694d9e1393dab6d1f11, type: 2}
+  - {fileID: 11400000, guid: a67c4a700d2cb694d9e1393dab6d1f11, type: 2}
+  - {fileID: 11400000, guid: 2c1dc011e49f54b459b8d08e6f77389b, type: 2}
+  - {fileID: 11400000, guid: 2c1dc011e49f54b459b8d08e6f77389b, type: 2}
+  - {fileID: 11400000, guid: 1c84359235d98c049bf213b49a18fabd, type: 2}
+  - {fileID: 11400000, guid: 1c84359235d98c049bf213b49a18fabd, type: 2}
+  - {fileID: 11400000, guid: 1c84359235d98c049bf213b49a18fabd, type: 2}
+  - {fileID: 11400000, guid: 1c84359235d98c049bf213b49a18fabd, type: 2}
+  RandomCards: 0

@@ -108,7 +108,17 @@ public class GameManager : MonoBehaviour
 
 			if (GameStartParams.AutoPlayer)
 			{
-				_playerAgent = new AdvancedAI(_gameState.Players[0], new SystemRNG());
+				IGameAgent agent;
+				if (GameStartParams.PlayerAgent == null)
+				{
+					agent = new AdvancedAI(_gameState.Players[0], new SystemRNG());
+				}
+				else
+				{
+					agent = GameStartParams.PlayerAgent;
+					agent.SetPlayer(_gameState.Players[0]);
+				}
+				_playerAgent = agent;
 				FindFirstObjectByType<GameResultScreen>(FindObjectsInactive.Include)
 					.SetAutoAdvance(true);
 			}
@@ -438,6 +448,7 @@ public class GameStartParams
 	public string BackgroundName;
 
 	public bool AutoPlayer; //assign ai to player
+	public IGameAgent PlayerAgent; //null to use default
 }
 
 public class UnityRNG : IRNG

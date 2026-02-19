@@ -4,7 +4,7 @@ using System.Linq;
 
 public class BasicAI : IGameAgent
 {
-	private readonly CardBattleEngine.Player _player;
+	private CardBattleEngine.Player _player;
 	private readonly IRNG _rng;
 
 	public BasicAI(CardBattleEngine.Player player, IRNG rng)
@@ -36,5 +36,9 @@ public class BasicAI : IGameAgent
 
 	public void OnGameEnd(GameState gamestate, bool win)
 	{
+	}
+	public void SetPlayer(CardBattleEngine.Player player)
+	{
+		_player = player;
 	}
 }

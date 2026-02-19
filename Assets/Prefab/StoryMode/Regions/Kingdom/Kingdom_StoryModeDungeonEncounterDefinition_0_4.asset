@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91e9a7a17cf54145af42886ace33580, type: 3}
+  m_Name: Kingdom_StoryModeDungeonEncounterDefinition_0_4
+  m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonEncounterDefinition
+  LevelID: Kingdom_StoryModeDungeonEncounterDefinition_0
+  BattleImage: {fileID: 0}
+  Description: 
+  BackgroundName: ElfCity
+  Health: 30
+  Deck: {fileID: 11400000, guid: 244360994b4670a40a8354521a2c8213, type: 2}
+  StoryBattleModifiers: []
+  references:
+    version: 2
+    RefIds: []

@@ -122,12 +122,24 @@ public class TournamentRunnerWindow : EditorWindow
 
         Stopwatch stopwatch = Stopwatch.StartNew();
 
-        // Run the original fight
-        runner.RunFight();
+        int p1Win = 0;
+        int p2Win = 0;
+        for (int i = 0; i < fightsToRun; i++)
+        {
+            var result = runner.RunFight();
+            if (result.Winner == result.Players[0])
+			{
+                p1Win++;
+			}
+            else if(result.Winner == result.Players[1])
+			{
+                p2Win++;
+			}
+        }
 
         stopwatch.Stop();
         double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
-        UnityEngine.Debug.Log($"Fight finished in {elapsedSeconds:F2} seconds");
+        UnityEngine.Debug.Log($"{fightsToRun} Fights {p1Win}-{p2Win} finished in {elapsedSeconds:F2} seconds");
         isRunning = false;
         Repaint();
     }

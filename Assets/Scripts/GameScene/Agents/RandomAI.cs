@@ -5,7 +5,7 @@ using System.Linq;
 
 public class RandomAI : IGameAgent
 {
-	private readonly CardBattleEngine.Player _player;
+	private CardBattleEngine.Player _player;
 	private readonly IRNG _rng;
 
 	public RandomAI(CardBattleEngine.Player player, IRNG rng)
@@ -30,5 +30,9 @@ public class RandomAI : IGameAgent
 	}
 	public void OnGameEnd(GameState gamestate, bool win)
 	{
+	}
+	public void SetPlayer(CardBattleEngine.Player player)
+	{
+		_player = player;
 	}
 }

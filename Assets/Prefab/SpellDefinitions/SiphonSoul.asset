@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
   m_Name: SiphonSoul
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
-  Collectable: 0
+  Collectable: 1
   CardName: SiphonSoul
   ID: SiphonSoul
   Sprite: {fileID: 21300000, guid: d0534a801054401489d8578ca541eaf3, type: 3}

@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b7dcc7f85419c4781daff63d304e8e, type: 3}
+  m_Name: NewEvalWeights
+  m_EditorClassIdentifier: Assembly-CSharp::EvalWeightsScriptableObject
+  Bias: 0
+  MyHealth: 2.5
+  EnemyHealth: 6
+  EnemyHpBelow15: 8
+  EnemyHpBelow10: 15
+  EnemyHpBelow5: 30
+  MyBoardStats: 1
+  EnemyBoardStats: 1
+  MyNextTurnAttack: 1.5
+  EnemyNextTurnAttack: 2
+  EnemyBoardAttack: 1.2
+  EnemyTauntHealth: 1.5
+  MyTauntHealth: 1.5
+  MyHandSize: 1.5
+  EnemyHandSize: 1.5
+  MyReadyAttack: 1.2
+  ManaAdvantage: 5
+  HasLethalBonus: 100000
+  EnemyHasLethalPenalty: 100000
+  MinionAttack: 1.6
+  MinionHealth: 1.2
+  MinionBonusHealth: 0.3
+  ReadyNextTurnBonus: 1.2
+  SummoningSickPenalty: 0.6
+  DivineShield: 1.3
+  TauntMinionHealth: 1.5
+  TauntFlatBonus: 2.5
+  PoisonousBase: 6
+  PoisonousAttack: 1.5
+  Windfury: 1.4
+  StealthAttack: 1.8
+  StealthFlat: 3
+  Lifesteal: 1
+  RebornAttack: 1.2
+  RebornHealth: 1.2
+  RebornFlat: 4

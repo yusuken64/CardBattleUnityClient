@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a87b73977c7f784297afa4ba9e9f8f0, type: 3}
+  m_Name: Kingdom_StoryModeDungeonEncounterDeckDefinition_4
+  m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
+  Title: Tactician
+  HeroCard: {fileID: 11400000, guid: 1e7bc3812e731a541be66a9f253265b8, type: 2}
+  Cards:
+  - {fileID: 11400000, guid: b49e50078e0167d4d8ed2974688d042f, type: 2}
+  - {fileID: 11400000, guid: b49e50078e0167d4d8ed2974688d042f, type: 2}
+  - {fileID: 11400000, guid: b49e50078e0167d4d8ed2974688d042f, type: 2}
+  - {fileID: 11400000, guid: b49e50078e0167d4d8ed2974688d042f, type: 2}
+  - {fileID: 11400000, guid: 1e7bc3812e731a541be66a9f253265b8, type: 2}
+  - {fileID: 11400000, guid: 1e7bc3812e731a541be66a9f253265b8, type: 2}
+  - {fileID: 11400000, guid: 1e7bc3812e731a541be66a9f253265b8, type: 2}
+  - {fileID: 11400000, guid: 1e7bc3812e731a541be66a9f253265b8, type: 2}
+  - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
+  - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
+  - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
+  - {fileID: 11400000, guid: 32aa456b37e8a3c44b67cac309b8041a, type: 2}
+  - {fileID: 11400000, guid: a8880bbf752f4324e80378847c7c4417, type: 2}
+  - {fileID: 11400000, guid: a8880bbf752f4324e80378847c7c4417, type: 2}
+  - {fileID: 11400000, guid: a8880bbf752f4324e80378847c7c4417, type: 2}
+  - {fileID: 11400000, guid: a8880bbf752f4324e80378847c7c4417, type: 2}
+  - {fileID: 11400000, guid: 1f0b0dd4e7d389e43857c627184039cf, type: 2}
+  - {fileID: 11400000, guid: 1f0b0dd4e7d389e43857c627184039cf, type: 2}
+  - {fileID: 11400000, guid: 1f0b0dd4e7d389e43857c627184039cf, type: 2}
+  - {fileID: 11400000, guid: 1f0b0dd4e7d389e43857c627184039cf, type: 2}
+  - {fileID: 11400000, guid: 419ec9a550096da47b04de3599dda872, type: 2}
+  - {fileID: 11400000, guid: 419ec9a550096da47b04de3599dda872, type: 2}
+  - {fileID: 11400000, guid: 419ec9a550096da47b04de3599dda872, type: 2}
+  - {fileID: 11400000, guid: 419ec9a550096da47b04de3599dda872, type: 2}
+  - {fileID: 11400000, guid: 46f536ca86614da488b3e26799c2f3b5, type: 2}
+  - {fileID: 11400000, guid: 46f536ca86614da488b3e26799c2f3b5, type: 2}
+  - {fileID: 11400000, guid: 46f536ca86614da488b3e26799c2f3b5, type: 2}
+  - {fileID: 11400000, guid: 46f536ca86614da488b3e26799c2f3b5, type: 2}
+  - {fileID: 11400000, guid: 2706cfa1abcb55549894663c731047ce, type: 2}
+  - {fileID: 11400000, guid: 2706cfa1abcb55549894663c731047ce, type: 2}
+  - {fileID: 11400000, guid: aaffc31083daa8d42bf73d534edb8a7b, type: 2}
+  - {fileID: 11400000, guid: aaffc31083daa8d42bf73d534edb8a7b, type: 2}
+  - {fileID: 11400000, guid: dd7abd99b659bdc4990ed5f8b1f257ff, type: 2}
+  - {fileID: 11400000, guid: dd7abd99b659bdc4990ed5f8b1f257ff, type: 2}
+  - {fileID: 11400000, guid: 5f2ae65120ca6a24f91d43555af6ba18, type: 2}
+  - {fileID: 11400000, guid: 5f2ae65120ca6a24f91d43555af6ba18, type: 2}
+  RandomCards: 0

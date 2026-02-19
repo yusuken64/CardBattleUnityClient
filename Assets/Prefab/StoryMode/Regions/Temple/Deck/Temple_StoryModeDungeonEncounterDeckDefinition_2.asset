@@ -63,3 +63,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 37ddf8d5af8cd284887fec090a0ecdd6, type: 2}
   - {fileID: 11400000, guid: 37ddf8d5af8cd284887fec090a0ecdd6, type: 2}
   - {fileID: 11400000, guid: 37ddf8d5af8cd284887fec090a0ecdd6, type: 2}
+  - {fileID: 11400000, guid: 71b6a3574e063a04b81c1b1c83515d8b, type: 2}
+  - {fileID: 11400000, guid: 71b6a3574e063a04b81c1b1c83515d8b, type: 2}
+  - {fileID: 11400000, guid: 71b6a3574e063a04b81c1b1c83515d8b, type: 2}
+  RandomCards: 0

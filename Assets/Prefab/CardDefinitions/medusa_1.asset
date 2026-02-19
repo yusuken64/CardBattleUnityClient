@@ -55,7 +55,7 @@ MonoBehaviour:
         Damage:
           rid: 2140584803152167064
         Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 3d5ef7a2d949e984baeebb1ea9fde80e, type: 2}
+        CustomSFX: {fileID: 11400000, guid: 40307da0d02c32d4bbfcf4f291aeae2a, type: 2}
     - rid: 2140584803152167064
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:

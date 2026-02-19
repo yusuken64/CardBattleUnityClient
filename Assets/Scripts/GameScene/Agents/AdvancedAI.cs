@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AdvancedAI : IGameAgent
 {
-	private readonly CardBattleEngine.Player _player;
+	private CardBattleEngine.Player _player;
 	private readonly IRNG _rng;
 	private GameEngine _engine;
 	private System.Random _random;
@@ -85,7 +85,7 @@ public class AdvancedAI : IGameAgent
 		_cloneStopwatch = new System.Diagnostics.Stopwatch();
 		_evalStopwatch = new System.Diagnostics.Stopwatch();
 
-		Debug.Log($"AI thinking for {_player.Name}");
+		//Debug.Log($"AI thinking for {_player.Name}");
 		_cacheHit = 0;
 		_search = 0;
 
@@ -126,7 +126,7 @@ public class AdvancedAI : IGameAgent
 		}
 
 		totalStopwatch.Stop();
-		Debug.Log($"AI {totalStopwatch.ElapsedMilliseconds}ms, {_search} searches, {_cacheHit} cached, eval {_evalStopwatch.ElapsedMilliseconds}ms, clone {_cloneStopwatch.ElapsedMilliseconds}ms");
+		//Debug.Log($"AI {totalStopwatch.ElapsedMilliseconds}ms, {_search} searches, {_cacheHit} cached, eval {_evalStopwatch.ElapsedMilliseconds}ms, clone {_cloneStopwatch.ElapsedMilliseconds}ms");
 
 		return results
 			.OrderByDescending(r => r.Score)
@@ -220,7 +220,7 @@ public class AdvancedAI : IGameAgent
 		};
 	}
 
-	public float Evaluate(GameState state, CardBattleEngine.Player me)
+	public static float Evaluate(GameState state, CardBattleEngine.Player me)
 	{
 		var enemy = state.OpponentOf(me);
 
@@ -352,7 +352,7 @@ public class AdvancedAI : IGameAgent
 		return score;
 	}
 
-	private float MinionValue(CardBattleEngine.Minion m)
+	private static float MinionValue(CardBattleEngine.Minion m)
 	{
 		float value = 0;
 
@@ -457,6 +457,11 @@ public class AdvancedAI : IGameAgent
 
 	public void OnGameEnd(GameState gamestate, bool win)
 	{
+	}
+
+	public void SetPlayer(CardBattleEngine.Player player)
+	{
+		_player = player;
 	}
 }
 public class ActionScore

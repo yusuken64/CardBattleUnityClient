@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 public class AdvancedAI1 : IGameAgent
 {
-	private readonly CardBattleEngine.Player _player;
+	private CardBattleEngine.Player _player;
 	private readonly IRNG _rng;
 	private GameEngine _engine;
 	private System.Random _random;
@@ -445,6 +444,10 @@ public class AdvancedAI1 : IGameAgent
 
 	public void OnGameEnd(GameState gamestate, bool win)
 	{
+	}
+	public void SetPlayer(CardBattleEngine.Player player)
+	{
+		_player = player;
 	}
 }
 
