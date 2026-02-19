@@ -47,6 +47,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d97709e3d2b5fc74d870ddaf82e407b9, type: 2}
   - {fileID: 11400000, guid: d97709e3d2b5fc74d870ddaf82e407b9, type: 2}
   - {fileID: 11400000, guid: d97709e3d2b5fc74d870ddaf82e407b9, type: 2}
+  - {fileID: 11400000, guid: 3d2ead5b7554f8b4084ef2f6e075859e, type: 2}
+  - {fileID: 11400000, guid: 3d2ead5b7554f8b4084ef2f6e075859e, type: 2}
   - {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
   - {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
   - {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
@@ -59,3 +61,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3900c711cb017c741b5822cbe8bf6756, type: 2}
   - {fileID: 11400000, guid: 3900c711cb017c741b5822cbe8bf6756, type: 2}
   - {fileID: 11400000, guid: 3900c711cb017c741b5822cbe8bf6756, type: 2}
+  RandomCards: 0

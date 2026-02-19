@@ -34,8 +34,8 @@ public class TournamentRunner : MonoBehaviour
 
 		//var p1AI = new MonteCarloAgent(p1, new SystemRNG(), 10000);
 		//var p1AI = new AdvancedAI(p1, new SystemRNG());
-		var p1AI = new BasicAI(p1, new SystemRNG());
-		var p2AI = new MonteCarloAgent(p2, new SystemRNG(), 10000);
+		var p1AI = new AdvancedAI(p1, new SystemRNG());
+		var p2AI = new AdvancedAI(p2, new SystemRNG());
 
 		while (!gamestate.IsGameOver())
 		{

@@ -182,7 +182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &729129518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,9 +195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de2c7d5c35eab4cbae3b31af862b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleTester
-  SimualteInClient: 0
+  SimualteInClient: 1
   AutoCount: 1000
-  P1Deck: {fileID: 11400000, guid: 17a16adcd2b466b41a0bdf69f30caa03, type: 2}
+  P1Deck: {fileID: 11400000, guid: 541395c03976af04d903965605013bce, type: 2}
   P2Deck: {fileID: 11400000, guid: 17a16adcd2b466b41a0bdf69f30caa03, type: 2}
   Decks:
   - {fileID: 11400000, guid: bdaa4c01c81a657478e7d9f7c33074e9, type: 2}
@@ -303,6 +303,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d687c8874caec8b4a99f1a8ba7112c2f, type: 2}
   - {fileID: 11400000, guid: cf7ad34dd399ac6488d276a6ea6936fc, type: 2}
   - {fileID: 11400000, guid: 30a05844ba1f878439faf16bd6d6faa7, type: 2}
+  - {fileID: 11400000, guid: bb613c0e32369a24f862dacf39261cad, type: 2}
+  - {fileID: 11400000, guid: 244360994b4670a40a8354521a2c8213, type: 2}
+  - {fileID: 11400000, guid: 17a16adcd2b466b41a0bdf69f30caa03, type: 2}
 --- !u!4 &1794051149
 Transform:
   m_ObjectHideFlags: 0
@@ -334,7 +337,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2057201960
 MonoBehaviour:
   m_ObjectHideFlags: 0

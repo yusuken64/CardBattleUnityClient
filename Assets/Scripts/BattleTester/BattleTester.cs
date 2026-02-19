@@ -119,7 +119,7 @@ public class BattleTester : MonoBehaviour
 			CombatDeck = firstDeck.ToDeck(),
 			Health = 60,
 			AutoPlayer = true,
-			PlayerAgent = new MonteCarloAgent(null, new SystemRNG(), 50000),
+			//PlayerAgent = new Adv(null, new SystemRNG(), 50000),
 
 			CombatDeckEnemy = secondDeck.ToDeck(),
 			OpponentHealth = 60,

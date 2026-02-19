@@ -55,5 +55,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c8292405537b1f409304e126dc58fd2, type: 2}
   - {fileID: 11400000, guid: 0c8292405537b1f409304e126dc58fd2, type: 2}
   - {fileID: 11400000, guid: 0c8292405537b1f409304e126dc58fd2, type: 2}
+  - {fileID: 11400000, guid: 35669ca59e0a46847ad7bb824c6d22dd, type: 2}
+  - {fileID: 11400000, guid: 35669ca59e0a46847ad7bb824c6d22dd, type: 2}
+  - {fileID: 11400000, guid: 763cabcec8537b0418fbe4749e217372, type: 2}
+  - {fileID: 11400000, guid: 763cabcec8537b0418fbe4749e217372, type: 2}
   - {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}
   - {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}
+  - {fileID: 11400000, guid: 89b1e0cb8a2ccf04198c66494b87404e, type: 2}
+  - {fileID: 11400000, guid: 89b1e0cb8a2ccf04198c66494b87404e, type: 2}
+  - {fileID: 11400000, guid: 89b1e0cb8a2ccf04198c66494b87404e, type: 2}
+  - {fileID: 11400000, guid: 89b1e0cb8a2ccf04198c66494b87404e, type: 2}
+  RandomCards: 0
