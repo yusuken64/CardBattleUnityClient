@@ -57,6 +57,17 @@ public class TournamentRunner : MonoBehaviour
 
 		deckA = $"p1 {firstDeck.Title}";
 		deckB = $"p2 {secondDeck.Title}";
-		winner = resultState.Winner?.Name;
+		if (resultState.Winner == resultState.Players[0])
+		{
+			winner = deckA;
+		}
+		else if ((resultState.Winner == resultState.Players[1]))
+		{
+			winner = deckB;
+		}
+		else
+		{
+			winner = "Draw";
+		}
 	}
 }
