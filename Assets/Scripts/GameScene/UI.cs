@@ -18,6 +18,7 @@ public class UI : MonoBehaviour
     public Card CardPreview;
     public GameObject HoverCardPreviewObject;
     public Card HoverCardPreview;
+    public KeywordDetailList HoverCardPreviewKeywords;
     public GameObject TriggeredEffectParticlePrefab;
 
     public GameResultScreen GameResultScreen;
@@ -166,6 +167,8 @@ public class UI : MonoBehaviour
         HoverCardPreview.Setup(card);
         HoverCardPreview.CanPlayIndicator.gameObject.SetActive(false);
         HoverCardPreview.gameObject.SetActive(true);
+        HoverCardPreviewKeywords.gameObject.SetActive(true);
+        HoverCardPreviewKeywords.Setup(card);
     }
 
     internal void HoverPreviewMove(Minion minion)
@@ -176,6 +179,7 @@ public class UI : MonoBehaviour
     {
         HoverCardPreviewObject.gameObject.SetActive(false);
         HoverCardPreview.gameObject.SetActive(false);
+        HoverCardPreviewKeywords.gameObject.SetActive(false);
     }
 
     public void OpenSettings_Clicked()
