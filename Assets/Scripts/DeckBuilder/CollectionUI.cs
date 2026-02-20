@@ -6,15 +6,21 @@ public class CollectionUI : MonoBehaviour
 	public GameObject PreviewObject;
 	public Card PreviewCard;
 
+	public KeywordDetailList KeywordDetailList;
+
 	private void Start()
 	{
 		PreviewObject.SetActive(false);
+		KeywordDetailList.gameObject.SetActive(false);
 	}
 
 	internal void PreviewStart(CollectionItem collectionItem)
 	{
 		PreviewObject.SetActive(true);
 		PreviewCard.Setup(collectionItem.DisplayCard);
+
+		KeywordDetailList.gameObject.SetActive(true);
+		KeywordDetailList.Setup(collectionItem.Card);
 	}
 
 	internal void PreviewMove(CollectionItem collectionItem)
@@ -22,15 +28,9 @@ public class CollectionUI : MonoBehaviour
 		//throw new NotImplementedException();
 	}
 
-	internal void PreviewStart(CardDefinition cardDefinition)
-	{
-		PreviewObject.SetActive(true);
-		PreviewCard.Setup(cardDefinition.CreateCard());
-	}
-
-
 	public void PreviewEnd()
 	{
 		PreviewObject.SetActive(false);
+		KeywordDetailList.gameObject.SetActive(false);
 	}
 }
