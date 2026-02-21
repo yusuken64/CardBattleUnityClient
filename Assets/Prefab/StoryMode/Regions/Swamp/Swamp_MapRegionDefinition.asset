@@ -20,6 +20,7 @@ MonoBehaviour:
     forbidden necromancy beneath flickering lanterns, their chants drifting across
     the bog. Few who enter the swamps return unchanged, and fewer still return at
     all.
+  DungeonSprite: {fileID: 21300000, guid: a7fb9bf5ea4d4f941afee44d6cd78201, type: 3}
   Dungeons:
   - {fileID: 11400000, guid: 8481470ae007e7f4dbe739e7311f694d, type: 2}
   - {fileID: 11400000, guid: f42f6a38cc034e340b14a703de899a00, type: 2}

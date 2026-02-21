@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Map : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Map : MonoBehaviour
 	public GameObject MapObject;
 	public List<MapLocation> MapLocations;
 	public MapLocation SelectedLocation;
+	public Image SelectedLocationImage;
 
 	// location preview
 	public TextMeshProUGUI RegionText;
@@ -21,6 +23,7 @@ public class Map : MonoBehaviour
 	public BattlePreview BattlePreview;
 	public TextMeshProUGUI DungeonText;
 	public Dungeon Dungeon;
+	public Image DungeonBG;
 
 	private void Awake()
 	{
@@ -48,6 +51,7 @@ public class Map : MonoBehaviour
 
 		RegionText.text = mapLocation.MapRegionDefinition.Name;
 		RegionDescriptionText.text = mapLocation.MapRegionDefinition.Description;
+		SelectedLocationImage.sprite = mapLocation.MapRegionDefinition.DungeonSprite;
 	}
 
 	public void Enter_Clicked()
@@ -83,7 +87,10 @@ public class Map : MonoBehaviour
 			Destroy(child.gameObject);
 		}
 
-		var dungeons = SelectedLocation.MapRegionDefinition.Dungeons;
+		MapRegionDefinition mapRegionDefinition = SelectedLocation.MapRegionDefinition;
+		DungeonBG.sprite = mapRegionDefinition.DungeonSprite;
+
+		var dungeons = mapRegionDefinition.Dungeons;
 		foreach (var data in dungeons)
 		{
 			var newButton = Instantiate(BattleGridButtonPrefab, Container);
@@ -92,7 +99,7 @@ public class Map : MonoBehaviour
 		}
 
 		BattleGridButton_Clicked(null);
-		DungeonText.text = $"{SelectedLocation.MapRegionDefinition.Name} Dungeons";
+		DungeonText.text = $"{mapRegionDefinition.Name} Dungeons";
 	}
 
 	public void BattleGridButton_Clicked(StoryModeDungeonDefinition data)

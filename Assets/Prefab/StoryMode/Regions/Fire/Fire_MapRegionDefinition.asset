@@ -19,6 +19,7 @@ MonoBehaviour:
     rule the molten peaks, stirring ash storms with their wings. Beneath the surface,
     fearless dwarves mine rare metals and forge deadly weapons in magma-lit forges,
     treasures as feared as they are coveted.
+  DungeonSprite: {fileID: 21300000, guid: 5ff1d8da4c7a119409ad87abb198bcf9, type: 3}
   Dungeons:
   - {fileID: 11400000, guid: 1f00f2b7504fda844a86eb8e7aab7c5d, type: 2}
   - {fileID: 11400000, guid: f2c92a94b05ec964fa0813e22a5a88f2, type: 2}

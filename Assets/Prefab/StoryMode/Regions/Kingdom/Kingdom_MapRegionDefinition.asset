@@ -20,6 +20,7 @@ MonoBehaviour:
     nobles, and pickpockets crowd the same markets beneath ringing cathedral bells.
     Radiant angels descend from the skies to rule with stern, military authority,
     their presence inspiring as much fear as reverence.
+  DungeonSprite: {fileID: 21300000, guid: 64016cde57b6c8d41acb2c187621f605, type: 3}
   Dungeons:
   - {fileID: 11400000, guid: 63f80a3332ac1254688bf75d4286196e, type: 2}
   - {fileID: 11400000, guid: 366414ecc452ef1458781914872382c5, type: 2}

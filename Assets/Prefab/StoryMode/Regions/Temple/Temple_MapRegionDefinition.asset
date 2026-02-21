@@ -19,6 +19,7 @@ MonoBehaviour:
     complex forms. Mana leaks from the temple, corrupting the nearby entins, once
     gentle guardians, now twisted and wary protectors of a place even they no longer
     understand.
+  DungeonSprite: {fileID: 21300000, guid: abfb6dc49eb10f2459cf3ca7918a5da0, type: 3}
   Dungeons:
   - {fileID: 11400000, guid: 0328f3873f093a345923f4a0f9354be8, type: 2}
   - {fileID: 11400000, guid: 5bd8b2472eeae1b4ea6e239cfd65b8c8, type: 2}

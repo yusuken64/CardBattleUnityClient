@@ -19,6 +19,7 @@ MonoBehaviour:
     for conquest. Yet ancient giants also wander these wastes, untouched by the cold
     and indifferent to all conflict. No one knows their origin or purpose, only that
     they guard something older than kingdoms buried deep beneath the ice.
+  DungeonSprite: {fileID: 21300000, guid: fcbad1352b58d3e4a943af4ee7ca8e61, type: 3}
   Dungeons:
   - {fileID: 11400000, guid: a7f1749c774f48a42a0749ea7fa0cbc2, type: 2}
   - {fileID: 11400000, guid: aa66d1c36feeabc42a806f1360c7cebd, type: 2}
