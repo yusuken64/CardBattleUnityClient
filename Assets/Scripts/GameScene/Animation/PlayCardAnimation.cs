@@ -18,8 +18,6 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 
 		if (playedCard != null)
 		{
-			var animator = playedCard.GetComponent<Animator>();
-			animator.Play("CardCast", 0, 0f);
 			player.Hand.Cards.Remove(playedCard);
 			player.Hand.UpdateCardPositions();
 
@@ -27,7 +25,6 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 			{
 				FindFirstObjectByType<UI>().PreviewStart(playedCard);
 			}
-			yield return playedCard.transform.DOMove(Vector3.zero, 0.4f).WaitForCompletion();
 		}
 
 		if (playCardAction.Card.Owner == this.GameManager.Opponent.Data)

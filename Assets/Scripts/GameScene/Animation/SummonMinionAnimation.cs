@@ -6,6 +6,8 @@ using UnityEngine;
 public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 {
 	public AudioClip SummonMinionClip;
+	public GameObject SummonParticlePrefab;
+
 	public override IEnumerator Play()
 	{
 		Common.Instance.AudioManager.PlayClip(SummonMinionClip);
@@ -39,6 +41,13 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			player.Board.Minions.Remove(existingMinion);
 			player.Board.Minions.Insert(Context.PlayIndex, existingMinion);
 			player.Board.UpdateMinionPositions();
+		}
+
+		if (existingMinion != null)
+		{
+			var particles = Instantiate(SummonParticlePrefab, existingMinion.transform);
+			particles.transform.localPosition = Vector3.zero;
+			Destroy(particles.gameObject, 3f);
 		}
 
 		existingMinion.SummonedCard = null;

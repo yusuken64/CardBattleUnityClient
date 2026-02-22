@@ -1146,6 +1146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 304668838}
   - component: {fileID: 304668840}
+  - component: {fileID: 304668841}
   m_Layer: 0
   m_Name: MulliganPrompt
   m_TagString: Untagged
@@ -1192,6 +1193,19 @@ MonoBehaviour:
   Items: []
   CardArea: {fileID: 771239541}
   BG: {fileID: 954727647}
+  CanvasGroup: {fileID: 304668841}
+--- !u!225 &304668841
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304668837}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,6 +2552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SummonMinionAnimation
   SummonMinionClip: {fileID: 8300000, guid: b8478e7a98b544421ac4038102c4f7de, type: 3}
+  SummonParticlePrefab: {fileID: 4416982436297924106, guid: d3e0f2d89e72cc946818fb25b660b588, type: 3}
 --- !u!1 &647646191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2741,6 +2756,14 @@ PrefabInstance:
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010682437845266216, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345123570213200955, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8345123570213200955, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_OverrideSorting
@@ -5554,7 +5577,7 @@ MonoBehaviour:
   Player: {fileID: 1280333541}
   Opponent: {fileID: 568661103}
   AnimationQueue: {fileID: 984708922}
-  TestDeck: {fileID: 11400000, guid: bdaa4c01c81a657478e7d9f7c33074e9, type: 2}
+  TestDeck: {fileID: 11400000, guid: fc752d3c539bcd24c88a4363301258b0, type: 2}
   EnemyTestDeck: {fileID: 11400000, guid: d4d902ecfdd2a4d409f6fb392b81ad23, type: 2}
   UseSeed: 1
   RandomSeed: 0

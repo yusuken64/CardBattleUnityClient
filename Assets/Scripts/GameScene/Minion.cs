@@ -303,7 +303,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
                 current = (null, null);
                 return false;
             }
-;
+
             var player = gameManager.GetPlayerFor(SummonedCard.Owner);
             var first = player.Hand.Cards.FirstOrDefault(x => x.Data == SummonedCard);
             PlayCardAction playCardAction = new()

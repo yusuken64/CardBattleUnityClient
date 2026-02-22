@@ -1,4 +1,5 @@
 using CardBattleEngine;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -430,19 +431,22 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         if (card.CardType == CardBattleEngine.CardType.Minion)
         {
             var newMinion = Instantiate(minionPrefab, player.Board.transform);
-            //var minionData = new CardBattleEngine.Minion(card.Data as CardBattleEngine.MinionCard, player.Data);
             newMinion.SetupWithCard(card.Data as CardBattleEngine.MinionCard);
             player.Board.Minions.Insert(index, newMinion);
             player.Board.UpdateMinionPositions();
             newMinion.transform.position = newMinion.TargetPosition;
 
             animator.Play("MinionAppear");
-            card.transform.position = newMinion.transform.position;
 
             if (!RequiresTarget(this.Data))
             {
                 _gameManager.ResolveAction(current.action, current.context);
             }
+
+            Vector3 moveTarget = Vector3.zero;
+            moveTarget = newMinion.TargetPosition;
+            transform.DOMove(moveTarget, 0.4f).WaitForCompletion();
+
             Destroy(card.gameObject, 2f);
         }
         else if (card.CardType == CardBattleEngine.CardType.Weapon)
