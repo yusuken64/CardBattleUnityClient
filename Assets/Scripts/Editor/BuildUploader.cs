@@ -124,7 +124,7 @@ public class BuildUploader : EditorWindow
     {
         if (!skipBuild)
         {
-            BuildUsingProfile(buildProfileName, Path.Combine(buildFolder, buildExe));
+            BuildUsingProfile(buildProfileName, buildFolder);
         }
 
         string zipPath = ZipBuild();
@@ -166,9 +166,14 @@ public class BuildUploader : EditorWindow
         if (profile == null)
             throw new System.Exception($"Build profile not found: {profileName}");
 
+        if (Directory.Exists(buildFolder))
+            Directory.Delete(buildFolder, true);
+
+        Directory.CreateDirectory(buildFolder);
+
         BuildPlayerWithProfileOptions options = new BuildPlayerWithProfileOptions();
         options.buildProfile = profile;
-        options.locationPathName = $"{buildFolder}/{buildExe}";
+        options.locationPathName = Path.Combine(buildFolder, buildExe);
         options.options = BuildOptions.None;
 
         BuildReport report = BuildPipeline.BuildPlayer(options);

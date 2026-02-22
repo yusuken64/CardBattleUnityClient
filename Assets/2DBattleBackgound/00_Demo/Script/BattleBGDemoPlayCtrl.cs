@@ -125,6 +125,6 @@ namespace BattleBGCtrlTest
                 _BattleBGCtrl._IsAutoPlayModeSetting(false);
             }
         }
-    }
 #endif
+    }
 }
