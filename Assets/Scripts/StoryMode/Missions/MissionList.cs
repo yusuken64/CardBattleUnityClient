@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MissionList : MonoBehaviour
 {
+	public StoryModeScene StoryModeScene;
 	public Transform Container;
 	public MissionListItem MissionListItemPrefab;
 	public List<MissionListItem> MissionListItems;
@@ -71,6 +72,7 @@ public class MissionList : MonoBehaviour
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
+			StoryModeScene.RefreshRedDots();
 			gameObject.SetActive(false);
 		});
 	}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,12 +9,14 @@ public class StoryModeScene : MonoBehaviour
     public Map Map;
     public MissionList MissionList;
 
+    public MissionDot MissionDot;
+
     void Start()
-	{
+    {
         MissionList.gameObject.SetActive(false);
 
         ReloadDungeonState();
-	}
+    }
 
 	public void ReloadDungeonState()
     {
@@ -77,5 +80,10 @@ public class StoryModeScene : MonoBehaviour
         {
             SceneManager.LoadScene("Main");
         });
+    }
+
+    public void RefreshRedDots()
+	{
+        MissionDot.RefreshData();
     }
 }
