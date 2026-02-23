@@ -98,9 +98,11 @@ namespace BattleBGCtrlTest
             //Brightness value of Sample_Characters
             _CharBrightness.onValueChanged.AddListener(delegate { CharBrightnessCheck(); });
 
-            //Get sample characters(Prefab name = "CharPos")
-            GameObject[] temp = FindObjectsOfType<GameObject>();
-            for (int i = 0; i < temp.Length; i++)
+			//Get sample characters(Prefab name = "CharPos")
+#pragma warning disable CS0618 // Type or member is obsolete
+			GameObject[] temp = FindObjectsOfType<GameObject>();
+#pragma warning restore CS0618 // Type or member is obsolete
+			for (int i = 0; i < temp.Length; i++)
             {
                 if (temp[i].name == "CharPos")
                     CharPos.Add(temp[i]);

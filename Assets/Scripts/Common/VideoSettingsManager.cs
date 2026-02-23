@@ -81,8 +81,8 @@ public class VideoSettingsManager : MonoBehaviour
 		int resIndex = System.Array.FindIndex(
 			availableResolutions,
 			r => r.width == Screen.width &&
-				 r.height == Screen.height &&
-				 r.refreshRate == Screen.currentResolution.refreshRate
+				 r.height == Screen.height
+				// && r.refreshRate == Screen.currentResolution.refreshRate
 		);
 
 		if (resIndex < 0)

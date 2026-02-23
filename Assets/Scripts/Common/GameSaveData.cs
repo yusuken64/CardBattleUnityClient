@@ -51,6 +51,9 @@ public class GameSaveData
 	public CardCollection CardCollection = new();
 
 	public int PackCount;
+
+	[SerializeReference]
+	public QuestSaveData QuestSaveData = new();
 }
 
 [Serializable]
@@ -190,4 +193,18 @@ public class DeckSaveData
 			CardIDs = deck.Cards.Select(x => x.ID).ToList()
 		};
 	}
+}
+
+[Serializable]
+public class QuestSaveData
+{
+	public List<QuestProgress> QuestProgressList = new();
+}
+
+[Serializable]
+public class QuestProgress
+{
+	public string questId;
+	public int questProgress;
+	public bool Collected; //reward collected
 }

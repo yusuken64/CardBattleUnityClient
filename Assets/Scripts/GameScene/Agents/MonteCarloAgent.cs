@@ -31,14 +31,14 @@ public class MonteCarloAgent : IGameAgent
 	}
 
 	private int _search;
-	private int _cacheHit;
+	//private int _cacheHit;
 	private System.Diagnostics.Stopwatch _totalStopWatch = new();
 	private Dictionary<ulong, int> _gameState_Hash_Score_Cache = new();
 
 	public (IGameAction, ActionContext) GetNextAction(GameState game)
 	{
 		_search = 0;
-		_cacheHit = 0;
+		//_cacheHit = 0;
 		_gameState_Hash_Score_Cache.Clear();
 		_totalStopWatch.Start();
 		var topAction = GetTopAction(game);

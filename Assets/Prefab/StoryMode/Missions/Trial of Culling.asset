@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be799a375dcf27343bcd6fd8252e63c1, type: 3}
+  m_Name: Trial of Culling
+  m_EditorClassIdentifier: Assembly-CSharp::QuestDefinition
+  QuestId: Trial of Culling
+  QuestTitle: Trial of Culling
+  QuestObjective: Kill 5 Minions
+  QuestDescription: 'A soft voice echoes in your mind, gentle as drifting ash. "The
+    fields have grown unruly. A handful of lesser creatures wander too far from their
+    place. Remove five of them, and restore a sense of balance."
+
+
+    There is no
+    urgency in the request. No anger. No fear. Only quiet observation.'
+  QuestOutcome: You sense no gratitude will follow your task, only silence... and
+    the faint impression that something unseen is taking careful note of how efficiently
+    you end a life.
+  MaxProgres: 5
+  QuestEffectWrapper:
+    Description: 
+    EffectTrigger: 8
+    Condition:
+      rid: 7726825083664334934
+  references:
+    version: 2
+    RefIds:
+    - rid: 7726825083664334934
+      type: {class: OriginalSourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 1

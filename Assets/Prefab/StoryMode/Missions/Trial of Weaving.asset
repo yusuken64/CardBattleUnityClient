@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be799a375dcf27343bcd6fd8252e63c1, type: 3}
+  m_Name: Trial of Weaving
+  m_EditorClassIdentifier: Assembly-CSharp::QuestDefinition
+  QuestId: Trial of Weaving
+  QuestTitle: Trial of Weaving
+  QuestObjective: Cast 5 Spells
+  QuestDescription: 'A presence settles over you, cool and patient. "The threads
+    of power flow through all things. Show that you may grasp them without becoming
+    entangled."
+
+
+    You are encouraged to cast five spells. Any spells. Harmless
+    or harmful makes no difference.'
+  QuestOutcome: "There is a stillness after each incantation, as though the world
+    itself pauses to listen.\n\nWhen the fifth spell leaves your lips, the silence
+    lingers a moment too long\u2014heavy with quiet calculation."
+  MaxProgres: 5
+  QuestEffectWrapper:
+    Description: 
+    EffectTrigger: 14
+    Condition:
+      rid: 7726825083664335000
+  references:
+    version: 2
+    RefIds:
+    - rid: 7726825083664335000
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+        SourceType: 0

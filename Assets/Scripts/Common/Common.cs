@@ -6,6 +6,7 @@ public class Common : MonoBehaviour
 {
 	public static Common Instance;
 
+	public QuestTracker QuestTracker;
 	public CardManager CardManager;
 	public SaveManager SaveManager;
 	public AudioManager AudioManager;

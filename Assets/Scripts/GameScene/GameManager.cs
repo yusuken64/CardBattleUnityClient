@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 	public int RandomSeed;
 	public BattleIntro BattleIntro;
 
+	public Action<GameEngine> GameInitialized;
+
 	void Start()
 	{
 		ClearBoard();
@@ -144,6 +146,8 @@ public class GameManager : MonoBehaviour
 
 			StartCoroutine(WaitToStartRoutine());
 		});
+
+		GameInitialized?.Invoke(this._engine);
 	}
 
 	private IEnumerator WaitToStartRoutine()

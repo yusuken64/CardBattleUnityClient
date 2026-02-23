@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be799a375dcf27343bcd6fd8252e63c1, type: 3}
+  m_Name: Trial of Calling
+  m_EditorClassIdentifier: Assembly-CSharp::QuestDefinition
+  QuestId: Trial of Calling
+  QuestTitle: Trial of Calling
+  QuestObjective: Summon 5 Minions
+  QuestDescription: 'A whisper coils through the air like silk drawn across steel.
+    "Power is not measured only in what you destroy, but in what answers when you
+    call."
+
+
+    You are asked, politely, to summon five allies to your side. No
+    explanation is given for why they are needed. No battle looms nearby.'
+  QuestOutcome: "As each creature manifests, you feel it again\u2014that subtle tightening
+    in the atmosphere. Approval? Curiosity?\n\nWhatever watches you seems less interested
+    in your companions... and more interested in whether they come willingly."
+  MaxProgres: 5
+  QuestEffectWrapper:
+    Description: 
+    EffectTrigger: 4
+    Condition:
+      rid: 7726825083664334932
+  references:
+    version: 2
+    RefIds:
+    - rid: 7726825083664334932
+      type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+        SourceType: 0

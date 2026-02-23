@@ -6,12 +6,12 @@ public class StoryModeScene : MonoBehaviour
 {
     public GameObject Main;
     public Map Map;
+    public MissionList MissionList;
 
     void Start()
 	{
-        //InitializeGridButtons();
+        MissionList.gameObject.SetActive(false);
 
-        //Reload Dungeon State
         ReloadDungeonState();
 	}
 
@@ -60,6 +60,16 @@ public class StoryModeScene : MonoBehaviour
             Map.ShowRegionPicker();
         });
     }
+
+    public void Missions_Click()
+    {
+        Common.Instance.SceneTransition.DoTransition(() =>
+        {
+            MissionList.gameObject.SetActive(true);
+            MissionList.Setup();
+        });
+    }
+
 
     public void Back_Clicked()
     {
