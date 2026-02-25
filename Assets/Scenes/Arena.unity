@@ -778,7 +778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &238198435
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1783,7 +1783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7902436968835120850, guid: c318bd1054a40cf4f9dca478c5decf5f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -29
       objectReference: {fileID: 0}
     - target: {fileID: 7902436968835120850, guid: c318bd1054a40cf4f9dca478c5decf5f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2332,6 +2332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatingCardPreview
   PreviewCard: {fileID: 591030081}
+  KeywordDetailList: {fileID: 0}
 --- !u!224 &1737774848
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2367,7 +2368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1765750827
 RectTransform:
   m_ObjectHideFlags: 0
