@@ -86,11 +86,7 @@ public class MainMenu : MonoBehaviour
 
 		IEnumerator GameResult(bool isWin)
 		{
-			if (isWin)
-			{
-				Common.Instance.SaveManager.SaveData.GameSaveData.TutorialSaveData.BattleTutorialCompleted = true;
-			}
-
+			Common.Instance.SaveManager.SaveData.GameSaveData.TutorialSaveData.BattleTutorialCompleted = true;
 			Common.Instance.SaveManager.SaveData.GameSaveData.PackCount++;
 
 			yield return null;
@@ -176,18 +172,6 @@ public class MainMenu : MonoBehaviour
 		SettingsObject.gameObject.SetActive(false);
 		DataObject.gameObject.SetActive(false);
 
-		SceneManager.LoadScene("Main");
-	}
-
-	public void AllCards_Click()
-	{
-		Common.Instance.CardManager.GiveAllCards();
-		SceneManager.LoadScene("Main");
-	}
-
-	public void PacksPlus10_Click()
-	{
-		Common.Instance.SaveManager.SaveData.GameSaveData.PackCount += 10;
 		SceneManager.LoadScene("Main");
 	}
 

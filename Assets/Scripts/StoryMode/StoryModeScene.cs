@@ -10,10 +10,14 @@ public class StoryModeScene : MonoBehaviour
     public MissionList MissionList;
 
     public MissionDot MissionDot;
+    public GameObject Settings;
+    public GameObject DataObject;
 
     void Start()
     {
         MissionList.gameObject.SetActive(false);
+        Settings.gameObject.SetActive(false);
+        DataObject.gameObject.SetActive(false);
 
         ReloadDungeonState();
     }
@@ -76,14 +80,50 @@ public class StoryModeScene : MonoBehaviour
 
     public void Back_Clicked()
     {
+        Settings.gameObject.SetActive(true);
+    }
+
+    public void RefreshRedDots()
+	{
+        MissionDot.RefreshData();
+    }
+
+    public void AudioSettings_Click()
+    {
+        Common.Instance.GlobalSettings.gameObject.SetActive(true);
+        Common.Instance.GlobalSettings.SetToAudioSettings();
+    }
+
+    public void DisplaySettings_Click()
+    {
+        Common.Instance.GlobalSettings.gameObject.SetActive(true);
+        Common.Instance.GlobalSettings.SetToDisplaySettings();
+    }
+
+    public void Close_Click()
+    {
+        Common.Instance.SaveManager.Save();
+
         Common.Instance.SceneTransition.DoTransition(() =>
         {
             SceneManager.LoadScene("Main");
         });
     }
 
-    public void RefreshRedDots()
-	{
-        MissionDot.RefreshData();
+    public void Data_Click()
+    {
+        DataObject.gameObject.SetActive(true);
+    }
+
+    public void AllCards_Click()
+    {
+        Common.Instance.CardManager.GiveAllCards();
+        SceneManager.LoadScene("StoryMode");
+    }
+
+    public void PacksPlus10_Click()
+    {
+        Common.Instance.SaveManager.SaveData.GameSaveData.PackCount += 10;
+        SceneManager.LoadScene("StoryMode");
     }
 }

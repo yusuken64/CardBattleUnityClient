@@ -14,7 +14,7 @@ public class IntroCutscene : MonoBehaviour
 
     public static string ReturnScreenName;
     public static Func<bool> ExitAction;
-	private static bool exiting;
+	private bool exiting;
 	private float holdTimer;
     private const float holdDuration = 2f;
 
@@ -74,7 +74,7 @@ public class IntroCutscene : MonoBehaviour
         // Your reaction code here
     }
 
-    private static void ExitScene()
+    private void ExitScene()
     {
         if (exiting) return;
         exiting = true;
