@@ -54,19 +54,6 @@ public class DeckInteractionHandler : MonoBehaviour
 			if (hit.collider.TryGetComponent<IClickable>(out var clickable))
 				clickable.OnClick();
 		}
-		//var mousePos = GameInteractionHandler.GetMouseWorldPosition2D(obj);
-
-		//RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
-		//if (hit.collider != null)
-		//{
-		//	var hoverable = hit.collider.GetComponent<IHoverable>();
-		//	if (hoverable != null)
-		//	{
-		//		//show info
-		//		currentHolding = hoverable;
-		//		currentHolding.HoldStart();
-		//	}
-		//}
 	}
 
 	private void PointerInput_OnClick(Vector2 obj)

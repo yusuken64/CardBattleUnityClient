@@ -9,10 +9,13 @@ public class AdventureCardPicker : MonoBehaviour
 	public CardPickerItem ItemPrefab;
 
 	public Action<CardDefinition> CardPickedCallback;
+	public KeywordDetailList KeywordDetailList;
 
 	public void Setup(bool isHeroSet = true)
 	{
-		foreach(Transform child in Container)
+		KeywordDetailList.gameObject.SetActive(false);
+
+		foreach (Transform child in Container)
 		{
 			Destroy(child.gameObject);
 		}
@@ -34,7 +37,21 @@ public class AdventureCardPicker : MonoBehaviour
 			var newItem = Instantiate(ItemPrefab, Container);
 			newItem.Setup(choice);
 			newItem.CardPickedCallBack = ChoiceClicked;
+			newItem.CardPickerHoverCallback = OnCardPickerHover;
 		}
+	}
+
+	public void OnCardPickerHover(CardPickerItem cardPickerItem)
+	{
+		if (cardPickerItem == null)
+		{
+			KeywordDetailList.gameObject.SetActive(false);
+			return;
+		}
+
+		KeywordDetailList.gameObject.SetActive(true);
+		KeywordDetailList.transform.position = cardPickerItem.GetPosition();
+		KeywordDetailList.Setup(cardPickerItem.Card);
 	}
 
 	public void ChoiceClicked(CardDefinition cardChoice)

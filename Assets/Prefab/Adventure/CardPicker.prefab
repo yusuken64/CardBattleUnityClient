@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardPickerItem
   Card: {fileID: 2964782919693766797}
   CardDefinition: {fileID: 0}
+  ToolTipOffset: {x: 335.8, y: -132.62, z: 0}
 --- !u!114 &5593583709993350872
 MonoBehaviour:
   m_ObjectHideFlags: 0
