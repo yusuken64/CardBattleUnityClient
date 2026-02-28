@@ -165,7 +165,15 @@ public class UI : MonoBehaviour
         if (card == null) { return; }
         HoverCardPreviewObject.gameObject.SetActive(true);
         HoverCardPreview.Setup(card);
-        HoverCardPreview.CanPlayIndicator.gameObject.SetActive(false);
+
+        if(hoverable is Card hoverCard)
+        {
+            HoverCardPreview.CanPlayIndicator.gameObject.SetActive(hoverCard.CanPlayIndicator.activeSelf);
+        }
+		else
+        {
+            HoverCardPreview.CanPlayIndicator.gameObject.SetActive(false);
+        }
         HoverCardPreview.gameObject.SetActive(true);
         HoverCardPreviewKeywords.gameObject.SetActive(true);
         HoverCardPreviewKeywords.Setup(card);
