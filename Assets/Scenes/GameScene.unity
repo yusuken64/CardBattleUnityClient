@@ -2447,6 +2447,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayCardAnimation
   PlayCardClip: {fileID: 8300000, guid: a2004167f662840328992ab0cc86fcd9, type: 3}
+--- !u!1 &557461729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 557461730}
+  - component: {fileID: 557461731}
+  m_Layer: 0
+  m_Name: AddTriggerAnimation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &557461730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557461729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 984708921}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &557461731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557461729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd239298e5f7f4248a5f83c4cbfc56f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AddTriggerAnimation
 --- !u!1 &566408349
 GameObject:
   m_ObjectHideFlags: 0
@@ -5001,6 +5045,7 @@ Transform:
   - {fileID: 704603125}
   - {fileID: 1738033817}
   - {fileID: 2009112250}
+  - {fileID: 557461730}
   m_Father: {fileID: 1153458583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &984708922
@@ -5044,6 +5089,7 @@ MonoBehaviour:
   - {fileID: 1738033818}
   - {fileID: 2009112251}
   - {fileID: 1718998746}
+  - {fileID: 557461731}
   IsStopped: 0
 --- !u!1 &1045255049
 GameObject:
