@@ -42,7 +42,8 @@ public class HeroPowerDefinition : CardDefinition
 
 		List<TriggeredEffectWrapper> minionTriggeredEffects = minionCard.MinionTriggeredEffects;
 		if (minionTriggeredEffects != null &&
-			minionTriggeredEffects.Any())
+			minionTriggeredEffects.Any() &&
+			minionTriggeredEffects[0].EffectTrigger == EffectTrigger.Battlecry)
 		{
 			TriggeredEffectWrapper triggeredEffectWrapper = minionTriggeredEffects[0];
 			return new CardBattleEngine.HeroPower()

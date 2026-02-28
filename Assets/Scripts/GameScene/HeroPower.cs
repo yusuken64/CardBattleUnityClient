@@ -37,6 +37,12 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 	public bool CanStartAiming()
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
+
+		if (Player.Data.Owner != gameManager.Player.Data.Owner)
+		{
+			return false;
+		}
+
 		if (!gameManager.ActivePlayerTurn)
 		{
 			var ui = FindFirstObjectByType<UI>();
@@ -44,13 +50,13 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 			return false;
 		}
 
-		if (Data.ValidTargetSelector != null)
+		var validTargets = Data.ValidTargetSelector?
+			.Select(gameManager._gameState, Player.Data, OriginalCard)
+			?.ToList();
+
+		if (validTargets == null || validTargets.Count == 0)
 		{
-			var validTargets = Data.ValidTargetSelector.Select(gameManager._gameState, Player.Data, OriginalCard);
-			if (!validTargets.Any())
-			{
-				return false;
-			}
+			return false;
 		}
 
 		if (Data.CastRestriction != null)
@@ -100,7 +106,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 
 	public void OnClick()
 	{
-		if (!Data.UsedThisTurn)
+		if (Data.UsedThisTurn)
 		{
 			return;
 		}

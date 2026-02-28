@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestDeck
   m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
   Title: TestDeck
-  HeroCard: {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
+  HeroCard: {fileID: 11400000, guid: b49e50078e0167d4d8ed2974688d042f, type: 2}
   Cards:
   - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
   - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
@@ -39,3 +39,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
   - {fileID: 11400000, guid: dd7abd99b659bdc4990ed5f8b1f257ff, type: 2}
   - {fileID: 11400000, guid: dd7abd99b659bdc4990ed5f8b1f257ff, type: 2}
+  RandomCards: 0
