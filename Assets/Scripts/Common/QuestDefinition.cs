@@ -1,5 +1,6 @@
 ﻿using CardBattleEngine;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -13,8 +14,15 @@ public class QuestDefinition : ScriptableObject
     public string QuestObjective;
     public string QuestDescription;
     public string QuestOutcome;
-    public int MaxProgres;
+    public int MaxProgress;
+    public QuestPrereq QuestPrereq;
     public QuestEffectWrapper QuestEffectWrapper;
+}
+
+[Serializable]
+public class QuestPrereq
+{
+    public List<string> PrereqQuestIds;
 }
 
 [Serializable]

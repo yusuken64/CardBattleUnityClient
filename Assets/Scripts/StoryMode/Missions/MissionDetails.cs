@@ -22,6 +22,8 @@ public class MissionDetails : MonoBehaviour
 	private QuestDefinition _currentQuest;
 	private QuestProgress _currentProgress;
 
+	public Action MissionChanged;
+
 	public void Setup(QuestDefinition obj)
 	{
 		_currentQuest = obj;
@@ -58,10 +60,21 @@ public class MissionDetails : MonoBehaviour
 	private void SetToUnAccepted()
 	{
 		ProgressSlider.value = 0;
-		ProgressSlider.maxValue = _currentQuest.MaxProgres;
+		ProgressSlider.maxValue = _currentQuest.MaxProgress;
 
 		ButtonContainer.gameObject.SetActive(true);
 		CompleteIndicator.gameObject.SetActive(false);
+
+		AcceptButton.gameObject.SetActive(true);
+		if (MissionList.GetActiveMissionsCount() >= 3)
+		{
+			AcceptButton.interactable = false;
+		}
+		else
+		{
+			AcceptButton.interactable = true;
+		}
+
 		AcceptButton.gameObject.SetActive(true);
 		CompleteButton.gameObject.SetActive(false);
 		AbortButton.gameObject.SetActive(false);
@@ -70,13 +83,13 @@ public class MissionDetails : MonoBehaviour
 	private void SetToInProgress()
 	{
 		ProgressSlider.value = _currentProgress.questProgress;
-		ProgressSlider.maxValue = _currentQuest.MaxProgres;
+		ProgressSlider.maxValue = _currentQuest.MaxProgress;
 
 		ButtonContainer.gameObject.SetActive(true);
 		CompleteIndicator.gameObject.SetActive(false);
 		AcceptButton.gameObject.SetActive(false);
 
-		bool isComplete = _currentProgress.questProgress >= _currentQuest.MaxProgres;
+		bool isComplete = _currentProgress.questProgress >= _currentQuest.MaxProgress;
 		CompleteButton.interactable = isComplete;
 		AbortButton.interactable = !isComplete;
 		
@@ -87,7 +100,7 @@ public class MissionDetails : MonoBehaviour
 	private void SetToCompleted()
 	{
 		ProgressSlider.value = _currentProgress.questProgress;
-		ProgressSlider.maxValue = _currentQuest.MaxProgres;
+		ProgressSlider.maxValue = _currentQuest.MaxProgress;
 
 		ButtonContainer.gameObject.SetActive(false);
 		CompleteIndicator.gameObject.SetActive(true);
@@ -100,6 +113,11 @@ public class MissionDetails : MonoBehaviour
 	{
 		if (_currentQuest == null)
 			return;
+
+		if (MissionList.GetActiveMissionsCount() >= 3)
+		{
+			return;
+		}
 
 		var questData = Common.Instance.SaveManager.SaveData.GameSaveData.QuestSaveData;
 
@@ -115,6 +133,7 @@ public class MissionDetails : MonoBehaviour
 		RefreshUI();
 
 		Common.Instance.SaveManager.Save();
+		MissionChanged?.Invoke();
 	}
 
 	public void Complete_Click()
@@ -122,7 +141,7 @@ public class MissionDetails : MonoBehaviour
 		if (_currentQuest == null || _currentProgress == null)
 			return;
 
-		if (_currentProgress.questProgress < _currentQuest.MaxProgres)
+		if (_currentProgress.questProgress < _currentQuest.MaxProgress)
 			return;
 
 		_currentProgress.Collected = true;
@@ -132,6 +151,7 @@ public class MissionDetails : MonoBehaviour
 
 		Common.Instance.SaveManager.SaveData.GameSaveData.PackCount++;
 		Common.Instance.SaveManager.Save();
+		MissionChanged?.Invoke();
 	}
 
 	public void Abort_Click()
@@ -148,5 +168,6 @@ public class MissionDetails : MonoBehaviour
 		RefreshUI();
 
 		Common.Instance.SaveManager.Save();
+		MissionChanged?.Invoke();
 	}
 }

@@ -21,7 +21,7 @@ public class MissionDot : MonoBehaviour
 
         int collectableCount = questTracker.QuestDefinitions
             .Where(q => progressById.TryGetValue(q.QuestId, out var progress)
-                        && progress.questProgress >= q.MaxProgres
+                        && progress.questProgress >= q.MaxProgress
                         && !progress.Collected)
             .Count();
 

@@ -7885,8 +7885,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestTracker
   QuestDefinitions:
   - {fileID: 11400000, guid: 1d951c2c04c98ad4ea984d054439542e, type: 2}
+  - {fileID: 11400000, guid: 34aca6109c6ae9241aa2b9da4ccfecb4, type: 2}
   - {fileID: 11400000, guid: 421541fbe47d5c645a6739a5686d5766, type: 2}
+  - {fileID: 11400000, guid: 7241f681539c56243a4d1294ee5089b5, type: 2}
+  - {fileID: 11400000, guid: e70647b0e78ae18418ec3edb499a6d13, type: 2}
   - {fileID: 11400000, guid: 157740772f3637f428bb2a3faea3a57a, type: 2}
+  - {fileID: 11400000, guid: 110eead55d09799439ee78d77d1f1824, type: 2}
 --- !u!4 &1670704781
 Transform:
   m_ObjectHideFlags: 0

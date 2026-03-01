@@ -10,24 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be799a375dcf27343bcd6fd8252e63c1, type: 3}
-  m_Name: Trial of Weaving
+  m_Name: Trial of Weaving 2
   m_EditorClassIdentifier: Assembly-CSharp::QuestDefinition
-  QuestId: Trial of Weaving
-  QuestTitle: Trial of Weaving
-  QuestObjective: Cast 5 Spells
-  QuestDescription: 'A presence settles over you, cool and patient. "The threads
-    of power flow through all things. Show that you may grasp them without becoming
-    entangled."
-
-
-    You are encouraged to cast five spells. Any spells. Harmless
-    or harmful makes no difference.'
+  QuestId: Trial of Weaving 2
+  QuestTitle: Trial of Weaving 2
+  QuestObjective: Cast 15 Spells
+  QuestDescription: "The ICE agents patrol the city gates. You are instructed to
+    stir the crowd\u2019s fear and anger, let unrest ripple through the market squares
+    and alleyways, and fracture the authority that binds the people.\n\nEnsure that
+    the city believes the turmoil rose from its own shadows, not from the hand that
+    pays you."
   QuestOutcome: "There is a stillness after each incantation, as though the world
     itself pauses to listen.\n\nWhen the fifth spell leaves your lips, the silence
     lingers a moment too long\u2014heavy with quiet calculation."
-  MaxProgress: 5
+  MaxProgress: 15
   QuestPrereq:
-    PrereqQuestIds: []
+    PrereqQuestIds:
+    - Trial of Weaving
   QuestEffectWrapper:
     Description: 
     EffectTrigger: 14

@@ -10,24 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be799a375dcf27343bcd6fd8252e63c1, type: 3}
-  m_Name: Trial of Calling
+  m_Name: Trial of Calling 2
   m_EditorClassIdentifier: Assembly-CSharp::QuestDefinition
-  QuestId: Trial of Calling
-  QuestTitle: Trial of Calling
-  QuestObjective: Summon 5 Minions
-  QuestDescription: 'A whisper coils through the air like silk drawn across steel.
-    "Power is not measured only in what you destroy, but in what answers when you
-    call."
-
-
-    You are asked, politely, to summon five allies to your side. No
-    explanation is given for why they are needed. No battle looms nearby.'
+  QuestId: Trial of Calling 2
+  QuestTitle: Trial of Calling 2
+  QuestObjective: Summon 15 Minions
+  QuestDescription: You are asked, without judgment or urgency, to gather fifteen
+    more creatures to stand beside you in service of 'performing massage and work'.
+    Seek those whose youth has not yet faded, for they are said to be more responsive
+    to instruction. The reason is not shared, and none is expected. Simply bring
+    them when you can.
   QuestOutcome: "As each creature manifests, you feel it again\u2014that subtle tightening
     in the atmosphere. Approval? Curiosity?\n\nWhatever watches you seems less interested
     in your companions... and more interested in whether they come willingly."
-  MaxProgress: 5
+  MaxProgress: 15
   QuestPrereq:
-    PrereqQuestIds: []
+    PrereqQuestIds:
+    - Trial of Calling
   QuestEffectWrapper:
     Description: 
     EffectTrigger: 4

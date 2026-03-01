@@ -1,4 +1,5 @@
 using CardBattleEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -141,7 +142,7 @@ public class QuestTracker : MonoBehaviour
         if (!_questProgressMap.TryGetValue(quest.QuestId, out var progress))
             return false;
 
-        return progress.questProgress < quest.MaxProgres;
+        return progress.questProgress < quest.MaxProgress;
     }
 
     private void IncrementQuest(QuestEffect quest)
@@ -149,16 +150,36 @@ public class QuestTracker : MonoBehaviour
         QuestProgress questProgress = Common.Instance.SaveManager.SaveData.GameSaveData.QuestSaveData
             .QuestProgressList.FirstOrDefault(x => x.questId == quest.questDefinition.QuestId);
 
-        if (questProgress.questProgress >= quest.questDefinition.MaxProgres)
+        if (questProgress.questProgress >= quest.questDefinition.MaxProgress)
         {
             return;
         }
         questProgress.questProgress++;
 
-        if (questProgress.questProgress == quest.questDefinition.MaxProgres)
+        if (questProgress.questProgress == quest.questDefinition.MaxProgress)
         {
             ///TODO show quest complete;
         }
+    }
+
+    public static bool IsQuestUnlocked(QuestDefinition quest)
+    {
+        var prereq = quest.QuestPrereq?.PrereqQuestIds;
+
+        if (prereq == null || prereq.Count == 0)
+            return true;
+
+        return prereq.All(IsQuestCompleted);
+    }
+
+    private static bool IsQuestCompleted(string questId)
+    {
+        var questData = Common.Instance.SaveManager.SaveData.GameSaveData.QuestSaveData;
+
+        var currentProgress = questData.QuestProgressList
+            .FirstOrDefault(x => x.questId == questId);
+
+        return currentProgress != null && currentProgress.Collected;
     }
 }
 
