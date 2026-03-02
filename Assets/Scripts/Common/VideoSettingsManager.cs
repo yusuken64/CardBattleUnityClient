@@ -59,6 +59,7 @@ public class VideoSettingsManager : MonoBehaviour
 
 	public void InitializeVideo()
 	{
+		PopulateResolutionOptions();
 		if (HasSavedSettings())
 		{
 			LoadSettings(false);              // UI + Screen reflect player choice

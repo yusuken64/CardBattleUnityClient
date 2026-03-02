@@ -43,8 +43,8 @@ public class Common : MonoBehaviour
 		AudioManager.ApplicationInitialized(SaveManager.SaveData);
 		Debug.Log("AudioManager Initialized");
 
-		VideoSettingsManager.InitializeVideo();
 		YesNoConfirmation.gameObject.SetActive(false);
+		VideoSettingsManager.InitializeVideo();
 	}
 }
 
