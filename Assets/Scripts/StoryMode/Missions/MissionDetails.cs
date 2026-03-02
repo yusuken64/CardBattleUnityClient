@@ -59,8 +59,8 @@ public class MissionDetails : MonoBehaviour
 
 	private void SetToUnAccepted()
 	{
-		ProgressSlider.value = 0;
 		ProgressSlider.maxValue = _currentQuest.MaxProgress;
+		ProgressSlider.value = 0;
 
 		ButtonContainer.gameObject.SetActive(true);
 		CompleteIndicator.gameObject.SetActive(false);
@@ -82,8 +82,8 @@ public class MissionDetails : MonoBehaviour
 
 	private void SetToInProgress()
 	{
-		ProgressSlider.value = _currentProgress.questProgress;
 		ProgressSlider.maxValue = _currentQuest.MaxProgress;
+		ProgressSlider.value = _currentProgress.questProgress;
 
 		ButtonContainer.gameObject.SetActive(true);
 		CompleteIndicator.gameObject.SetActive(false);
@@ -99,8 +99,8 @@ public class MissionDetails : MonoBehaviour
 
 	private void SetToCompleted()
 	{
-		ProgressSlider.value = _currentProgress.questProgress;
 		ProgressSlider.maxValue = _currentQuest.MaxProgress;
+		ProgressSlider.value = _currentProgress.questProgress;
 
 		ButtonContainer.gameObject.SetActive(false);
 		CompleteIndicator.gameObject.SetActive(true);
