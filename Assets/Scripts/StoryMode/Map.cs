@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,22 @@ public class Map : MonoBehaviour
 	{
 		MapObject.gameObject.SetActive(true);
 		LocationObject.gameObject.SetActive(false);
+
+		foreach (var location in MapLocations)
+		{
+			SetStars(location);
+		}
 		SelectLocation(MapLocations[0]);
+	}
+
+	private void SetStars(MapLocation location)
+	{
+		List<string> completedLevels = Common.Instance.SaveManager.SaveData.GameSaveData.StorySaveData.CompletedLevels;
+
+		int stars = location.MapRegionDefinition.Dungeons
+							 .Count(d => completedLevels.Contains(d.DungeonID));
+
+		location.SetStars(stars);
 	}
 
 	public void SelectLocation(MapLocation mapLocation)
