@@ -186,9 +186,6 @@ Lives: {adventureSaveData.Lives}";
 
 	public void GoBackToMain_Clicked()
 	{
-		Common.Instance.SceneTransition.DoTransition(() =>
-		{
-			SceneManager.LoadScene("Main");
-		});
+		EndArena_Clicked();
 	}
 }
