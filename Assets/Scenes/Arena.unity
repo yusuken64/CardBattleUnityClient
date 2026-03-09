@@ -1748,6 +1748,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeywordDetailList
       objectReference: {fileID: 0}
+    - target: {fileID: 2801909605886423792, guid: 928e7efb8a7b89e45896cab3a86b37ed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4878496111235814471, guid: 928e7efb8a7b89e45896cab3a86b37ed, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

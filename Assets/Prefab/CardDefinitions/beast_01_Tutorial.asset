@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: beast_01_Tutorial
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 0
-  CardName: Beast 01
+  CardName: Beast
   ID: beast_01_Tutorial
   Sprite: {fileID: 21300000, guid: d67121c3754a110429ba5138110f5d88, type: 3}
   Cost: 1

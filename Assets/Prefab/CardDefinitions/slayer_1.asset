@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: slayer_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: slayer 1
+  CardName: Slayer
   ID: slayer_1
   Sprite: {fileID: 21300000, guid: bc14b8645d41a1741bc74a1cebc23346, type: 3}
   Cost: 1

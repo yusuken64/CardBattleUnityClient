@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: lucy_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Lucy 01
+  CardName: Lucy
   ID: lucy_01
   Sprite: {fileID: 21300000, guid: 46f91831efb5c3445b6a8b17726a1abc, type: 3}
   Cost: 4

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: sword_girl_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: sword girl 1
+  CardName: Sword Girl
   ID: sword_girl_1
   Sprite: {fileID: 21300000, guid: 2216c26d04fe20a45acf7aeb19dd6c2d, type: 3}
   Cost: 1
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 1
     GameActions:
     - rid: 6533011672544051267
     Condition:
@@ -62,6 +61,7 @@ MonoBehaviour:
     - rid: 6533011672544051267
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 867526101213118541
         HealthChange:

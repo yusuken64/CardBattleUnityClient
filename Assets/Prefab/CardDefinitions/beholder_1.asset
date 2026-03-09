@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: beholder_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Beholder 1
+  CardName: Detonator
   ID: beholder_1
   Sprite: {fileID: 21300000, guid: 828b5d80038739e44b49583b74b21269, type: 3}
   Cost: 2
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 2
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 6533011672544051261
     Condition:

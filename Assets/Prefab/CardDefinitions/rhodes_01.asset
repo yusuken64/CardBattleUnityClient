@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: rhodes_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Rhodes 01
+  CardName: Rhodes
   ID: rhodes_01
   Sprite: {fileID: 21300000, guid: f68b76fd3afe3cb4dbb4af89086e16d0, type: 3}
   Cost: 7

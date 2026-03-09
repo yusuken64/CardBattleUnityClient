@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: rockman_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: rockman 1
+  CardName: Rockman
   ID: rockman_1
   Sprite: {fileID: 21300000, guid: bb525cf3643b50544b25fa859d87f9f8, type: 3}
   Cost: 2

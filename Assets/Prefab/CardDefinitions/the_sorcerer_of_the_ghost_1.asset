@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: the_sorcerer_of_the_ghost_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: the sorcerer of the ghost 1
+  CardName: Ghost
   ID: the_sorcerer_of_the_ghost_1
   Sprite: {fileID: 21300000, guid: 42e141000ae1b6c40b816b5eed44fc8f, type: 3}
   Cost: 3
@@ -52,6 +52,7 @@ MonoBehaviour:
     - rid: 2140584803152167049
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 2140584803152167050
         HealthChange:

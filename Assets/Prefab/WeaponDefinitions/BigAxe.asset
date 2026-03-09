@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BigAxe
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCardDefinition
   Collectable: 1
-  CardName: BigAxe
+  CardName: Big Axe
   ID: BigAxe
   Sprite: {fileID: 21300000, guid: e4dea24325f0ed74d97198738278646f, type: 3}
   Cost: 5
@@ -22,7 +22,7 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  WeaponName: BigAxe
+  WeaponName: Big Axe
   Attack: 5
   Durability: 2
   WeaponTriggeredEffects: []

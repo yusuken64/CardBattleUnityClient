@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GainMana
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: GainMana
+  CardName: Gain Mana
   ID: GainMana
   Sprite: {fileID: 21300000, guid: ea0feba82d4457f4c8174fa9fe36fb65, type: 3}
   Cost: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: dryad_ss
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Dryad SS
+  CardName: Worldroot Guardian
   ID: dryad_ss
   Sprite: {fileID: 21300000, guid: 9b43655f16ef28b458fb43e9a087ff0f, type: 3}
   Cost: 9

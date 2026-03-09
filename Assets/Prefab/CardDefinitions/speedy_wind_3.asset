@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: speedy_wind_3
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: speedy wind 3
+  CardName: Wind Commander
   ID: speedy_wind_3
   Sprite: {fileID: 21300000, guid: eb753a57ad4527f41bf484e6d4e55e18, type: 3}
   Cost: 4

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: fire_magician_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: fire magician 1
+  CardName: Fire Magician
   ID: fire_magician_1
   Sprite: {fileID: 21300000, guid: af37481b23241944bbe67f0659292c2e, type: 3}
   Cost: 2
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 14
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867525694638784580
     Condition:

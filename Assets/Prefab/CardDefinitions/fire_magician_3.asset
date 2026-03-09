@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: fire_magician_3
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: fire magician 3
+  CardName: Fire Wizard
   ID: fire_magician_3
   Sprite: {fileID: 21300000, guid: 598391d1cb85dab46a5b5cf510ab49b3, type: 3}
   Cost: 8

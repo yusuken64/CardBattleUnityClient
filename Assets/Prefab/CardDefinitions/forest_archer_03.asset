@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: forest_archer_03
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Forest archer 03
+  CardName: Marksman
   ID: forest_archer_03
   Sprite: {fileID: 21300000, guid: f355b1bad927c7c4dbefe1ef454d659e, type: 3}
   Cost: 3

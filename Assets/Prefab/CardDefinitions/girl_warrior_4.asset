@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: girl_warrior_4
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: girl Warrior 4
+  CardName: Iron Protector
   ID: girl_warrior_4
   Sprite: {fileID: 21300000, guid: d80b0dd2879fec848815f2e22a0744e0, type: 3}
   Cost: 4

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: oread_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Oread 01
+  CardName: Oread
   ID: oread_01
   Sprite: {fileID: 21300000, guid: 299e0afd33dca5b48bf78002269083d2, type: 3}
   Cost: 1
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 0
     GameActions:
     - rid: 867526235581054987
     Condition:

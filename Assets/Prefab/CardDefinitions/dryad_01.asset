@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: dryad_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Dryad 01
+  CardName: Dryad Nymph
   ID: dryad_01
   Sprite: {fileID: 21300000, guid: 25c8b34cab9677a49a258fd57d686069, type: 3}
   Cost: 1
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 0
     GameActions:
     - rid: 6533011735244963905
     Condition:

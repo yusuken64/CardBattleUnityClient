@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: orc_m_03
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Orc m 03
+  CardName: Orc Warchief
   ID: orc_m_03
   Sprite: {fileID: 21300000, guid: e32204a02fff3004e8675fd48af37dd0, type: 3}
   Cost: 6

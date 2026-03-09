@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: chain_warrior_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: chain warrior 2
+  CardName: Chain Leader
   ID: chain_warrior_2
   Sprite: {fileID: 21300000, guid: b13b3d5d44c2f11439ef44115ca5b3d1, type: 3}
   Cost: 5

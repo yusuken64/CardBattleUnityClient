@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: medusa_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: medusa 1
+  CardName: Medusa
   ID: medusa_1
   Sprite: {fileID: 21300000, guid: 273b1360503b40d4daae09b4d856726e, type: 3}
   Cost: 5

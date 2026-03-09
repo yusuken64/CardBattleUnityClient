@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: white_fox_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: White fox 01
+  CardName: White Fox
   ID: white_fox_01
   Sprite: {fileID: 21300000, guid: c61057b1cd565414da34cc53fda73ddb, type: 3}
   Cost: 5
@@ -52,6 +52,7 @@ MonoBehaviour:
     - rid: 2140584803152167056
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 2140584803152167057
         HealthChange:

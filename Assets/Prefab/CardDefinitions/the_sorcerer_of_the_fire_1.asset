@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: the_sorcerer_of_the_fire_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: the sorcerer of the fire 1
+  CardName: Flame Sorcerer
   ID: the_sorcerer_of_the_fire_1
   Sprite: {fileID: 21300000, guid: f8db809fb56aafe41aff809612a1b7c3, type: 3}
   Cost: 3
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: When you cast a spell deal 2 damage
     EffectTrigger: 14
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867526235581055132
     - rid: 2140584538619248720

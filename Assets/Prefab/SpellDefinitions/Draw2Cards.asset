@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Draw2Cards
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: DrawCard
+  CardName: Draw Card
   ID: DrawCard
   Sprite: {fileID: 21300000, guid: 9ef381b09cf32cc4681abfcfd0dc1e25, type: 3}
   Cost: 3

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: moon_light_warrior_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: moon light Warrior 1
+  CardName: Runelord
   ID: moon_light_warrior_1
   Sprite: {fileID: 21300000, guid: b090ce3963579274e9d752fbe5b81f4e, type: 3}
   Cost: 6

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: seraphiel_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Seraphiel 01
+  CardName: Seraphiel
   ID: seraphiel_01
   Sprite: {fileID: 21300000, guid: bd4e4a34bfdffa140813420745cb1c03, type: 3}
   Cost: 8

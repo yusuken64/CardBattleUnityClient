@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: the_warrior_of_the_flame
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: the warrior of the flame
+  CardName: Warrior of the Flame
   ID: the_warrior_of_the_flame
   Sprite: {fileID: 21300000, guid: fa80981d3b2da9145b0c633a7bcc155e, type: 3}
   Cost: 3
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 6
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867525712731439186
     Condition:
@@ -53,6 +52,7 @@ MonoBehaviour:
     - rid: 867525712731439186
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 867526305074118745
         HealthChange:
@@ -70,6 +70,7 @@ MonoBehaviour:
         IncludeSource: 1
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0
     - rid: 867526305074118745
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlameStrike
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: FlameStrike
+  CardName: Flame Strike
   ID: FlameStrike
   Sprite: {fileID: 21300000, guid: 06ecb2a32ac6b914591f1ef5664478e8, type: 3}
   Cost: 7

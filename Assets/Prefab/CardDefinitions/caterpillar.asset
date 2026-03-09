@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: caterpillar
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: caterpillar
+  CardName: Caterpillar
   ID: caterpillar
   Sprite: {fileID: 21300000, guid: eaa0690ae3b17fd45b44cba2c3cdc93d, type: 3}
   Cost: 3

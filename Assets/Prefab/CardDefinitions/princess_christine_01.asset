@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: princess_christine_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Princess christine 01
+  CardName: Princess Christine
   ID: princess_christine_01
   Sprite: {fileID: 21300000, guid: 924b6e88398150144a1694a0776f6239, type: 3}
   Cost: 4
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: When you cast a spell summon a Gargoyle
     EffectTrigger: 14
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867526235581054990
     Condition:
@@ -64,6 +63,7 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0
     - rid: 867526304419807315
       type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}

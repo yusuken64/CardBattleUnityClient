@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: lightman_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: lightman 2
+  CardName: Runic Champion
   ID: lightman_2
   Sprite: {fileID: 21300000, guid: 1d94a9bf06b52f74bb8a1d0a742da600, type: 3}
   Cost: 4

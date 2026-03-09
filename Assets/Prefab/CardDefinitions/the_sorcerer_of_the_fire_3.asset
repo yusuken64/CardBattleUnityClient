@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: the_sorcerer_of_the_fire_3
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: the sorcerer of the fire 3
+  CardName: Archmage of the Fire
   ID: the_sorcerer_of_the_fire_3
   Sprite: {fileID: 21300000, guid: ae0fce0b07ccd9546b1e98baf98023b7, type: 3}
   Cost: 7

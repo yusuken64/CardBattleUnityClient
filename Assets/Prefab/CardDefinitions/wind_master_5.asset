@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: wind_master_5
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: wind master 5
+  CardName: Wind Master
   ID: wind_master_5
   Sprite: {fileID: 21300000, guid: 563d14852f77cac4eab290c4af5bf4c9, type: 3}
   Cost: 6

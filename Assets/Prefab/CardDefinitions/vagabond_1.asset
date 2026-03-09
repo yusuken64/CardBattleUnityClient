@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: vagabond_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: vagabond 1
+  CardName: Vagabond
   ID: vagabond_1
   Sprite: {fileID: 21300000, guid: 31ec9085f1e7ad84dba1b12eea663a28, type: 3}
   Cost: 4

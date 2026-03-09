@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: big_monkey_3
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Big monkey 3
+  CardName: Ice Giant
   ID: big_monkey_3
   Sprite: {fileID: 21300000, guid: 58379419f510f3249bd95e4726e9c87c, type: 3}
   Cost: 10
@@ -60,10 +60,12 @@ MonoBehaviour:
         IncludeSource: 1
         IncludeSourcePlayer: 0
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0
     - rid: 867526061311393879
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: -2
         HealthChange:

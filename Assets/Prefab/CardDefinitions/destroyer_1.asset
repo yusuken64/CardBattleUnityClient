@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: destroyer_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: destroyer 1
+  CardName: Destroyer
   ID: destroyer_1
   Sprite: {fileID: 21300000, guid: cb37fb195bfd0c149aba6ad7ad1ec754, type: 3}
   Cost: 1
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 1
     GameActions:
     - rid: 6533011735244963900
     Condition:
@@ -59,7 +58,6 @@ MonoBehaviour:
       data:
         EffectTrigger: 12
         EffectTiming: 1
-        TargetType: 7
         Condition:
           rid: -2
     - rid: 2140584782446198852
@@ -70,6 +68,7 @@ MonoBehaviour:
     - rid: 6533011735244963900
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 867526305074118738
         HealthChange:

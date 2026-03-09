@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: luna_girl_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Luna girl 01
+  CardName: Luna Girl
   ID: luna_girl_01
   Sprite: {fileID: 21300000, guid: deb2d22812fb83646ba8aeff810b77d5, type: 3}
   Cost: 3

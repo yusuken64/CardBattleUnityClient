@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: the_spirit_of_rock_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: the spirit of rock 1
+  CardName: Rock Spirit
   ID: the_spirit_of_rock_1
   Sprite: {fileID: 21300000, guid: cfa65c5f151062a48a2cfbe7b4850f22, type: 3}
   Cost: 4

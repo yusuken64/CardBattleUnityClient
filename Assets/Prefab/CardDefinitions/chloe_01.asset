@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: chloe_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Chloe 01
+  CardName: Chloe
   ID: chloe_01
   Sprite: {fileID: 21300000, guid: 62af6aeec35b91048a6c4643cba3e33a, type: 3}
   Cost: 3

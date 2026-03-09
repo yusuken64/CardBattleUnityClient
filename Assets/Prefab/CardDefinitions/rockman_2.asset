@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: rockman_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: rockman 2
+  CardName: Rockman Monk
   ID: rockman_2
   Sprite: {fileID: 21300000, guid: 3333d9e4b4c5ceb42aa95e3a66d088c4, type: 3}
   Cost: 4
@@ -78,6 +78,7 @@ MonoBehaviour:
     - rid: 2140584809053814893
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
+        StatModifierType: 0
         AttackChange:
           rid: 2140584809053814894
         HealthChange:

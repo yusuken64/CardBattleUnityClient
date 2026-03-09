@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FrostBolt
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: FrostBolt
+  CardName: Frost Bolt
   ID: FrostBolt
   Sprite: {fileID: 21300000, guid: 9aabb01653ba07b44b0aca599a72aadb, type: 3}
   Cost: 2

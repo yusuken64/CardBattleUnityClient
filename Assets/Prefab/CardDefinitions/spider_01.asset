@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: spider_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Spider 01
+  CardName: Young Spider
   ID: spider_01
   Sprite: {fileID: 21300000, guid: 885322928eea7dc46b11b3d69a75340f, type: 3}
   Cost: 2
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 2
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 6533011672544051268
     - rid: 6533011672544051269

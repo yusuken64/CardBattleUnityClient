@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: tactician_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: tactician 2
+  CardName: Tactician Scholar
   ID: tactician_2
   Sprite: {fileID: 21300000, guid: 39d0321c80fe1b54384869d1c2c9a3ba, type: 3}
   Cost: 6

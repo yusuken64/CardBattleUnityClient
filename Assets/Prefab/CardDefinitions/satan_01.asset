@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: satan_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Satan 01
+  CardName: Satan
   ID: satan_01
   Sprite: {fileID: 21300000, guid: aa1730848a8c9224ca7ccc3e0d944c6b, type: 3}
   Cost: 6

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: deep_water_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: deep water 1
+  CardName: Deep Water
   ID: deep_water_1
   Sprite: {fileID: 21300000, guid: 0de505f4141a67244917ecfa986d69c9, type: 3}
   Cost: 4
@@ -38,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 6
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 6533011672544051271
     Condition:
@@ -66,6 +65,7 @@ MonoBehaviour:
       data:
         IncludeTarget: 1
         IncludeSource: 0
+        IncludeSummonedMinion: 0
     - rid: 6533011717531107389
       type: {class: OriginalSourceConditionWrapper, ns: , asm: Assembly-CSharp}
       data: 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: fly_lady
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: fly lady
+  CardName: Fly Lady
   ID: fly_lady
   Sprite: {fileID: 21300000, guid: 45f93eb2cecae87459ebb72d6708c206, type: 3}
   Cost: 1

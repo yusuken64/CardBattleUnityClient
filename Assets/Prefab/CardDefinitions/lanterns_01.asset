@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: lanterns_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Lanterns 01
+  CardName: Lanterns
   ID: lanterns_01
   Sprite: {fileID: 21300000, guid: 059d32768c2b583438e5a25ed52b7220, type: 3}
   Cost: 0

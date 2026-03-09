@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: fighter_of_forest_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: fighter of forest 1
+  CardName: Forest Queen
   ID: fighter_of_forest_1
   Sprite: {fileID: 21300000, guid: 5d9a664f0128b3848921061cb97dab14, type: 3}
   Cost: 8
