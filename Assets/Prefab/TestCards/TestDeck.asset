@@ -15,28 +15,7 @@ MonoBehaviour:
   Title: TestDeck
   HeroCard: {fileID: 11400000, guid: b49e50078e0167d4d8ed2974688d042f, type: 2}
   Cards:
-  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
-  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
-  - {fileID: 11400000, guid: 35669ca59e0a46847ad7bb824c6d22dd, type: 2}
   - {fileID: 11400000, guid: ed5d371e0992d6b4e84e08f11f5ab7e4, type: 2}
   - {fileID: 11400000, guid: ed5d371e0992d6b4e84e08f11f5ab7e4, type: 2}
   - {fileID: 11400000, guid: ed5d371e0992d6b4e84e08f11f5ab7e4, type: 2}
-  - {fileID: 11400000, guid: 007a78bb2919a6943a293a8b71e0bd1f, type: 2}
-  - {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
-  - {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
-  - {fileID: 11400000, guid: 98f626ccfff2aaa4fb8d3be5ff8fc449, type: 2}
-  - {fileID: 11400000, guid: 98f626ccfff2aaa4fb8d3be5ff8fc449, type: 2}
-  - {fileID: 11400000, guid: 216d237b9ae55d443aca1fae15c9513b, type: 2}
-  - {fileID: 11400000, guid: 216d237b9ae55d443aca1fae15c9513b, type: 2}
-  - {fileID: 11400000, guid: bf151d0725b4fe24baeab9714aa2d4e9, type: 2}
-  - {fileID: 11400000, guid: bf151d0725b4fe24baeab9714aa2d4e9, type: 2}
-  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
-  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
-  - {fileID: 11400000, guid: 555ab535b991844468035f5b0501722f, type: 2}
-  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
-  - {fileID: 11400000, guid: 01f19f655fd9baa498249b3d01a4346b, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: ba7eb5d248d0504499847de6609baff3, type: 2}
-  - {fileID: 11400000, guid: dd7abd99b659bdc4990ed5f8b1f257ff, type: 2}
-  - {fileID: 11400000, guid: dd7abd99b659bdc4990ed5f8b1f257ff, type: 2}
   RandomCards: 0

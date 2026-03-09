@@ -104,6 +104,18 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 
 	public CardBattleEngine.Card DisplayCard => OriginalCard;
 
+	public bool CanClick()
+	{
+		var gameManager = FindFirstObjectByType<GameManager>();
+		if (Player.Data.Id != gameManager.Player.Data.Id)
+		{
+			return false;
+		}
+
+		return Player.Data.HeroPower != null &&
+			Player.Data.HeroPower?.ValidTargetSelector == null;
+	}
+
 	public void OnClick()
 	{
 		if (Data.UsedThisTurn)

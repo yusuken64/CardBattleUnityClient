@@ -5623,7 +5623,7 @@ MonoBehaviour:
   Player: {fileID: 1280333541}
   Opponent: {fileID: 568661103}
   AnimationQueue: {fileID: 984708922}
-  TestDeck: {fileID: 11400000, guid: fff7692da7d81c24d9fcab23effd227e, type: 2}
+  TestDeck: {fileID: 11400000, guid: b81bae1c68bc30d4c9c2ee5ca93b100b, type: 2}
   EnemyTestDeck: {fileID: 11400000, guid: fff7692da7d81c24d9fcab23effd227e, type: 2}
   UseSeed: 1
   RandomSeed: 0

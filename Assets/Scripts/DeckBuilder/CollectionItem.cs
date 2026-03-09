@@ -72,6 +72,12 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable,
 		}
 	}
 
+
+	public bool CanClick()
+	{
+		return true;
+	}
+
 	public void OnClick()
 	{
 		//AddToDeck();

@@ -81,14 +81,6 @@ public class PointerInput : MonoBehaviour
             {
                 OnDrag?.Invoke(pos);
             }
-
-            // Hold start (if not dragging)
-            //float heldTime = Time.time - downTime;
-            //if (!holdStarted && !dragging && heldTime >= clickTime)
-            //{
-            //    holdStarted = true;
-            //    OnHoverStart?.Invoke(pos); //TODO instantly invoke with right click
-            //}
         }
 
         // ---------------- BUTTON UP ----------------

@@ -1,6 +1,7 @@
 ﻿using CardBattleEngine;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class GameInteractionHandler : MonoBehaviour
@@ -111,10 +112,21 @@ public class GameInteractionHandler : MonoBehaviour
 				}
 			}
 		}
-		else if (currentAimable != null)
+		//else if (currentAimable != null)
+		//{
+		//	UpdateAimingLine(_aimStartPosition, mousePos);
+		//	//UpdateArrowHead();
+		//}
+	}
+
+	private void Update()
+	{
+		if (currentAimable != null)
 		{
+			var mouse = Mouse.current;
+			Vector2 pos = mouse.position.ReadValue();
+			var mousePos = GetMouseWorldPosition2D(pos);
 			UpdateAimingLine(_aimStartPosition, mousePos);
-			//UpdateArrowHead();
 		}
 	}
 
@@ -153,39 +165,50 @@ public class GameInteractionHandler : MonoBehaviour
 		}
 		else if (currentAimable != null)
 		{
-			RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
-			ITargetable target = null;
-			if (hit.collider != null)
-			{
-				target = hit.collider.GetComponent<ITargetable>();
-				if (target == null)
-				{
-					target = hit.collider.GetComponentInParent<ITargetable>();
-				}
-			}
+			ResolveAim(mousePos, currentAimable);
+		}
+	}
 
-			if (target != null)
+	private void ResolveAim(Vector3 mousePos, ITargetOrigin currentAimable)
+	{
+		if (currentAimable == null)
+		{
+			CancelAim();
+			return;
+		}
+
+		RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
+		ITargetable target = null;
+		if (hit.collider != null)
+		{
+			target = hit.collider.GetComponent<ITargetable>();
+			if (target == null)
 			{
-				if (currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current, mousePos, out string reason))
-				{
-					currentAimable.ResolveAim(current, pendingDraggable?.DragObject);
-					EndAim(true);
-				}
-				else
-				{
-					//cancel the action
-					if (!string.IsNullOrWhiteSpace(reason))
-					{
-						var ui = FindFirstObjectByType<UI>();
-						ui.ShowMessage(reason);
-					}
-					CancelAim();
-				}
+				target = hit.collider.GetComponentInParent<ITargetable>();
+			}
+		}
+
+		if (target != null)
+		{
+			if (currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current, mousePos, out string reason))
+			{
+				currentAimable.ResolveAim(current, pendingDraggable?.DragObject);
+				EndAim(true);
 			}
 			else
 			{
+				//cancel the action
+				if (!string.IsNullOrWhiteSpace(reason))
+				{
+					var ui = FindFirstObjectByType<UI>();
+					ui.ShowMessage(reason);
+				}
 				CancelAim();
 			}
+		}
+		else
+		{
+			CancelAim();
 		}
 	}
 
@@ -280,16 +303,18 @@ public class GameInteractionHandler : MonoBehaviour
 		RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
 		if (currentAimable != null)
 		{
-			var target = hit.collider.GetComponent<ITargetable>();
-			//currentAimable.ResolveTarget(target);
+			ResolveAim(mousePos, currentAimable);
 		}
 		else if (hit.collider != null)
 		{
 			var clickable = hit.collider.GetComponent<IClickable>();
 			if (clickable != null)
 			{
-				clickable.OnClick();
-				return;
+				if (clickable.CanClick())
+				{
+					clickable.OnClick();
+					return;
+				}
 			}
 
 			var targetOrigin = hit.collider.GetComponent<ITargetOrigin>();
@@ -298,6 +323,7 @@ public class GameInteractionHandler : MonoBehaviour
 				if (targetOrigin.CanStartAiming())
 				{
 					currentAimable = targetOrigin;
+					StartLine(currentAimable.DragObject.transform.position);
 				}
 			}
 		}
@@ -446,5 +472,6 @@ public interface IHoverable
 
 public interface IClickable
 {
+	bool CanClick();
 	void OnClick();
 }
