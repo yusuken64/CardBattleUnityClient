@@ -21,6 +21,8 @@ public class ArenaPage : MonoBehaviour
 
 	private void Start()
 	{
+		CardPicker.KeywordDetailList.gameObject.SetActive(false);
+
 		//TODO make a better indicator for "start new game"
 		var newAdventure = Common.Instance.SaveManager.SaveData.GameSaveData.AdventureSaveData.CurrentDeck == null;
 

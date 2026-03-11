@@ -188,7 +188,13 @@ public class GameInteractionHandler : MonoBehaviour
 			}
 		}
 
-		if (target != null)
+		if (target == MinionPlayPreview ||
+			target == currentAimable ||
+			(target == null && pendingDraggable != null))
+		{
+			return; //let the player pick a target;
+		}
+		else if (target != null)
 		{
 			if (currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current, mousePos, out string reason))
 			{
@@ -303,7 +309,15 @@ public class GameInteractionHandler : MonoBehaviour
 		RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
 		if (currentAimable != null)
 		{
-			ResolveAim(mousePos, currentAimable);
+			if (pendingDraggable != null &&
+				hit.collider == null)
+			{
+				CancelAim();
+			}
+			else
+			{
+				ResolveAim(mousePos, currentAimable);
+			}
 		}
 		else if (hit.collider != null)
 		{

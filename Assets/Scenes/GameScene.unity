@@ -16932,6 +16932,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5944102474219387366, guid: 363cfcfb37569eb428811f26be6c993c, type: 3}
+      propertyPath: m_LayerOverridePriority
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8099402940746379996, guid: 363cfcfb37569eb428811f26be6c993c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
