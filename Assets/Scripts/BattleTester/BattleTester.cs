@@ -1,4 +1,5 @@
 using CardBattleEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ public class BattleTester : MonoBehaviour
 	public DeckDefinition P1Deck;
 	public DeckDefinition P2Deck;
 	public List<DeckDefinition> Decks;
+
+	public GameRecorder GameRecorder;
 
 	private void Start()
 	{
@@ -49,11 +52,9 @@ public class BattleTester : MonoBehaviour
 			DeckDefinition firstDeck = P1Deck != null ? P1Deck : Decks[UnityEngine.Random.Range(0, Decks.Count())];
 			DeckDefinition secondDeck = P2Deck != null ? P2Deck : Decks[UnityEngine.Random.Range(0, Decks.Count())];
 
-			//IGameAgent firstAI = new MonteCarloAgent(null, new SystemRNG(), 1000);
 			IGameAgent firstAI = new AdvancedAI(null, new SystemRNG());
-			//IGameAgent secondAI = new MonteCarloAgent(null, new SystemRNG(), 1000);
 			IGameAgent secondAI = new AdvancedAI(null, new SystemRNG());
-			var result = RunFight(firstDeck, firstAI, secondDeck, secondAI);
+			GameState result = RunFight(firstDeck, firstAI, secondDeck, secondAI);
 
 			if (result.Winner == result.Players[0])
 			{
@@ -63,10 +64,43 @@ public class BattleTester : MonoBehaviour
 			{
 				p2Wins++;
 			}
+
+			string gameId = Guid.NewGuid().ToString();
+			var records = FromHistory(result.History, gameId, result.turn, result.Winner, result.Players[0]);
+			foreach (var record in records)
+			{
+				_ = GameRecorder.SendRecordAsync(record);
+			}
 			yield return null;
 		}
 
 		Debug.Log($"p1[{p1Wins}] vs p2[{p2Wins}]");
+	}
+
+	public static List<GameRecordDto> FromHistory(
+		List<HistoryEntry> history, 
+		string gameId, 
+		int totalTurns, 
+		CardBattleEngine.Player winner,
+		CardBattleEngine.Player firstPlayer)
+	{
+		var records = history
+			.Where(x => x.Action is PlayCardAction) // only include PlayCardAction
+			.Select(x => new GameRecordDto
+			{
+				GameId = gameId,
+				CardID = (x.Action as PlayCardAction).Card.Name,
+				DidWin = x.Player == winner,
+				PlayerOrder = x.Player == firstPlayer ? (byte)1 : (byte)2,
+				//WasDrawn = x.Action.WasDrawn(), // you may need an extension or bool from Action
+				WasPlayed = true,               // always true for PlayCardAction
+				//CopiesPlayed = x.Context.Copies, // track copies from context
+				TurnPlayed = x.Turn,
+				TotalTurns = totalTurns
+			})
+			.ToList();
+
+		return records;
 	}
 
 	public GameState RunFight(

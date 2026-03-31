@@ -182,7 +182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &729129518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,9 +195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de2c7d5c35eab4cbae3b31af862b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleTester
-  SimualteInClient: 1
-  AutoCount: 1000
-  P1Deck: {fileID: 11400000, guid: 541395c03976af04d903965605013bce, type: 2}
+  SimualteInClient: 0
+  AutoCount: 100000
+  P1Deck: {fileID: 11400000, guid: 17a16adcd2b466b41a0bdf69f30caa03, type: 2}
   P2Deck: {fileID: 11400000, guid: 17a16adcd2b466b41a0bdf69f30caa03, type: 2}
   Decks:
   - {fileID: 11400000, guid: bdaa4c01c81a657478e7d9f7c33074e9, type: 2}
@@ -228,6 +228,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d687c8874caec8b4a99f1a8ba7112c2f, type: 2}
   - {fileID: 11400000, guid: cf7ad34dd399ac6488d276a6ea6936fc, type: 2}
   - {fileID: 11400000, guid: 30a05844ba1f878439faf16bd6d6faa7, type: 2}
+  GameRecorder: {fileID: 1947270820}
 --- !u!4 &729129519
 Transform:
   m_ObjectHideFlags: 0
@@ -321,6 +322,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1947270819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1947270821}
+  - component: {fileID: 1947270820}
+  m_Layer: 0
+  m_Name: GameRecorder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1947270820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947270819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e220888c8f5086944ac88125c86a6433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameRecorder
+  Url: http://localhost:5000/record
+--- !u!4 &1947270821
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947270819}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2057201959
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,3 +449,4 @@ SceneRoots:
   - {fileID: 1794051149}
   - {fileID: 493782388}
   - {fileID: 2057201961}
+  - {fileID: 1947270821}
