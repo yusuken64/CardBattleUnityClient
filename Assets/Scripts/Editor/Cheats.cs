@@ -14,7 +14,8 @@ public static class Cheats
         gameManager._opponentAgent = new AdvancedAI(gameManager.Opponent.Data, new SystemRNG());
         gameManager._playerAgent = new AdvancedAI(gameManager.Player.Data, new SystemRNG());
         //_playerAgent = new BasicAI(Player.Data, new UnityRNG());
-        gameManager.ProcessPlayerMove();
+        //gameManager.ProcessPlayerMove();
+        _ = gameManager.ProcessMoveAsync(gameManager._playerAgent);
     }
 
     [MenuItem("Game/Auto/AutoPlayerTurn1")]
@@ -24,7 +25,7 @@ public static class Cheats
         //gameManager._opponentAgent = new AdvancedAI(gameManager.Opponent.Data, new UnityRNG());
         gameManager._playerAgent = new AdvancedAI1(gameManager.Player.Data, new SystemRNG());
         //_playerAgent = new BasicAI(Player.Data, new UnityRNG());
-        gameManager.ProcessPlayerMove();
+        _ = gameManager.ProcessMoveAsync(gameManager._playerAgent);
     }
     
     [MenuItem("Game/Auto/AutoPlayerTurn_Stop")]

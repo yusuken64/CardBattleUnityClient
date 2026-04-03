@@ -108,7 +108,14 @@ public class AdvancedAI : IGameAgent
 			if (!clonedAction.IsValid(simState, clonedContext, out _))
 				continue;
 
-			_engine.Resolve(simState, clonedContext, clonedAction);
+			try
+			{
+				_engine.Resolve(simState, clonedContext, clonedAction);
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
 
 			float score;
 

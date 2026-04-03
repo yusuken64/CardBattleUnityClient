@@ -54,7 +54,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			GameManager.ActivePlayerTurn = true;
 			player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
 
-			GameManager.ProcessPlayerMove();
+			_ = GameManager.ProcessMoveAsync(GameManager._playerAgent);
 		}
 		else
 		{
@@ -63,7 +63,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			GameManager.Player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
 			yield return new WaitForSecondsRealtime(1.0f);
 
-			GameManager.ProcessEnemyMove();
+			_ = GameManager.ProcessMoveAsync(GameManager._opponentAgent);
 		}
 	}
 }

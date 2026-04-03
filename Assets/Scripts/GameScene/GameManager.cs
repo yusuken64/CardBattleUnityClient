@@ -311,8 +311,21 @@ public class GameManager : MonoBehaviour
 
 	private void ActionResolvedCallback(GameState state)
 	{
-		ProcessPlayerMove();
-		ProcessEnemyMove();
+		IGameAgent agent = null;
+		if (!OpponentTurn &&
+			_gameState.CurrentPlayer.Id == Player.Data.Id &&
+			_playerAgent != null)
+		{
+			agent = _playerAgent;
+		}
+		else if (
+			OpponentTurn &&
+			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
+		{
+			agent = _opponentAgent;
+		}
+
+		_ = ProcessMoveAsync(agent);
 
 		Opponent.UpdatePlayableActions(false);
 		Player.UpdatePlayableActions(
@@ -320,70 +333,32 @@ public class GameManager : MonoBehaviour
 			state.CurrentPlayer == Player.Data);
 	}
 
-	public async void ProcessPlayerMove()
+	public async Task ProcessMoveAsync(IGameAgent gameAgent)
 	{
-		if (!OpponentTurn &&
-			_gameState.CurrentPlayer.Id == Player.Data.Id &&
-			_playerAgent != null)
-		{
-			var nextAction = await Task.Run(() => ((IGameAgent)_playerAgent).GetNextAction(_gameState));
-			//(IGameAction, ActionContext) nextAction = ((IGameAgent)_playerAgent).GetNextAction(_gameState);
+		if (gameAgent == null)
+			return;
 
-			if (nextAction.Item1.IsValid(_gameState, nextAction.Item2, out string reason))
-			{
-				ResolveAction(nextAction.Item1, nextAction.Item2);
-			}
-			else
-			{
-				Debug.LogError($"Invalid Action {reason}");
-				StartCoroutine(Fire());
+		var nextAction = await Task.Run(() =>
+			gameAgent.GetNextAction(_gameState));
 
-				IEnumerator Fire()
-				{
-					yield return null;
-					ProcessPlayerMove();
-				}
-			}
-		}
+		if (TryResolveAction(nextAction))
+			return;
+
+		Debug.LogError("Invalid action, retrying...");
+		await Task.Yield();
+		await ProcessMoveAsync(gameAgent);
 	}
 
-	public async void ProcessEnemyMove()
+	private bool TryResolveAction((IGameAction action, ActionContext context) nextAction)
 	{
-		if (OpponentTurn &&
-			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
+		if (nextAction.action.IsValid(_gameState, nextAction.context, out string reason))
 		{
-			var nextAction = await Task.Run(() => ((IGameAgent)_opponentAgent).GetNextAction(_gameState));
-			//(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(_gameState);
-
-			string actionString = nextAction.Item1.ToString();
-			IGameAction item1 = nextAction.Item1;
-			if (item1 is PlayCardAction playCardAction)
-			{
-				actionString = $"Play card {playCardAction.Card.Name}";
-			}
-			else if (item1 is AttackAction attackAction)
-			{
-				var attackSource = nextAction.Item2.Source;
-				var attackTarget = nextAction.Item2.Target;
-				actionString = $"Attack {attackSource} to {attackTarget}";
-			}
-			//Debug.Log($"Enemy Action {actionString}");
-			if (nextAction.Item1.IsValid(_gameState, nextAction.Item2, out string reason))
-			{
-				ResolveAction(nextAction.Item1, nextAction.Item2);
-			}
-			else
-			{
-				Debug.LogError($"Invalid Action {reason}");
-				StartCoroutine(Fire());
-
-				IEnumerator Fire()
-				{
-					yield return null;
-					ProcessEnemyMove();
-				}
-			}
+			ResolveAction(nextAction.action, nextAction.context);
+			return true;
 		}
+
+		Debug.LogError($"Invalid Action: {reason}");
+		return false;
 	}
 
 	public static void ValidateState(CardBattleEngine.Player data, Player player)

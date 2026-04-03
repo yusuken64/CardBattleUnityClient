@@ -25,6 +25,8 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 			{
 				FindFirstObjectByType<UI>().PreviewStart(playedCard);
 			}
+
+			Object.Destroy(playedCard.gameObject, 2.0f);
 		}
 
 		if (playCardAction.Card.Owner == this.GameManager.Opponent.Data)
