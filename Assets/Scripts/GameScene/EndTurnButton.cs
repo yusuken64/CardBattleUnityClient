@@ -11,6 +11,9 @@ public class EndTurnButton : MonoBehaviour
 	public Image ButtonImage;
 	public Button Button;
 	public GameObject OnlyActionIndicator;
+	public GameObject OnlyActionIndicator2;
+
+	public AudioClip NoActionSound;
 
 	public Color ReadyColor;
 	public Color OnlyColor;
@@ -23,6 +26,7 @@ public class EndTurnButton : MonoBehaviour
 		_gameManager = FindFirstObjectByType<GameManager>();
 		_ui = FindFirstObjectByType<UI>();
 		OnlyActionIndicator.gameObject.SetActive(false);
+		OnlyActionIndicator2.gameObject.SetActive(false);
 	}
 
 	public void SetToReady()
@@ -31,12 +35,15 @@ public class EndTurnButton : MonoBehaviour
 		this.Button.interactable = true;
 		ButtonText.text = "End Turn";
 		OnlyActionIndicator.gameObject.SetActive(false);
+		OnlyActionIndicator2.gameObject.SetActive(false);
 	}
 
 	public void SetToOnlyAction()
 	{
 		ButtonText.text = "End Turn";
 		OnlyActionIndicator.gameObject.SetActive(true);
+		OnlyActionIndicator2.gameObject.SetActive(true);
+		Common.Instance.AudioManager.PlayUISound(NoActionSound);
 	}
 
 	public void SetToEnemyTurn()
@@ -44,6 +51,7 @@ public class EndTurnButton : MonoBehaviour
 		ButtonImage.color = EnemyColor;
 		ButtonText.text = "Enemy Turn";
 		OnlyActionIndicator.gameObject.SetActive(false);
+		OnlyActionIndicator2.gameObject.SetActive(false);
 	}
 
 	public void OnClick()
