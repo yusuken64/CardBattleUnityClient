@@ -20,20 +20,20 @@ public class Collection : MonoBehaviour
 
     private CardBattleEngine.Player owner = new CardBattleEngine.Player("Test Player");
 
-	private int MaxPage => Mathf.Max(0, (CardsToShow.Count() - 1) / ItemsPerPage);
+    private int MaxPage => Mathf.Max(0, (CardsToShow.Count() - 1) / ItemsPerPage);
 
-	public IEnumerable<CardDefinition> CardsToShow { get; private set; }
+    public IEnumerable<CardDefinition> CardsToShow { get; private set; }
     public bool HideUncollectable;
     public List<CollectionItem> showingItems;
     public bool IsCollectionView;
     public Deck CurrentDeck;
 
-	private void OnEnable()
-	{
+    private void OnEnable()
+    {
         CollectionFilter.FilterChanged += CollectionFilter_FilterChanged;
     }
 
-	private void OnDisable()
+    private void OnDisable()
     {
         CollectionFilter.FilterChanged -= CollectionFilter_FilterChanged;
     }
@@ -46,11 +46,11 @@ public class Collection : MonoBehaviour
     }
 
     private void Start()
-	{
+    {
         IsCollectionView = true;
         ResetCardsToShow();
-		SetToPage(CurrentPage);
-	}
+        SetToPage(CurrentPage);
+    }
 
     private void ResetCardsToShow()
     {
@@ -67,7 +67,7 @@ public class Collection : MonoBehaviour
         CardsToShow = CardsToShow.Where(x => cardCollection.Has(x.ID));
     }
 
-	public void SetToPage(int page)
+    public void SetToPage(int page)
     {
         // Clamp page number
         int maxPage = Mathf.Max(0, (CardsToShow.Count() - 1) / ItemsPerPage);
@@ -88,7 +88,7 @@ public class Collection : MonoBehaviour
         foreach (var item in itemsToShow)
         {
             var cardCollection = Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection;
-			OwnedCardData ownedCardData = cardCollection.Cards[item.ID];
+            OwnedCardData ownedCardData = cardCollection.Cards[item.ID];
             var newGridItem = Instantiate(CardGridItemPrefab, CardGridTransform);
             newGridItem.Setup(item, owner, ownedCardData);
 
@@ -108,14 +108,14 @@ public class Collection : MonoBehaviour
     }
 
     public void SetToCollectionView()
-	{
+    {
         IsCollectionView = true;
         CurrentDeck = null;
         foreach (var item in showingItems)
-		{
+        {
             item.SetToCollectionView();
-		}
-	}
+        }
+    }
 
     public void SetToDeckView(Deck editingDeck)
     {
@@ -146,5 +146,10 @@ public class Collection : MonoBehaviour
 
         NextButton.interactable = CurrentPage < MaxPage;
         PrevButton.interactable = CurrentPage > 0;
+    }
+
+    public void ClearFilters_Click()
+	{
+        CollectionFilter.ClearAllFilters();
     }
 }

@@ -39,6 +39,12 @@ public class FilterCardTypeButton : MonoBehaviour, IFilterRule, IButtonSoundStat
         ActiveIndicator.SetActive(FilterActive);
         FilterChangedCallBack?.Invoke();
     }
+
+	public void SetActive(bool active)
+	{
+        FilterActive = active;
+        ActiveIndicator.SetActive(FilterActive);
+    }
 }
 
 public enum CardTypeEnum

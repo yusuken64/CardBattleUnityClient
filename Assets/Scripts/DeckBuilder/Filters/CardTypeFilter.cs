@@ -34,4 +34,9 @@ public class CardTypeFilter : MonoBehaviour, IFilterRule
             return false;
         };
     }
+
+    public void SetActive(bool active)
+    {
+        CardTypeButtons.ForEach(x => x.SetActive(active));
+    }
 }
