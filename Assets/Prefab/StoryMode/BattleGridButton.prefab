@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2726272988894325921}
   - component: {fileID: 4461698223038504188}
   - component: {fileID: 5084440327139886833}
+  - component: {fileID: 2249639530698555570}
   m_Layer: 5
   m_Name: BattleGridButton
   m_TagString: Untagged
@@ -57,6 +58,8 @@ MonoBehaviour:
   NameText: {fileID: 745492655805086602}
   BattleImage: {fileID: 926979634937234770}
   CompletedIndicator: {fileID: 3962647571407339883}
+  IsComplete: 0
+  CanvasGroup: {fileID: 2249639530698555570}
 --- !u!114 &4461698223038504188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +131,18 @@ MonoBehaviour:
   HoverSound: {fileID: 0}
   ClickSound: {fileID: 8300000, guid: 3785e34596f8c4fc182defb6bb1da164, type: 3}
   UnclickableSound: {fileID: 0}
+--- !u!225 &2249639530698555570
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450032743595539095}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1525484294793445650
 GameObject:
   m_ObjectHideFlags: 0

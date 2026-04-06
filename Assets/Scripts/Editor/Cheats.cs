@@ -6,6 +6,16 @@ using CardBattleEngine;
 
 public static class Cheats
 {
+    [MenuItem("Game/CheatWin")]
+    public static void CheatWin()
+    {
+        var gameManager = Object.FindFirstObjectByType<GameManager>();
+        gameManager.ResolveAction(new DeathAction(), new ActionContext()
+        {
+            Target = gameManager.Opponent.Data
+        });
+    }
+
     [MenuItem("Game/Auto/AutoPlayerTurn")]
     public static void AutoPlay()
     {

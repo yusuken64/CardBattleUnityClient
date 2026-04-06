@@ -107,11 +107,27 @@ public class Map : MonoBehaviour
 		DungeonBG.sprite = mapRegionDefinition.DungeonSprite;
 
 		var dungeons = mapRegionDefinition.Dungeons;
-		foreach (var data in dungeons)
+
+		List<BattleGridButton> girdButtons = new();
+		for (int i = 0; i < dungeons.Count; i++)
 		{
-			var newButton = Instantiate(BattleGridButtonPrefab, Container);
+			var data = dungeons[i];
+			BattleGridButton newButton = Instantiate(BattleGridButtonPrefab, Container);
 			newButton.Setup(data);
 			newButton.ClickAction = BattleGridButton_Clicked;
+			girdButtons.Add(newButton);
+
+			// Unlock the first dungeon or the ones after completed dungeons
+			if (i == 0 || girdButtons[i - 1].IsComplete)
+			{
+				newButton.gameObject.GetComponent<Button>().interactable = true;
+				newButton.CanvasGroup.alpha = 1;
+			}
+			else
+			{
+				newButton.gameObject.GetComponent<Button>().interactable = false;
+				newButton.CanvasGroup.alpha = 0.5f;
+			}
 		}
 
 		BattleGridButton_Clicked(null);
