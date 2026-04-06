@@ -44,6 +44,7 @@ public class FlippableCard : MonoBehaviour
 		Front.SetActive(false);
 
 		Common.Instance.AudioManager.PlayUISound(FlipCard);
+		transform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 1, 0.5f);
 
 		// First half: rotate to 90 degrees
 		transform.DOLocalRotate(

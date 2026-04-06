@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: kitty_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 0
-  CardName: Kitty 01
+  CardName: Kitty
   ID: kitty_01
   Sprite: {fileID: 21300000, guid: eea83e6cd24c120489c174894df1affd, type: 3}
   Cost: 2

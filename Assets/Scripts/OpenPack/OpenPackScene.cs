@@ -12,6 +12,7 @@ public class OpenPackScene : MonoBehaviour
 	public FlippableCard FlippableCardPrefab;
 
 	public float CardSpacing = 1.5f;
+	public float CardSpacingVertical = 1.5f;
 	public int CardCount = 5;
 	public bool readyToOpen;
 
@@ -21,6 +22,9 @@ public class OpenPackScene : MonoBehaviour
 	public GameObject OKButton;
 	public GameObject ReturnButton;
 	public PackRedDot PackRedDot;
+
+	public Button Pull10Button;
+	public float Pull10Scale = 2f;
 
 	public int CardsOpened { get; private set; }
 	public List<CardDefinition> CardsCollected = new();
@@ -64,6 +68,7 @@ public class OpenPackScene : MonoBehaviour
 		CardsCollected.Clear();
 
 		ReturnButton.gameObject.SetActive(false);
+		Pull10Button.gameObject.SetActive(false);
 		StartCoroutine(OpenPackRoutine());
 	}
 
@@ -76,6 +81,22 @@ public class OpenPackScene : MonoBehaviour
 
 		var packCount = Common.Instance.SaveManager.SaveData.GameSaveData.PackCount;
 		if (packCount <= 0)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	public bool CanOpen10Pack()
+	{
+		if (!readyToOpen)
+		{
+			return false;
+		}
+
+		var packCount = Common.Instance.SaveManager.SaveData.GameSaveData.PackCount;
+		if (packCount < 10)
 		{
 			return false;
 		}
@@ -123,7 +144,7 @@ public class OpenPackScene : MonoBehaviour
 
 		yield return chestSequence.WaitForCompletion();
 
-		List<Tween> tweens = new();
+		Sequence cardSequence = DOTween.Sequence();
 		for (int i = 0; i < CardDefinitions.Count; i++)
 		{
 			CardDefinition cardDefinition = CardDefinitions[i];
@@ -154,19 +175,128 @@ public class OpenPackScene : MonoBehaviour
 				.SetDelay(i * cascadeDelay)
 				.OnComplete(() =>
 				{
-					card.transform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 1, 0.5f);
 					card.CanFlip = true;
 				});
-			tweens.Add(jumpTween);
+			cardSequence.Join(jumpTween);
 		}
 
-		foreach (var tween in tweens)
-		{
-			yield return tween.WaitForCompletion();
-		}
+		yield return cardSequence.WaitForCompletion();
+
 		ClosedChest.GetComponent<Button>().interactable = true;
 	}
 
+	public void OpenPack10()
+	{
+		if (!CanOpen10Pack())
+		{
+			return;
+		}
+
+		ClosedChest.GetComponent<Button>().interactable = false;
+		CardsCollected.Clear();
+
+		ReturnButton.gameObject.SetActive(false);
+		Pull10Button.gameObject.SetActive(false);
+		StartCoroutine(OpenTenPackRoutine());
+	}
+
+	private IEnumerator OpenTenPackRoutine()
+	{
+		yield return null;
+		readyToOpen = false;
+		Common.Instance.SaveManager.SaveData.GameSaveData.PackCount -= 10;
+
+		ClosedChest.gameObject.SetActive(true);
+		OpenChest.gameObject.SetActive(false);
+
+		float cascadeDelay = 0.1f;
+
+		int columns = 15;
+		int rows = 4;
+		int totalCards = 50;
+
+		float scale = 1 / Pull10Scale;
+
+		float totalWidth = (columns - 1) * (CardSpacing / Pull10Scale);
+		float totalHeight = (rows - 1) * (CardSpacing / Pull10Scale);
+
+		float startX = -totalWidth * 0.5f;
+		float startY = totalHeight * 0.5f;
+
+		Vector3 chestPos = ChestParent.position;
+
+		List<CardDefinition> cardDefinitions = new(totalCards);
+
+		for (int i = 0; i < totalCards; i++)
+		{
+			var cardDef = PickRandomWithReplacement(Common.Instance.CardManager.CollectableCards())[0];
+			cardDefinitions.Add(cardDef);
+			CardsCollected.Add(cardDef);
+		}
+
+		// Chest animation (unchanged)
+		Sequence chestSequence = DOTween.Sequence();
+
+		chestSequence.Append(ChestParent.DOShakePosition(0.5f, 1f, 20, 90, false, true));
+		chestSequence.Append(ChestParent.DOScale(0.3f, 0.4f).SetEase(Ease.InBack));
+
+		chestSequence.AppendCallback(() =>
+		{
+			ClosedChest.SetActive(false);
+			OpenChest.SetActive(true);
+		});
+
+		chestSequence.Append(ChestParent.DOScale(1f, 0.3f).SetEase(Ease.OutBack));
+
+		yield return chestSequence.WaitForCompletion();
+
+		// Cards
+		Sequence cardSequence = DOTween.Sequence();
+
+		for (int i = 0; i < cardDefinitions.Count; i++)
+		{
+			int row = i / columns;
+			int col = i % columns;
+
+			Vector3 targetLocalPos = new Vector3(
+				startX + col * CardSpacing / Pull10Scale,
+				startY - row * CardSpacingVertical / Pull10Scale,
+				0f
+			);
+
+			var card = Instantiate(FlippableCardPrefab, PackArea);
+
+			card.transform.position = chestPos;
+			card.transform.localRotation = Quaternion.identity;
+			card.transform.localScale = Vector3.one * scale;
+
+			card.FlipComplete = FlipComplete;
+			card.Setup(cardDefinitions[i]);
+			card.CanFlip = false;
+
+			FlippableCard localCard = card;
+
+			var jumpTween = card.transform
+				.DOLocalJump(targetLocalPos, 2f, 1, 0.6f)
+				.SetEase(Ease.OutBack)
+				.SetDelay(i * cascadeDelay)
+				.OnStart(() =>
+				{
+					Common.Instance.AudioManager.PlayUISound(localCard.JumpCard);
+				})
+				.OnComplete(() =>
+				{
+					localCard.CanFlip = true;
+					localCard.Flip();
+				});
+
+			cardSequence.Join(jumpTween);
+		}
+
+		yield return cardSequence.WaitForCompletion();
+
+		ClosedChest.GetComponent<Button>().interactable = true;
+	}
 	private void FlipComplete()
 	{
 		CardsOpened++;
@@ -197,6 +327,8 @@ public class OpenPackScene : MonoBehaviour
 		OKButton.gameObject.SetActive(false);
 		ReturnButton.gameObject.SetActive(true);
 		CardsOpened = 0;
+
+		Pull10Button.gameObject.SetActive(CanOpen10Pack());
 	}
 
 	public void Return_Clicked()
