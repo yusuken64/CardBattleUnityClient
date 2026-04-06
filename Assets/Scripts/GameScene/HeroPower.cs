@@ -43,10 +43,21 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 			return false;
 		}
 
+		var ui = FindFirstObjectByType<UI>();
 		if (!gameManager.ActivePlayerTurn)
 		{
-			var ui = FindFirstObjectByType<UI>();
 			ui.WarnEnemyTurn();
+			return false;
+		}
+
+		if (Data.UsedThisTurn)
+		{
+			return false;
+		}
+
+		if (Player.Data.Mana < Data.ManaCost)
+		{
+			ui.ShowWarningMessage("Not enough Mana");
 			return false;
 		}
 
@@ -68,7 +79,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 			}
 		}
 
-		return !Data.UsedThisTurn;//TODO heropoweraction.isvalid
+		return true;
 	}
 
 	public IGameEntity GetData()
