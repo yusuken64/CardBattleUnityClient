@@ -10,16 +10,35 @@ public class StoryModeScene : MonoBehaviour
     public MissionList MissionList;
 
     public MissionDot MissionDot;
+    public PackRedDot PacksDot;
     public GameObject Settings;
     public GameObject DataObject;
+
+    public TutorialPopup TutorialPopup;
 
     void Start()
     {
         MissionList.gameObject.SetActive(false);
         Settings.gameObject.SetActive(false);
         DataObject.gameObject.SetActive(false);
+        TutorialPopup.gameObject.SetActive(false);
 
         ReloadDungeonState();
+        ShowTutorial();
+    }
+
+	private void ShowTutorial()
+    {
+        if (Common.Instance.SaveManager.SaveData.GameSaveData.TutorialSaveData.HomeTutorialCompleted == false)
+        {
+            TutorialPopup.gameObject.SetActive(true);
+            Common.Instance.SaveManager.SaveData.GameSaveData.TutorialSaveData.HomeTutorialCompleted = true;
+        }
+    }
+
+    public void TutorialOK_Click()
+	{
+        TutorialPopup.gameObject.SetActive(false);
     }
 
 	public void ReloadDungeonState()
@@ -86,6 +105,7 @@ public class StoryModeScene : MonoBehaviour
     public void RefreshRedDots()
 	{
         MissionDot.RefreshData();
+        PacksDot.RefreshData();
     }
 
     public void AudioSettings_Click()

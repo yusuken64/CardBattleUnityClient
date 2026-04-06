@@ -24,6 +24,7 @@ public class AppSaveData
 public class TutorialSaveData
 {
 	public bool BattleTutorialCompleted;
+	public bool HomeTutorialCompleted;
 
 	public List<string> CompletedTutorials = new();
 
