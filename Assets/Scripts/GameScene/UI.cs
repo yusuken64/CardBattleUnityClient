@@ -152,14 +152,24 @@ public class UI : MonoBehaviour
         CardPreview.Setup(card);
         CardPreview.CanPlayIndicator.gameObject.SetActive(false);
         CardPreview.gameObject.SetActive(true);
+
+		CanvasGroup canvasGroup = CardPreview.GetComponent<CanvasGroup>();
+        canvasGroup.DOKill();
+		canvasGroup.alpha = 0;
+        canvasGroup.DOFade(1, 0.2f);
     }
 
     internal void PreviewEnd()
     {
-        CardPreview.gameObject.SetActive(false);
-    }
+        CanvasGroup canvasGroup = CardPreview.GetComponent<CanvasGroup>();
+        canvasGroup.DOFade(0, 0.5f)
+            .OnComplete(() =>
+            {
+                CardPreview.gameObject.SetActive(false);
+            });
+	}
 
-    internal void HoverPreviewStart(IHoverable hoverable)
+	internal void HoverPreviewStart(IHoverable hoverable)
     {
         var card = hoverable.DisplayCard;
         if (card == null) { return; }

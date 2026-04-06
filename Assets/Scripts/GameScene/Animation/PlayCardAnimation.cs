@@ -23,18 +23,31 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 
 			if (playCardAction.Card.Owner == this.GameManager.Opponent.Data)
 			{
-				FindFirstObjectByType<UI>().PreviewStart(playedCard);
+				UI ui = FindFirstObjectByType<UI>();
+				yield return ui.StartCoroutine(PreviewRoutine(playedCard, ui));
 			}
-
-			Object.Destroy(playedCard.gameObject, 2.0f);
-		}
-
-		if (playCardAction.Card.Owner == this.GameManager.Opponent.Data)
-		{
-			yield return new WaitForSecondsRealtime(1.0f);
-			FindFirstObjectByType<UI>().PreviewEnd();
+			else
+			{
+				Object.Destroy(playedCard.gameObject, 2.0f);
+			}
 		}
 
 		yield return null;
+	}
+
+	private IEnumerator PreviewRoutine(Card card, UI ui)
+	{
+		yield return card.transform
+			.DOMove(ui.CardPreview.transform.position, 0.5f)
+			.SetEase(Ease.OutQuad)
+			.WaitForCompletion();
+
+		ui.PreviewStart(card);
+
+		yield return new WaitForSecondsRealtime(2f);
+
+		ui.PreviewEnd();
+
+		Object.Destroy(card.gameObject);
 	}
 }

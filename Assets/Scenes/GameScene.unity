@@ -2816,7 +2816,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4728465195448024071, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1995981157}
   m_SourcePrefab: {fileID: 100100000, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
 --- !u!224 &678021836 stripped
 RectTransform:
@@ -7206,6 +7209,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1717919321 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4728465195448024071, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+  m_PrefabInstance: {fileID: 678021835}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1718998745
 GameObject:
   m_ObjectHideFlags: 0
@@ -8329,12 +8337,24 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5146108261924859069, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
   m_PrefabInstance: {fileID: 678021835}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1717919321}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ad8b1e944047ef4688fa809a4f1cf2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandCard
+--- !u!225 &1995981157
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717919321}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1998315190
 PrefabInstance:
   m_ObjectHideFlags: 0
