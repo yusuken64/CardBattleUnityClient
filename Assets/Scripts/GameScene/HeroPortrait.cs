@@ -28,8 +28,8 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 		ArmorText.text = Player.Armor.ToString();
 
 		HealthObject.gameObject.SetActive(true);
-		AttackObject.gameObject.SetActive(Player.Attack != 0);
-		ArmorObject.gameObject.SetActive(Player.Armor != 0);
+		AttackObject.gameObject.SetActive(Player.Attack > 0);
+		ArmorObject.gameObject.SetActive(Player.Armor > 0);
 
 		FreezeIndicator.gameObject.SetActive(Player.IsFrozen);
 

@@ -44,10 +44,9 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 
 		ui.PreviewStart(card);
 
+		Object.Destroy(card.gameObject);
 		yield return new WaitForSecondsRealtime(2f);
 
 		ui.PreviewEnd();
-
-		Object.Destroy(card.gameObject);
 	}
 }

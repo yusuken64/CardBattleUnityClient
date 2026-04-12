@@ -284,7 +284,7 @@ public class GameManager : MonoBehaviour
 
 	internal Player GetPlayerFor(CardBattleEngine.Player sourcePlayer)
 	{
-		return Player.Data.Id == sourcePlayer.Id ? Player : Opponent;
+		return Player.Data.Id == sourcePlayer?.Id ? Player : Opponent;
 	}
 
 	private void ActionPlaybackCallback(GameState state, (IGameAction action, ActionContext context) current)

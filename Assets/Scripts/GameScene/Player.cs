@@ -102,7 +102,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		Health = data.Health;
 		MaxHealth = data.MaxHealth;
 		Attack = data.Attack;
-		//Armor = data.Armor;
+		Armor = data.Armor;
 		Mana = data.Mana;
 		MaxMana = data.MaxMana;
 		CanAttack = data.CanAttack();

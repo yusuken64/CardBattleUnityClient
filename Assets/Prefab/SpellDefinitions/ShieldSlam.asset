@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
+  m_Name: ShieldSlam
+  m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 1
+  CardName: Shield Slam
+  ID: ShieldSlam
+  Sprite: {fileID: 21300000, guid: ad1c75201ca9d2f49b1c4bbe1d2e0f78, type: 3}
+  Cost: 1
+  CastRestriction:
+    rid: 8766383395212623943
+  ValidTargetSelector:
+    rid: 7726824635107377225
+  TriggeredEffects: []
+  SpellCastEffects:
+  - Description: Deal 1 damage to a minion for each Armor you have
+    GameActions:
+    - rid: 8766383395212623945
+    AffectedEntitySelectorWrapper:
+      rid: 7726824635107377224
+  CustomSFX: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7726824635107377224
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 1
+        IncludeSource: 0
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
+        ResolutionTiming: 0
+    - rid: 7726824635107377225
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 1
+    - rid: 8766383395212623943
+      type: {class: CombinedRestrictionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Left:
+          rid: 8766383395212623944
+        Operation: 0
+        Right:
+          rid: 8766383395212623947
+    - rid: 8766383395212623944
+      type: {class: ValidTargetRestrictionWrapper, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8766383395212623945
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 8766383395212623948
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: b61f810bca1449d4faf911239820cde6, type: 2}
+    - rid: 8766383395212623947
+      type: {class: ArmorRestrictionWrapper, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8766383395212623948
+      type: {class: AmorValueWrapper, ns: , asm: Assembly-CSharp}
+      data: 

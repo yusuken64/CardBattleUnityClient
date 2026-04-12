@@ -26,7 +26,7 @@ MonoBehaviour:
   Health: 2
   MinionTribes: 
   IsStealth: 0
-  HasCharge: 0
+  HasCharge: 1
   HasDivineShield: 0
   HasTaunt: 0
   HasPoisonous: 0

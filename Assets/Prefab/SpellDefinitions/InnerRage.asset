@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
+  m_Name: InnerRage
+  m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 1
+  CardName: Inner Rage
+  ID: InnerRage
+  Sprite: {fileID: 21300000, guid: c583dff4ac3c1ca4e9e4251c59ee30e9, type: 3}
+  Cost: 0
+  CastRestriction:
+    rid: 8766383395212623960
+  ValidTargetSelector:
+    rid: 8766383395212623958
+  TriggeredEffects: []
+  SpellCastEffects:
+  - Description: Deal 1 damage to a minion and give it +2 Attack
+    GameActions:
+    - rid: 8766383395212623954
+    - rid: 8766383395212623956
+    AffectedEntitySelectorWrapper:
+      rid: 8766383395212623959
+  CustomSFX: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8766383395212623954
+      type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Damage:
+          rid: 8766383395212623955
+        Canceled: 0
+        CustomSFX: {fileID: 11400000, guid: 651a46974234afb40b456136270a1eb4, type: 2}
+    - rid: 8766383395212623955
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 8766383395212623956
+      type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        StatModifierType: 0
+        AttackChange:
+          rid: 8766383395212623957
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
+        ExpirationTrigger:
+          rid: -2
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 8766383395212623957
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
+    - rid: 8766383395212623958
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 2
+    - rid: 8766383395212623959
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 1
+        IncludeSource: 0
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
+        ResolutionTiming: 0
+    - rid: 8766383395212623960
+      type: {class: ValidTargetRestrictionWrapper, ns: , asm: Assembly-CSharp}
+      data: 

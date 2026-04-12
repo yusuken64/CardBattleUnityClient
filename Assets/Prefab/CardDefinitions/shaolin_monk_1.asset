@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: shaolin_monk_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 0
-  CardName: Shaolin monk 1
+  CardName: Shaolin Monk
   ID: shaolin_monk_1
   Sprite: {fileID: 21300000, guid: f210db37b744b0749be5608a728cdc0e, type: 3}
   Cost: 2
@@ -22,8 +22,8 @@ MonoBehaviour:
   ValidTargetSelector:
     rid: -2
   TriggeredEffects: []
-  Attack: 2
-  Health: 2
+  Attack: 1
+  Health: 4
   MinionTribes: 
   IsStealth: 0
   HasCharge: 0
@@ -34,9 +34,54 @@ MonoBehaviour:
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects: []
+  MinionTriggeredEffects:
+  - Description: Whenever a friendly minion takes damage, gain 1 Armor.
+    EffectTrigger: 6
+    EffectTiming: 1
+    GameActions:
+    - rid: 8766383395212623964
+    Condition:
+      rid: 8766383395212623977
+    AffectedEntitySelectorWrapper:
+      rid: 8766383395212623967
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 8766383395212623964
+      type: {class: GainArmorActionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Amount:
+          rid: 8766383395212623965
+        Canceled: 0
+        CustomSFX: {fileID: 0}
+    - rid: 8766383395212623965
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 8766383395212623967
+      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        IncludeTarget: 0
+        IncludeSource: 0
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 1
+        IncludeSummonedMinion: 0
+        ResolutionTiming: 0
+    - rid: 8766383395212623977
+      type: {class: CombinedConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Left:
+          rid: 8766383395212623978
+        Operation: 0
+        Right:
+          rid: 8766383395212623979
+    - rid: 8766383395212623978
+      type: {class: TargetOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        TeamRelationship: 0
+    - rid: 8766383395212623979
+      type: {class: TargetTypeConditionWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2

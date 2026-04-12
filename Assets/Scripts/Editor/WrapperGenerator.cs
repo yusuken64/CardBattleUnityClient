@@ -91,6 +91,12 @@ public static class WrapperGenerator
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
         },
         new PropertyReplacement
+		{
+            OriginalType = typeof(CardBattleEngine.ITriggerCondition),
+            GenerateField = p => $"    [SerializeReference] public {typeof(ITriggerConditionWrapperBase).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
         {
             OriginalType = typeof(System.Object),
             GenerateField = p => $"    public {typeof(CustomSFX).FullName} {p.Name};",

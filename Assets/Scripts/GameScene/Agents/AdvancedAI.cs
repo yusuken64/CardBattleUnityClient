@@ -253,19 +253,19 @@ public class AdvancedAI : IGameAgent
 		// --------------------------------------------------
 
 		// Staying alive matters, but not as much as killing enemy
-		score += me.Health * 2.5f;
+		score += me.Health + me.Armor * 2.5f;
 
 		// Enemy HP is the win condition (increasing pressure as it drops)
-		score -= enemy.Health * 6f;
+		score -= enemy.Health + enemy.Armor * 6f;
 
 		if (enemy.Health <= 15)
-			score += (15 - enemy.Health) * 8f;
+			score += (15 - (enemy.Health + enemy.Armor)) * 8f;
 
 		if (enemy.Health <= 10)
-			score += (10 - enemy.Health) * 15f;
+			score += (10 - (enemy.Health + enemy.Armor)) * 15f;
 
 		if (enemy.Health <= 5)
-			score += (5 - enemy.Health) * 30f;
+			score += (5 - (enemy.Health + enemy.Armor)) * 30f;
 
 
 		// --------------------------------------------------
@@ -349,10 +349,10 @@ public class AdvancedAI : IGameAgent
 		// 8) Lethal checks (VERY IMPORTANT)
 		// --------------------------------------------------
 
-		if (myReadyAttack - enemyTauntHealth >= enemy.Health)
+		if (myReadyAttack - enemyTauntHealth >= enemy.Health + enemy.Armor)
 			score += 100_000;
 
-		if (enemyReadyAttack - myTauntHealth >= me.Health)
+		if (enemyReadyAttack - myTauntHealth >= me.Health + me.Armor)
 			score -= 100_000;
 
 
