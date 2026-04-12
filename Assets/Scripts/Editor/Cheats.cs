@@ -16,6 +16,21 @@ public static class Cheats
         });
     }
 
+    [MenuItem("Game/CheatMana")]
+    public static void CheatMana()
+    {
+        var gameManager = Object.FindFirstObjectByType<GameManager>();
+        gameManager.ResolveAction(new GainManaAction()
+        {
+            Amount = (Value)10,
+        },
+        new ActionContext()
+        {
+            SourcePlayer = gameManager.Player.Data,
+            Target = gameManager.Player.Data
+        });
+    }
+
     [MenuItem("Game/Auto/AutoPlayerTurn")]
     public static void AutoPlay()
     {

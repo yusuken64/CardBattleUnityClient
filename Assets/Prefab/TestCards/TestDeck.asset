@@ -13,16 +13,14 @@ MonoBehaviour:
   m_Name: TestDeck
   m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
   Title: TestDeck
-  HeroCard: {fileID: 11400000, guid: ed5d371e0992d6b4e84e08f11f5ab7e4, type: 2}
+  HeroCard: {fileID: 11400000, guid: 72654caad3c75be4b88a3b97303d28d6, type: 2}
   Cards:
   - {fileID: 11400000, guid: ed5d371e0992d6b4e84e08f11f5ab7e4, type: 2}
   - {fileID: 11400000, guid: ed5d371e0992d6b4e84e08f11f5ab7e4, type: 2}
-  - {fileID: 11400000, guid: 3900c711cb017c741b5822cbe8bf6756, type: 2}
-  - {fileID: 11400000, guid: 3900c711cb017c741b5822cbe8bf6756, type: 2}
-  - {fileID: 11400000, guid: 3900c711cb017c741b5822cbe8bf6756, type: 2}
-  - {fileID: 11400000, guid: bf151d0725b4fe24baeab9714aa2d4e9, type: 2}
-  - {fileID: 11400000, guid: bf151d0725b4fe24baeab9714aa2d4e9, type: 2}
-  - {fileID: 11400000, guid: bf151d0725b4fe24baeab9714aa2d4e9, type: 2}
+  - {fileID: 11400000, guid: ed5d371e0992d6b4e84e08f11f5ab7e4, type: 2}
+  - {fileID: 11400000, guid: ed5d371e0992d6b4e84e08f11f5ab7e4, type: 2}
   - {fileID: 11400000, guid: 216d237b9ae55d443aca1fae15c9513b, type: 2}
   - {fileID: 11400000, guid: 216d237b9ae55d443aca1fae15c9513b, type: 2}
+  - {fileID: 11400000, guid: 72654caad3c75be4b88a3b97303d28d6, type: 2}
+  - {fileID: 11400000, guid: 415a46ba368370545b0fe143c3c8f0a7, type: 2}
   RandomCards: 0

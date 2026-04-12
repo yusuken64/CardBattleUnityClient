@@ -46,12 +46,21 @@ public class HeroPowerDefinition : CardDefinition
 			minionTriggeredEffects[0].EffectTrigger == EffectTrigger.Battlecry)
 		{
 			TriggeredEffectWrapper triggeredEffectWrapper = minionTriggeredEffects[0];
+			IAffectedEntitySelector affectedEntitySelector = minionTriggeredEffects[0].AffectedEntitySelectorWrapper?.Create();
+			if (affectedEntitySelector is ContextSelector contextSelector)
+			{
+				if (contextSelector.IncludeSummonedMinion)
+				{
+					contextSelector.IncludeSourcePlayer = true;
+				}
+			}
+
 			return new CardBattleEngine.HeroPower()
 			{
 				Name = $"Invoke {minionCard.CardName}",
 				ValidTargetSelector = minionCard.ValidTargetSelector?.Create(),
 				CastRestriction = minionCard.CastRestriction?.Create(),
-				AffectedEntitySelector = minionTriggeredEffects[0].AffectedEntitySelectorWrapper?.Create(),
+				AffectedEntitySelector = affectedEntitySelector,
 				GameActions = minionTriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
 				ManaCost = minionCard.Cost,
 				UsedThisTurn = false
