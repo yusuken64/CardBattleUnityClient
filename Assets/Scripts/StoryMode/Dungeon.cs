@@ -25,8 +25,11 @@ public class Dungeon : MonoBehaviour
 	public GameObject EndPositionObect;
 	private static int? previousWins;
 
+	public AudioClip DungeonMusic;
+
 	public void Setup()
 	{
+		AudioManager.Instance.PlayMusic(DungeonMusic);
 		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
 
 		var currentDungeonSaveData = gameSaveData?.StorySaveData?.CurrentDungeon;

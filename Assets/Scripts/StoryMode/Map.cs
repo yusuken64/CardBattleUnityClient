@@ -26,6 +26,8 @@ public class Map : MonoBehaviour
 	public Dungeon Dungeon;
 	public Image DungeonBG;
 
+	public AudioClip DungeonDoorSlide;
+
 	private void Awake()
 	{
 		foreach(var location in MapLocations)
@@ -158,6 +160,7 @@ public class Map : MonoBehaviour
 
 	public void DungeonEnter_Clicked()
 	{
+		AudioManager.Instance.PlaySound(DungeonDoorSlide);
 		Common.Instance.SceneTransition.DoDoorTransition(() =>
 		{
 			var data = BattlePreview.GetData();

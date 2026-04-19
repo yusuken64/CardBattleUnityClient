@@ -3934,6 +3934,7 @@ MonoBehaviour:
   DataObject: {fileID: 144474292}
   TutorialPlayerDeck: {fileID: 11400000, guid: 92ee9cde26afe1b4abbaa9c9504de5ec, type: 2}
   TutorialOpponentDeck: {fileID: 11400000, guid: 68da05eb6bd22fa46a070f48ac3af180, type: 2}
+  MainMenuMusic: {fileID: 8300000, guid: 342a5062cbfc11e43acc99bf50c42738, type: 3}
 --- !u!4 &1421078723
 Transform:
   m_ObjectHideFlags: 0

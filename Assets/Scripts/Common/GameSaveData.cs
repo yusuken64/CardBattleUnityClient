@@ -18,6 +18,7 @@ public class AppSaveData
 	public float MASTERVolume = 1f;
 	public float MUSICVolume = 1f;
 	public float GAMEVolume = 1f;
+	public float GUIVolume = 1f;
 }
 
 [Serializable]

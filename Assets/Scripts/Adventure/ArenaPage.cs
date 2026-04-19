@@ -19,6 +19,8 @@ public class ArenaPage : MonoBehaviour
 	public TextMeshProUGUI BattleText;
 	public GameObject BattleButton;
 
+	public AudioClip ArenaMusic;
+
 	private void Start()
 	{
 		CardPicker.KeywordDetailList.gameObject.SetActive(false);
@@ -55,6 +57,8 @@ public class ArenaPage : MonoBehaviour
 
 	private void SetToEncounter()
 	{
+		AudioManager.Instance.PlayMusic(ArenaMusic);
+
 		DeckViewer.RemoveCardOnClick = false;
 		NewAdventurePrompt.gameObject.SetActive(false);
 		Encouter.gameObject.SetActive(true);

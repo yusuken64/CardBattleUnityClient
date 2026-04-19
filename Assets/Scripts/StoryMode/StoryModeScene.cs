@@ -16,6 +16,8 @@ public class StoryModeScene : MonoBehaviour
 
     public TutorialPopup TutorialPopup;
 
+    public AudioClip TownMusic;
+
     void Start()
     {
         MissionList.gameObject.SetActive(false);
@@ -51,6 +53,7 @@ public class StoryModeScene : MonoBehaviour
             //normal
             Map.gameObject.SetActive(false);
             Map.Dungeon.gameObject.SetActive(false);
+            AudioManager.Instance.PlayMusic(TownMusic);
         }
 		else
 		{

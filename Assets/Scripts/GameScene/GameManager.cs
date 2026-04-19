@@ -33,8 +33,11 @@ public class GameManager : MonoBehaviour
 
 	public Action<GameEngine> GameInitialized;
 
+	public AudioClip BattleMusic;
+
 	void Start()
 	{
+		AudioManager.Instance.PlayMusic(BattleMusic);
 		ClearBoard();
 		InitializeGame();
 	}

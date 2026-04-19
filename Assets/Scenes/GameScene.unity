@@ -5740,6 +5740,7 @@ MonoBehaviour:
   UseSeed: 1
   RandomSeed: 0
   BattleIntro: {fileID: 1320670705}
+  BattleMusic: {fileID: 8300000, guid: dfdc01c6b60cbf244b5666f4039ef52b, type: 3}
 --- !u!1 &1191839122
 GameObject:
   m_ObjectHideFlags: 0
@@ -6227,6 +6228,8 @@ MonoBehaviour:
   WinObject: {fileID: 92921376}
   LoseObject: {fileID: 1588550587}
   OkButton: {fileID: 7749406133269674821}
+  WinClip: {fileID: 8300000, guid: 690370ca58d1147bbb1ae1a691349060, type: 3}
+  LoseClip: {fileID: 8300000, guid: 4e5a752d7ee29468abe739ab5fc0f886, type: 3}
 --- !u!1 &1409314095
 GameObject:
   m_ObjectHideFlags: 0

@@ -146,7 +146,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 	internal IEnumerator DoDeathRoutine()
 	{
 		CanAttackIndicator.gameObject.SetActive(false);
-		Common.Instance.AudioManager.PlayClip(HeroDieStart);
+		Common.Instance.AudioManager.PlaySound(HeroDieStart);
 		var shake = HeroPortrait.transform.DOShakePosition(1.7f, 1f, 30);
 
 		var sequence = DOTween.Sequence();
@@ -158,7 +158,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		yield return shake.WaitForCompletion();
 		HeroPortrait.gameObject.SetActive(false);
 
-		Common.Instance.AudioManager.PlayClip(HeroDieExplode);
+		Common.Instance.AudioManager.PlaySound(HeroDieExplode);
 		var explode = Instantiate(ExplodeParticlePrefab, this.transform);
 		explode.transform.position = HeroPortrait.transform.position;
 		//Common.Instance.AudioManager.PlayClip(Common.Instance.AudioManager.Explosion);

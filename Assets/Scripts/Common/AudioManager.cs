@@ -122,7 +122,7 @@ public class AudioManager : MonoBehaviour
 				Common.Instance.SaveManager.SaveData.AppSaveData.GAMEVolume = sliderValue;
 				break;
 			case "GUI":
-				Common.Instance.SaveManager.SaveData.AppSaveData.GAMEVolume = sliderValue;
+				Common.Instance.SaveManager.SaveData.AppSaveData.GUIVolume = sliderValue;
 				break;
 			default:
 				break;
@@ -134,5 +134,6 @@ public class AudioManager : MonoBehaviour
 		OnVolumeSliderChanged("MASTER", saveData.AppSaveData.MASTERVolume);
 		OnVolumeSliderChanged("MUSIC", saveData.AppSaveData.MUSICVolume);
 		OnVolumeSliderChanged("GAME", saveData.AppSaveData.GAMEVolume);
+		OnVolumeSliderChanged("GUI", saveData.AppSaveData.GUIVolume);
 	}
 }

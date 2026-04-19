@@ -10,7 +10,7 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 
 	public override IEnumerator Play()
 	{
-		Common.Instance.AudioManager.PlayClip(SummonMinionClip);
+		Common.Instance.AudioManager.PlaySound(SummonMinionClip);
 
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		CardBattleEngine.Minion minionData = Context.SummonedMinion;

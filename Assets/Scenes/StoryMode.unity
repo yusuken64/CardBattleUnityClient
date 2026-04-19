@@ -6384,6 +6384,7 @@ MonoBehaviour:
   DungeonText: {fileID: 1954237937}
   Dungeon: {fileID: 1352401591}
   DungeonBG: {fileID: 1198764179}
+  DungeonDoorSlide: {fileID: 8300000, guid: b33b5ed4d27e943ff95d9817bf26bb3b, type: 3}
 --- !u!1 &705610520
 GameObject:
   m_ObjectHideFlags: 0
@@ -8768,6 +8769,7 @@ MonoBehaviour:
   Settings: {fileID: 40586120}
   DataObject: {fileID: 354048471}
   TutorialPopup: {fileID: 1343729045}
+  TownMusic: {fileID: 8300000, guid: 18356d562551fb34b8542f864e3ab703, type: 3}
 --- !u!4 &938256840
 Transform:
   m_ObjectHideFlags: 0
@@ -12713,6 +12715,7 @@ MonoBehaviour:
   ScrollingBackground: {fileID: 1690598651}
   StartPositionObect: {fileID: 202167270}
   EndPositionObect: {fileID: 986692578}
+  DungeonMusic: {fileID: 8300000, guid: 83dba637082fc5e4ab15788092447970, type: 3}
 --- !u!1 &1359507786
 GameObject:
   m_ObjectHideFlags: 0

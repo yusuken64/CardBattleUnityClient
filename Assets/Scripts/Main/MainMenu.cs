@@ -16,6 +16,8 @@ public class MainMenu : MonoBehaviour
 
 	private bool showContinue;
 
+	public AudioClip MainMenuMusic;
+
 	private void Start()
 	{
 		showContinue = ShouldShowContinue();
@@ -23,6 +25,8 @@ public class MainMenu : MonoBehaviour
 
 		SettingsObject.gameObject.SetActive(false);
 		DataObject.gameObject.SetActive(false);
+
+		AudioManager.Instance.PlayMusic(MainMenuMusic);
 	}
 
 	private bool ShouldShowContinue()
@@ -34,6 +38,7 @@ public class MainMenu : MonoBehaviour
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
+			AudioManager.Instance.StopMusc();
 			SceneManager.LoadScene("StoryMode");
 		});
 	}
@@ -71,6 +76,7 @@ public class MainMenu : MonoBehaviour
 		Common.Instance.SaveManager.EnsureData();
 		Common.Instance.SaveManager.Save();
 
+		AudioManager.Instance.StopMusc();
 		SceneManager.LoadScene("StoryIntro");
 		IntroCutscene.ExitAction = () =>
 		{
@@ -119,6 +125,7 @@ public class MainMenu : MonoBehaviour
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
+			AudioManager.Instance.StopMusc();
 			SceneManager.LoadScene("Adventure");
 		});
 	}
@@ -127,6 +134,7 @@ public class MainMenu : MonoBehaviour
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
+			AudioManager.Instance.StopMusc();
 			SceneManager.LoadScene("Arena");
 		});
 	}

@@ -14,6 +14,9 @@ public class GameResultScreen : MonoBehaviour
 
 	public GameObject OkButton;
 
+	public AudioClip WinClip;
+	public AudioClip LoseClip;
+
 	private bool okClicked = false;
 	public void Ok_Clicked()
 	{
@@ -61,6 +64,15 @@ public class GameResultScreen : MonoBehaviour
 
 	internal IEnumerator DoGameEndRoutine(bool isWin)
 	{
+		AudioManager.Instance.StopMusc();
+		if (isWin)
+		{
+			AudioManager.Instance.PlayClip(WinClip);
+		}
+		else
+		{
+			AudioManager.Instance.PlayClip(LoseClip);
+		}
 		this.gameObject.SetActive(true);
 
 		var gameManager = FindFirstObjectByType<GameManager>();

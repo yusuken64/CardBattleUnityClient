@@ -1970,6 +1970,7 @@ MonoBehaviour:
   ArenaText: {fileID: 218009964}
   BattleText: {fileID: 129987286}
   BattleButton: {fileID: 521324537432948755}
+  ArenaMusic: {fileID: 8300000, guid: 18356d562551fb34b8542f864e3ab703, type: 3}
 --- !u!1001 &1289896672
 PrefabInstance:
   m_ObjectHideFlags: 0

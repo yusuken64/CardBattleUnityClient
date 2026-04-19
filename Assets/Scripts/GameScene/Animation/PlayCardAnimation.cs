@@ -9,7 +9,7 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 	public AudioClip PlayCardClip;
 	public override IEnumerator Play()
 	{
-		Common.Instance.AudioManager.PlayClip(PlayCardClip);
+		Common.Instance.AudioManager.PlaySound(PlayCardClip);
 
 		var playCardAction = Action;
 		var player = this.GameManager.GetPlayerFor(playCardAction.Card.Owner);

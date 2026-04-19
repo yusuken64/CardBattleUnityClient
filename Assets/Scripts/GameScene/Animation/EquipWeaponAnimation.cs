@@ -8,7 +8,7 @@ public class EquipWeaponAnimation : GameActionAnimation<EquipWeaponAction>
 	public AudioClip EquipWeaponClip;
 	public override IEnumerator Play()
 	{
-		Common.Instance.AudioManager.PlayClip(EquipWeaponClip);
+		Common.Instance.AudioManager.PlaySound(EquipWeaponClip);
 
 		var equipWeaponAction = Action;
 		var player = GameManager.GetPlayerFor(Context.Target as CardBattleEngine.Player);
