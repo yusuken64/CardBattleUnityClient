@@ -14,6 +14,7 @@ public class Common : MonoBehaviour
 	public VideoSettingsManager VideoSettingsManager;
 	public SceneTransition SceneTransition;
 	public YesNoConfirmation YesNoConfirmation;
+	public ModManager ModManager;
 
 	public DeckDefinition StartingDeck;
 
@@ -38,6 +39,9 @@ public class Common : MonoBehaviour
 		SaveManager.Initialize();
 		SaveManager.Load();
 		SaveManager.EnsureData();
+
+		ModManager.DiscoverMods();
+		CardManager.ReloadCards();
 
 		Debug.Log("AudioManager Initializing");
 		AudioManager.ApplicationInitialized(SaveManager.SaveData);

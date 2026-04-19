@@ -19,7 +19,10 @@ public class WeaponCardDefinition : CardDefinition
 	{
 		var weapon = new WeaponCard(WeaponName, Cost, Attack, Durability);
 		weapon.SpriteID = ID;
-		weapon.TriggeredEffects.AddRange(WeaponTriggeredEffects.Select(x => x.CreateEffect()));
+		if (WeaponTriggeredEffects != null)
+		{
+			weapon.TriggeredEffects.AddRange(WeaponTriggeredEffects.Select(x => x.CreateEffect()));
+		}
 
 		weapon.ValidTargetSelector = ValidTargetSelector?.Create();
 		weapon.CastRestriction = CastRestriction?.Create();

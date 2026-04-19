@@ -13,6 +13,7 @@ public class CardManager : MonoBehaviour
 	public List<CardDefinition> Cards;
 
 	public bool AddDebugCards;
+	public bool LoadCustomCards;
 	[Header("Debug Cards")]
 	public List<CardDefinition> DebugCards;
 
@@ -23,7 +24,7 @@ public class CardManager : MonoBehaviour
 
 	private Dictionary<string, CardDefinition> _cardLookup;
 
-	private void Awake()
+	public void ReloadCards()
 	{
 		_cardLookup = new Dictionary<string, CardDefinition>();
 
@@ -62,10 +63,25 @@ public class CardManager : MonoBehaviour
 			cardsToAdd.AddRange(DebugCards);
 		}
 
+		if (LoadCustomCards)
+		{
+			IEnumerable<CardDefinition> customCards = GetCustomCards();
+			if (customCards != null)
+			{
+				cardsToAdd.AddRange(customCards);
+			}
+		}
+
 		return cardsToAdd
+			.Where(x => x != null)
 			.GroupBy(c => c.ID)
 			.Select(g => g.First())
 			.ToList();
+	}
+
+	private IEnumerable<CardDefinition> GetCustomCards()
+	{
+		return Common.Instance.ModManager.GetAllEnabledCardDefinitions();
 	}
 
 	public CardDefinition GetCardByID(string id)

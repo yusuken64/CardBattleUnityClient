@@ -10,6 +10,8 @@ public class SaveData
 	public AppSaveData AppSaveData = new();
 	[SerializeReference]
 	public GameSaveData GameSaveData = new();
+	[SerializeReference]
+	public ModSaveData ModSaveData = new();
 }
 
 [Serializable]
@@ -19,6 +21,12 @@ public class AppSaveData
 	public float MUSICVolume = 1f;
 	public float GAMEVolume = 1f;
 	public float GUIVolume = 1f;
+}
+
+[Serializable]
+public class ModSaveData
+{
+	public List<string> EnabledMods = new();
 }
 
 [Serializable]

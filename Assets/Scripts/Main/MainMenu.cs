@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 
 	public GameObject SettingsObject;
 	public GameObject DataObject;
+	public ModMenu ModMenu;
 
 	public DeckDefinition TutorialPlayerDeck;
 	public DeckDefinition TutorialOpponentDeck;
@@ -25,6 +26,7 @@ public class MainMenu : MonoBehaviour
 
 		SettingsObject.gameObject.SetActive(false);
 		DataObject.gameObject.SetActive(false);
+		ModMenu.gameObject.SetActive(false);
 
 		AudioManager.Instance.PlayMusic(MainMenuMusic);
 	}
@@ -148,6 +150,12 @@ public class MainMenu : MonoBehaviour
 	public void Data_Click()
 	{
 		DataObject.gameObject.SetActive(true);
+	}
+
+	public void Mods_Click()
+	{
+		ModMenu.gameObject.SetActive(true);
+		ModMenu.Setup();
 	}
 
 	public void Reset_Click()
