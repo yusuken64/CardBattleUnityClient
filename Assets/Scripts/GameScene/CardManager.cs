@@ -26,6 +26,7 @@ public class CardManager : MonoBehaviour
 
 	public void ReloadCards()
 	{
+		Common.Instance.ModManager.DiscoverMods();
 		_cardLookup = new Dictionary<string, CardDefinition>();
 
 		foreach (var card in AllCards())

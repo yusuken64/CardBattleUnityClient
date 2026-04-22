@@ -202,6 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ModItem
   ModText: {fileID: 5029256772774824237}
   Toggle: {fileID: 2439701751831648010}
+  PreviewButton: {fileID: 2155583750331335157}
 --- !u!114 &2933515174912223109
 MonoBehaviour:
   m_ObjectHideFlags: 0

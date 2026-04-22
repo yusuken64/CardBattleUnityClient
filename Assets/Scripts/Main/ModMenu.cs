@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;
 
 public class ModMenu : MonoBehaviour
 {
@@ -107,30 +109,48 @@ and the Image should be {cardName}.jpg
         Setup();
     }
 
-	private void CreateFiles(
+    private void CreateFiles(
         string defaultDir,
         string fileNameMinion,
         CardData data,
         Texture2D texture)
-	{
-		string jsonPath = Path.Combine(defaultDir, fileNameMinion + ".json");
-		string jpgPath = Path.Combine(defaultDir, fileNameMinion + ".jpg");
+    {
+        string jsonPath = Path.Combine(defaultDir, fileNameMinion + ".json");
+        string jpgPath = Path.Combine(defaultDir, fileNameMinion + ".jpg");
 
-		// Write JSON file (only if it doesn't exist)
-		if (!File.Exists(jsonPath))
-		{
-			string jsonContent = JsonUtility.ToJson(data);
-			File.WriteAllText(jsonPath, jsonContent);
-		}
+        // Write JSON file (only if it doesn't exist)
+        if (!File.Exists(jsonPath))
+        {
+            string jsonContent = JsonUtility.ToJson(data);
+            File.WriteAllText(jsonPath, jsonContent);
+        }
 
-		if (!File.Exists(jpgPath))
-		{
-			byte[] jpgBytes = texture.EncodeToJPG();
-			File.WriteAllBytes(jpgPath, jpgBytes);
-		}
-	}
+        if (!File.Exists(jpgPath))
+        {
+            byte[] jpgBytes = texture.EncodeToJPG();
+            File.WriteAllBytes(jpgPath, jpgBytes);
+        }
+    }
 
-	public void Cancel_Clicked()
+    public void OpenFolder_Clicked()
+    {
+        string exeDir = Directory.GetParent(Application.dataPath).FullName;
+        string modsDir = Path.Combine(exeDir, "Mods");
+
+        if (!System.IO.Directory.Exists(modsDir))
+        {
+            return;
+        }
+
+        Process.Start(new ProcessStartInfo()
+        {
+            FileName = "explorer.exe",
+            Arguments = $"\"{modsDir}\"",
+            UseShellExecute = true
+        });
+    }
+
+    public void Cancel_Clicked()
     {
         this.gameObject.SetActive(false);
     }
@@ -138,12 +158,12 @@ and the Image should be {cardName}.jpg
     public void Apply_Clicked()
     {
         Common.Instance.YesNoConfirmation.Setup("Apply Mod Changes?",
-            "This will erase in progress Campaign and Arenas",
+            "This could break in progress Campaigns",
             "Apply",
             () =>
             {
-                Common.Instance.SaveManager.ResetData();
-                Common.Instance.SaveManager.EnsureData();
+                //Common.Instance.SaveManager.ResetData();
+                //Common.Instance.SaveManager.EnsureData();
                 var activeMods = modItems.Where(x => x.IsModEnabled())
                     .Select(x => x.ModData.modName).ToList();
                 Common.Instance.SaveManager.SaveData.ModSaveData.EnabledMods = activeMods;

@@ -189,7 +189,9 @@ public class DeckSaveData
 		var deck = new Deck();
 		deck.Title = Title;
 		deck.HeroCard = Common.Instance.CardManager.GetCardByID(HeroCard);
-		deck.Cards = CardIDs.Select(x => Common.Instance.CardManager.GetCardByID(x)).ToList();
+		deck.Cards = CardIDs.Select(x => Common.Instance.CardManager.GetCardByID(x))
+			.Where(x => x != null)
+			.ToList();
 
 		return deck;
 	}

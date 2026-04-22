@@ -10,6 +10,8 @@ public class ModItem : MonoBehaviour
 	public Toggle Toggle;
 	public ModData ModData;
 
+	public Button PreviewButton;
+
 	public Action<ModItem> PreviewCallBack { get; internal set; }
 
 	internal void Setup(ModData modData)
@@ -17,6 +19,15 @@ public class ModItem : MonoBehaviour
 		ModData = modData;
 		ModText.text = $"{ModData.modName} ({modData.cards.Count()} cards)";
 		Toggle.isOn = ModData.enabled;
+		UpdateUI();
+	}
+
+	private void UpdateUI()
+	{
+		var enabledMods = Common.Instance.SaveManager.SaveData.ModSaveData.EnabledMods;
+		var enabled = enabledMods.Contains(ModData.modName);
+
+		PreviewButton.interactable = enabled;
 	}
 
 	public bool IsModEnabled()

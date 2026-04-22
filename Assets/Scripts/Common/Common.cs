@@ -40,7 +40,6 @@ public class Common : MonoBehaviour
 		SaveManager.Load();
 		SaveManager.EnsureData();
 
-		ModManager.DiscoverMods();
 		CardManager.ReloadCards();
 
 		Debug.Log("AudioManager Initializing");
