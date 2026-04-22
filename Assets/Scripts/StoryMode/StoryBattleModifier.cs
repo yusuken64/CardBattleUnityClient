@@ -5,5 +5,6 @@ using System.Collections.Generic;
 public class StoryBattleModifier
 {
 	public string ModifierText;
+	public string Id;
 	public List<TriggeredEffectWrapper> TriggeredEffects;
 }

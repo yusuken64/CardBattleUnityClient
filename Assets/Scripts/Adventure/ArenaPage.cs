@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class ArenaPage : MonoBehaviour
 {
 	public GameObject NewAdventurePrompt;
+	public ArenaChallengePicker ArenaChallengePicker;
 	public VerticalDeckViewer DeckViewer;
 	public DeckToggle DeckToggle;
 	public GameObject Encouter;
@@ -32,6 +33,7 @@ public class ArenaPage : MonoBehaviour
 		{
 			NewAdventurePrompt.gameObject.SetActive(true);
 			Encouter.gameObject.SetActive(false);
+			ArenaChallengePicker.Setup();
 		}
 		else
 		{
@@ -51,6 +53,7 @@ public class ArenaPage : MonoBehaviour
 		adventureSaveData.Wins = 0;
 		adventureSaveData.MaxWins = 5;
 		adventureSaveData.Lives = 1;
+		adventureSaveData.ActiveModifiers = ArenaChallengePicker.GetActiveModifierIds();
 		DeckViewer.Setup(deck);
 		SetToEncounter();
 	}
@@ -150,6 +153,10 @@ Lives: {adventureSaveData.Lives}";
 		gameStartParams.CombatDeck = gameSaveData.AdventureSaveData.CurrentDeck.ToDeck();
 		gameStartParams.CombatDeckEnemy = GenerateEnemyDeck(gameSaveData.AdventureSaveData.Wins).ToDeck();
 		gameStartParams.OpponentHealth = 30 + (gameSaveData.AdventureSaveData.Wins * 15);
+		gameStartParams.OpponentExtraEffects = ArenaChallengePicker
+			.GetModifiersFromIds(gameSaveData.AdventureSaveData.ActiveModifiers)
+			.SelectMany(x => x.TriggeredEffects).ToList();
+
 		GameManager.GameStartParams = gameStartParams;
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{

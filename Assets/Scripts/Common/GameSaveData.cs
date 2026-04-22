@@ -175,6 +175,7 @@ public class AdventureSaveData
 	public int Wins { get; set; }
 	public int MaxWins { get; set; }
 	public int Lives { get; set; }
+	public List<string> ActiveModifiers { get; set; }
 }
 
 [Serializable]
