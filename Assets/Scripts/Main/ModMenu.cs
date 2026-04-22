@@ -105,6 +105,10 @@ and the Image should be {cardName}.jpg
         };
         CreateFiles(defaultDir, fileNameWeapon, weaponData, WeaponImage);
 
+        if (Common.Instance.SaveManager.SaveData.ModSaveData.EnabledMods.Remove(defaultDir))
+        {
+            Common.Instance.SaveManager.Save();
+        }
         Debug.Log("Default mod created at: " + defaultDir);
         Setup();
     }
