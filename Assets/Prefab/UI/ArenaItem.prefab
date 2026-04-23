@@ -266,6 +266,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArenaItem
   Text: {fileID: 1524207407104840918}
   SwitchButton: {fileID: 8686780802138496578}
+  Modifier:
+    ModifierText: 
+    Id: 
+    TriggeredEffects: []
+  ActiveColor: {r: 1, g: 1, b: 1, a: 1}
+  InactiveColor: {r: 0.4188679, g: 0.4188679, b: 0.4188679, a: 1}
+  references:
+    version: 2
+    RefIds: []
 --- !u!222 &5362763240457270336
 CanvasRenderer:
   m_ObjectHideFlags: 0

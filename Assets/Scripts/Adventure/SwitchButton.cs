@@ -10,6 +10,8 @@ public class SwitchButton : MonoBehaviour, IButtonSoundState
 
 	public bool IsActive => IsOn;
 
+	public event Action<bool> OnSwitch;
+
 	public void Toggle()
 	{
 		SetIsOn(!IsOn);
@@ -17,8 +19,13 @@ public class SwitchButton : MonoBehaviour, IButtonSoundState
 
 	public void SetIsOn(bool isOn)
 	{
+		if (IsOn == isOn)
+			return;
+
 		IsOn = isOn;
+
 		UpdateUI();
+		OnSwitch?.Invoke(IsOn);
 	}
 
 	private void UpdateUI()
