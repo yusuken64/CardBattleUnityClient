@@ -23,7 +23,7 @@ MonoBehaviour:
     rid: -2
   TriggeredEffects: []
   SpellCastEffects:
-  - Description: 
+  - Description: Deal 5 damage to all enemy minions
     GameActions:
     - rid: 6533011575016521996
     AffectedEntitySelectorWrapper:

@@ -23,7 +23,7 @@ MonoBehaviour:
     rid: -2
   TriggeredEffects: []
   SpellCastEffects:
-  - Description: 
+  - Description: Deal 2 damage and Freeze all enemy minions
     GameActions:
     - rid: 6533011575016521996
     - rid: 867526235581055125

@@ -2,6 +2,7 @@ using CardBattleEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public abstract class CardDefinition : ScriptableObject
@@ -40,7 +41,9 @@ public abstract class CardDefinition : ScriptableObject
 			FreezeAction freeze => $"Freeze",
 			AddStatModifierAction addStat => DescribeStatMod(addStat),
 			GainCardAction gainCard => $"Gain {gainCard.Card.Name}",
+			GainArmorAction gainArmor => $"Gain {GetValue(gainArmor.Amount)} Armor",
 			RepeatAction repeatAction => $"{string.Join(", ", repeatAction.ChildActions.Select(x => ActionToDescription(x)))} x {((ConstantValue)repeatAction.Count).Number}",
+			SilenceAction silenceAction => $"Silence",
 			//HealAction heal => $"Heal {heal.Target} for {heal.Amount} HP",
 			// Add more types as needed
 			_ => gameAction.GetType().Name.ToString() // fallback
@@ -80,6 +83,17 @@ public abstract class CardDefinition : ScriptableObject
 		return healString;
 	}
 
+	string GetValue(IValueProvider valueProvider)
+	{
+		string value = valueProvider switch
+		{
+			ConstantValue constant => constant.Number.ToString(),
+			_ => valueProvider.GetType().Name,
+		};
+
+		return value;
+	}
+
 	public virtual string ToDescription(TriggeredEffectWrapper triggeredEffect, int arg2)
 	{
 		if (!string.IsNullOrWhiteSpace(triggeredEffect.Description))
@@ -87,7 +101,7 @@ public abstract class CardDefinition : ScriptableObject
 			return triggeredEffect.Description;
 		}
 
-		var trigger = triggeredEffect.EffectTrigger;
+		var trigger = AddSpacesToCamelCase(triggeredEffect.EffectTrigger.ToString());
 		var condition = "";
 		//if (triggeredEffect.Condition is not null)
 		//{
@@ -105,5 +119,35 @@ public abstract class CardDefinition : ScriptableObject
 		string description = $"{trigger}: {condition}{actions}.";
 
 		return description;
+	}
+
+	public static string AddSpacesToCamelCase(string input)
+	{
+		if (string.IsNullOrEmpty(input))
+			return input;
+
+		var sb = new StringBuilder(input.Length + 5);
+
+		sb.Append(input[0]);
+
+		for (int i = 1; i < input.Length; i++)
+		{
+			char current = input[i];
+			char previous = input[i - 1];
+
+			// Add space if:
+			// - current is uppercase AND
+			// - previous is lowercase OR next is lowercase (handles "XMLParser" -> "XML Parser")
+			if (char.IsUpper(current) &&
+				(char.IsLower(previous) ||
+				 (i + 1 < input.Length && char.IsLower(input[i + 1]))))
+			{
+				sb.Append(' ');
+			}
+
+			sb.Append(current);
+		}
+
+		return sb.ToString();
 	}
 }

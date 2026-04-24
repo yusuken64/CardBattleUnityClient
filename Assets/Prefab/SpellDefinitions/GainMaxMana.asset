@@ -23,7 +23,7 @@ MonoBehaviour:
     rid: -2
   TriggeredEffects: []
   SpellCastEffects:
-  - Description: GainMaxMana
+  - Description: Increase Max Mana
     GameActions:
     - rid: 6533011592832090113
     AffectedEntitySelectorWrapper:

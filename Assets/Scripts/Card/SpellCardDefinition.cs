@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 [CreateAssetMenu(
     fileName = "NewSpellCard",
     menuName = "Game/Cards/SpellCard Definition"
@@ -28,6 +32,7 @@ public class SpellCardDefinition : CardDefinition
 
         return spellCard;
     }
+
     public string ToDescription(SpellCastEffectWrapper spellCastEffect, int arg2)
     {
         if (!string.IsNullOrWhiteSpace(spellCastEffect.Description))
@@ -39,6 +44,18 @@ public class SpellCardDefinition : CardDefinition
         string description = $"{actions}.";
 
         return description;
+    }
+
+    [ContextMenu("Set Effect Descriptions")]
+    public void SetEffectDescriptions()
+    {
+        var description = string.Join(",", SpellCastEffects.Select(ToDescription));
+        SpellCastEffects[0].Description = description;
+
+#if UNITY_EDITOR
+        Undo.RecordObject(this, "Set Effect Descriptions");
+        EditorUtility.SetDirty(this);
+#endif
     }
 }
 

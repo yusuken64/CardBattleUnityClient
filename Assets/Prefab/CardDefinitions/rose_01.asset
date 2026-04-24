@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: rose_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Rose 01
+  CardName: Rose
   ID: rose_01
   Sprite: {fileID: 21300000, guid: 4abd3c5217b7a7d44b06678772f67996, type: 3}
   Cost: 3

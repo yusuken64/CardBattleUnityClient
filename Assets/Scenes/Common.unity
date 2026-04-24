@@ -170,11 +170,17 @@ MonoBehaviour:
       rid: -2
     GameSaveData:
       rid: -2
+    ModSaveData:
+      rid: 8766383661626949723
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 8766383661626949723
+      type: {class: ModSaveData, ns: , asm: Assembly-CSharp}
+      data:
+        EnabledMods: []
 --- !u!114 &18950028 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 979480524780753769, guid: 5155eec19bb24094eba81f042a7daabf, type: 3}
