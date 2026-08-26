@@ -3,14 +3,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
 	public static string ReturnScreenName;
 	public static Func<bool, IEnumerator> GameResultRoutine;
+
+	// Set before SceneManager.LoadScene("GameScene") to configure this match. Null preserves legacy local single-player behavior.
+	public static StartGameArgs PendingStartArgs;
+
 	public Player Player;
 	public Player Opponent;
+
+	// Which CardBattleEngine.Player is "me", resolved once InitializeGame runs.
+	public Guid? LocalPlayerId { get; private set; }
 
 	public AnimationQueue AnimationQueue;
 	public DeckDefinition TestDeck;
@@ -26,10 +34,29 @@ public class GameManager : MonoBehaviour
 	public int RandomSeed;
 	public BattleIntro BattleIntro;
 
+	public string ServerUrl = "http://localhost:5299";
+
+	private MiniSignalRClient _networkClient;
+	private PlayerGameView _lastNetworkView;
+	private Guid _networkMatchId;
+
 	void Start()
 	{
 		ClearBoard();
 		InitializeGame();
+	}
+
+	void Update()
+	{
+		_networkClient?.PumpMainThread();
+	}
+
+	void OnDestroy()
+	{
+		if (_networkClient != null)
+		{
+			_ = _networkClient.DisconnectAsync();
+		}
 	}
 
 	private void ClearBoard()
@@ -42,6 +69,21 @@ public class GameManager : MonoBehaviour
 	{
 		_engine = new GameEngine();
 
+		StartGameArgs args = PendingStartArgs ?? StartGameArgs.LocalTestDefault();
+		PendingStartArgs = null;
+
+		if (args.Mode == GameMode.Networked)
+		{
+			StartCoroutine(InitializeNetworkedGame(args));
+		}
+		else
+		{
+			InitializeLocalTestGame(args);
+		}
+	}
+
+	private void InitializeLocalTestGame(StartGameArgs args)
+	{
 		Deck deck;
 		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
 		if (gameSaveData.CombatDeck != null)
@@ -77,8 +119,16 @@ public class GameManager : MonoBehaviour
 		UnityRNG rng = new UnityRNG();
 
 		_gameState = CreateTestGame(deck, enemyDeck, rng);
-		SetupPlayer(deck, Player, _gameState.Players[0]);
-		SetupPlayer(enemyDeck, Opponent, _gameState.Players[1]);
+
+		bool localIsP1 = args.LocalSeat == 0;
+		CardBattleEngine.Player localData = localIsP1 ? _gameState.Players[0] : _gameState.Players[1];
+		CardBattleEngine.Player remoteData = localIsP1 ? _gameState.Players[1] : _gameState.Players[0];
+		Deck localDeck = localIsP1 ? deck : enemyDeck;
+		Deck remoteDeck = localIsP1 ? enemyDeck : deck;
+		LocalPlayerId = localData.Id;
+
+		SetupPlayer(localDeck, Player, localData);
+		SetupPlayer(remoteDeck, Opponent, remoteData);
 
 		_opponentAgent = new RandomAI(Opponent.Data, rng);
 
@@ -87,7 +137,7 @@ public class GameManager : MonoBehaviour
 
 		Player.HeroPortrait.gameObject.SetActive(false);
 		Opponent.HeroPortrait.gameObject.SetActive(false);
-		BattleIntro.Setup(deck, enemyDeck);
+		BattleIntro.Setup(localDeck, remoteDeck);
 		BattleIntro.gameObject.SetActive(true);
 		BattleIntro.DoIntro(() =>
 		{
@@ -95,6 +145,90 @@ public class GameManager : MonoBehaviour
 			Opponent.HeroPortrait.gameObject.SetActive(true);
 			_engine.StartGame(_gameState);
 		});
+	}
+
+	private IEnumerator InitializeNetworkedGame(StartGameArgs args)
+	{
+		Task initTask = InitializeNetworkedGameAsync(args);
+		while (!initTask.IsCompleted)
+		{
+			yield return null;
+		}
+
+		if (initTask.IsFaulted)
+		{
+			Debug.LogError($"Networked game initialization failed: {initTask.Exception}");
+		}
+	}
+
+	// Connects to GameServer's MatchHub and either creates or joins a match. Note this only stands
+	// up the connection/submission channel - Player/Opponent/Board still expect live CardBattleEngine
+	// objects (see InitializeLocalTestGame), and nothing here renders from the PlayerGameView pushes
+	// yet. That's a separate rendering adapter, not part of this.
+	private async Task InitializeNetworkedGameAsync(StartGameArgs args)
+	{
+		_networkClient = new MiniSignalRClient($"{ServerUrl}/hubs/match");
+		_networkClient.On<PlayerGameView>("OnStateUpdated", OnNetworkStateUpdated);
+		_networkClient.On<string>("OnActionRejected", reason => Debug.LogWarning($"Action rejected: {reason}"));
+		_networkClient.On<Guid?>("OnMatchEnded", winnerId => Debug.Log($"Networked match ended. Winner: {winnerId}"));
+
+		await _networkClient.ConnectAsync();
+
+		bool isHost = string.IsNullOrEmpty(args.MatchId);
+		DecklistRequest decklist = TestDeck.ToDeck().ToDecklistRequest(isHost ? "Host" : "Joiner");
+
+		if (isHost)
+		{
+			_networkMatchId = await _networkClient.InvokeAsync<Guid>("CreateMatch", decklist);
+			Debug.Log($"Created match {_networkMatchId}. Waiting for an opponent to join.");
+		}
+		else
+		{
+			_networkMatchId = Guid.Parse(args.MatchId);
+			JoinResult joinResult = await _networkClient.InvokeAsync<JoinResult>("JoinMatch", _networkMatchId, decklist);
+			if (!joinResult.Success)
+			{
+				Debug.LogError($"Failed to join match {_networkMatchId}: {joinResult.Error}");
+			}
+		}
+	}
+
+	private void OnNetworkStateUpdated(PlayerGameView view)
+	{
+		_lastNetworkView = view;
+
+		if (LocalPlayerId == null)
+		{
+			LocalPlayerId = view.ViewerPlayerId;
+		}
+
+		if (view.IsGameOver)
+		{
+			Debug.Log($"Networked match over. Winner: {view.WinnerPlayerId}");
+		}
+	}
+
+	// Submits one of the options offered in _lastNetworkView.LegalActions back to the server.
+	// Matching a board click (which card/minion was targeted) to the right LegalActionView is the
+	// rendering adapter's job, not this method's - callers just hand over the chosen entry.
+	public void SubmitLocalAction(LegalActionView chosen)
+	{
+		if (_networkClient == null || _lastNetworkView?.PromptVersion == null)
+		{
+			Debug.LogError("No active network prompt to submit an action against.");
+			return;
+		}
+
+		_ = SubmitLocalActionAsync(chosen, _networkMatchId, _lastNetworkView.PromptVersion.Value);
+	}
+
+	private async Task SubmitLocalActionAsync(LegalActionView chosen, Guid matchId, int promptVersion)
+	{
+		ActionResult result = await _networkClient.InvokeAsync<ActionResult>("SubmitAction", matchId, chosen.Index, promptVersion);
+		if (!result.Success)
+		{
+			Debug.LogWarning($"Server rejected action: {result.Error}");
+		}
 	}
 
 	private void SetupPlayer(Deck deck, Player player, CardBattleEngine.Player data)
