@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a87b73977c7f784297afa4ba9e9f8f0, type: 3}
+  m_Name: HealSynergyDeck
+  m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
+  Title: SpellSynergyDeck
+  HeroCard: {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
+  Cards:
+  - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
+  - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
+  - {fileID: 11400000, guid: c1fb7a871229b3c43a55920df427f5cf, type: 2}
+  - {fileID: 11400000, guid: f5c85da0272baa94cb8321a0168539fc, type: 2}
+  - {fileID: 11400000, guid: f5c85da0272baa94cb8321a0168539fc, type: 2}
+  - {fileID: 11400000, guid: f5c85da0272baa94cb8321a0168539fc, type: 2}
+  - {fileID: 11400000, guid: 94d8868d685e921478766ebfa0670aeb, type: 2}
+  - {fileID: 11400000, guid: 94d8868d685e921478766ebfa0670aeb, type: 2}
+  - {fileID: 11400000, guid: f727cac3d71400448934287caf26991c, type: 2}
+  - {fileID: 11400000, guid: f727cac3d71400448934287caf26991c, type: 2}
+  - {fileID: 11400000, guid: 1c84359235d98c049bf213b49a18fabd, type: 2}
+  - {fileID: 11400000, guid: 1c84359235d98c049bf213b49a18fabd, type: 2}

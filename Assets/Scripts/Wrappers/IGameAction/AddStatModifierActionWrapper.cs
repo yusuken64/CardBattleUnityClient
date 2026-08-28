@@ -7,6 +7,7 @@ using CardBattleEngine;
 [Serializable]
 public class AddStatModifierActionWrapper : IGameActionWrapperBase
 {
+    public CardBattleEngine.StatModifierType StatModifierType;
     [SerializeReference] public IValueProviderWrapperBase AttackChange;
     [SerializeReference] public IValueProviderWrapperBase HealthChange;
     [SerializeReference] public IValueProviderWrapperBase CostChange;
@@ -17,6 +18,7 @@ public class AddStatModifierActionWrapper : IGameActionWrapperBase
     public override CardBattleEngine.IGameAction Create()
     {
         var instance = new CardBattleEngine.AddStatModifierAction();
+        instance.StatModifierType = this.StatModifierType;
         instance.AttackChange = AttackChange?.Create();
         instance.HealthChange = HealthChange?.Create();
         instance.CostChange = CostChange?.Create();

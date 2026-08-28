@@ -13,22 +13,27 @@ MonoBehaviour:
   m_Name: GainMaxMana
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: GainMaxMana
+  CardName: Wild Growth
   ID: GainMaxMana
-  Sprite: {fileID: 21300000, guid: 0918ab6964eb6451b8ebc28257b289ce, type: 3}
+  Sprite: {fileID: 21300000, guid: aeb5eee6c33331e468e973d8120bb7c2, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
-  TargetingType: 7
   SpellCastEffects:
-  - Description: GainMaxMana
+  - Description: Increase Max Mana
     GameActions:
     - rid: 6533011592832090113
     AffectedEntitySelectorWrapper:
       rid: 6533011592832090114
-  CustomSFX: {fileID: 0}
+  CustomSFX: {fileID: 11400000, guid: c1ec43ba2127ba744a05a55fa2218da3, type: 2}
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 6533011592832090113
       type: {class: IncreaseMaxManaActionWrapper, ns: , asm: Assembly-CSharp}
       data:

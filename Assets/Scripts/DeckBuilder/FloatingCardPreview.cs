@@ -4,6 +4,7 @@ using UnityEngine;
 public class FloatingCardPreview : MonoBehaviour
 {
 	public Card PreviewCard;
+	public KeywordDetailList KeywordDetailList;
 
 	private float lockedX;
 	private RectTransform previewRect;
@@ -25,11 +26,16 @@ public class FloatingCardPreview : MonoBehaviour
 	internal void PreviewStart(CardDefinition cardDefinition, Vector2 screenPos)
 	{
 		gameObject.SetActive(true);
-		PreviewCard.Setup(cardDefinition.CreateCard());
+		CardBattleEngine.Card cardData = cardDefinition.CreateCard();
+		PreviewCard.Setup(cardData);
+
+		KeywordDetailList.gameObject.SetActive(true);
+		KeywordDetailList.Setup(cardData);
 	}
 
 	internal void PreviewEnd()
 	{
 		this.gameObject.SetActive(false);
+		KeywordDetailList.gameObject.SetActive(false);
 	}
 }

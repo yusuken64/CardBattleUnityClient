@@ -1,4 +1,5 @@
 using CardBattleEngine;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 	public GameObject HeroPowerExpiredObject;
 	public GameObject HeroPowerCostObject;
 	public TextMeshProUGUI HeroPowerCostText;
+	public Vector3 ToolTipOffset;
 
 	public CardBattleEngine.HeroPower Data { get; set; }
 	internal void RefreshData()
@@ -34,8 +36,50 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 
 	public bool CanStartAiming()
 	{
-		return Data.TargetingType != TargetingType.None &&
-				!Data.UsedThisTurn;//TODO heropoweraction.isvalid
+		var gameManager = FindFirstObjectByType<GameManager>();
+
+		if (Player.Data.Owner != gameManager.Player.Data.Owner)
+		{
+			return false;
+		}
+
+		var ui = FindFirstObjectByType<UI>();
+		if (!gameManager.ActivePlayerTurn)
+		{
+			ui.WarnEnemyTurn();
+			return false;
+		}
+
+		if (Data.UsedThisTurn)
+		{
+			return false;
+		}
+
+		if (Player.Data.Mana < Data.ManaCost)
+		{
+			ui.ShowWarningMessage("Not enough Mana");
+			return false;
+		}
+
+		var validTargets = Data.ValidTargetSelector?
+			.Select(gameManager._gameState, Player.Data, OriginalCard)
+			?.ToList();
+
+		if (validTargets == null || validTargets.Count == 0)
+		{
+			return false;
+		}
+
+		if (Data.CastRestriction != null)
+		{
+			var canPlay = Data.CastRestriction.CanPlay(gameManager._gameState, Player.Data, OriginalCard, out _);
+			if (!canPlay)
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public IGameEntity GetData()
@@ -69,15 +113,23 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		return gameManager.CheckIsValid(action, context, out reason);
 	}
 
-	public CardBattleEngine.Card GetDisplayCard()
+	public CardBattleEngine.Card DisplayCard => OriginalCard;
+
+	public bool CanClick()
 	{
-		return OriginalCard;
+		var gameManager = FindFirstObjectByType<GameManager>();
+		if (Player.Data.Id != gameManager.Player.Data.Id)
+		{
+			return false;
+		}
+
+		return Player.Data.HeroPower != null &&
+			Player.Data.HeroPower?.ValidTargetSelector == null;
 	}
 
 	public void OnClick()
 	{
-		if (Data.TargetingType != TargetingType.None &&
-			!Data.UsedThisTurn)
+		if (Data.UsedThisTurn)
 		{
 			return;
 		}
@@ -98,15 +150,20 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		}
 	}
 
-	public void HoldStart()
+	public void HoverStart()
 	{
 		var ui = FindFirstObjectByType<UI>();
-		ui.PreviewStart(this);
+		ui.HoverPreviewStart(this);
 	}
 
-	public void HoldEnd()
+	public void HoverEnd()
 	{
 		var ui = FindFirstObjectByType<UI>();
-		ui.PreviewEnd();
+		ui.HoverPreviewEnd();
+	}
+
+	public Vector3 GetPosition()
+	{
+		return this.transform.position + ToolTipOffset;
 	}
 }

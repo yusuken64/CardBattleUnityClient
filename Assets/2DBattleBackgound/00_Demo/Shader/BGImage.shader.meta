@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5798b2b03d9068f45aba3d6cc61047ed
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 290162
+  packageName: 367 Battle Backgrounds
+  packageVersion: 2.0.1
+  assetPath: Assets/2DBattleBackgound/00_Demo/Shader/BGImage.shader
+  uploadId: 701232

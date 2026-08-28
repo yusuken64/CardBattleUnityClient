@@ -63,11 +63,10 @@ public class SaveManager : MonoBehaviour
 		{
 			var startingDeck = Common.Instance.StartingDeck;
 			SaveData.GameSaveData.DeckSaveDatas.Add(startingDeck.ToDeckData());
-			SaveData.GameSaveData.CurrentDeckIndex = 0;
 
 			foreach (var card in startingDeck.Cards)
 			{
-				SaveData.GameSaveData.CardCollection.Add(card.CardName, 1);
+				SaveData.GameSaveData.CardCollection.Add(card.ID, 1);
 			}
 			Save();
 		}
@@ -76,6 +75,18 @@ public class SaveManager : MonoBehaviour
 	[ContextMenu("Reset Data")]
 	public void ResetData()
 	{
-		SaveData = new SaveData();
+		//SaveData = new SaveData();
+		SaveData.GameSaveData = new();
+		SaveData.GameSaveData.PackCount = 1;
+	}
+
+	internal void ResetTutorialData()
+	{
+		SaveData.GameSaveData.TutorialSaveData = new();
+	}
+
+	internal void SkipTutorialData()
+	{
+		SaveData.GameSaveData.TutorialSaveData.BattleTutorialCompleted = true;
 	}
 }

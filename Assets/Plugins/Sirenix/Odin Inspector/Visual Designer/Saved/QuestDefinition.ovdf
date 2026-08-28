@@ -1,0 +1,12 @@
+OVDF v1.0
+QuestDefinition, Assembly-CSharp
+
+# QuestDescription
++ [UnityEngine.TextAreaAttribute]
+	minLines = 9
+	maxLines = 9
+
+# QuestOutcome
++ [UnityEngine.TextAreaAttribute]
+	minLines = 9
+	maxLines = 9

@@ -16,17 +16,28 @@ public class UI : MonoBehaviour
     public DamageNumber DamageNumberPrefab;
     public DamageNumber HealNumberPrefab;
     public Card CardPreview;
+    public GameObject HoverCardPreviewObject;
+    public Card HoverCardPreview;
+    public KeywordDetailList HoverCardPreviewKeywords;
     public GameObject TriggeredEffectParticlePrefab;
 
     public GameResultScreen GameResultScreen;
     public GameSettings GameSettingsScreen;
     public GameObject SettingsButton;
 
+    public Color DefaultTextColor;
+    public Color DamagedTextColor;
+    public Color BuffedTextColor;
+
+    public AudioClip ErrorSound;
+
 	private void Start()
 	{
         Message.gameObject.SetActive(false);
         GameResultScreen.gameObject.SetActive(false);
         GameSettingsScreen.gameObject.SetActive(false);
+        CardPreview.gameObject.SetActive(false);
+        HoverCardPreviewObject.gameObject.SetActive(false);
     }
 
 	public void ShowMessage(string message)
@@ -40,6 +51,17 @@ public class UI : MonoBehaviour
         // Start new message coroutine
         messageCoroutine = StartCoroutine(ShowMessageCoroutine(message));
     }
+
+    public void WarnEnemyTurn()
+	{
+		ShowWarningMessage("Not your Turn");
+	}
+
+    public void ShowWarningMessage(string warning)
+    {
+        Common.Instance.AudioManager.PlayUISound(ErrorSound);
+        ShowMessage(warning);
+	}
 
 	internal IEnumerator DoGameEndRoutine(bool isWin)
     {
@@ -108,17 +130,74 @@ public class UI : MonoBehaviour
            });
     }
 
-    internal void PreviewStart(IHoverable hoverable)
+    internal Color GetColor(int current, int baseValue, int maxValue)
     {
-        var card = hoverable.GetDisplayCard();
-        if (card == null) { return; }
-        CardPreview.Setup(card);
-        CardPreview.gameObject.SetActive(true);
+        if (current < maxValue)
+        {
+            return DamagedTextColor;
+        }
+
+        if (current > baseValue)
+        {
+            return BuffedTextColor;
+        }
+
+        return DefaultTextColor;
     }
 
-	internal void PreviewEnd()
+    internal void PreviewStart(IHoverable hoverable)
     {
-        CardPreview.gameObject.SetActive(false);
+        var card = hoverable.DisplayCard;
+        if (card == null) { return; }
+        CardPreview.Setup(card);
+        CardPreview.CanPlayIndicator.gameObject.SetActive(false);
+        CardPreview.gameObject.SetActive(true);
+
+		CanvasGroup canvasGroup = CardPreview.GetComponent<CanvasGroup>();
+        canvasGroup.DOKill();
+		canvasGroup.alpha = 0;
+        canvasGroup.DOFade(1, 0.2f);
+    }
+
+    internal void PreviewEnd()
+    {
+        CanvasGroup canvasGroup = CardPreview.GetComponent<CanvasGroup>();
+        canvasGroup.DOFade(0, 0.5f)
+            .OnComplete(() =>
+            {
+                CardPreview.gameObject.SetActive(false);
+            });
+	}
+
+	internal void HoverPreviewStart(IHoverable hoverable)
+    {
+        var card = hoverable.DisplayCard;
+        if (card == null) { return; }
+        HoverCardPreviewObject.gameObject.SetActive(true);
+        HoverCardPreview.Setup(card);
+
+        if(hoverable is Card hoverCard)
+        {
+            HoverCardPreview.CanPlayIndicator.gameObject.SetActive(hoverCard.CanPlayIndicator.activeSelf);
+        }
+		else
+        {
+            HoverCardPreview.CanPlayIndicator.gameObject.SetActive(false);
+        }
+        HoverCardPreview.gameObject.SetActive(true);
+        HoverCardPreviewKeywords.gameObject.SetActive(true);
+        HoverCardPreviewKeywords.Setup(card);
+    }
+
+    internal void HoverPreviewMove(Minion minion)
+    {
+    }
+
+    internal void HoverPreviewEnd()
+    {
+        HoverCardPreviewObject.gameObject.SetActive(false);
+        HoverCardPreview.gameObject.SetActive(false);
+        HoverCardPreviewKeywords.gameObject.SetActive(false);
     }
 
     public void OpenSettings_Clicked()

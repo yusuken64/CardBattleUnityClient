@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class TriggerEffectActionAnimation : GameActionAnimation<TriggerEffectAction>
 {
+	public AudioClip TriggerSound;
+
 	public override IEnumerator Play()
 	{
+		Common.Instance.AudioManager.PlaySound(TriggerSound);
 		var ui = Object.FindFirstObjectByType<UI>();
 		var triggerParticle = Object.Instantiate(ui.TriggeredEffectParticlePrefab);
 		var entity = Action.TriggerSource.Entity;

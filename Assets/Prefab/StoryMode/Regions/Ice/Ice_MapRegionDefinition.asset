@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
+  m_Name: Ice_MapRegionDefinition
+  m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
+  RegionID: Ice
+  Name: Ice
+  Description: Jagged ice mountains rise beneath a pale sun, a frozen realm of endless
+    blizzards ruled by the Ice Witch and her tireless undead army, quietly preparing
+    for conquest. Yet ancient giants also wander these wastes, untouched by the cold
+    and indifferent to all conflict. No one knows their origin or purpose, only that
+    they guard something older than kingdoms buried deep beneath the ice.
+  DungeonSprite: {fileID: 21300000, guid: fcbad1352b58d3e4a943af4ee7ca8e61, type: 3}
+  Dungeons:
+  - {fileID: 11400000, guid: a7f1749c774f48a42a0749ea7fa0cbc2, type: 2}
+  - {fileID: 11400000, guid: aa66d1c36feeabc42a806f1360c7cebd, type: 2}
+  - {fileID: 11400000, guid: 7e18f4baeabd0ae4bb1a2f7f51591d11, type: 2}

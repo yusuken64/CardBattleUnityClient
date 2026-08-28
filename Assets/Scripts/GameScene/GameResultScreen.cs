@@ -14,10 +14,18 @@ public class GameResultScreen : MonoBehaviour
 
 	public GameObject OkButton;
 
+	public AudioClip WinClip;
+	public AudioClip LoseClip;
+
 	private bool okClicked = false;
 	public void Ok_Clicked()
 	{
 		okClicked = true;
+	}
+
+	internal void SetAutoAdvance(bool autoAdvance)
+	{
+		okClicked = autoAdvance;
 	}
 
 	private static void ExitScene()
@@ -56,6 +64,15 @@ public class GameResultScreen : MonoBehaviour
 
 	internal IEnumerator DoGameEndRoutine(bool isWin)
 	{
+		AudioManager.Instance.StopMusc();
+		if (isWin)
+		{
+			AudioManager.Instance.PlayClip(WinClip);
+		}
+		else
+		{
+			AudioManager.Instance.PlayClip(LoseClip);
+		}
 		this.gameObject.SetActive(true);
 
 		var gameManager = FindFirstObjectByType<GameManager>();
@@ -118,11 +135,6 @@ public class GameResultScreen : MonoBehaviour
 		if (gameResultRoutine != null)
 		{
 			yield return gameResultRoutine(isWin);
-			yield return new WaitUntil(() =>
-				Mouse.current?.leftButton.wasPressedThisFrame == true ||
-				Keyboard.current?.anyKey.wasPressedThisFrame == true ||
-				Touchscreen.current?.primaryTouch.press.wasPressedThisFrame == true
-			);
 		}
 
 		ExitScene();

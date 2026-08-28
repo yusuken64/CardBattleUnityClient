@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: gabriela
   Sprite: {fileID: 21300000, guid: a6c523dd48e517244ad5d9e3c7042bb6, type: 3}
   Cost: 8
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 8
   Health: 8
@@ -34,14 +38,8 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 7
     GameActions:
-    - rid: 867526235581054976
-    - rid: 867526235581054977
-    - rid: 867526235581054978
-    - rid: 867526235581054979
-    - rid: 867526235581054981
-    - rid: 867526235581054980
+    - rid: 7726824745899917406
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
@@ -51,42 +49,20 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 867526235581054976
-      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
+    - rid: 7726824745899917406
+      type: {class: RepeatActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}
-        IndexOffset: 0
+        Count:
+          rid: 7726824745899917407
+        ChildActions:
+        - rid: 7726824745899917408
         Canceled: 0
         CustomSFX: {fileID: 0}
-    - rid: 867526235581054977
-      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
+    - rid: 7726824745899917407
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:
-        Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}
-        IndexOffset: 0
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 867526235581054978
-      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}
-        IndexOffset: 0
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 867526235581054979
-      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}
-        IndexOffset: 0
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 867526235581054980
-      type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}
-        IndexOffset: 0
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 867526235581054981
+        Number: 6
+    - rid: 7726824745899917408
       type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Card: {fileID: 11400000, guid: 67477a8c0dfb1fa49b993efcd8dffaa3, type: 2}

@@ -14,7 +14,9 @@ public static class WrapperGenerator
         typeof(CardBattleEngine.IGameAction),
         typeof(CardBattleEngine.IAffectedEntitySelector),
         typeof(CardBattleEngine.ITargetOperation),
-        typeof(CardBattleEngine.IValueProvider)
+        typeof(CardBattleEngine.IValueProvider),
+        typeof(CardBattleEngine.ICastRestriction),
+        typeof(CardBattleEngine.IValidTargetSelector)
     };
 
     private static readonly List<PropertyReplacement> PropertyReplacements = new()
@@ -48,8 +50,26 @@ public static class WrapperGenerator
         },
         new PropertyReplacement
         {
+            OriginalType = typeof(List<CardBattleEngine.SequentialEffect>),
+            GenerateField = p => $"    public List<SequentialEffectWrapper> {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Select(x => x.Create()).ToList();"
+        },
+        new PropertyReplacement
+        {
             OriginalType = typeof(CardBattleEngine.IValueProvider),
             GenerateField = p => $"    [SerializeReference] public {typeof(IValueProviderWrapperBase).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
+        {
+            OriginalType = typeof(CardBattleEngine.IGameAction),
+            GenerateField = p => $"    [SerializeReference] public IGameActionWrapperBase {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
+        {
+            OriginalType = typeof(CardBattleEngine.IAffectedEntitySelector),
+            GenerateField = p => $"    [SerializeReference] public IAffectedEntitySelectorWrapperBase {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
         },
         new PropertyReplacement
@@ -57,6 +77,24 @@ public static class WrapperGenerator
             OriginalType = typeof(CardBattleEngine.Weapon),
             GenerateField = p => $"    public {typeof(WeaponCardDefinition).FullName} {p.Name};",
             GenerateAssignment = p => $"instance.{p.Name} = ({p.Name}?.CreateCard() as WeaponCard)?.CreateWeapon();"
+        },
+        new PropertyReplacement
+		{
+            OriginalType = typeof(CardBattleEngine.IValidTargetSelector),
+            GenerateField = p => $"    [SerializeReference] public {typeof(IValidTargetSelectorWrapperBase).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
+        {
+            OriginalType = typeof(CardBattleEngine.ICastRestriction),
+            GenerateField = p => $"    [SerializeReference] public {typeof(ICastRestrictionWrapperBase).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
+        },
+        new PropertyReplacement
+		{
+            OriginalType = typeof(CardBattleEngine.ITriggerCondition),
+            GenerateField = p => $"    [SerializeReference] public {typeof(ITriggerConditionWrapperBase).FullName} {p.Name};",
+            GenerateAssignment = p => $"instance.{p.Name} = {p.Name}?.Create();"
         },
         new PropertyReplacement
         {

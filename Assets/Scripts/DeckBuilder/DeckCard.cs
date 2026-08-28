@@ -9,41 +9,60 @@ public class DeckCard : MonoBehaviour,
 	IPointerExitHandler,
 	IBeginDragHandler,
 	IDragHandler,
-	IEndDragHandler
+	IEndDragHandler,
+	IPointerClickHandler
 {
 	public TextMeshProUGUI ManaText;
 	public TextMeshProUGUI NameText;
 	public Image CardImage;
 
 	public CardDefinition CardDefinition;
-	public Action<DeckCard> RemoveCardFromDeckAction;
 	public Action<DeckCard> SetAsHeroAction;
 
 	public HeroIndicator HeroIndicator;
 
+	public event Action<DeckCard> CardClickAction;
+	public event Action<DeckCard> CardRightClickAction;
+
 	public void Setup(
 		CardDefinition cardDefinition,
-		Action<DeckCard> removeCardFromDeck,
+		Action<DeckCard> cardClickAction,
+		Action<DeckCard> cardRightClickAction,
 		Action<DeckCard> setAsHeroAction)
 	{
 		this.CardDefinition = cardDefinition;
-		this.RemoveCardFromDeckAction = removeCardFromDeck;
+		this.CardClickAction = cardClickAction;
+		this.CardRightClickAction = cardRightClickAction;
 		this.SetAsHeroAction = setAsHeroAction;
 
 		ManaText.text = cardDefinition.Cost.ToString();
 		NameText.text = cardDefinition.CardName.ToString();
 		CardImage.sprite = cardDefinition.Sprite;
 
+		HeroIndicator.gameObject.SetActive(cardDefinition is MinionCardDefinition);
 		HeroIndicator.SetAsHeroAction = setAsHeroAction;
 		HeroIndicator.DeckCard = this;
 		
 		FloatingCardPreview = FindFirstObjectByType<FloatingCardPreview>(FindObjectsInactive.Include);
 	}
 
-	public void OnClick()
+	//public void OnClick()
+	//{
+	//	CardClickAction?.Invoke(this);
+	//	HidePreview();
+	//}
+
+	public void OnPointerClick(PointerEventData eventData)
 	{
-		RemoveCardFromDeckAction?.Invoke(this);
 		HidePreview();
+		if (eventData.button == PointerEventData.InputButton.Left)
+		{
+			CardClickAction?.Invoke(this);
+		}
+		else if (eventData.button == PointerEventData.InputButton.Right)
+		{
+			CardRightClickAction?.Invoke(this);
+		}
 	}
 
 	public void SetAsHero_Click()
@@ -137,7 +156,7 @@ public class DeckCard : MonoBehaviour,
 	{
 		Debug.Log("Show preview");
 
-		FloatingCardPreview.PreviewStart(this.CardDefinition, lastPointerPosition);
+		FloatingCardPreview?.PreviewStart(this.CardDefinition, lastPointerPosition);
 		hoverStartTime = Time.unscaledTime;
 	}
 
@@ -145,6 +164,6 @@ public class DeckCard : MonoBehaviour,
 	{
 		Debug.Log("Hide preview");
 
-		FloatingCardPreview.PreviewEnd();
+		FloatingCardPreview?.PreviewEnd();
 	}
 }

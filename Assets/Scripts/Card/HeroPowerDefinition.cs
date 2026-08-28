@@ -12,8 +12,6 @@ public class HeroPowerDefinition : CardDefinition
 {
 	public string HeroPowerName;
 
-	public TargetingType TargetingType;
-
 	[SerializeReference]
 	public List<IGameActionWrapperBase> GameActions = new List<IGameActionWrapperBase>();
 
@@ -31,7 +29,8 @@ public class HeroPowerDefinition : CardDefinition
 		{
 			Name = HeroPowerName,
 			ManaCost = Cost,
-			TargetingType = TargetingType,
+			ValidTargetSelector = ValidTargetSelector.Create(),
+			CastRestriction = CastRestriction.Create(),
 			GameActions = GameActions.Select(x => x.Create()),
 			AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create(),
 			UsedThisTurn = false
@@ -43,14 +42,25 @@ public class HeroPowerDefinition : CardDefinition
 
 		List<TriggeredEffectWrapper> minionTriggeredEffects = minionCard.MinionTriggeredEffects;
 		if (minionTriggeredEffects != null &&
-			minionTriggeredEffects.Any())
+			minionTriggeredEffects.Any() &&
+			minionTriggeredEffects[0].EffectTrigger == EffectTrigger.Battlecry)
 		{
 			TriggeredEffectWrapper triggeredEffectWrapper = minionTriggeredEffects[0];
+			IAffectedEntitySelector affectedEntitySelector = minionTriggeredEffects[0].AffectedEntitySelectorWrapper?.Create();
+			if (affectedEntitySelector is ContextSelector contextSelector)
+			{
+				if (contextSelector.IncludeSummonedMinion)
+				{
+					contextSelector.IncludeSourcePlayer = true;
+				}
+			}
+
 			return new CardBattleEngine.HeroPower()
 			{
 				Name = $"Invoke {minionCard.CardName}",
-				TargetingType = triggeredEffectWrapper.TargetType,
-				AffectedEntitySelector = minionTriggeredEffects[0].AffectedEntitySelectorWrapper?.Create(),
+				ValidTargetSelector = minionCard.ValidTargetSelector?.Create(),
+				CastRestriction = minionCard.CastRestriction?.Create(),
+				AffectedEntitySelector = affectedEntitySelector,
 				GameActions = minionTriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
 				ManaCost = minionCard.Cost,
 				UsedThisTurn = false

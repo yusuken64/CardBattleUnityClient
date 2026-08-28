@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
+  m_Name: Kingdom_StoryModeDungeonDefinition_1
+  m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
+  DungeonID: Kingdom_Dungeon1
+  BattleImage: {fileID: 0}
+  DungeonName: Kingdom Dungeon lv.2
+  Description: 
+  MaxWins: 5
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: 908fa22561578ad459bc2ad3490be2eb, type: 2}
+  - {fileID: 11400000, guid: 394ea4419eefd314e947428658c34a26, type: 2}
+  - {fileID: 11400000, guid: 5affd9288f0ce1a4094c0c4508922889, type: 2}
+  - {fileID: 11400000, guid: c6804e85054f091438644535d97094f6, type: 2}
+  - {fileID: 11400000, guid: 6946709dd0a621c4ab6f64723f779f70, type: 2}

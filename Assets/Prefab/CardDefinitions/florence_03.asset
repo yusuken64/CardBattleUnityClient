@@ -17,6 +17,10 @@ MonoBehaviour:
   ID: florence_03
   Sprite: {fileID: 21300000, guid: e1a087a588eda78488d3a40eb048f7c1, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 1
@@ -29,7 +33,10 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

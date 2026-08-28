@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: the_sorcerer_of_the_fire_3
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: the sorcerer of the fire 3
+  CardName: Archmage of the Fire
   ID: the_sorcerer_of_the_fire_3
   Sprite: {fileID: 21300000, guid: ae0fce0b07ccd9546b1e98baf98023b7, type: 3}
   Cost: 7
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 5
   Health: 7
@@ -34,7 +38,6 @@ MonoBehaviour:
   - Description: 
     EffectTrigger: 14
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867526235581055127
     Condition:
@@ -44,10 +47,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 867526235581055127
       type: {class: GainCardActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Card: {fileID: 11400000, guid: 2a332ee2acf45b34d9bba1426cb1aa55, type: 2}
+        GenerateNewCard: 1
         Canceled: 0
         CustomSFX: {fileID: 0}
     - rid: 867526242224308288
@@ -57,9 +63,10 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0
     - rid: 867526242224308295
       type: {class: SourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
       data:
         TeamRelationship: 0
-        SourceType: 2
+        SourceType: 0

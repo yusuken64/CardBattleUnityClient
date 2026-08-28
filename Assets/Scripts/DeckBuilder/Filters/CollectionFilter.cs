@@ -60,10 +60,22 @@ public class CollectionFilter : MonoBehaviour
             return true;
         };
     }
+
+	public void ClearAllFilters()
+    {
+        Filters.ForEach(x =>
+        {
+            var filterRule = x.GetComponent<IFilterRule>();
+            filterRule.SetActive(false);
+        });
+        
+        NotifyFiltersUpdated();
+    }
 }
 internal interface IFilterRule
 {
 	Action FilterChangedCallBack { get; set; }
 
+	void SetActive(bool active);
 	Func<CardDefinition, bool> GetPredicate();
 }

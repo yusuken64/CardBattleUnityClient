@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: powwow_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: powwow 1
+  CardName: Powwow
   ID: powwow_1
   Sprite: {fileID: 21300000, guid: de725634cbf6382468b3b3ccf3aaed9f, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 3
   Health: 2
@@ -33,4 +37,6 @@ MonoBehaviour:
   MinionTriggeredEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

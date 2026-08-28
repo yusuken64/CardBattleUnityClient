@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd85168f101763c44bee8b6dcb1f1ccb, type: 3}
+  m_Name: LightningNormalObj
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileSFX
+  MuzzleObject: {fileID: 110318, guid: 23a47ac4f30f1d84ab3979b1b31cfb3d, type: 3}
+  ProjectileObject: {fileID: 114422, guid: cb24f83e2d4ba3341a709b96968ea801, type: 3}
+  ImpactObject: {fileID: 100010, guid: 57f5b3ee00e6f21418a92edfce249494, type: 3}
+  ProjectileDuration: 0.5

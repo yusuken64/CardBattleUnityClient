@@ -24,13 +24,17 @@ public class VerticalDeckViewer : MonoBehaviour
 
     public Action<Deck> DeckChanged { get; internal set; }
     public Action<Deck> DeckClosedAction { get; internal set; }
+    public bool RemoveCardOnClick = true;
+
+    public event Action<DeckCard> CardAdded;
+    public event Action<DeckCard> CardRemoved;
 
 	private void Start()
     {
         TitleInput.gameObject.SetActive(false);
     }
 
-    internal void Setup(Deck deck)
+    public void Setup(Deck deck)
     {
         editingDeck = deck;
         TitleText.text = deck.Title;
@@ -54,7 +58,7 @@ public class VerticalDeckViewer : MonoBehaviour
     public void AddCardToDeck(CardDefinition cardDefinition, bool isHero)
     {
         var newDeckItem = Instantiate(DeckItemPrefab, VerticalContainer);
-        newDeckItem.Setup(cardDefinition, RemoveCardFromDeck, SetCardAsHero);
+        newDeckItem.Setup(cardDefinition, CardClicked, CardRightClicked, SetCardAsHero);
 
         if (_spawnedCards.Count == 0 || isHero)
         {
@@ -65,13 +69,14 @@ public class VerticalDeckViewer : MonoBehaviour
             newDeckItem.SetAsHero(false);
         }
         _spawnedCards.Add(newDeckItem);
+        CardAdded?.Invoke(newDeckItem);
 
         GetDeck();
-        DeckChanged(editingDeck);
+        DeckChanged?.Invoke(editingDeck);
         SortAndReorder();
     }
 
-    private void SortAndReorder()
+	private void SortAndReorder()
     {
         // Sort by ManaCost then Name
         _spawnedCards.Sort((a, b) =>
@@ -102,18 +107,45 @@ public class VerticalDeckViewer : MonoBehaviour
         }
     }
 
-    public void RemoveCardFromDeck(DeckCard deckCard)
+    public void CardClicked(DeckCard deckCard)
+    {
+    }
+
+    private void CardRightClicked(DeckCard deckCard)
     {
         if (deckCard == null)
             return;
 
-        if (_spawnedCards.Remove(deckCard))
+        if (RemoveCardOnClick)
         {
-            Destroy(deckCard.gameObject);
-            SortAndReorder();
+            if (_spawnedCards.Remove(deckCard))
+            {
+                CardRemoved?.Invoke(deckCard);
+                Destroy(deckCard.gameObject);
+                SortAndReorder();
+            }
         }
+
         GetDeck();
-        DeckChanged(editingDeck);
+        DeckChanged?.Invoke(editingDeck);
+    }
+
+    internal void RemoveCardFromDeck(CardDefinition cardDefinition)
+    {
+        var deckCard = _spawnedCards.FirstOrDefault(x => x.CardDefinition == cardDefinition);
+        if (RemoveCardOnClick &&
+            deckCard != null)
+        {
+            if (_spawnedCards.Remove(deckCard))
+            {
+                CardRemoved?.Invoke(deckCard);
+                Destroy(deckCard.gameObject);
+                SortAndReorder();
+            }
+        }
+
+        GetDeck();
+        DeckChanged?.Invoke(editingDeck);
     }
 
     public void Title_Click()

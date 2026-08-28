@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
+  m_Name: Woods_StoryModeDungeonDefinition_2
+  m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
+  DungeonID: Woods_Dungeon2
+  BattleImage: {fileID: 0}
+  DungeonName: Woods Dungeon lv.3
+  Description: 
+  MaxWins: 7
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: 3934d7af2bb975245a1048d955df7147, type: 2}
+  - {fileID: 11400000, guid: 1c86306b3ef94bd48aa8e8477c2bb353, type: 2}
+  - {fileID: 11400000, guid: 364aa42e9d8a7734b9645e56ce27b434, type: 2}
+  - {fileID: 11400000, guid: 9f7f7957f217fac4bb0700e8cf6fa881, type: 2}
+  - {fileID: 11400000, guid: 68f4ef57ccd6a0742b80a69e9c30dab8, type: 2}

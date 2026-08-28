@@ -2,6 +2,7 @@ using CardBattleEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public abstract class CardDefinition : ScriptableObject
@@ -13,24 +14,39 @@ public abstract class CardDefinition : ScriptableObject
 	public int Cost = 1;
 
 	[SerializeReference]
+	public ICastRestrictionWrapperBase CastRestriction;
+	[SerializeReference]
+	public IValidTargetSelectorWrapperBase ValidTargetSelector;
+
+	[SerializeReference]
 	public List<TriggeredEffectWrapper> TriggeredEffects = new List<TriggeredEffectWrapper>();
 
 	public abstract CardBattleEngine.Card CreateCard();
 
-	public string ActionToDescription(IGameActionWrapperBase action, int arg2)
+	public string ActionWrapperToDescription(IGameActionWrapperBase action, int arg2)
 	{
 		IGameAction gameAction = action.Create();
 
+		return ActionToDescription(gameAction);
+	}
+
+	private string ActionToDescription(IGameAction gameAction)
+	{
 		return gameAction switch
 		{
 			DamageAction dealDamage => DescribeDamage(dealDamage),
+			HealAction heal => DescribeHeal(heal),
 			DrawCardFromDeckAction drawCard => $"Draw card",
 			SummonMinionAction summon => $"Summon {summon.Card.Name}",
 			FreezeAction freeze => $"Freeze",
 			AddStatModifierAction addStat => DescribeStatMod(addStat),
+			GainCardAction gainCard => $"Gain {gainCard.Card.Name}",
+			GainArmorAction gainArmor => $"Gain {GetValue(gainArmor.Amount)} Armor",
+			RepeatAction repeatAction => $"{string.Join(", ", repeatAction.ChildActions.Select(x => ActionToDescription(x)))} x {((ConstantValue)repeatAction.Count).Number}",
+			SilenceAction silenceAction => $"Silence",
 			//HealAction heal => $"Heal {heal.Target} for {heal.Amount} HP",
 			// Add more types as needed
-			_ => action.Create().GetType().Name.ToString() // fallback
+			_ => gameAction.GetType().Name.ToString() // fallback
 		};
 	}
 
@@ -57,6 +73,27 @@ public abstract class CardDefinition : ScriptableObject
 		return damageString;
 	}
 
+	string DescribeHeal(HealAction h)
+	{
+		var healString = h.Amount switch
+		{
+			ConstantValue value => $"Heal {value.Number}",
+			_ => h.GetType().Name,
+		};
+		return healString;
+	}
+
+	string GetValue(IValueProvider valueProvider)
+	{
+		string value = valueProvider switch
+		{
+			ConstantValue constant => constant.Number.ToString(),
+			_ => valueProvider.GetType().Name,
+		};
+
+		return value;
+	}
+
 	public virtual string ToDescription(TriggeredEffectWrapper triggeredEffect, int arg2)
 	{
 		if (!string.IsNullOrWhiteSpace(triggeredEffect.Description))
@@ -64,36 +101,53 @@ public abstract class CardDefinition : ScriptableObject
 			return triggeredEffect.Description;
 		}
 
-		var trigger = triggeredEffect.EffectTrigger;
+		var trigger = AddSpacesToCamelCase(triggeredEffect.EffectTrigger.ToString());
 		var condition = "";
-		if (triggeredEffect.Condition is not null)
-		{
-			string text = triggeredEffect.Condition.GetType().Name;
-			string suffix = "ConditionWrapper";
-			if (text.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
-			{
-				text = text.Substring(0, text.Length - suffix.Length);
-			}
+		//if (triggeredEffect.Condition is not null)
+		//{
+		//	string text = triggeredEffect.Condition.GetType().Name;
+		//	string suffix = "ConditionWrapper";
+		//	if (text.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+		//	{
+		//		text = text.Substring(0, text.Length - suffix.Length);
+		//	}
 
-			condition = text + ",";
-		}
+		//	condition = text + ",";
+		//}
 
-		string actions = string.Join(Environment.NewLine, triggeredEffect.GameActions.Select(ActionToDescription));
-		string targeting = triggeredEffect.TargetType switch
-		{
-			TargetingType.Any => " to any target",
-			TargetingType.FriendlyMinion => " to friendly minion",
-			TargetingType.FriendlyHero => " to hero",
-			TargetingType.EnemyMinion => " to minion",
-			TargetingType.EnemyHero => " to opponent",
-			TargetingType.AnyEnemy => " to target enemy",
-			TargetingType.Self => " to self",
-			TargetingType.None => "",
-			TargetingType.AnyMinion => " to a minion",
-			_ => throw new NotImplementedException(),
-		};
-		string description = $"{trigger}: {condition}{actions}{targeting}.";
+		string actions = string.Join(Environment.NewLine, triggeredEffect.GameActions.Select(ActionWrapperToDescription));
+		string description = $"{trigger}: {condition}{actions}.";
 
 		return description;
+	}
+
+	public static string AddSpacesToCamelCase(string input)
+	{
+		if (string.IsNullOrEmpty(input))
+			return input;
+
+		var sb = new StringBuilder(input.Length + 5);
+
+		sb.Append(input[0]);
+
+		for (int i = 1; i < input.Length; i++)
+		{
+			char current = input[i];
+			char previous = input[i - 1];
+
+			// Add space if:
+			// - current is uppercase AND
+			// - previous is lowercase OR next is lowercase (handles "XMLParser" -> "XML Parser")
+			if (char.IsUpper(current) &&
+				(char.IsLower(previous) ||
+				 (i + 1 < input.Length && char.IsLower(input[i + 1]))))
+			{
+				sb.Append(' ');
+			}
+
+			sb.Append(current);
+		}
+
+		return sb.ToString();
 	}
 }

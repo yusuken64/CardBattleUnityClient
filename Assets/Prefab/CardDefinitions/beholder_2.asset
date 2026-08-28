@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: beholder_2
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Beholder 2
+  CardName: Brawler
   ID: beholder_2
   Sprite: {fileID: 21300000, guid: 7e9a82587fe794641b44ea04b34da657, type: 3}
-  Cost: 1
+  Cost: 4
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 3
-  Health: 3
+  Health: 1
   MinionTribes: 
   IsStealth: 0
   HasCharge: 1
@@ -29,11 +33,11 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 0
-    TargetType: 7
     GameActions:
     - rid: 6533011735244963928
     Condition:
@@ -50,6 +54,7 @@ MonoBehaviour:
       data:
         Operations:
         - rid: 6533011735244963927
+        ResolutionTiming: 0
     - rid: 6533011735244963927
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
@@ -60,4 +65,6 @@ MonoBehaviour:
       type: {class: SummonMinionActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Card: {fileID: 11400000, guid: de3297d42d144064faf1abf39e7196c9, type: 2}
+        IndexOffset: 0
         Canceled: 0
+        CustomSFX: {fileID: 0}

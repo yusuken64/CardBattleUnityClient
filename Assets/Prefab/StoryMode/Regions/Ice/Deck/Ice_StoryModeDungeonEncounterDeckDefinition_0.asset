@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a87b73977c7f784297afa4ba9e9f8f0, type: 3}
+  m_Name: Ice_StoryModeDungeonEncounterDeckDefinition_0
+  m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
+  Title: Frost
+  HeroCard: {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}
+  Cards:
+  - {fileID: 11400000, guid: d7ea443658cad8f4da66693c06937191, type: 2}
+  - {fileID: 11400000, guid: d7ea443658cad8f4da66693c06937191, type: 2}
+  - {fileID: 11400000, guid: d7ea443658cad8f4da66693c06937191, type: 2}
+  - {fileID: 11400000, guid: d7ea443658cad8f4da66693c06937191, type: 2}
+  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+  - {fileID: 11400000, guid: ef58575ea555d8e4887ffda3dc8736a7, type: 2}
+  - {fileID: 11400000, guid: ef58575ea555d8e4887ffda3dc8736a7, type: 2}
+  - {fileID: 11400000, guid: ef58575ea555d8e4887ffda3dc8736a7, type: 2}
+  - {fileID: 11400000, guid: ef58575ea555d8e4887ffda3dc8736a7, type: 2}
+  - {fileID: 11400000, guid: 7b690b6c22081874caa87794cfa9899c, type: 2}
+  - {fileID: 11400000, guid: 7b690b6c22081874caa87794cfa9899c, type: 2}
+  - {fileID: 11400000, guid: 7b690b6c22081874caa87794cfa9899c, type: 2}
+  - {fileID: 11400000, guid: 7b690b6c22081874caa87794cfa9899c, type: 2}
+  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
+  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
+  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
+  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
+  - {fileID: 11400000, guid: 35669ca59e0a46847ad7bb824c6d22dd, type: 2}
+  - {fileID: 11400000, guid: 35669ca59e0a46847ad7bb824c6d22dd, type: 2}
+  - {fileID: 11400000, guid: 35669ca59e0a46847ad7bb824c6d22dd, type: 2}
+  - {fileID: 11400000, guid: 35669ca59e0a46847ad7bb824c6d22dd, type: 2}
+  - {fileID: 11400000, guid: 763cabcec8537b0418fbe4749e217372, type: 2}
+  - {fileID: 11400000, guid: 763cabcec8537b0418fbe4749e217372, type: 2}
+  - {fileID: 11400000, guid: 763cabcec8537b0418fbe4749e217372, type: 2}
+  - {fileID: 11400000, guid: 763cabcec8537b0418fbe4749e217372, type: 2}
+  - {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}
+  - {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}
+  - {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}
+  - {fileID: 11400000, guid: e56c84dcf7772b14a9277f6949e407cd, type: 2}

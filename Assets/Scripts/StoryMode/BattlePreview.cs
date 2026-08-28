@@ -1,63 +1,32 @@
+using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BattlePreview : MonoBehaviour
 {
 	public Image BattleImage;
+	public TextMeshProUGUI NameText;
 	public TextMeshProUGUI DescriptionText;
-	private StoryModeBattleDefinition _data;
+	private StoryModeDungeonDefinition _data;
 
-	internal void Setup(StoryModeBattleDefinition data)
+	public Rondel Rondel;
+
+	internal void Setup(StoryModeDungeonDefinition data)
 	{
 		this._data = data;
 
 		BattleImage.sprite = data.BattleImage;
+		NameText.text = data.DungeonName;
 		DescriptionText.text = data.Description;
 	}
 
-	public void Fight_Clicked()
+	internal StoryModeDungeonDefinition GetData()
 	{
-		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
-
-		DeckSaveData firstDeck = gameSaveData.DeckSaveDatas[0];
-		gameSaveData.CombatDeck = firstDeck;
-		gameSaveData.CombatDeckEnemy = _data.Deck.ToDeckData();
-		var levelId = _data.LevelID;
-
-		GameManager.GameResultRoutine = GameResult;
-
-		IEnumerator GameResult(bool isWin)
-		{
-			if (!isWin)
-			{
-				yield break;
-			}
-
-			var save = Common.Instance.SaveManager.SaveData.GameSaveData;
-			var completed = save.StorySaveData.CompletedLevels;
-
-			if (!completed.Contains(levelId))
-			{
-				completed.Add(levelId);
-			}
-
-			save.PackCount++;
-
-			FindFirstObjectByType<UI>().ShowMessage("Acquired 1 Pack");
-
-			Common.Instance.SaveManager.Save();
-
-			yield return null;
-		}
-
-		GameManager.ReturnScreenName = "StoryMode";
-
-		Common.Instance.SceneTransition.DoTransition(() =>
-		{
-			SceneManager.LoadScene("GameScene");
-		});
+		return this._data;
 	}
 }

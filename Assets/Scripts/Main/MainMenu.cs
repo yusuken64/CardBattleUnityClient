@@ -1,51 +1,143 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-	public GameObject startobect;
+	public Button ContinueButton;
+	public Button NewGameButton;
+
 	public GameObject SettingsObject;
 	public GameObject DataObject;
+	public ModMenu ModMenu;
+
+	public DeckDefinition TutorialPlayerDeck;
+	public DeckDefinition TutorialOpponentDeck;
+
+	private bool showContinue;
+
+	public AudioClip MainMenuMusic;
 
 	private void Start()
 	{
-		startobect.gameObject.SetActive(true);
+		showContinue = ShouldShowContinue();
+		ContinueButton.gameObject.SetActive(showContinue);
+
 		SettingsObject.gameObject.SetActive(false);
 		DataObject.gameObject.SetActive(false);
+		ModMenu.gameObject.SetActive(false);
+
+		AudioManager.Instance.PlayMusic(MainMenuMusic);
 	}
 
-	public void Play_Click()
+	private bool ShouldShowContinue()
 	{
-		DeckSaveData firstDeck = Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas[0];
-		Common.Instance.SaveManager.SaveData.GameSaveData.CombatDeck = firstDeck;
+		return Common.Instance.SaveManager.SaveData.GameSaveData.TutorialSaveData.BattleTutorialCompleted;
+	}
 
+	public void Continue_Click()
+	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
+			AudioManager.Instance.StopMusc();
 			SceneManager.LoadScene("StoryMode");
 		});
+	}
+
+	public void NewGame_Click()
+	{
+		if (showContinue)
+		{
+			//prompt are you sure;
+			Common.Instance.YesNoConfirmation.Setup("Start New Game?",
+				"this will overwrite current progress",
+				"New Game",
+				() =>
+				{
+					Common.Instance.SceneTransition.DoTransition(() =>
+					{
+						StartNameGame();
+					});
+				},
+				"Cancel",
+				() => { });
+		}
+		else
+		{
+			Common.Instance.SceneTransition.DoTransition(() =>
+			{
+				StartNameGame();
+			});
+		}
+	}
+
+	private void StartNameGame()
+	{
+		Common.Instance.SaveManager.ResetData();
+		Common.Instance.SaveManager.EnsureData();
+		Common.Instance.SaveManager.Save();
+
+		AudioManager.Instance.StopMusc();
+		SceneManager.LoadScene("StoryIntro");
+		IntroCutscene.ExitAction = () =>
+		{
+			Common.Instance.SceneTransition.DoTransition(LoadGameWithTutorial);
+			
+			return true;
+		};
+	}
+
+	private IEnumerator LoadGameWithTutorial()
+	{
+		GameManager.GameResultRoutine = GameResult;
+
+		IEnumerator GameResult(bool isWin)
+		{
+			Common.Instance.SaveManager.SaveData.GameSaveData.TutorialSaveData.BattleTutorialCompleted = true;
+			Common.Instance.SaveManager.SaveData.GameSaveData.PackCount++;
+
+			yield return null;
+		}
+
+		GameStartParams gameStartParams = new()
+		{
+			BlockStart = true,
+			SkipMulligan = true,
+			SkipShuffle = true,
+			InitialCards = 0
+		};
+		gameStartParams.CombatDeck = TutorialPlayerDeck.ToDeckData().ToDeck();
+		gameStartParams.CombatDeckEnemy = TutorialOpponentDeck.ToDeckData().ToDeck(); ;
+		GameManager.GameStartParams = gameStartParams;
+		GameManager.ReturnScreenName = "StoryMode";
+
+		yield return SceneManager.LoadSceneAsync(
+			"GameScene",
+			LoadSceneMode.Single
+		);
+
+		yield return SceneManager.LoadSceneAsync(
+			"GameSceneTutorial",
+			LoadSceneMode.Additive
+		);
 	}
 
 	public void Adventure_Click()
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
+			AudioManager.Instance.StopMusc();
 			SceneManager.LoadScene("Adventure");
 		});
 	}
 
-	public void Deck_Click()
+	public void Arena_Click()
 	{
 		Common.Instance.SceneTransition.DoTransition(() =>
 		{
-			SceneManager.LoadScene("DeckBuilder");
-		});
-	}
-
-	public void OpenPacks_Click()
-	{
-		Common.Instance.SceneTransition.DoTransition(() =>
-		{
-			SceneManager.LoadScene("OpenPacks");
+			AudioManager.Instance.StopMusc();
+			SceneManager.LoadScene("Arena");
 		});
 	}
 
@@ -60,9 +152,37 @@ public class MainMenu : MonoBehaviour
 		DataObject.gameObject.SetActive(true);
 	}
 
+	public void Mods_Click()
+	{
+		ModMenu.gameObject.SetActive(true);
+		ModMenu.Setup();
+	}
+
 	public void Reset_Click()
 	{
 		Common.Instance.SaveManager.ResetData();
+		Common.Instance.SaveManager.EnsureData();
+		Common.Instance.SaveManager.Save();
+		SettingsObject.gameObject.SetActive(false);
+		DataObject.gameObject.SetActive(false);
+
+		SceneManager.LoadScene("Main");
+	}
+
+	public void ResetTutorial_Click()
+	{
+		Common.Instance.SaveManager.ResetTutorialData();
+		Common.Instance.SaveManager.EnsureData();
+		Common.Instance.SaveManager.Save();
+		SettingsObject.gameObject.SetActive(false);
+		DataObject.gameObject.SetActive(false);
+
+		SceneManager.LoadScene("Main");
+	}
+
+	public void SkipTutorial_Click()
+	{
+		Common.Instance.SaveManager.SkipTutorialData();
 		Common.Instance.SaveManager.EnsureData();
 		Common.Instance.SaveManager.Save();
 		SettingsObject.gameObject.SetActive(false);
@@ -87,5 +207,13 @@ public class MainMenu : MonoBehaviour
 	{
 		Common.Instance.SaveManager.Save();
 		Application.Quit();
+	}
+
+	public void CutScene_Click()
+	{
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			SceneManager.LoadScene("StoryIntro");
+		});
 	}
 }

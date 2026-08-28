@@ -22,7 +22,7 @@ public class MinionCardDefinition : CardDefinition
     public bool HasLifeSteal;
     public bool HasReborn;
     public bool CannotAttack;
-
+    
     public List<TriggeredEffectWrapper> MinionTriggeredEffects = new List<TriggeredEffectWrapper>();
 
     // Creates a runtime MinionCard from this definition
@@ -30,6 +30,7 @@ public class MinionCardDefinition : CardDefinition
     {
         MinionCard card = new MinionCard(CardName, Cost, Attack, Health)
         {
+            SpriteID = ID,
             MinionTribes = new List<MinionTribe>(MinionTribes),
             IsStealth = this.IsStealth,
             HasCharge = this.HasCharge,
@@ -44,6 +45,8 @@ public class MinionCardDefinition : CardDefinition
 
 		try
 		{
+            card.ValidTargetSelector = ValidTargetSelector?.Create();
+            card.CastRestriction = CastRestriction?.Create();
 			card.TriggeredEffects.AddRange(TriggeredEffects.Select(x => x.CreateEffect()));
 			card.MinionTriggeredEffects.AddRange(MinionTriggeredEffects.Select(x => x.CreateEffect()));
 
@@ -68,7 +71,6 @@ public class TriggeredEffectWrapper
     public string Description;
     public EffectTrigger EffectTrigger;
     public EffectTiming EffectTiming;
-    public TargetingType TargetType;
 
     [SerializeReference]
     public List<IGameActionWrapperBase> GameActions = new List<IGameActionWrapperBase>();
@@ -86,7 +88,6 @@ public class TriggeredEffectWrapper
         {
             EffectTrigger = this.EffectTrigger,
             EffectTiming = this.EffectTiming,
-            TargetType = this.TargetType,
             GameActions = GameActions?.Select(x => x.Create()).ToList(),
             Condition = Condition?.Create(),
             AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create()
@@ -101,7 +102,6 @@ public class ExpirationTriggerWrapper
 {
     public EffectTrigger EffectTrigger;
     public EffectTiming EffectTiming;
-    public TargetingType TargetType;
 
     [SerializeReference]
     public ITriggerConditionWrapperBase Condition;
@@ -116,5 +116,24 @@ public class ExpirationTriggerWrapper
         };
 
         return expirationTrigger;
+    }
+}
+
+[Serializable]
+public class SequentialEffectWrapper
+{
+    [SerializeReference]
+    public List<IGameActionWrapperBase> GameActions = new List<IGameActionWrapperBase>();
+
+    [SerializeReference]
+    public IAffectedEntitySelectorWrapperBase AffectedEntitySelectorWrapper;
+
+    public SequentialEffect Create()
+    {
+        return new SequentialEffect()
+        {
+            GameActions = GameActions?.Select(x => x.Create()).ToList(),
+            AffectedEntitySelector = AffectedEntitySelectorWrapper?.Create()
+        };
     }
 }

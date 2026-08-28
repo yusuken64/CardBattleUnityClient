@@ -7,14 +7,16 @@ using CardBattleEngine;
 [Serializable]
 public class DeferredResolveActionWrapper : IGameActionWrapperBase
 {
-    public CardBattleEngine.TargetOperationSelector AffectedEntitySelector;
+    [SerializeReference] public IGameActionWrapperBase Action;
+    [SerializeReference] public IAffectedEntitySelectorWrapperBase AffectedEntitySelector;
     public System.Boolean Canceled;
     public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
     {
         var instance = new CardBattleEngine.DeferredResolveAction();
-        instance.AffectedEntitySelector = this.AffectedEntitySelector;
+        instance.Action = Action?.Create();
+        instance.AffectedEntitySelector = AffectedEntitySelector?.Create();
         instance.Canceled = this.Canceled;
         instance.CustomSFX = CustomSFX;
         return instance;

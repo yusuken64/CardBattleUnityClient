@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 63d7fe4c56a048d4192a6c4e4b929157
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 290162
+  packageName: 367 Battle Backgrounds
+  packageVersion: 2.0.1
+  assetPath: Assets/2DBattleBackgound/00_Demo/Script/BattleBGDemoPlayCtrl.cs
+  uploadId: 701232

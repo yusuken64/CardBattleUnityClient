@@ -16,6 +16,7 @@ public class MulliganPrompt : MonoBehaviour
 	public RectTransform CardArea;
 
 	public Image BG;
+	public CanvasGroup CanvasGroup;
 
 	public void Setup(List<Card> cards)
 	{
@@ -32,8 +33,8 @@ public class MulliganPrompt : MonoBehaviour
 		UpdatePositions();
 
 		SubmitButton.gameObject.SetActive(true);
-		BG.color = new Color(0f, 0f, 0f, 0f);
-		BG.DOFade(245f / 255f, 0.5f);
+		CanvasGroup.alpha = 0;
+		CanvasGroup.DOFade(245f / 255f, 0.5f);
 	}
 
 	private void ClearItems()
@@ -96,7 +97,7 @@ public class MulliganPrompt : MonoBehaviour
 		}
 
 		SubmitButton.gameObject.SetActive(false);
-		BG.DOFade(0, 0.5f)
+		CanvasGroup.DOFade(0, 0.5f)
 			.OnComplete(() =>
 			{
 				this.GameManager.Player.Hand.UpdateCardPositions();

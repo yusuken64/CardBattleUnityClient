@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: FrostBolt
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
   Collectable: 1
-  CardName: FrostBolt
+  CardName: Frost Bolt
   ID: FrostBolt
-  Sprite: {fileID: 21300000, guid: 4ae8467ec593d4aa8acef7b42991d30c, type: 3}
+  Sprite: {fileID: 21300000, guid: 9aabb01653ba07b44b0aca599a72aadb, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: 2140584782446198859
   TriggeredEffects: []
-  TargetingType: 0
   SpellCastEffects:
   - Description: 
     GameActions:
@@ -37,13 +40,18 @@ MonoBehaviour:
       data:
         Canceled: 0
         CustomSFX: {fileID: 0}
+    - rid: 2140584782446198859
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 3
+        TeamRelationship: 2
     - rid: 6533011575016521996
       type: {class: DamageActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Damage:
           rid: 6533011738762674248
         Canceled: 0
-        CustomSFX: {fileID: 11400000, guid: 0d898c30b67cde946a3620081bd1acc2, type: 2}
+        CustomSFX: {fileID: 11400000, guid: 181717942103191489bc455787754eb0, type: 2}
     - rid: 6533011738762674248
       type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
       data:

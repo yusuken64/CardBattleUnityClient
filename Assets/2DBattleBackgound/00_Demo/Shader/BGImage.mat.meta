@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: eaafbf4d094ef2b409633b1ccf582faf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 290162
+  packageName: 367 Battle Backgrounds
+  packageVersion: 2.0.1
+  assetPath: Assets/2DBattleBackgound/00_Demo/Shader/BGImage.mat
+  uploadId: 701232

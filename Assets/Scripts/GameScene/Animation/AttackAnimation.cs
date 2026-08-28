@@ -1,6 +1,8 @@
 ﻿using CardBattleEngine;
 using DG.Tweening;
+using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class AttackAnimation : GameActionAnimation<AttackAction>
@@ -10,14 +12,17 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 
 	public GameObject AttackParticlePrefab;
 
+	public AttackTier[] AttackTiers;
+
 	public override IEnumerator Play()
 	{
 		Transform attacker = GameManager.GetObjectFor(Context.Source).transform;
 		Transform target = GameManager.GetObjectFor(Context.Target).transform;
 
-		Vector3 startPos = attacker.position;
+		Vector3 startPos = attacker.position + new Vector3(0, 0, -0.5f);
+		attacker.transform.position = startPos;
 		Vector3 dir = (target.position - attacker.position).normalized;
-		Vector3 bumpPos = target.position - dir * 0.4f; // distance of bump
+		Vector3 bumpPos = target.position - (dir * 0.4f) + new Vector3(0, 0, -0.1f); // distance of bump
 
 		// forward bump
 		Tween forward = attacker.DOMove(bumpPos, Duration).SetEase(AttackCurve)
@@ -28,6 +33,8 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 
 				var attackParticle = Instantiate(AttackParticlePrefab, attacker.position, rotation);
 				Destroy(attackParticle, 3f);
+
+				int attack = Context.Source.Attack;
 			});
 
 		// wait
@@ -58,5 +65,23 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 			minion.CanAttack = (Context.Source as CardBattleEngine.Minion).CanAttack();
 			minion.UpdateUI();
 		}
+	}
+}
+
+[Serializable]
+public class AttackTier
+{
+	public int MinAttack;   // inclusive
+	public int MaxAttack = -1;   // -1 means no upper limit (8+ etc)
+
+	public float ShakeStrength = 0.05f;
+	public float ShakeDuration = 0.08f;
+
+	public AudioClip AttackSound;
+	
+	public bool Matches(int attack)
+	{
+		return attack >= MinAttack &&
+			   (MaxAttack < 0 || attack <= MaxAttack);
 	}
 }

@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: aileen_02
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Aileen 02
+  CardName: Aileen, The Blade
   ID: aileen_02
   Sprite: {fileID: 21300000, guid: b4885aa188590df438fb6a201df30bc9, type: 3}
   Cost: 2
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 2
   Health: 2
@@ -31,10 +35,9 @@ MonoBehaviour:
   HasReborn: 0
   CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: Equip a Dagger
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 867526332731097089
     Condition:
@@ -53,6 +56,7 @@ MonoBehaviour:
         IncludeSource: 0
         IncludeSourcePlayer: 1
         IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
         ResolutionTiming: 0
     - rid: 867526332731097089
       type: {class: AcquireWeaponActionWrapper, ns: , asm: Assembly-CSharp}

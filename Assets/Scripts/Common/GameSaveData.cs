@@ -10,6 +10,8 @@ public class SaveData
 	public AppSaveData AppSaveData = new();
 	[SerializeReference]
 	public GameSaveData GameSaveData = new();
+	[SerializeReference]
+	public ModSaveData ModSaveData = new();
 }
 
 [Serializable]
@@ -18,12 +20,35 @@ public class AppSaveData
 	public float MASTERVolume = 1f;
 	public float MUSICVolume = 1f;
 	public float GAMEVolume = 1f;
+	public float GUIVolume = 1f;
+}
+
+[Serializable]
+public class ModSaveData
+{
+	public List<string> EnabledMods = new();
+}
+
+[Serializable]
+public class TutorialSaveData
+{
+	public bool BattleTutorialCompleted;
+	public bool HomeTutorialCompleted;
+
+	public List<string> CompletedTutorials = new();
+
+	internal bool IsCompleted(string tutorialName)
+	{
+		return CompletedTutorials.Contains(tutorialName);
+	}
 }
 
 [Serializable]
 public class GameSaveData
 {
-	public int CurrentDeckIndex = -1;
+	[SerializeReference]
+	public TutorialSaveData TutorialSaveData = new();
+
 	[SerializeReference]
 	public List<DeckSaveData> DeckSaveDatas = new();
 
@@ -33,13 +58,12 @@ public class GameSaveData
 	[SerializeReference]
 	public AdventureSaveData AdventureSaveData = new();
 
-	[SerializeReference]
-	public DeckSaveData CombatDeck;
-	public DeckSaveData CombatDeckEnemy;
-
 	public CardCollection CardCollection = new();
 
 	public int PackCount;
+
+	[SerializeReference]
+	public QuestSaveData QuestSaveData = new();
 }
 
 [Serializable]
@@ -120,12 +144,38 @@ public class OwnedCardData
 public class StorySaveData
 {
 	public List<string> CompletedLevels = new();
+
+	public DungeonSaveData CurrentDungeon { get; set; }
+
+	public void SetToComplete(string id)
+	{
+		if (!CompletedLevels.Contains(id))
+		{
+			CompletedLevels.Add(id);
+		}
+	}
+}
+
+[Serializable]
+public class DungeonSaveData
+{
+	public string Title { get; set; }
+	public int Wins { get; set; }
+	public int Lives { get; set; }
+	public int MaxWins { get; set; }
+	public bool Exited { get; set; }
+	public string ID { get; set; } //Used for determining complete status
 }
 
 [Serializable]
 public class AdventureSaveData
 {
 	public DeckSaveData CurrentDeck { get; internal set; }
+	public int PicksLeft { get; set; }
+	public int Wins { get; set; }
+	public int MaxWins { get; set; }
+	public int Lives { get; set; }
+	public List<string> ActiveModifiers { get; set; }
 }
 
 [Serializable]
@@ -139,8 +189,10 @@ public class DeckSaveData
 	{
 		var deck = new Deck();
 		deck.Title = Title;
-		deck.HeroCard = Common.Instance.CardManager.GetCardByName(HeroCard);
-		deck.Cards = CardIDs.Select(x => Common.Instance.CardManager.GetCardByName(x)).ToList();
+		deck.HeroCard = Common.Instance.CardManager.GetCardByID(HeroCard);
+		deck.Cards = CardIDs.Select(x => Common.Instance.CardManager.GetCardByID(x))
+			.Where(x => x != null)
+			.ToList();
 
 		return deck;
 	}
@@ -150,8 +202,22 @@ public class DeckSaveData
 		return new DeckSaveData()
 		{
 			Title = deck.Title,
-			HeroCard = deck.HeroCard.CardName,
-			CardIDs = deck.Cards.Select(x => x.CardName).ToList()
+			HeroCard = deck.HeroCard?.ID,
+			CardIDs = deck.Cards.Select(x => x.ID).ToList()
 		};
 	}
+}
+
+[Serializable]
+public class QuestSaveData
+{
+	public List<QuestProgress> QuestProgressList = new();
+}
+
+[Serializable]
+public class QuestProgress
+{
+	public string questId;
+	public int questProgress;
+	public bool Collected; //reward collected
 }

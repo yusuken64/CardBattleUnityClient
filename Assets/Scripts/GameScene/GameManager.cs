@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
 	// Set before SceneManager.LoadScene("GameScene") to configure this match. Null preserves legacy local single-player behavior.
 	public static StartGameArgs PendingStartArgs;
+	public static GameStartParams GameStartParams;
 
 	public Player Player;
 	public Player Opponent;
@@ -22,10 +23,12 @@ public class GameManager : MonoBehaviour
 
 	public AnimationQueue AnimationQueue;
 	public DeckDefinition TestDeck;
+	public DeckDefinition EnemyTestDeck;
 
 	public GameEngine _engine { get; private set; }
 
-	private RandomAI _opponentAgent;
+	public IGameAgent _playerAgent;
+	public IGameAgent _opponentAgent;
 	public GameState _gameState { get; private set; }
 	public bool ActivePlayerTurn { get; internal set; } //based on client animation timing 
 	public bool OpponentTurn { get; internal set; }
@@ -40,8 +43,13 @@ public class GameManager : MonoBehaviour
 	private PlayerGameView _lastNetworkView;
 	private Guid _networkMatchId;
 
+	public Action<GameEngine> GameInitialized;
+
+	public AudioClip BattleMusic;
+
 	void Start()
 	{
+		AudioManager.Instance.PlayMusic(BattleMusic);
 		ClearBoard();
 		InitializeGame();
 	}
@@ -67,6 +75,9 @@ public class GameManager : MonoBehaviour
 
 	private void InitializeGame()
 	{
+		FindFirstObjectByType<ScrollingBackground>(FindObjectsInactive.Include)?
+			.ActivateBackgroundByName(GameStartParams?.BackgroundName);
+		
 		_engine = new GameEngine();
 
 		StartGameArgs args = PendingStartArgs ?? StartGameArgs.LocalTestDefault();
@@ -85,11 +96,10 @@ public class GameManager : MonoBehaviour
 	private void InitializeLocalTestGame(StartGameArgs args)
 	{
 		Deck deck;
-		GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
-		if (gameSaveData.CombatDeck != null)
+		if (GameStartParams?.CombatDeck != null)
 		{
-			deck = gameSaveData.CombatDeck.ToDeck();
-			gameSaveData.CombatDeck = null;
+			deck = GameStartParams.CombatDeck;
+			GameStartParams.CombatDeck = null;
 		}
 		else
 		{
@@ -97,15 +107,22 @@ public class GameManager : MonoBehaviour
 		}
 
 		Deck enemyDeck;
-		if (gameSaveData.CombatDeckEnemy != null &&
-			gameSaveData.CombatDeckEnemy.CardIDs.Any())
+		if (GameStartParams?.CombatDeckEnemy != null &&
+			GameStartParams.CombatDeckEnemy.Cards.Any())
 		{
-			enemyDeck = gameSaveData.CombatDeckEnemy.ToDeck();
-			gameSaveData.CombatDeckEnemy = null;
+			enemyDeck = GameStartParams.CombatDeckEnemy;
+			GameStartParams.CombatDeckEnemy = null;
 		}
 		else
 		{
-			enemyDeck = TestDeck.ToDeck();
+			if (EnemyTestDeck != null)
+			{
+				enemyDeck = EnemyTestDeck.ToDeck();
+			}
+			else
+			{
+				enemyDeck = TestDeck.ToDeck();
+			}
 		}
 
 		int seed = 0;
@@ -116,13 +133,48 @@ public class GameManager : MonoBehaviour
 		}
 #endif
 
-		UnityRNG rng = new UnityRNG();
+		SystemRNG rng = new SystemRNG();
 
-		_gameState = CreateTestGame(deck, enemyDeck, rng);
+		_gameState = CreateGame(deck, enemyDeck, rng);
 
 		bool localIsP1 = args.LocalSeat == 0;
-		CardBattleEngine.Player localData = localIsP1 ? _gameState.Players[0] : _gameState.Players[1];
-		CardBattleEngine.Player remoteData = localIsP1 ? _gameState.Players[1] : _gameState.Players[0];
+		int localIdx = localIsP1 ? 0 : 1;
+		int remoteIdx = localIsP1 ? 1 : 0;
+
+		if (GameStartParams != null)
+		{
+			_gameState.Players[localIdx].MaxHealth = GameStartParams.Health;
+			_gameState.Players[localIdx].Health = GameStartParams.Health;
+			_gameState.Players[remoteIdx].MaxHealth = GameStartParams.OpponentHealth;
+			_gameState.Players[remoteIdx].Health = GameStartParams.OpponentHealth;
+			if (GameStartParams.OpponentExtraEffects != null)
+			{
+				foreach (var opponentEffect in GameStartParams.OpponentExtraEffects)
+				{
+					_gameState.Players[remoteIdx].TriggeredEffects.Add(opponentEffect.CreateEffect());
+				}
+			}
+
+			if (GameStartParams.AutoPlayer)
+			{
+				IGameAgent agent;
+				if (GameStartParams.PlayerAgent == null)
+				{
+					agent = new AdvancedAI(_gameState.Players[localIdx], new SystemRNG());
+				}
+				else
+				{
+					agent = GameStartParams.PlayerAgent;
+					agent.SetPlayer(_gameState.Players[localIdx]);
+				}
+				_playerAgent = agent;
+				FindFirstObjectByType<GameResultScreen>(FindObjectsInactive.Include)
+					.SetAutoAdvance(true);
+			}
+		}
+
+		CardBattleEngine.Player localData = _gameState.Players[localIdx];
+		CardBattleEngine.Player remoteData = _gameState.Players[remoteIdx];
 		Deck localDeck = localIsP1 ? deck : enemyDeck;
 		Deck remoteDeck = localIsP1 ? enemyDeck : deck;
 		LocalPlayerId = localData.Id;
@@ -130,10 +182,12 @@ public class GameManager : MonoBehaviour
 		SetupPlayer(localDeck, Player, localData);
 		SetupPlayer(remoteDeck, Opponent, remoteData);
 
-		_opponentAgent = new RandomAI(Opponent.Data, rng);
+		//_opponentAgent = new BasicAI(Opponent.Data, rng);
+		_opponentAgent = new AdvancedAI(Opponent.Data, rng);
+		//_opponentAgent = new RandomAI(Opponent.Data, rng);
 
-		_engine.ActionPlaybackCallback = ActionPlaybackCallback;
-		_engine.ActionResolvedCallback = ActionResolvedCallback;
+		_engine.ActionPlaybackCallback += ActionPlaybackCallback;
+		_engine.ActionResolvedCallback += ActionResolvedCallback;
 
 		Player.HeroPortrait.gameObject.SetActive(false);
 		Opponent.HeroPortrait.gameObject.SetActive(false);
@@ -143,8 +197,24 @@ public class GameManager : MonoBehaviour
 		{
 			Player.HeroPortrait.gameObject.SetActive(true);
 			Opponent.HeroPortrait.gameObject.SetActive(true);
-			_engine.StartGame(_gameState);
+
+			StartCoroutine(WaitToStartRoutine());
 		});
+
+		GameInitialized?.Invoke(this._engine);
+	}
+
+	private IEnumerator WaitToStartRoutine()
+	{
+		while(GameStartParams != null &&
+			  GameStartParams.BlockStart)
+		{
+			yield return null;
+		}
+
+		_engine.StartGame(_gameState);
+
+		GameStartParams = null;
 	}
 
 	private IEnumerator InitializeNetworkedGame(StartGameArgs args)
@@ -240,10 +310,8 @@ public class GameManager : MonoBehaviour
 		player.RefreshData();
 	}
 
-	private GameState CreateTestGame(Deck playerDeck, Deck enemyDeck, UnityRNG rng)
+	private GameState CreateGame(Deck playerDeck, Deck enemyDeck, IRNG rng)
 	{
-		var cardManager = Common.Instance.CardManager;
-
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
 		p1.Deck.AddRange(playerDeck.Cards.Select(x => x.CreateCard()).ToList());
 		p1.Deck.ForEach(x => x.Owner = p1);
@@ -256,7 +324,17 @@ public class GameManager : MonoBehaviour
 
 		List<CardBattleEngine.Card> cardDB = Common.Instance.CardManager.AllCards()
 			.Select(x => x.CreateCard()).ToList();
-		return new GameState(p1, p2, rng, cardDB);
+
+		var gameState =  new GameState(p1, p2, rng, cardDB);
+
+		if (GameStartParams != null)
+		{
+			gameState.SkipShuffle = GameStartParams.SkipShuffle;
+			gameState.SkipMulligan = GameStartParams.SkipMulligan;
+			gameState.InitialCards = GameStartParams.InitialCards;
+		}
+
+		return gameState;
 	}
 
 	internal GameObject GetObjectFor(IGameEntity entity)
@@ -274,7 +352,20 @@ public class GameManager : MonoBehaviour
 			allMinions.AddRange(Player.Board.Minions);
 			allMinions.AddRange(Opponent.Board.Minions);
 
-			var first = allMinions.FirstOrDefault(x => x.Data.Id == minion.Id);
+			var first = allMinions.FirstOrDefault(x => x?.Data?.Id == minion.Id);
+			if (first != null)
+			{
+				return first.gameObject;
+			}
+		}
+
+		if (entity is CardBattleEngine.Card card)
+		{
+			var allCards = new List<Card>();
+			allCards.AddRange(Player.Hand.Cards);
+			allCards.AddRange(Opponent.Hand.Cards);
+
+			var first = allCards.FirstOrDefault(x => x?.Data?.Id == card.Id);
 			if (first != null)
 			{
 				return first.gameObject;
@@ -304,6 +395,12 @@ public class GameManager : MonoBehaviour
 
 	public bool CheckIsValid(IGameAction action, ActionContext context, out string reason)
 	{
+		if (!ActivePlayerTurn)
+		{
+			reason = "Not your Turn";
+			return false;
+		}
+
 		return action.IsValid(_gameState, context, out reason);
 	}
 
@@ -317,7 +414,7 @@ public class GameManager : MonoBehaviour
 			}
 			catch (System.Exception exception)
 			{
-				Debug.LogError(reason);
+				Debug.LogError(action);
 				Debug.LogError(exception);
 			}
 		}
@@ -325,7 +422,7 @@ public class GameManager : MonoBehaviour
 
 	internal Player GetPlayerFor(CardBattleEngine.Player sourcePlayer)
 	{
-		return Player.Data.Id == sourcePlayer.Id ? Player : Opponent;
+		return Player.Data.Id == sourcePlayer?.Id ? Player : Opponent;
 	}
 
 	private void ActionPlaybackCallback(GameState state, (IGameAction action, ActionContext context) current)
@@ -352,7 +449,21 @@ public class GameManager : MonoBehaviour
 
 	private void ActionResolvedCallback(GameState state)
 	{
-		ProcessEnemyMove();
+		IGameAgent agent = null;
+		if (!OpponentTurn &&
+			_gameState.CurrentPlayer.Id == Player.Data.Id &&
+			_playerAgent != null)
+		{
+			agent = _playerAgent;
+		}
+		else if (
+			OpponentTurn &&
+			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
+		{
+			agent = _opponentAgent;
+		}
+
+		_ = ProcessMoveAsync(agent);
 
 		Opponent.UpdatePlayableActions(false);
 		Player.UpdatePlayableActions(
@@ -360,44 +471,32 @@ public class GameManager : MonoBehaviour
 			state.CurrentPlayer == Player.Data);
 	}
 
-	public void ProcessEnemyMove()
+	public async Task ProcessMoveAsync(IGameAgent gameAgent)
 	{
-		if (OpponentTurn &&
-			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
+		if (gameAgent == null)
+			return;
+
+		var nextAction = await Task.Run(() =>
+			gameAgent.GetNextAction(_gameState));
+
+		if (TryResolveAction(nextAction))
+			return;
+
+		Debug.LogError("Invalid action, retrying...");
+		await Task.Yield();
+		await ProcessMoveAsync(gameAgent);
+	}
+
+	private bool TryResolveAction((IGameAction action, ActionContext context) nextAction)
+	{
+		if (nextAction.action.IsValid(_gameState, nextAction.context, out string reason))
 		{
-			(IGameAction, ActionContext) nextAction = ((IGameAgent)_opponentAgent).GetNextAction(_gameState);
-			((IGameAgent)_opponentAgent).SetTarget(nextAction, (x) =>
-			{
-				var triggerSource = nextAction.Item2?.Source as ITriggerSource;
-
-				if (triggerSource == null) { return null; }
-				var targets = _gameState.GetValidTargets(triggerSource, x);
-
-				if (!targets.Any()) { return null; }
-
-				if (targets.Contains(triggerSource))
-				{
-					targets.Remove(triggerSource);
-				}
-
-				return targets[UnityEngine.Random.Range(0, targets.Count())];
-			});
-
-			string actionString = nextAction.Item1.ToString();
-			IGameAction item1 = nextAction.Item1;
-			if (item1 is PlayCardAction playCardAction)
-			{
-				actionString = $"Play card {playCardAction.Card.Name}";
-			}
-			else if (item1 is AttackAction attackAction)
-			{
-				var attackSource = nextAction.Item2.Source;
-				var attackTarget = nextAction.Item2.Target;
-				actionString = $"Attack {attackSource} to {attackTarget}";
-			}
-			Debug.Log($"Enemy Action {actionString}");
-			ResolveAction(nextAction.Item1, nextAction.Item2);
+			ResolveAction(nextAction.action, nextAction.context);
+			return true;
 		}
+
+		Debug.LogError($"Invalid Action: {reason}");
+		return false;
 	}
 
 	public static void ValidateState(CardBattleEngine.Player data, Player player)
@@ -430,13 +529,13 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < data.Board.Count; i++)
 		{
-			CardBattleEngine.Minion minionData = data.Board[i];
-			var boardMinion = minions[i];
+			//CardBattleEngine.Minion minionData = data.Board[i];
+			//var boardMinion = minions[i];
 
-			AssertAreEqual(boardMinion.Data.Id, minionData.Id);
-			AssertAreEqual(boardMinion.Attack, minionData.Attack);
-			AssertAreEqual(boardMinion.Health, minionData.Health);
-			AssertAreEqual(boardMinion.CanAttack, minionData.CanAttack());
+			//AssertAreEqual(boardMinion.Data.Id, minionData.Id);
+			//AssertAreEqual(boardMinion.Attack, minionData.Attack);
+			//AssertAreEqual(boardMinion.Health, minionData.Health);
+			//AssertAreEqual(boardMinion.CanAttack, minionData.CanAttack());
 		}
 	}
 
@@ -449,7 +548,27 @@ public class GameManager : MonoBehaviour
 	}
 }
 
-internal class UnityRNG : IRNG
+public class GameStartParams
+{
+	public bool BlockStart = false;	//the game will not start until this is true
+	public bool SkipMulligan = false;
+	public bool SkipShuffle = false;
+	public int InitialCards = 3;
+
+	public List<TriggeredEffectWrapper> OpponentExtraEffects;
+
+	public Deck CombatDeck;
+	public int Health = 30;
+	public Deck CombatDeckEnemy;
+	public int OpponentHealth = 30;
+
+	public string BackgroundName;
+
+	public bool AutoPlayer; //assign ai to player
+	public IGameAgent PlayerAgent; //null to use default
+}
+
+public class UnityRNG : IRNG
 {
 	public UnityRNG()
 	{
@@ -473,5 +592,39 @@ internal class UnityRNG : IRNG
 	public int NextInt(int minInclusive, int maxExclusive)
 	{
 		return UnityEngine.Random.Range(minInclusive, maxExclusive);
+	}
+}
+public class SystemRNG : IRNG
+{
+	private readonly System.Random _rng;
+
+	// Optional: allow providing a seed
+	public SystemRNG(int? seed = null)
+	{
+		_rng = seed.HasValue ? new System.Random(seed.Value) : new System.Random();
+	}
+
+	// Clone creates a new RNG with a "randomized" seed based on current RNG state
+	public IRNG Clone()
+	{
+		// Generate a seed from the current RNG (so clone has independent sequence)
+		int newSeed = _rng.Next();
+		return new SystemRNG(newSeed);
+	}
+
+	public double NextDouble()
+	{
+		// Returns a double in [0,1)
+		return _rng.NextDouble();
+	}
+
+	public int NextInt(int maxExclusive)
+	{
+		return _rng.Next(maxExclusive); // [0, maxExclusive)
+	}
+
+	public int NextInt(int minInclusive, int maxExclusive)
+	{
+		return _rng.Next(minInclusive, maxExclusive); // [minInclusive, maxExclusive)
 	}
 }

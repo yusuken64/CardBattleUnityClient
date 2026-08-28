@@ -6,11 +6,15 @@ public class Common : MonoBehaviour
 {
 	public static Common Instance;
 
+	public QuestTracker QuestTracker;
 	public CardManager CardManager;
 	public SaveManager SaveManager;
 	public AudioManager AudioManager;
 	public GlobalSettings GlobalSettings;
+	public VideoSettingsManager VideoSettingsManager;
 	public SceneTransition SceneTransition;
+	public YesNoConfirmation YesNoConfirmation;
+	public ModManager ModManager;
 
 	public DeckDefinition StartingDeck;
 
@@ -36,9 +40,14 @@ public class Common : MonoBehaviour
 		SaveManager.Load();
 		SaveManager.EnsureData();
 
+		CardManager.ReloadCards();
+
 		Debug.Log("AudioManager Initializing");
 		AudioManager.ApplicationInitialized(SaveManager.SaveData);
 		Debug.Log("AudioManager Initialized");
+
+		YesNoConfirmation.gameObject.SetActive(false);
+		VideoSettingsManager.InitializeVideo();
 	}
 }
 

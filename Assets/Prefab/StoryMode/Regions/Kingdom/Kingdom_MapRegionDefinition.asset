@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332798f50b7cb7543bb3571573d85096, type: 3}
+  m_Name: Kingdom_MapRegionDefinition
+  m_EditorClassIdentifier: Assembly-CSharp::MapRegionDefinition
+  RegionID: Kingdom
+  Name: Kingdom
+  Description: At the heart of the realm stands a proud human kingdom crowned by
+    a towering white castle. Royal processions fill the marble courtyards while thieves
+    whisper in lantern-lit alleys and hidden guild signs mark the stone. Merchants,
+    nobles, and pickpockets crowd the same markets beneath ringing cathedral bells.
+    Radiant angels descend from the skies to rule with stern, military authority,
+    their presence inspiring as much fear as reverence.
+  DungeonSprite: {fileID: 21300000, guid: 64016cde57b6c8d41acb2c187621f605, type: 3}
+  Dungeons:
+  - {fileID: 11400000, guid: 63f80a3332ac1254688bf75d4286196e, type: 2}
+  - {fileID: 11400000, guid: 366414ecc452ef1458781914872382c5, type: 2}
+  - {fileID: 11400000, guid: 78f109b3c55aca540a5b7d244bb2ca05, type: 2}

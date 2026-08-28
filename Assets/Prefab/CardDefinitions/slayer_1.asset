@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: slayer_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: slayer 1
+  CardName: Slayer
   ID: slayer_1
   Sprite: {fileID: 21300000, guid: bc14b8645d41a1741bc74a1cebc23346, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 2
@@ -29,15 +33,15 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
-  - Description: 
+  - Description: 'On Attack: +1 Attack'
     EffectTrigger: 5
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 6533011735244963916
     Condition:
-      rid: 6533011735244963920
+      rid: 2140584399319859268
     AffectedEntitySelectorWrapper:
       rid: 6533011735244963917
   references:
@@ -45,26 +49,33 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2140584399319859267
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 1
+    - rid: 2140584399319859268
+      type: {class: OriginalSourceConditionWrapper, ns: , asm: Assembly-CSharp}
+      data: 
     - rid: 6533011735244963916
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        AttackChange: 1
-        HealthChange: 0
+        StatModifierType: 0
+        AttackChange:
+          rid: 2140584399319859267
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
         ExpirationTrigger:
-          Description: 
-          EffectTrigger: 0
-          EffectTiming: 0
-          TargetType: 0
-          GameActions: []
-          Condition:
-            rid: -2
-          AffectedEntitySelectorWrapper:
-            rid: -2
+          rid: -2
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 6533011735244963917
       type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6533011735244963920
-      type: {class: OriginalSourceOwnerConditionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        TeamRelationship: 0
+        IncludeTarget: 0
+        IncludeSource: 1
+        IncludeSourcePlayer: 0
+        IncludeTargetOwner: 0
+        IncludeSummonedMinion: 0
+        ResolutionTiming: 0

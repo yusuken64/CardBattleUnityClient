@@ -25,6 +25,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 	public CardBattleEngine.Player Data { get; internal set; }
 
 	public int Health;
+	public int MaxHealth;
 	public int Attack;
 	public int Armor;
 	public int Mana;
@@ -36,6 +37,12 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 
 	public AudioClip HeroDieStart;
 	public AudioClip HeroDieExplode;
+	private UI _ui;
+
+	private void Start()
+	{
+		_ui = FindFirstObjectByType<UI>();
+	}
 
 	internal void Clear()
 	{
@@ -56,6 +63,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 	internal void RefreshData()
 	{
 		Health = Data.Health;
+		MaxHealth = Data.MaxHealth;
 		Attack = Data.Attack;
 		//Armor = Data.Armor;
 		Mana = Data.Mana;
@@ -92,8 +100,9 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 	{
 		var data = entity as CardBattleEngine.Player;
 		Health = data.Health;
+		MaxHealth = data.MaxHealth;
 		Attack = data.Attack;
-		//Armor = data.Armor;
+		Armor = data.Armor;
 		Mana = data.Mana;
 		MaxMana = data.MaxMana;
 		CanAttack = data.CanAttack();
@@ -137,7 +146,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 	internal IEnumerator DoDeathRoutine()
 	{
 		CanAttackIndicator.gameObject.SetActive(false);
-		Common.Instance.AudioManager.PlayClip(HeroDieStart);
+		Common.Instance.AudioManager.PlaySound(HeroDieStart);
 		var shake = HeroPortrait.transform.DOShakePosition(1.7f, 1f, 30);
 
 		var sequence = DOTween.Sequence();
@@ -149,7 +158,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		yield return shake.WaitForCompletion();
 		HeroPortrait.gameObject.SetActive(false);
 
-		Common.Instance.AudioManager.PlayClip(HeroDieExplode);
+		Common.Instance.AudioManager.PlaySound(HeroDieExplode);
 		var explode = Instantiate(ExplodeParticlePrefab, this.transform);
 		explode.transform.position = HeroPortrait.transform.position;
 		//Common.Instance.AudioManager.PlayClip(Common.Instance.AudioManager.Explosion);

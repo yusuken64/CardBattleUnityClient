@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd85168f101763c44bee8b6dcb1f1ccb, type: 3}
+  m_Name: FireNormalObj
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileSFX
+  MuzzleObject: {fileID: 104278, guid: aa93d6fd1636c314db42f1758e084bfa, type: 3}
+  ProjectileObject: {fileID: 100010, guid: b32f835e658efa1419ad0ae6b033b81f, type: 3}
+  ImpactObject: {fileID: 100010, guid: 87698b9d467306440a17655d9c528f3a, type: 3}
+  ProjectileDuration: 0.5

@@ -34,4 +34,9 @@ public class CostFilter : MonoBehaviour, IFilterRule
             return false;
         };
     }
+
+	public void SetActive(bool active)
+    {
+        CostButtons.ForEach(x => x.SetActive(active));
+    }
 }

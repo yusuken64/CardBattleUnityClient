@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: speedy_wind_1
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: speedy wind 1
+  CardName: Speedy Wind
   ID: speedy_wind_1
   Sprite: {fileID: 21300000, guid: 36fdf5d5b0810ee4197ea5b22bfc9580, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
   TriggeredEffects: []
   Attack: 1
   Health: 1
@@ -26,36 +30,13 @@ MonoBehaviour:
   HasDivineShield: 0
   HasTaunt: 0
   HasPoisonous: 0
-  HasWindFury: 0
+  HasWindFury: 1
   HasLifeSteal: 0
   HasReborn: 0
   CannotAttack: 0
-  MinionTriggeredEffects:
-  - Description: 
-    EffectTrigger: 1
-    EffectTiming: 1
-    TargetType: 7
-    GameActions:
-    - rid: 6533011735244963929
-    Condition:
-      rid: -2
-    AffectedEntitySelectorWrapper:
-      rid: 6533011735244963931
+  MinionTriggeredEffects: []
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6533011735244963929
-      type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Canceled: 0
-        CustomSFX: {fileID: 0}
-    - rid: 6533011735244963931
-      type: {class: ContextSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        IncludeTarget: 0
-        IncludeSource: 0
-        IncludeSourcePlayer: 1
-        IncludeTargetOwner: 0
-        ResolutionTiming: 0

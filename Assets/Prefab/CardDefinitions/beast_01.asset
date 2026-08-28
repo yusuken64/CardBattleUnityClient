@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: beast_01
   m_EditorClassIdentifier: Assembly-CSharp::MinionCardDefinition
   Collectable: 1
-  CardName: Beast 01
+  CardName: Claw Beast
   ID: beast_01
   Sprite: {fileID: 21300000, guid: d67121c3754a110429ba5138110f5d88, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: 2140584782446198858
   TriggeredEffects: []
   Attack: 1
   Health: 1
@@ -29,51 +33,42 @@ MonoBehaviour:
   HasWindFury: 0
   HasLifeSteal: 0
   HasReborn: 0
+  CannotAttack: 0
   MinionTriggeredEffects:
   - Description: 
     EffectTrigger: 1
     EffectTiming: 1
-    TargetType: 7
     GameActions:
     - rid: 6533011672544051278
     Condition:
       rid: -2
     AffectedEntitySelectorWrapper:
-      rid: 6533011672544051279
+      rid: -2
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2140584399319859264
+      type: {class: ConstantValueWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        Number: 2
+    - rid: 2140584782446198858
+      type: {class: EntityTypeSelectorWrapper, ns: , asm: Assembly-CSharp}
+      data:
+        EntityTypes: 2
+        TeamRelationship: 0
     - rid: 6533011672544051278
       type: {class: AddStatModifierActionWrapper, ns: , asm: Assembly-CSharp}
       data:
-        AttackChange: 2
-        HealthChange: 0
+        StatModifierType: 0
+        AttackChange:
+          rid: 2140584399319859264
+        HealthChange:
+          rid: -2
+        CostChange:
+          rid: -2
         ExpirationTrigger:
-          Description: 
-          EffectTrigger: 12
-          EffectTiming: 1
-          TargetType: 0
-          GameActions:
-          - rid: 6533011672544051281
-          Condition:
-            rid: -2
-          AffectedEntitySelectorWrapper:
-            rid: -2
+          rid: -2
         Canceled: 0
-    - rid: 6533011672544051279
-      type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Operations:
-        - rid: 6533011672544051280
-    - rid: 6533011672544051280
-      type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Side: 1
-        Group: 0
-        ExcludeSelf: 0
-    - rid: 6533011672544051281
-      type: {class: RemoveModifierActionWrapper, ns: , asm: Assembly-CSharp}
-      data:
-        Canceled: 0
+        CustomSFX: {fileID: 0}

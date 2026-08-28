@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class HeroPowerActionAnimation : GameActionAnimation<HeroPowerAction>
 {
+	public AudioClip TriggerSound;
+
 	public override IEnumerator Play()
 	{
+		Common.Instance.AudioManager.PlaySound(TriggerSound);
 		var ui = Object.FindFirstObjectByType<UI>();
 		var triggerParticle = Object.Instantiate(ui.TriggeredEffectParticlePrefab); ;
 		//entity could be card, hero or minion, or secret

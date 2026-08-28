@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 [CreateAssetMenu(
     fileName = "NewSpellCard",
     menuName = "Game/Cards/SpellCard Definition"
 )]
 public class SpellCardDefinition : CardDefinition
 {
-    public TargetingType TargetingType;
-
     [Header("SpellCast Effects")]
     public List<SpellCastEffectWrapper> SpellCastEffects = new();
 
@@ -20,13 +22,17 @@ public class SpellCardDefinition : CardDefinition
     public override CardBattleEngine.Card CreateCard()
 	{
         var spellCard = new SpellCard(CardName, Cost);
-        spellCard.TargetingType = TargetingType;
+        spellCard.SpriteID = ID;
         spellCard.SpellCastEffects.AddRange(SpellCastEffects.Select(x => x.Create()));
         spellCard.Description = string.Join(Environment.NewLine, SpellCastEffects.Select(ToDescription));
         spellCard.CustomSFX = CustomSFX;
 
+        spellCard.ValidTargetSelector = ValidTargetSelector?.Create();
+        spellCard.CastRestriction = CastRestriction?.Create();
+
         return spellCard;
     }
+
     public string ToDescription(SpellCastEffectWrapper spellCastEffect, int arg2)
     {
         if (!string.IsNullOrWhiteSpace(spellCastEffect.Description))
@@ -34,23 +40,22 @@ public class SpellCardDefinition : CardDefinition
             return spellCastEffect.Description;
         }
 
-        string actions = string.Join(Environment.NewLine, spellCastEffect.GameActions.Select(ActionToDescription));
-        string targeting = TargetingType switch
-        {
-            TargetingType.Any => " to any target",
-            TargetingType.FriendlyMinion => " to friendly minion",
-            TargetingType.FriendlyHero => " to hero",
-            TargetingType.EnemyMinion => " to minion",
-            TargetingType.EnemyHero => " to opponent",
-            TargetingType.AnyEnemy => " to target enemy",
-            TargetingType.Self => " to self",
-            TargetingType.None => "",
-            TargetingType.AnyMinion => " to a minion",
-            _ => throw new NotImplementedException(),
-        };
-        string description = $"{actions}{targeting}.";
+        string actions = string.Join(Environment.NewLine, spellCastEffect.GameActions.Select(ActionWrapperToDescription));
+        string description = $"{actions}.";
 
         return description;
+    }
+
+    [ContextMenu("Set Effect Descriptions")]
+    public void SetEffectDescriptions()
+    {
+        var description = string.Join(",", SpellCastEffects.Select(ToDescription));
+        SpellCastEffects[0].Description = description;
+
+#if UNITY_EDITOR
+        Undo.RecordObject(this, "Set Effect Descriptions");
+        EditorUtility.SetDirty(this);
+#endif
     }
 }
 

@@ -1,0 +1,185 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Map : MonoBehaviour
+{
+	[Header("Map")]
+	public GameObject MapObject;
+	public List<MapLocation> MapLocations;
+	public MapLocation SelectedLocation;
+	public Image SelectedLocationImage;
+
+	// location preview
+	public TextMeshProUGUI RegionText;
+	public TextMeshProUGUI RegionDescriptionText;
+
+	[Header("Dungeon Picker")]
+	public GameObject LocationObject;
+	public Transform Container;
+	public BattleGridButton BattleGridButtonPrefab;
+	public BattlePreview BattlePreview;
+	public TextMeshProUGUI DungeonText;
+	public Dungeon Dungeon;
+	public Image DungeonBG;
+
+	public AudioClip DungeonDoorSlide;
+
+	private void Awake()
+	{
+		foreach(var location in MapLocations)
+		{
+			location.ClickAction = SelectLocation;
+		}
+	}
+
+	internal void ShowRegionPicker()
+	{
+		MapObject.gameObject.SetActive(true);
+		LocationObject.gameObject.SetActive(false);
+
+		foreach (var location in MapLocations)
+		{
+			SetStars(location);
+		}
+		SelectLocation(MapLocations[0]);
+	}
+
+	private void SetStars(MapLocation location)
+	{
+		List<string> completedLevels = Common.Instance.SaveManager.SaveData.GameSaveData.StorySaveData.CompletedLevels;
+
+		int stars = location.MapRegionDefinition.Dungeons
+							 .Count(d => completedLevels.Contains(d.DungeonID));
+
+		location.SetStars(stars);
+	}
+
+	public void SelectLocation(MapLocation mapLocation)
+	{
+		SelectedLocation = mapLocation;
+
+		foreach(var location in MapLocations)
+		{
+			location.SetSelected(location == SelectedLocation);
+		}
+
+		RegionText.text = mapLocation.MapRegionDefinition.Name;
+		RegionDescriptionText.text = mapLocation.MapRegionDefinition.Description;
+		SelectedLocationImage.sprite = mapLocation.MapRegionDefinition.DungeonSprite;
+	}
+
+	public void Enter_Clicked()
+	{
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			MapObject.gameObject.SetActive(false);
+			LocationObject.gameObject.SetActive(true);
+			InitializeGridButtons();
+		});
+	}
+
+	public void Back_Clicked()
+	{
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			this.gameObject.SetActive(false);
+		});
+	}
+
+#if UNITY_EDITOR
+	[ContextMenu("Find All Locations")]
+	public void FindAllLocations()
+	{
+		MapLocations = new List<MapLocation>(GetComponentsInChildren<MapLocation>(true));
+	}
+#endif
+
+	private void InitializeGridButtons()
+	{
+		foreach (Transform child in Container)
+		{
+			Destroy(child.gameObject);
+		}
+
+		MapRegionDefinition mapRegionDefinition = SelectedLocation.MapRegionDefinition;
+		DungeonBG.sprite = mapRegionDefinition.DungeonSprite;
+
+		var dungeons = mapRegionDefinition.Dungeons;
+
+		List<BattleGridButton> girdButtons = new();
+		for (int i = 0; i < dungeons.Count; i++)
+		{
+			var data = dungeons[i];
+			BattleGridButton newButton = Instantiate(BattleGridButtonPrefab, Container);
+			newButton.Setup(data);
+			newButton.ClickAction = BattleGridButton_Clicked;
+			girdButtons.Add(newButton);
+
+			// Unlock the first dungeon or the ones after completed dungeons
+			if (i == 0 || girdButtons[i - 1].IsComplete)
+			{
+				newButton.gameObject.GetComponent<Button>().interactable = true;
+				newButton.CanvasGroup.alpha = 1;
+			}
+			else
+			{
+				newButton.gameObject.GetComponent<Button>().interactable = false;
+				newButton.CanvasGroup.alpha = 0.5f;
+			}
+		}
+
+		BattleGridButton_Clicked(null);
+		DungeonText.text = $"{mapRegionDefinition.Name} Dungeons";
+	}
+
+	public void BattleGridButton_Clicked(StoryModeDungeonDefinition data)
+	{
+		if (data == null)
+		{
+			BattlePreview.gameObject.SetActive(false);
+		}
+		else
+		{
+			BattlePreview.gameObject.SetActive(true);
+			BattlePreview.Setup(data);
+		}
+	}
+
+	public void DungeonBack_Clicked()
+	{
+		Common.Instance.SceneTransition.DoTransition(() =>
+		{
+			MapObject.gameObject.SetActive(true);
+			LocationObject.gameObject.SetActive(false);
+		});
+	}
+
+	public void DungeonEnter_Clicked()
+	{
+		AudioManager.Instance.PlaySound(DungeonDoorSlide);
+		Common.Instance.SceneTransition.DoDoorTransition(() =>
+		{
+			var data = BattlePreview.GetData();
+			MapObject.gameObject.SetActive(false);
+			LocationObject.gameObject.SetActive(false);
+
+			GameSaveData gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
+			gameSaveData.StorySaveData.CurrentDungeon = new DungeonSaveData()
+			{
+				Title = data.DungeonName,
+				Lives = 1,
+				Wins = 0,
+				MaxWins = data.MaxWins,
+				Exited = false,
+				ID = data.DungeonID,
+			};
+
+			Dungeon.gameObject.SetActive(true);
+			Dungeon.Setup();
+		});
+	}
+}

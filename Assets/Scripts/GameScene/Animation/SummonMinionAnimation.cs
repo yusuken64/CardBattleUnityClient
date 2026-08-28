@@ -6,9 +6,11 @@ using UnityEngine;
 public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 {
 	public AudioClip SummonMinionClip;
+	public GameObject SummonParticlePrefab;
+
 	public override IEnumerator Play()
 	{
-		Common.Instance.AudioManager.PlayClip(SummonMinionClip);
+		Common.Instance.AudioManager.PlaySound(SummonMinionClip);
 
 		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
 		CardBattleEngine.Minion minionData = Context.SummonedMinion;
@@ -16,8 +18,8 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 
 		Debug.Log($"{minionData} at {Context.PlayIndex}");
 		var existingMinion = player.Board.Minions
-			.Where(x => x)
-			.FirstOrDefault(minion => minion.SummonedCard == Action.Card);
+			.FirstOrDefault(minion => minion.SummonedCard == Context.SourceCard &&
+			Context.SourceCard != null);
 		if (existingMinion == null)
 		{
 			var index = Context.PlayIndex;
@@ -25,7 +27,6 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			//play summon animation and set existingMinion
 			var minionPrefab = Object.FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
 			var newMinion = Object.Instantiate(minionPrefab, player.Board.transform);
-			newMinion.Setup(minionData);
 			var clampedIndex = Mathf.Clamp(index, 0, player.Board.Minions.Count());
 			player.Board.Minions.Insert(clampedIndex, newMinion);
 			player.Board.UpdateMinionPositions();
@@ -42,9 +43,16 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 			player.Board.UpdateMinionPositions();
 		}
 
+		if (existingMinion != null)
+		{
+			var particles = Instantiate(SummonParticlePrefab, existingMinion.transform);
+			particles.transform.localPosition = Vector3.zero;
+			Destroy(particles.gameObject, 3f);
+		}
+
 		existingMinion.SummonedCard = null;
 		existingMinion.Setup(minionData);
-		existingMinion.RefreshData(minionDataSnapShot);
+		//existingMinion.RefreshData(minionDataSnapShot);
 
 		yield return null;
 	}

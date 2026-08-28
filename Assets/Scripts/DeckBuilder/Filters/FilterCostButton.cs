@@ -55,4 +55,10 @@ public class FilterCostButton : MonoBehaviour, IFilterRule, IButtonSoundState
         ActiveIndicator.SetActive(FilterActive);
         FilterChangedCallBack?.Invoke();
     }
+
+	public void SetActive(bool active)
+	{
+        FilterActive = active;
+        ActiveIndicator.SetActive(FilterActive);
+    }
 }

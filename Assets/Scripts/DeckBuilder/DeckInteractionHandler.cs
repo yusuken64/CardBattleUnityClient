@@ -9,8 +9,8 @@ public class DeckInteractionHandler : MonoBehaviour
 	private void OnEnable()
 	{
 		PointerInput.OnClick += PointerInput_OnClick;
-		PointerInput.OnHoldStart += PointerInput_OnHoldStart;
-		PointerInput.OnHoldEnd += PointerInput_OnHoldEnd;
+		PointerInput.OnHoverStart += PointerInput_OnHoldStart;
+		PointerInput.OnHoverEnd += PointerInput_OnHoldEnd;
 		PointerInput.OnDragStart += PointerInput_OnDragStart;
 		PointerInput.OnDrag += PointerInput_OnDrag;
 		PointerInput.OnDragEnd += PointerInput_OnDragEnd;
@@ -19,8 +19,8 @@ public class DeckInteractionHandler : MonoBehaviour
 	private void OnDisable()
 	{
 		PointerInput.OnClick -= PointerInput_OnClick;
-		PointerInput.OnHoldStart -= PointerInput_OnHoldStart;
-		PointerInput.OnHoldEnd -= PointerInput_OnHoldEnd;
+		PointerInput.OnHoverStart -= PointerInput_OnHoldStart;
+		PointerInput.OnHoverEnd -= PointerInput_OnHoldEnd;
 		PointerInput.OnDragStart -= PointerInput_OnDragStart;
 		PointerInput.OnDrag -= PointerInput_OnDrag;
 		PointerInput.OnDragEnd -= PointerInput_OnDragEnd;
@@ -40,7 +40,7 @@ public class DeckInteractionHandler : MonoBehaviour
 
 	private void PointerInput_OnHoldEnd(Vector2 obj)
 	{
-		currentHolding?.HoldEnd();
+		currentHolding?.HoverEnd();
 		currentHolding = null;
 	}
 
@@ -54,19 +54,6 @@ public class DeckInteractionHandler : MonoBehaviour
 			if (hit.collider.TryGetComponent<IClickable>(out var clickable))
 				clickable.OnClick();
 		}
-		//var mousePos = GameInteractionHandler.GetMouseWorldPosition2D(obj);
-
-		//RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, ClickableMask);
-		//if (hit.collider != null)
-		//{
-		//	var hoverable = hit.collider.GetComponent<IHoverable>();
-		//	if (hoverable != null)
-		//	{
-		//		//show info
-		//		currentHolding = hoverable;
-		//		currentHolding.HoldStart();
-		//	}
-		//}
 	}
 
 	private void PointerInput_OnClick(Vector2 obj)

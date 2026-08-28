@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
+  m_Name: Test1_Dungeon2
+  m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
+  DungeonID: Test2
+  BattleImage: {fileID: 21300000, guid: 7518edada618d624fa8dbb31697878ef, type: 3}
+  Description: Test Battles
+  StoryModeDungeonEncounterDefinition:
+  - {fileID: 11400000, guid: 25c5c1ddb00399145ae7c9118754ec46, type: 2}
+  - {fileID: 11400000, guid: 4b8dff2c0b1808c42804ebb5fb972ecf, type: 2}
+  - {fileID: 11400000, guid: 0c4c8f0a01855aa4da28ad721bf18e80, type: 2}
+  - {fileID: 11400000, guid: 3a74e9dc010daaf4a80951b7ec6dd984, type: 2}

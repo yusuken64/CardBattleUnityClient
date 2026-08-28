@@ -73,6 +73,16 @@ public class AudioManager : MonoBehaviour
 		source.Play();
 	}
 
+	internal void PlayUISoundWithRandomPitch(AudioClip clip, float minPitch = 0.5f, float maxPitch = 1.5f)
+	{
+		_index = (_index + 1) % UISounds.Count;
+		var source = UISounds[_index];
+		source.clip = clip;
+		source.loop = false;
+		source.pitch = UnityEngine.Random.Range(minPitch, maxPitch);
+		source.Play();
+	}
+
 	internal void PlaySoundWithRandomPitch(AudioClip clip, float minPitch = 0.5f, float maxPitch = 1.5f)
 	{
 		_index = (_index + 1) % Sounds.Count;
@@ -111,6 +121,9 @@ public class AudioManager : MonoBehaviour
 			case "GAME":
 				Common.Instance.SaveManager.SaveData.AppSaveData.GAMEVolume = sliderValue;
 				break;
+			case "GUI":
+				Common.Instance.SaveManager.SaveData.AppSaveData.GUIVolume = sliderValue;
+				break;
 			default:
 				break;
 		}
@@ -121,5 +134,6 @@ public class AudioManager : MonoBehaviour
 		OnVolumeSliderChanged("MASTER", saveData.AppSaveData.MASTERVolume);
 		OnVolumeSliderChanged("MUSIC", saveData.AppSaveData.MUSICVolume);
 		OnVolumeSliderChanged("GAME", saveData.AppSaveData.GAMEVolume);
+		OnVolumeSliderChanged("GUI", saveData.AppSaveData.GUIVolume);
 	}
 }

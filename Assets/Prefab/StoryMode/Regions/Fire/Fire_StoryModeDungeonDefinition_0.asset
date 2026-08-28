@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d8e3ea759bcd142b2f5c2327698677, type: 3}
+  m_Name: Fire_StoryModeDungeonDefinition_0
+  m_EditorClassIdentifier: Assembly-CSharp::StoryModeDungeonDefinition
+  DungeonID: Fire_Dungeon0
+  BattleImage: {fileID: 0}
+  DungeonName: Fire Dungeon lv.1
+  Description: 
+  MaxWins: 3
+  StoryModeDungeonEncounterDefinitions:
+  - {fileID: 11400000, guid: 75fed125d5f1ecd4280c9cd7ab67419f, type: 2}
+  - {fileID: 11400000, guid: bec75d15de75b8744a4853955db2ad82, type: 2}
+  - {fileID: 11400000, guid: f326a5f15d4be42478a39910063ea58b, type: 2}
+  - {fileID: 11400000, guid: e69f748aac224504e8acdac374785297, type: 2}

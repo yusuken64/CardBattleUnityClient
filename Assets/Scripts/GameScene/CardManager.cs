@@ -3,43 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class CardManager : MonoBehaviour
 {
-    [Header("Card Data")]
-    public List<CardDefinition> Cards;
+	[Header("Card Data")]
+	public List<CardDefinition> Cards;
 
-    public bool AddDebugCards;
-    [Header("Debug Cards")]
-    public List<CardDefinition> DebugCards;
+	public bool AddDebugCards;
+	public bool LoadCustomCards;
+	[Header("Debug Cards")]
+	public List<CardDefinition> DebugCards;
 
 	public DeckDefinition AdventureStartDeck;
 
-    [Header("Fallbacks")]
-    public Sprite DefaultMissingSprite;
+	[Header("Fallbacks")]
+	public Sprite DefaultMissingSprite;
 
-    private Dictionary<string, CardDefinition> _cardLookup;
+	private Dictionary<string, CardDefinition> _cardLookup;
 
-    private void Awake()
+	public void ReloadCards()
 	{
+		Common.Instance.ModManager.DiscoverMods();
 		_cardLookup = new Dictionary<string, CardDefinition>();
 
 		foreach (var card in AllCards())
 		{
-			if (card == null || string.IsNullOrEmpty(card.CardName))
+			if (card == null || string.IsNullOrEmpty(card.ID))
 			{
 				Debug.LogWarning("CardManager: A card entry is null or missing a name.");
 				continue;
 			}
 
-			if (_cardLookup.ContainsKey(card.CardName))
+			if (_cardLookup.ContainsKey(card.ID))
 			{
 				Debug.LogWarning(
-					$"CardManager: Duplicate card name '{card.CardName}' found. " +
+					$"CardManager: Duplicate card ID '{card.ID}' found. " +
 					$"Keeping the first one and ignoring the duplicate.");
 				continue;
 			}
 
-			_cardLookup.Add(card.CardName, card);
+			_cardLookup.Add(card.ID, card);
 		}
 	}
 
@@ -58,20 +64,64 @@ public class CardManager : MonoBehaviour
 			cardsToAdd.AddRange(DebugCards);
 		}
 
+		if (LoadCustomCards)
+		{
+			IEnumerable<CardDefinition> customCards = GetCustomCards();
+			if (customCards != null)
+			{
+				cardsToAdd.AddRange(customCards);
+			}
+		}
+
 		return cardsToAdd
-			.GroupBy(c => c.CardName)
+			.Where(x => x != null)
+			.GroupBy(c => c.ID)
 			.Select(g => g.First())
 			.ToList();
 	}
 
-	public CardDefinition GetCardByName(string name)
-    {
-		if (string.IsNullOrWhiteSpace(name)) { return null; }
-        return _cardLookup.TryGetValue(name, out var card) ? card : null;
-    }
+	private IEnumerable<CardDefinition> GetCustomCards()
+	{
+		return Common.Instance.ModManager.GetAllEnabledCardDefinitions();
+	}
 
-    public Sprite GetSpriteByCardName(string name)
-    {
-        return GetCardByName(name)?.Sprite ?? DefaultMissingSprite;
-    }
+	public CardDefinition GetCardByID(string id)
+	{
+		if (string.IsNullOrWhiteSpace(id)) { return null; }
+		return _cardLookup.TryGetValue(id, out var card) ? card : null;
+	}
+
+	public Sprite GetSpriteByCardID(string id)
+	{
+		return GetCardByID(id)?.Sprite ?? DefaultMissingSprite;
+	}
+
+	public void GiveAllCards()
+	{
+		var allCards = Common.Instance.CardManager.CollectableCards();
+		foreach (var cardData in allCards)
+		{
+			Common.Instance.SaveManager.SaveData.GameSaveData.CardCollection.Add(cardData.ID, 1);
+		}
+	}
+
+#if UNITY_EDITOR
+	[ContextMenu("RebuildCardList")]
+	public void RebuildCardList()
+	{
+		Cards.Clear();
+		string[] guids = AssetDatabase.FindAssets("t:CardDefinition");
+
+		foreach (var guid in guids)
+		{
+			string path = AssetDatabase.GUIDToAssetPath(guid);
+			var card = AssetDatabase.LoadAssetAtPath<CardDefinition>(path);
+			if (card != null)
+			{
+				Cards.Add(card);
+			}
+		}
+		EditorUtility.SetDirty(this);
+	}
+#endif
 }

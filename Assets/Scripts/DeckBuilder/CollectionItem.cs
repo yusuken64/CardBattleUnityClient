@@ -2,8 +2,10 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CollectionItem : MonoBehaviour, IClickable, IHoverable
+public class CollectionItem : MonoBehaviour, IClickable, IHoverable,
+	IPointerClickHandler
 {
 	public Card Card;
 	public CardDefinition CardDefinition;
@@ -16,6 +18,7 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 	public GameObject NoCardsLeftIndicator;
 	public GameObject CountObject;
 	public TextMeshProUGUI CountText;
+	public Vector3 ToolTipOffset;
 
 	private void OnEnable()
 	{
@@ -43,32 +46,65 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 		}
 		Card.Setup(cardData);
 	}
+	
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		if (eventData.button == PointerEventData.InputButton.Left)
+		{
+			AddToDeck();
+		}
+		else if (eventData.button == PointerEventData.InputButton.Right)
+		{
+			RemoveFromDeck();
+		}
+	}
 
-	public void OnClick()
+	private void RemoveFromDeck()
 	{
 		var verticalDeckViewer = FindFirstObjectByType<VerticalDeckViewer>();
 		if (verticalDeckViewer == null) { return; }
 
 		var deck = verticalDeckViewer.GetDeck();
-		var usedCount = deck.Cards.Count(x => x.CardName == CardDefinition.CardName);
+		var usedCount = deck.Cards.Count(x => x.ID == CardDefinition.ID);
+		if (usedCount > 0)
+		{
+			verticalDeckViewer?.RemoveCardFromDeck(CardDefinition);
+		}
+	}
+
+
+	public bool CanClick()
+	{
+		return true;
+	}
+
+	public void OnClick()
+	{
+		//AddToDeck();
+	}
+
+	private void AddToDeck()
+	{
+		var verticalDeckViewer = FindFirstObjectByType<VerticalDeckViewer>();
+		if (verticalDeckViewer == null) { return; }
+
+		var deck = verticalDeckViewer.GetDeck();
+		var usedCount = deck.Cards.Count(x => x.ID == CardDefinition.ID);
 		if (usedCount < OwnedCardData.Count)
 		{
 			verticalDeckViewer?.AddCardToDeck(CardDefinition, false);
 		}
 	}
 
-	public CardBattleEngine.Card GetDisplayCard()
-	{
-		return CardDefinition.CreateCard();
-	}
+	public CardBattleEngine.Card DisplayCard => CardDefinition.CreateCard();
 
-	public void HoldStart()
+	public void HoverStart()
 	{
 		var ui = FindFirstObjectByType<CollectionUI>();
 		ui.PreviewStart(this);
 	}
 
-	public void HoldEnd()
+	public void HoverEnd()
 	{
 		var ui = FindFirstObjectByType<CollectionUI>();
 		ui.PreviewEnd();
@@ -100,9 +136,14 @@ public class CollectionItem : MonoBehaviour, IClickable, IHoverable
 
 	public void SetToDeckView(Deck deck)
 	{
-		var usedCount = deck.Cards.Count(x => x.CardName == CardDefinition.CardName);
+		var usedCount = deck.Cards.Count(x => x.ID == CardDefinition.ID);
 		NoCardsLeftIndicator.gameObject.SetActive(usedCount >= OwnedCardData.Count);
 		CountObject.gameObject.SetActive(true);
 		CountText.text = (OwnedCardData.Count - usedCount).ToString();
+	}
+
+	public Vector3 GetPosition()
+	{
+		return this.transform.position + ToolTipOffset;
 	}
 }

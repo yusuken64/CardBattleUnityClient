@@ -12,36 +12,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce718523351cbc54e8422a08c2fd4043, type: 3}
   m_Name: NewSpellCard_UnTargeted
   m_EditorClassIdentifier: Assembly-CSharp::SpellCardDefinition
+  Collectable: 0
   CardName: TestSpellDraw
   ID: TestSpellDraw
   Sprite: {fileID: 21300000, guid: 7e9a82587fe794641b44ea04b34da657, type: 3}
   Cost: 1
+  CastRestriction:
+    rid: -2
+  ValidTargetSelector:
+    rid: -2
+  TriggeredEffects: []
   TargetingType: 7
   SpellCastEffects:
-  - GameActions:
+  - Description: 
+    GameActions:
     - rid: 6533011592832090112
     - rid: 6533011592832090113
     AffectedEntitySelectorWrapper:
       rid: 6533011592832090114
+  CustomSFX: {fileID: 0}
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 6533011592832090112
       type: {class: DrawCardFromDeckActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 6533011592832090113
       type: {class: IncreaseMaxManaActionWrapper, ns: , asm: Assembly-CSharp}
       data:
         Amount: 1
         Canceled: 0
+        CustomSFX: {fileID: 0}
     - rid: 6533011592832090114
       type: {class: TargetOperationSelectorWrapper, ns: , asm: Assembly-CSharp}
       data:
         Operations:
         - rid: 6533011592832090115
+        ResolutionTiming: 0
     - rid: 6533011592832090115
       type: {class: SelectBoardEntitiesOperationWrapper, ns: , asm: Assembly-CSharp}
       data:
         Side: 1
         Group: 1
+        ExcludeSelf: 0

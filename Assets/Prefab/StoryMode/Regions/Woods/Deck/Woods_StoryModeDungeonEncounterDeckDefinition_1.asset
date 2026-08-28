@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a87b73977c7f784297afa4ba9e9f8f0, type: 3}
+  m_Name: Woods_StoryModeDungeonEncounterDeckDefinition_1
+  m_EditorClassIdentifier: Assembly-CSharp::DeckDefinition
+  Title: Bandits
+  HeroCard: {fileID: 11400000, guid: fa7f6848699ec1540ab21e18ef75fd4b, type: 2}
+  Cards:
+  - {fileID: 11400000, guid: fa7f6848699ec1540ab21e18ef75fd4b, type: 2}
+  - {fileID: 11400000, guid: fa7f6848699ec1540ab21e18ef75fd4b, type: 2}
+  - {fileID: 11400000, guid: fa7f6848699ec1540ab21e18ef75fd4b, type: 2}
+  - {fileID: 11400000, guid: fa7f6848699ec1540ab21e18ef75fd4b, type: 2}
+  - {fileID: 11400000, guid: c905a31aec6f60e4aa71a3faee3361e8, type: 2}
+  - {fileID: 11400000, guid: c905a31aec6f60e4aa71a3faee3361e8, type: 2}
+  - {fileID: 11400000, guid: c905a31aec6f60e4aa71a3faee3361e8, type: 2}
+  - {fileID: 11400000, guid: c905a31aec6f60e4aa71a3faee3361e8, type: 2}
+  - {fileID: 11400000, guid: d7ea443658cad8f4da66693c06937191, type: 2}
+  - {fileID: 11400000, guid: d7ea443658cad8f4da66693c06937191, type: 2}
+  - {fileID: 11400000, guid: d7ea443658cad8f4da66693c06937191, type: 2}
+  - {fileID: 11400000, guid: d7ea443658cad8f4da66693c06937191, type: 2}
+  - {fileID: 11400000, guid: 1399d3dc822b563489a26052750c92a0, type: 2}
+  - {fileID: 11400000, guid: 1399d3dc822b563489a26052750c92a0, type: 2}
+  - {fileID: 11400000, guid: 1399d3dc822b563489a26052750c92a0, type: 2}
+  - {fileID: 11400000, guid: 1399d3dc822b563489a26052750c92a0, type: 2}
+  - {fileID: 11400000, guid: 6e057e1a74d62a345955a555233161b1, type: 2}
+  - {fileID: 11400000, guid: 6e057e1a74d62a345955a555233161b1, type: 2}
+  - {fileID: 11400000, guid: 6e057e1a74d62a345955a555233161b1, type: 2}
+  - {fileID: 11400000, guid: 6e057e1a74d62a345955a555233161b1, type: 2}
+  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+  - {fileID: 11400000, guid: 9015a6f40e481c047a3266d1dacec5b3, type: 2}
+  - {fileID: 11400000, guid: 5469809a0b3037d4086fe8b746e7b05d, type: 2}
+  - {fileID: 11400000, guid: 5469809a0b3037d4086fe8b746e7b05d, type: 2}
+  - {fileID: 11400000, guid: 64aa6ee18d7901a41b0ee101d267a49d, type: 2}
+  - {fileID: 11400000, guid: 64aa6ee18d7901a41b0ee101d267a49d, type: 2}
+  - {fileID: 11400000, guid: 68897f92ba9f4ee41a73e6ef37f34679, type: 2}
+  - {fileID: 11400000, guid: 68897f92ba9f4ee41a73e6ef37f34679, type: 2}
+  - {fileID: 11400000, guid: 274869e1769f146448a4bcf59ae0028b, type: 2}
+  - {fileID: 11400000, guid: 274869e1769f146448a4bcf59ae0028b, type: 2}
+  - {fileID: 11400000, guid: 274869e1769f146448a4bcf59ae0028b, type: 2}
+  - {fileID: 11400000, guid: 274869e1769f146448a4bcf59ae0028b, type: 2}
+  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
+  - {fileID: 11400000, guid: 5c78263484897b74ca8d7776c8b80433, type: 2}
+  - {fileID: 11400000, guid: f75bba3d54f903a44b57ce3c1f9f7ebc, type: 2}
+  - {fileID: 11400000, guid: f75bba3d54f903a44b57ce3c1f9f7ebc, type: 2}
+  - {fileID: 11400000, guid: e2bbdc79357dc5e42aa8f371756f9e7a, type: 2}
+  - {fileID: 11400000, guid: e2bbdc79357dc5e42aa8f371756f9e7a, type: 2}
+  - {fileID: 11400000, guid: a8880bbf752f4324e80378847c7c4417, type: 2}
+  - {fileID: 11400000, guid: a8880bbf752f4324e80378847c7c4417, type: 2}
+  RandomCards: 0
