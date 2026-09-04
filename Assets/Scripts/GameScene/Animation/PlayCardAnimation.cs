@@ -42,6 +42,10 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 			.SetEase(Ease.OutQuad)
 			.WaitForCompletion();
 
+		// Playing a card is a public action - it's no longer secret once it lands here, so reveal it
+		// regardless of who played it (otherwise DisplayCard stays null for the opponent's card and
+		// the preview never shows anything).
+		card.ForceReveal = true;
 		ui.PreviewStart(card);
 
 		Object.Destroy(card.gameObject);

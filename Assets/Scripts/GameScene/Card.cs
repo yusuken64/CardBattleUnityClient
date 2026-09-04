@@ -42,6 +42,12 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     // the identifying text/keywords are still blanked, so no data leak either way.
     public Sprite HiddenCardSprite;
 
+    // Overrides IsHiddenFromViewer to always show real data, regardless of ownership. Playing a card
+    // is a public action that reveals it, so PlayCardAnimation sets this on the opponent's played-card
+    // instance before previewing it, and UI.CardPreview (the dedicated played-card reveal slot) has it
+    // set permanently - both cases show a card that is no longer secret, not one still in a hidden hand.
+    public bool ForceReveal;
+
     #endregion
 
     #region Animation
@@ -114,10 +120,18 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     internal void Setup(CardBattleEngine.Card cardData)
     {
-        var cardManager = Common.Instance.CardManager;
-        this.CardImage.sprite = cardManager.GetSpriteByCardID(cardData.SpriteID);
-
         this.Data = cardData;
+
+        if (IsHiddenFromViewer)
+        {
+            if (HiddenCardSprite != null) { this.CardImage.sprite = HiddenCardSprite; }
+        }
+        else
+        {
+            var cardManager = Common.Instance.CardManager;
+            this.CardImage.sprite = cardManager.GetSpriteByCardID(cardData.SpriteID);
+        }
+
         RefreshData();
     }
 
@@ -574,6 +588,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 	// DisplayCard's hover tooltip so hidden information is never actually shown, not just visually
 	// obscured by scene layout.
 	private bool IsHiddenFromViewer =>
+		!ForceReveal &&
 		_gameManager != null &&
 		_gameManager.LocalPlayerId.HasValue &&
 		Data != null &&

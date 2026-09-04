@@ -37,6 +37,7 @@ public class UI : MonoBehaviour
         GameResultScreen.gameObject.SetActive(false);
         GameSettingsScreen.gameObject.SetActive(false);
         CardPreview.gameObject.SetActive(false);
+        CardPreview.ForceReveal = true;
         HoverCardPreviewObject.gameObject.SetActive(false);
     }
 
