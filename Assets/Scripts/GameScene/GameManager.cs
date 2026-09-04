@@ -241,6 +241,7 @@ public class GameManager : MonoBehaviour
 		_networkClient.On<PlayerGameView>("OnStateUpdated", OnNetworkStateUpdated);
 		_networkClient.On<string>("OnActionRejected", reason => Debug.LogWarning($"Action rejected: {reason}"));
 		_networkClient.On<Guid?>("OnMatchEnded", winnerId => Debug.Log($"Networked match ended. Winner: {winnerId}"));
+		_networkClient.On<Guid>("OnMatchFound", matchId => Debug.Log($"Match found: {matchId}"));
 
 		await _networkClient.ConnectAsync();
 
@@ -299,6 +300,25 @@ public class GameManager : MonoBehaviour
 		{
 			Debug.LogWarning($"Server rejected action: {result.Error}");
 		}
+	}
+
+	// Pull-based state fetch for the caller's own seat. Not called anywhere yet - added so the hub's
+	// full RPC surface is available once a rendering adapter or reconnect flow needs it.
+	private async Task<PlayerGameView> GetStateAsync(Guid matchId)
+	{
+		return await _networkClient.InvokeAsync<PlayerGameView>("GetState", matchId);
+	}
+
+	// Matchmaking queue entry points. Not called anywhere yet - there is no lobby/matchmaking UI in
+	// this project; added so the hub's full RPC surface is available for whenever that UI exists.
+	private async Task JoinQueueAsync(DecklistRequest deck)
+	{
+		await _networkClient.InvokeAsync<object>("JoinQueue", deck);
+	}
+
+	private async Task LeaveQueueAsync()
+	{
+		await _networkClient.InvokeAsync<object>("LeaveQueue");
 	}
 
 	private void SetupPlayer(Deck deck, Player player, CardBattleEngine.Player data)

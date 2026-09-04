@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using CardBattleEngine;
 
 // Mirrors GameServer.Contracts / CardBattleEngine.View wire shapes. Newtonsoft ignores unknown
-// incoming JSON properties by default, so PlayerGameView below only carries the fields the
-// submission pathway needs today - extend it once a rendering adapter consumes Self/Opponent/
-// PendingChoice/NewHistory too.
+// incoming JSON properties by default. Kept in sync with the engine's actual PlayerGameView - no
+// rendering adapter consumes Self/Opponent/PendingChoice/NewHistory yet, but the fields are here so
+// the shape matches the server.
 
 public class DecklistRequest
 {
@@ -42,6 +43,104 @@ public class LegalActionView
 	public string DisplayName;
 }
 
+public class CardView
+{
+	public Guid Id;
+	public string Name;
+	public int ManaCost;
+	public CardType Type;
+	public int? Attack;
+	public int? Health;
+}
+
+public class MinionView
+{
+	public Guid Id;
+	public string Name;
+	public int Attack;
+	public int Health;
+	public int MaxHealth;
+	public bool Taunt;
+	public bool IsFrozen;
+	public bool IsStealth;
+	public bool HasDivineShield;
+	public bool CanAttack;
+}
+
+public class WeaponView
+{
+	public Guid Id;
+	public string Name;
+	public int Attack;
+	public int Durability;
+}
+
+public class HeroPowerView
+{
+	public string Name;
+	public int ManaCost;
+	public bool UsedThisTurn;
+}
+
+public class SecretView
+{
+	public int Index;
+	public string Name;
+	public Guid? CardId;
+}
+
+public class PublicPlayerView
+{
+	public Guid PlayerId;
+	public string Name;
+	public int Health;
+	public int MaxHealth;
+	public int Armor;
+	public int Mana;
+	public int MaxMana;
+	public int Attack;
+	public bool IsAlive;
+	public bool HasAttackedThisTurn;
+	public bool IsFrozen;
+	public bool IsStealth;
+
+	public int HandCount;
+	public List<CardView> Hand; // null unless this is the viewer's own player
+
+	public int DeckCount;
+
+	public List<MinionView> Board = new List<MinionView>();
+	public List<MinionView> Graveyard = new List<MinionView>();
+
+	public WeaponView EquippedWeapon;
+	public HeroPowerView HeroPower;
+
+	public int SecretCount;
+	public List<SecretView> Secrets; // null unless this is the viewer's own player
+}
+
+public class PendingChoiceView
+{
+	public Guid SourcePlayerId;
+	public string ChoiceKind;
+	public List<LegalActionView> Options = new List<LegalActionView>();
+}
+
+public class HistoryEntryView
+{
+	public int Turn;
+	public Guid PlayerId;
+	public string ActionType;
+	public Guid? SourceId;
+	public Guid? TargetId;
+	public int? DamageDealt;
+	public int? HealedAmount;
+	public Guid? SummonedMinionId;
+	public string SummonedMinionName;
+	public Guid? CardGainedId;
+	public string CardGainedName;
+}
+
 public class PlayerGameView
 {
 	public Guid ViewerPlayerId;
@@ -49,7 +148,11 @@ public class PlayerGameView
 	public Guid CurrentPlayerId;
 	public bool IsGameOver;
 	public Guid? WinnerPlayerId;
+	public PublicPlayerView Self;
+	public PublicPlayerView Opponent;
+	public PendingChoiceView PendingChoice;
 	public bool OpponentIsChoosing;
 	public List<LegalActionView> LegalActions = new List<LegalActionView>();
 	public int? PromptVersion;
+	public List<HistoryEntryView> NewHistory = new List<HistoryEntryView>();
 }

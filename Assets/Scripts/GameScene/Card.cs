@@ -37,6 +37,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public GameObject CastIndicator;
 
+    // Shown instead of the real card art/text when this card is hidden from the local viewer (see
+    // IsHiddenFromViewer). Optional - if left unassigned in the Inspector, the real sprite is kept but
+    // the identifying text/keywords are still blanked, so no data leak either way.
+    public Sprite HiddenCardSprite;
+
     #endregion
 
     #region Animation
@@ -119,6 +124,21 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     private void UpdateUI()
     {
         if (!this) return;
+
+        if (IsHiddenFromViewer)
+        {
+            NameText.text = "";
+            DescriptionText.text = "";
+            CardTypeText.text = "";
+            TribeObject.gameObject.SetActive(false);
+            AttackObject.SetActive(false);
+            HealthObject.SetActive(false);
+            CanPlayIndicator.gameObject.SetActive(false);
+            CostText.text = "";
+            if (HiddenCardSprite != null) { CardImage.sprite = HiddenCardSprite; }
+            return;
+        }
+
         NameText.text = Data.Name;
         string description = "";
         if (this.Data is MinionCard minionCard)
@@ -549,7 +569,18 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         player.Hand.UpdateCardPositions();
     }
 
-	public CardBattleEngine.Card DisplayCard => this.Data;
+	// True when this card belongs to a player other than the one currently viewing the local game -
+	// i.e. the AI opponent's hand in single-player. Gates UpdateUI()'s real-data rendering and
+	// DisplayCard's hover tooltip so hidden information is never actually shown, not just visually
+	// obscured by scene layout.
+	private bool IsHiddenFromViewer =>
+		_gameManager != null &&
+		_gameManager.LocalPlayerId.HasValue &&
+		Data != null &&
+		Data.Owner != null &&
+		Data.Owner.Id != _gameManager.LocalPlayerId.Value;
+
+	public CardBattleEngine.Card DisplayCard => IsHiddenFromViewer ? null : this.Data;
 
 	public void HoverStart()
     {
