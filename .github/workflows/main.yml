@@ -1,5 +1,4 @@
 name: Build and Upload to Itch.io
-
 on: [push, pull_request]
 
 jobs:
@@ -12,23 +11,12 @@ jobs:
         targetPlatform:
           #- WebGL
           - StandaloneWindows64
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           lfs: true
           fetch-depth: 0
-
-      #- name: Free up disk space
-      #  run: |
-      #    sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android
-      #    df -h
-
-      #- name: Install dependencies
-      #  run: |
-      #    sudo apt-get update
-      #    sudo apt-get install -y libglu1-mesa xvfb
 
       - name: Build project
         id: unity-build
@@ -50,8 +38,21 @@ jobs:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
 
-      - name: Set Version
-        run: echo "version=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+  uploadToItch:
+    name: Upload ${{ matrix.targetPlatform }} to Itch.io
+    needs: buildForAllSupportedPlatforms
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
 
       - name: Upload to Itch.io
         uses: robpc/itchio-upload-action@v1
