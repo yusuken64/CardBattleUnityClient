@@ -18,9 +18,6 @@ jobs:
           lfs: true
           fetch-depth: 0
 
-      - name: Switch Docker to Windows containers
-        run: '& "C:\Program Files\Docker\Docker\DockerCli.exe" -SwitchDaemon'
-
       - name: Build project
         id: unity-build
         uses: game-ci/unity-builder@v4
