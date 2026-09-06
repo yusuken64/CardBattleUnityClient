@@ -37,10 +37,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public GameObject CastIndicator;
 
-    // Shown instead of the real card art/text when this card is hidden from the local viewer (see
-    // IsHiddenFromViewer). Optional - if left unassigned in the Inspector, the real sprite is kept but
-    // the identifying text/keywords are still blanked, so no data leak either way.
-    public Sprite HiddenCardSprite;
+    public FlippableCard FlippableCard;
 
     // Overrides IsHiddenFromViewer to always show real data, regardless of ownership. Playing a card
     // is a public action that reveals it, so PlayCardAnimation sets this on the opponent's played-card
@@ -124,10 +121,17 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
         if (IsHiddenFromViewer)
         {
-            if (HiddenCardSprite != null) { this.CardImage.sprite = HiddenCardSprite; }
+            if (FlippableCard != null)
+            {
+                FlippableCard.SetToBack();
+            }
         }
         else
         {
+            if (FlippableCard != null)
+            {
+                FlippableCard.SetToFront();
+            }
             var cardManager = Common.Instance.CardManager;
             this.CardImage.sprite = cardManager.GetSpriteByCardID(cardData.SpriteID);
         }
@@ -141,17 +145,14 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
         if (IsHiddenFromViewer)
         {
-            NameText.text = "";
-            DescriptionText.text = "";
-            CardTypeText.text = "";
-            TribeObject.gameObject.SetActive(false);
-            AttackObject.SetActive(false);
-            HealthObject.SetActive(false);
-            CanPlayIndicator.gameObject.SetActive(false);
-            CostText.text = "";
-            if (HiddenCardSprite != null) { CardImage.sprite = HiddenCardSprite; }
+            // FlippableCard's Back visual is responsible for concealing the card - no need to
+            // blank out individual fields here, since Front (where they live) isn't shown anyway.
+            if (!FlippableCard.IsAnimating) FlippableCard.SetToBack();
             return;
         }
+
+        if (FlippableCard != null &&
+            !FlippableCard.IsAnimating) FlippableCard.SetToFront();
 
         NameText.text = Data.Name;
         string description = "";
@@ -496,14 +497,14 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     }
 
     public bool IsCastRestricted()
-	{
+    {
         if (_gameManager == null)
-		{
+        {
             _gameManager = FindFirstObjectByType<GameManager>();
             if (_gameManager == null)
-			{
+            {
                 return true;
-			}
+            }
         }
 
         if (!_gameManager.ActivePlayerTurn)
@@ -583,21 +584,21 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         player.Hand.UpdateCardPositions();
     }
 
-	// True when this card belongs to a player other than the one currently viewing the local game -
-	// i.e. the AI opponent's hand in single-player. Gates UpdateUI()'s real-data rendering and
-	// DisplayCard's hover tooltip so hidden information is never actually shown, not just visually
-	// obscured by scene layout.
-	private bool IsHiddenFromViewer =>
-		!ForceReveal &&
-		_gameManager != null &&
-		_gameManager.LocalPlayerId.HasValue &&
-		Data != null &&
-		Data.Owner != null &&
-		Data.Owner.Id != _gameManager.LocalPlayerId.Value;
+    // True when this card belongs to a player other than the one currently viewing the local game -
+    // i.e. the AI opponent's hand in single-player. Gates UpdateUI()'s real-data rendering and
+    // DisplayCard's hover tooltip so hidden information is never actually shown, not just visually
+    // obscured by scene layout.
+    private bool IsHiddenFromViewer =>
+        !ForceReveal &&
+        _gameManager != null &&
+        _gameManager.LocalPlayerId.HasValue &&
+        Data != null &&
+        Data.Owner != null &&
+        Data.Owner.Id != _gameManager.LocalPlayerId.Value;
 
-	public CardBattleEngine.Card DisplayCard => IsHiddenFromViewer ? null : this.Data;
+    public CardBattleEngine.Card DisplayCard => IsHiddenFromViewer ? null : this.Data;
 
-	public void HoverStart()
+    public void HoverStart()
     {
         _ui.HoverPreviewStart(this);
     }
@@ -607,7 +608,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         _ui.HoverPreviewEnd();
     }
 
-	public Vector3 GetPosition()
+    public Vector3 GetPosition()
     {
         var mouse = Mouse.current;
 
@@ -618,3 +619,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         return world;
     }
 }
+
+
+
+

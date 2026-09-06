@@ -37,20 +37,18 @@ public class PlayCardAnimation : GameActionAnimation<PlayCardAction>
 
 	private IEnumerator PreviewRoutine(Card card, UI ui)
 	{
-		yield return card.transform
-			.DOMove(ui.CardPreview.transform.position, 0.5f)
-			.SetEase(Ease.OutQuad)
-			.WaitForCompletion();
+		var sequence = DOTween.Sequence()
+			.Append(card.transform.DOMove(ui.CardPreview.transform.position, 0.5f).SetEase(Ease.OutQuad));
 
-		// Playing a card is a public action - it's no longer secret once it lands here, so reveal it
-		// regardless of who played it (otherwise DisplayCard stays null for the opponent's card and
-		// the preview never shows anything).
+		card.FlippableCard.CanFlip = true;
+		card.FlippableCard.Flip();
 		card.ForceReveal = true;
-		ui.PreviewStart(card);
 
+		yield return sequence.WaitForCompletion();
+
+		ui.PreviewStart(card);
 		Object.Destroy(card.gameObject);
 		yield return new WaitForSecondsRealtime(2f);
-
 		ui.PreviewEnd();
 	}
 }

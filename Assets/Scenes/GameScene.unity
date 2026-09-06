@@ -2693,6 +2693,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 949474858}
     m_Modifications:
+    - target: {fileID: 779207366673543866, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1853841569818876711, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -2708,6 +2712,14 @@ PrefabInstance:
     - target: {fileID: 4728465195448024071, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146108261924859069, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: ForceReveal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146108261924859069, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: FlippableCard
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_Pivot.x
@@ -2801,6 +2813,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7331156340248550843, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8010682437845266216, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2810,11 +2826,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8345123570213200955, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345123570213200955, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_OverrideSorting
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 8584908813250255642, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 7331156340248550843, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4728465195448024071, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
@@ -3022,6 +3044,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card
       objectReference: {fileID: 0}
+    - target: {fileID: 5146108261924859069, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: ForceReveal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146108261924859069, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: FlippableCard
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3122,7 +3152,15 @@ PrefabInstance:
       propertyPath: m_BlockingMask.m_Bits
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7331156340248550843, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8010682437845266216, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8584908813250255642, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -5740,6 +5778,7 @@ MonoBehaviour:
   UseSeed: 1
   RandomSeed: 0
   BattleIntro: {fileID: 1320670705}
+  ServerUrl: http://localhost:5299
   BattleMusic: {fileID: 8300000, guid: dfdc01c6b60cbf244b5666f4039ef52b, type: 3}
 --- !u!1 &1191839122
 GameObject:

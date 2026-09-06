@@ -28,17 +28,42 @@ public class FlippableCard : MonoBehaviour
 		SetToBack();
 	}
 
-	private void SetToBack()
+	private bool animating;
+	public bool IsAnimating => animating;
+
+	public bool IsFlipped => flipped;
+
+	public void SetToBack()
 	{
+		// Stop any in-flight flip animation without letting its OnComplete callbacks fire
+		// (DOKill's default 'complete: false' skips them), then snap to a clean flat state.
+		transform.DOKill();
+		transform.localRotation = Quaternion.identity;
+		//transform.localScale = Vector3.one;
+		animating = false;
+
 		Back.SetActive(true);
 		Front.SetActive(false);
 		flipped = false;
+	}
+
+	public void SetToFront()
+	{
+		transform.DOKill();
+		transform.localRotation = Quaternion.identity;
+		//transform.localScale = Vector3.one;
+		animating = false;
+
+		Back.SetActive(false);
+		Front.SetActive(true);
+		flipped = true;
 	}
 
 	public void Flip()
 	{
 		if (flipped || !CanFlip) { return; }
 		flipped = true;
+		animating = true;
 		// Ensure initial visibility
 		Back.SetActive(true);
 		Front.SetActive(false);
@@ -63,7 +88,11 @@ public class FlippableCard : MonoBehaviour
 				Vector3.zero,
 				FlipDuration * 0.5f
 			).SetEase(FlipEase)
-			.OnComplete(() => FlipComplete?.Invoke());
+			.OnComplete(() =>
+			{
+				animating = false;
+				FlipComplete?.Invoke();
+			});
 		});
 	}
 

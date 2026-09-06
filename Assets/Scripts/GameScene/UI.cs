@@ -151,6 +151,7 @@ public class UI : MonoBehaviour
         var card = hoverable.DisplayCard;
         if (card == null) { return; }
         CardPreview.Setup(card);
+        //CardPreview.FlippableCard.SetToFront();
         CardPreview.CanPlayIndicator.gameObject.SetActive(false);
         CardPreview.gameObject.SetActive(true);
 
