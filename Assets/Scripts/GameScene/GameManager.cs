@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
 	private MiniSignalRClient _networkClient;
 	private PlayerGameView _lastNetworkView;
 	private Guid _networkMatchId;
+	private GameState _snapshotForDebug;
 
 	public Action<GameEngine> GameInitialized;
 
@@ -309,6 +310,94 @@ public class GameManager : MonoBehaviour
 		return await _networkClient.InvokeAsync<PlayerGameView>("GetState", matchId);
 	}
 
+	// Manual reconnect/resync fallback - pulls the server's latest known state for this match
+	// and snaps the board to match it. Not wired to auto-fire on disconnect (there's no
+	// reconnect-detection in MiniSignalRClient yet) - call this from a debug/dev menu.
+	public async Task ResyncFromServer()
+	{
+		if (_networkClient == null)
+		{
+			Debug.LogError("No active network connection to resync from.");
+			return;
+		}
+
+		PlayerGameView view = await GetStateAsync(_networkMatchId);
+		ApplyBoardState(BoardStateSnapshot.FromPlayerGameView(view));
+	}
+
+	// Instant snap (no animation) of both players' hand/board/health/mana to match snapshot.
+	// Not part of the normal per-action AnimationQueue rendering path - only for resync
+	// fallback and the debug ContextMenu pair below.
+	public void ApplyBoardState(BoardStateSnapshot snapshot)
+	{
+		Player.Clear();
+		Opponent.Clear();
+
+		ApplyPlayerBoardState(Player, snapshot.Self, snapshot.IsFromNetwork);
+		ApplyPlayerBoardState(Opponent, snapshot.Opponent, snapshot.IsFromNetwork);
+
+		LocalPlayerId = snapshot.LocalPlayerId;
+	}
+
+	private void ApplyPlayerBoardState(Player player, PlayerBoardSnapshot snapshot, bool isFromNetwork)
+	{
+		player.Data = snapshot.Data;
+
+		var cardPrefab = FindFirstObjectByType<GameInteractionHandler>().CardPrefab;
+		foreach (var cardData in snapshot.Data.Hand)
+		{
+			var newCard = Instantiate(cardPrefab, player.Hand.transform);
+			newCard.Setup(cardData);
+			player.Hand.AddCard(newCard);
+		}
+
+		for (int i = 0; i < snapshot.HiddenHandCount; i++)
+		{
+			// Opponent hand cards whose identity is unknown (hidden by the server by design) -
+			// instantiate the prefab but skip Setup() entirely; FlippableCard defaults to its
+			// back-facing state, so no CardBattleEngine.Card object is needed for a pure
+			// count-only placeholder.
+			var placeholderCard = Instantiate(cardPrefab, player.Hand.transform);
+			player.Hand.AddCard(placeholderCard);
+		}
+
+		var minionPrefab = FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
+		for (int i = 0; i < snapshot.Data.Board.Count; i++)
+		{
+			var minionData = snapshot.Data.Board[i];
+			var newMinion = Instantiate(minionPrefab, player.Board.transform);
+			newMinion.Setup(minionData);
+			player.Board.Minions.Add(newMinion);
+
+			if (isFromNetwork && snapshot.SourceMinionViews != null && i < snapshot.SourceMinionViews.Count)
+			{
+				// HasDeathRattle/HasTrigger can't be trusted from the reconstructed
+				// CardBattleEngine.Minion (its TriggeredEffects only reflect the base card,
+				// not any ability granted/removed at runtime) - the server-computed values on
+				// the view are authoritative, so they overwrite whatever Setup() just derived.
+				var mv = snapshot.SourceMinionViews[i];
+				newMinion.HasDeathRattle = mv.HasDeathRattle;
+				newMinion.HasTrigger = mv.HasTrigger;
+				newMinion.UpdateUI();
+			}
+		}
+
+		player.Board.UpdateMinionPositions();
+		player.RefreshData();
+
+		// Snap instantly instead of letting Card/Minion.Update() lerp toward TargetPosition.
+		foreach (var card in player.Hand.Cards)
+		{
+			card.Moving = false;
+			card.transform.localPosition = new Vector3(card.TargetPosition.x, card.TargetPosition.y, 0);
+		}
+		foreach (var minion in player.Board.Minions)
+		{
+			minion.Moving = false;
+			minion.transform.localPosition = new Vector3(minion.TargetPosition.x, minion.TargetPosition.y, 0);
+		}
+	}
+
 	// Matchmaking queue entry points. Not called anywhere yet - there is no lobby/matchmaking UI in
 	// this project; added so the hub's full RPC surface is available for whenever that UI exists.
 	private async Task JoinQueueAsync(DecklistRequest deck)
@@ -565,6 +654,25 @@ public class GameManager : MonoBehaviour
 		{
 			throw new Exception($"Validation exception: {a} != {b}");
 		}
+	}
+
+	[ContextMenu("Snapshot GameState")]
+	private void SnapshotGameStateForDebug()
+	{
+		_snapshotForDebug = _gameState.Clone();
+		Debug.Log("GameState snapshot captured.");
+	}
+
+	[ContextMenu("Restore GameState")]
+	private void RestoreGameStateForDebug()
+	{
+		if (_snapshotForDebug == null)
+		{
+			Debug.LogError("No snapshot captured yet - use \"Snapshot GameState\" first.");
+			return;
+		}
+
+		ApplyBoardState(BoardStateSnapshot.FromGameState(_snapshotForDebug, LocalPlayerId.Value));
 	}
 }
 

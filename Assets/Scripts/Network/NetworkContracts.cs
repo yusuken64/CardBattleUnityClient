@@ -6,6 +6,10 @@ using CardBattleEngine;
 // incoming JSON properties by default. Kept in sync with the engine's actual PlayerGameView - no
 // rendering adapter consumes Self/Opponent/PendingChoice/NewHistory yet, but the fields are here so
 // the shape matches the server.
+// CardView.CardId and the MinionView ability flags (HasPoisonous/HasWindfury/HasLifeSteal/HasReborn/
+// HasSummoningSickness/HasDeathRattle/HasTrigger) are populated by the server once its view-builder
+// is updated to send them; until then they deserialize as null/false and callers must treat that as
+// "unknown identity" / "no special ability state", not an error.
 
 public class DecklistRequest
 {
@@ -51,11 +55,20 @@ public class CardView
 	public CardType Type;
 	public int? Attack;
 	public int? Health;
+	public string CardId;
 }
 
 public class MinionView
 {
 	public Guid Id;
+	public string CardId;
+	public bool HasPoisonous;
+	public bool HasWindfury;
+	public bool HasLifeSteal;
+	public bool HasReborn;
+	public bool HasSummoningSickness;
+	public bool HasDeathRattle;
+	public bool HasTrigger;
 	public string Name;
 	public int Attack;
 	public int Health;
