@@ -674,6 +674,28 @@ public class GameManager : MonoBehaviour
 
 		ApplyBoardState(BoardStateSnapshot.FromGameState(_snapshotForDebug, LocalPlayerId.Value));
 	}
+
+	// Writes the current board state (both players' full hand/board/hero stats) to a JSON file -
+	// callable from the Board State editor window, or any other future debug/dev entry point.
+	public void ExportBoardStateToFile(string filePath)
+	{
+		if (!LocalPlayerId.HasValue)
+		{
+			Debug.LogError("No LocalPlayerId set - cannot export board state.");
+			return;
+		}
+
+		BoardStateFile.Export(_gameState, LocalPlayerId.Value, filePath);
+		Debug.Log($"Board state exported to {filePath}");
+	}
+
+	// Reads a JSON file written by ExportBoardStateToFile and snaps the board to match it.
+	public void ImportBoardStateFromFile(string filePath)
+	{
+		BoardStateSnapshot snapshot = BoardStateFile.Import(filePath);
+		ApplyBoardState(snapshot);
+		Debug.Log($"Board state imported from {filePath}");
+	}
 }
 
 public class GameStartParams
