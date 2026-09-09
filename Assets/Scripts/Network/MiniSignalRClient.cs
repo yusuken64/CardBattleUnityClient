@@ -23,6 +23,9 @@ public class MiniSignalRClient
 {
 	private const byte RecordSeparator = 0x1E;
 	private static readonly TimeSpan KeepAliveInterval = TimeSpan.FromSeconds(10);
+	private static readonly TimeSpan InvokeTimeout = TimeSpan.FromSeconds(15);
+
+	public event Action OnDisconnected;
 
 	private readonly string _hubUrl;
 	private readonly JsonSerializerSettings _jsonSettings = new JsonSerializerSettings
@@ -111,6 +114,13 @@ public class MiniSignalRClient
 		_pendingInvocations[invocationId] = tcs;
 
 		await SendFrame(message.ToString(Formatting.None));
+
+		Task completedTask = await Task.WhenAny(tcs.Task, Task.Delay(InvokeTimeout));
+		if (completedTask != tcs.Task)
+		{
+			_pendingInvocations.TryRemove(invocationId, out _);
+			throw new TimeoutException($"InvokeAsync timed out for target '{target}'");
+		}
 
 		JToken result = await tcs.Task;
 		return result == null ? default : result.ToObject<TResult>(JsonSerializer.Create(_jsonSettings));
@@ -217,14 +227,17 @@ public class MiniSignalRClient
 					}
 				}
 			}
+			_mainThreadQueue.Enqueue(() => OnDisconnected?.Invoke());
 		}
 		catch (OperationCanceledException)
 		{
 			// Expected on DisconnectAsync.
+			_mainThreadQueue.Enqueue(() => OnDisconnected?.Invoke());
 		}
 		catch (Exception exception)
 		{
 			_mainThreadQueue.Enqueue(() => Debug.LogError($"SignalR receive loop failed: {exception}"));
+			_mainThreadQueue.Enqueue(() => OnDisconnected?.Invoke());
 		}
 	}
 

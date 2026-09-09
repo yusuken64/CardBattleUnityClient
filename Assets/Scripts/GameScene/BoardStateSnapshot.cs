@@ -82,6 +82,28 @@ public class BoardStateSnapshot
             player.Board.Add(MinionBuilder.BuildMinion(mv, player));
         }
 
+        if (view.HeroPower != null)
+        {
+            player.HeroPower = new CardBattleEngine.HeroPower
+            {
+                Name = view.HeroPower.Name,
+                ManaCost = view.HeroPower.ManaCost,
+                UsedThisTurn = view.HeroPower.UsedThisTurn,
+            };
+        }
+
+        if (view.EquippedWeapon != null)
+        {
+            player.EquippedWeapon = new CardBattleEngine.Weapon(
+                view.EquippedWeapon.Name,
+                view.EquippedWeapon.Attack,
+                view.EquippedWeapon.Durability
+            )
+            {
+                Owner = player,
+            };
+        }
+
         return player;
     }
 }

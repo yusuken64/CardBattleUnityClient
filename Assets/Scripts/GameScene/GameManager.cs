@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 	// Which CardBattleEngine.Player is "me", resolved once InitializeGame runs.
 	public Guid? LocalPlayerId { get; private set; }
 
+	public StartGameArgs Args { get; private set; }
+
 	public AnimationQueue AnimationQueue;
 	public DeckDefinition TestDeck;
 	public DeckDefinition EnemyTestDeck;
@@ -41,6 +43,7 @@ public class GameManager : MonoBehaviour
 
 	private MiniSignalRClient _networkClient;
 	private PlayerGameView _lastNetworkView;
+	public PlayerGameView LastNetworkView => _lastNetworkView;
 	private Guid _networkMatchId;
 	private GameState _snapshotForDebug;
 
@@ -82,6 +85,7 @@ public class GameManager : MonoBehaviour
 		_engine = new GameEngine();
 
 		StartGameArgs args = PendingStartArgs ?? StartGameArgs.LocalTestDefault();
+		Args = args;
 		PendingStartArgs = null;
 
 		if (args.Mode == GameMode.Networked)
