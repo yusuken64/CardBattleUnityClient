@@ -47,10 +47,15 @@ public class MulliganPrompt : MonoBehaviour
 		_isNetworked = true;
 		ClearItems();
 
-		foreach (var card in cards)
+		var cardPrefab = FindFirstObjectByType<GameInteractionHandler>().CardPrefab;
+
+		foreach (var cardData in cards)
 		{
+			var newCard = Instantiate(cardPrefab, Container);
+			newCard.Setup(cardData);
+
 			var newItem = Instantiate(MulliganItemPrefab, Container);
-			newItem.Setup(card);
+			newItem.Setup(newCard);
 
 			Items.Add(newItem);
 		}
