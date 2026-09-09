@@ -475,7 +475,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
             if (!RequiresTarget(this.Data))
             {
-                _gameManager.ResolveAction(current.action, current.context);
+                GameActionSubmitter.Submit(_gameManager, current.action, current.context);
             }
 
             Vector3 moveTarget = Vector3.zero;
@@ -486,12 +486,12 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
         else if (card.CardType == CardBattleEngine.CardType.Weapon)
         {
-            _gameManager.ResolveAction(current.action, current.context);
+            GameActionSubmitter.Submit(_gameManager, current.action, current.context);
             Destroy(card.gameObject, 2f);
         }
         else
         {
-            _gameManager.ResolveAction(current.action, current.context);
+            GameActionSubmitter.Submit(_gameManager, current.action, current.context);
             Destroy(card.gameObject, 2f);
         }
     }

@@ -95,7 +95,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 	public void ResolveAim((IGameAction action, ActionContext context) current, GameObject gameObject)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
-		gameManager.ResolveAction(current.action, current.context);
+		GameActionSubmitter.Submit(gameManager, current.action, current.context);
 	}
 
 	public bool WillResolveSuccessfully(ITargetable target, GameObject pendingAimObject, out (IGameAction, ActionContext) current, Vector3 mousePos, out string reason)
@@ -146,7 +146,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		var current = (action, context);
 		if (gameManager.CheckIsValid(current.action, current.context, out string _))
 		{
-			gameManager.ResolveAction(current.action, current.context);
+			GameActionSubmitter.Submit(gameManager, current.action, current.context);
 		}
 	}
 

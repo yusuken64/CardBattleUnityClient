@@ -282,7 +282,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     public void ResolveAim((IGameAction action, ActionContext context) current, GameObject gameObject)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
-        gameManager.ResolveAction(current.action, current.context);
+        GameActionSubmitter.Submit(gameManager, current.action, current.context);
     }
 
     public bool WillResolveSuccessfully(

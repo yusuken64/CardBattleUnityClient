@@ -92,6 +92,6 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 	public void ResolveAim((IGameAction action, ActionContext context) current, GameObject gameObject)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
-		gameManager.ResolveAction(current.action, current.context);
+		GameActionSubmitter.Submit(gameManager, current.action, current.context);
 	}
 }
