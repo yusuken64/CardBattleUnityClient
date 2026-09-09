@@ -12,7 +12,6 @@ public class AddStatModifierActionWrapper : IGameActionWrapperBase
     [SerializeReference] public IValueProviderWrapperBase HealthChange;
     [SerializeReference] public IValueProviderWrapperBase CostChange;
     [SerializeReference] public ExpirationTriggerWrapper ExpirationTrigger;
-    public System.Boolean Canceled;
     public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
@@ -23,7 +22,6 @@ public class AddStatModifierActionWrapper : IGameActionWrapperBase
         instance.HealthChange = HealthChange?.Create();
         instance.CostChange = CostChange?.Create();
         instance.ExpirationTrigger = ExpirationTrigger?.CreateEffect();
-        instance.Canceled = this.Canceled;
         instance.CustomSFX = CustomSFX;
         return instance;
     }

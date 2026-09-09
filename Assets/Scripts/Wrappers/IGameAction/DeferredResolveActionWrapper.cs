@@ -9,7 +9,6 @@ public class DeferredResolveActionWrapper : IGameActionWrapperBase
 {
     [SerializeReference] public IGameActionWrapperBase Action;
     [SerializeReference] public IAffectedEntitySelectorWrapperBase AffectedEntitySelector;
-    public System.Boolean Canceled;
     public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
@@ -17,7 +16,6 @@ public class DeferredResolveActionWrapper : IGameActionWrapperBase
         var instance = new CardBattleEngine.DeferredResolveAction();
         instance.Action = Action?.Create();
         instance.AffectedEntitySelector = AffectedEntitySelector?.Create();
-        instance.Canceled = this.Canceled;
         instance.CustomSFX = CustomSFX;
         return instance;
     }

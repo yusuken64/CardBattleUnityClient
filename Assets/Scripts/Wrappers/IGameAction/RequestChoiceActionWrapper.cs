@@ -8,14 +8,12 @@ using CardBattleEngine;
 public class RequestChoiceActionWrapper : IGameActionWrapperBase
 {
     public CardBattleEngine.IPendingChoice PendingChoice;
-    public System.Boolean Canceled;
     public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
     {
         var instance = new CardBattleEngine.RequestChoiceAction();
         instance.PendingChoice = this.PendingChoice;
-        instance.Canceled = this.Canceled;
         instance.CustomSFX = CustomSFX;
         return instance;
     }

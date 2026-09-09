@@ -9,7 +9,6 @@ public class ReturnMinionToCardWrapper : IGameActionWrapperBase
 {
     public CardBattleEngine.TeamRelationship TeamRelationship;
     public CardBattleEngine.ZoneType ZoneType;
-    public System.Boolean Canceled;
     public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
@@ -17,7 +16,6 @@ public class ReturnMinionToCardWrapper : IGameActionWrapperBase
         var instance = new CardBattleEngine.ReturnMinionToCard();
         instance.TeamRelationship = this.TeamRelationship;
         instance.ZoneType = this.ZoneType;
-        instance.Canceled = this.Canceled;
         instance.CustomSFX = CustomSFX;
         return instance;
     }

@@ -10,7 +10,6 @@ public class AssignVariableActionWrapper : IGameActionWrapperBase
     public System.String VariableName;
     [SerializeReference] public IValueProviderWrapperBase Value;
     public CardBattleEngine.VariableScope VariableScope;
-    public System.Boolean Canceled;
     public CustomSFX CustomSFX;
 
     public override CardBattleEngine.IGameAction Create()
@@ -19,7 +18,6 @@ public class AssignVariableActionWrapper : IGameActionWrapperBase
         instance.VariableName = this.VariableName;
         instance.Value = Value?.Create();
         instance.VariableScope = this.VariableScope;
-        instance.Canceled = this.Canceled;
         instance.CustomSFX = CustomSFX;
         return instance;
     }
