@@ -41,11 +41,15 @@ public class GameManager : MonoBehaviour
 
 	public string ServerUrl = "http://localhost:5299";
 
+	public Network.NetworkAnimationQueue NetworkAnimationQueue;
+	public MulliganPrompt MulliganPrompt;
+
 	private MiniSignalRClient _networkClient;
 	private PlayerGameView _lastNetworkView;
 	public PlayerGameView LastNetworkView => _lastNetworkView;
 	private Guid _networkMatchId;
 	private GameState _snapshotForDebug;
+	private bool _mulliganHandled;
 
 	public Action<GameEngine> GameInitialized;
 
@@ -271,6 +275,7 @@ public class GameManager : MonoBehaviour
 
 	private void OnNetworkStateUpdated(PlayerGameView view)
 	{
+		// (a) Keep existing behavior: set _lastNetworkView and resolve LocalPlayerId
 		_lastNetworkView = view;
 
 		if (LocalPlayerId == null)
@@ -278,9 +283,43 @@ public class GameManager : MonoBehaviour
 			LocalPlayerId = view.ViewerPlayerId;
 		}
 
+		// (b) Enqueue animation batch - this triggers animate-then-resnap sequence
+		NetworkAnimationQueue.Enqueue(view);
+
+		// (c) Mulligan trigger: show screen exactly once per match when hand becomes non-empty
+		if (!_mulliganHandled && view.Self?.Hand != null && view.Self.Hand.Count > 0)
+		{
+			var hand = view.Self.Hand.Select(cv => CardBuilder.BuildCard(cv, null)).ToList();
+			MulliganPrompt.SetupNetworked(hand);
+			_mulliganHandled = true;
+		}
+
+		// (d) If pending choice exists, try to handle it (safe no-op if nothing staged or kind doesn't match)
+		if (view.PendingChoice != null)
+		{
+			MulliganPrompt.TryHandlePendingChoice(view.PendingChoice);
+		}
+
+		// (e) Safety net: if mulligan screen is still visible but we're in a real turn, hide it
+		if (_mulliganHandled && view.LegalActions.Count > 0 && view.PendingChoice == null &&
+			view.CurrentPlayerId == LocalPlayerId && MulliganPrompt.gameObject.activeSelf)
+		{
+			MulliganPrompt.gameObject.SetActive(false);
+		}
+
+		// (f) Turn gating: set ActivePlayerTurn based on whether there's a prompt to submit
+		ActivePlayerTurn = view.PromptVersion.HasValue;
+
+		// (g) Game over: keep existing Debug.Log and invoke result-screen flow
 		if (view.IsGameOver)
 		{
 			Debug.Log($"Networked match over. Winner: {view.WinnerPlayerId}");
+
+			if (GameResultRoutine != null)
+			{
+				bool didWin = view.WinnerPlayerId == LocalPlayerId;
+				StartCoroutine(GameResultRoutine(didWin));
+			}
 		}
 	}
 
