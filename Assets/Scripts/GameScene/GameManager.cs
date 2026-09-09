@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
 	public string ServerUrl = "http://localhost:5299";
 
-	public Network.NetworkAnimationQueue NetworkAnimationQueue;
+	public NetworkAnimationQueue NetworkAnimationQueue;
 	public MulliganPrompt MulliganPrompt;
 
 	private MiniSignalRClient _networkClient;
