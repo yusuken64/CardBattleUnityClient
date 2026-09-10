@@ -90,6 +90,7 @@ public class WeaponView
 	public string Name;
 	public int Attack;
 	public int Durability;
+	public string CardId;
 }
 
 public class HeroPowerView
@@ -150,6 +151,8 @@ public class HistoryEntryView
 	public string ActionType;
 	public Guid? SourceId;
 	public Guid? TargetId;
+	public string SourceName;
+	public string SourceCardId;
 	public int? DamageDealt;
 	public int? HealedAmount;
 	public Guid? SummonedMinionId;

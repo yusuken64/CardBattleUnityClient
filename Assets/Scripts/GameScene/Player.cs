@@ -82,6 +82,11 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		{
 			Weapon.gameObject.SetActive(false);
 		}
+		else
+		{
+			Weapon.gameObject.SetActive(true);
+			Weapon.Setup(Data.EquippedWeapon);
+		}
 
 		foreach(var minion in Board.Minions)
 		{

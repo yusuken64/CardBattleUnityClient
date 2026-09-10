@@ -15,8 +15,7 @@ public static class CardBuilder
         {
             // CardId didn't resolve (null today until the server populates it, or an
             // unrecognized id) - fall back to a minimal card of the right type so callers
-            // always get a usable instance. Sprite will fall back to CardManager's
-            // DefaultMissingSprite since SpriteID stays null on these.
+            // always get a usable instance.
             switch (cv.Type)
             {
                 case CardType.Minion:
@@ -31,6 +30,10 @@ public static class CardBuilder
                     break;
             }
 
+            // SpriteID is set to the requested CardId (matching how CardDefinition.CreateCard sets
+            // it for a recognized card) so GetSpriteByCardID can find the art once it arrives,
+            // instead of permanently missing the cache under a different key.
+            card.SpriteID = cv.CardId;
             CardArtNetworkService.RequestArtIfNeeded(cv.CardId, owner.Name);
         }
         else

@@ -27,10 +27,36 @@ public class Weapon : MonoBehaviour, IHoverable
 			return;
 		}
 
+		RefreshCardArt();
+		RefreshData();
+	}
+
+	private void RefreshCardArt()
+	{
+		if (Data == null) return;
 		var cardManager = Common.Instance.CardManager;
 		WeaponImage.sprite = cardManager.GetSpriteByCardID(Data.OriginalCard.SpriteID);
+	}
 
-		RefreshData();
+	// Setup() above only picks up art that had already arrived by the time it ran - if this weapon
+	// was built from an unresolved custom CardId, the request is still in flight, so listen for the
+	// matching arrival and refresh once it lands instead of being stuck on the placeholder forever.
+	private void OnEnable()
+	{
+		CardArtNetworkService.OnArtReceived += HandleArtReceived;
+	}
+
+	private void OnDisable()
+	{
+		CardArtNetworkService.OnArtReceived -= HandleArtReceived;
+	}
+
+	private void HandleArtReceived(string cardId)
+	{
+		if (Data?.OriginalCard.SpriteID == cardId)
+		{
+			RefreshCardArt();
+		}
 	}
 
 	public void RefreshData()

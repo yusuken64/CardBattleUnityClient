@@ -96,6 +96,11 @@ public static class CardArtNetworkService
 		}
 	}
 
+	// Fired after a cardId's sprite is cached, so anything already rendering that card's placeholder
+	// (built before this round trip completed) can refresh without needing to be rebuilt from
+	// scratch. Setup() alone only picks up art that had already arrived by the time it ran.
+	public static event Action<string> OnArtReceived;
+
 	private static void OnCardArtReceived(string cardId, byte[] imageBytes)
 	{
 		if (imageBytes == null || imageBytes.Length == 0) return;
@@ -114,6 +119,8 @@ public static class CardArtNetworkService
 		{
 			_receivedArtOwner[cardId] = ownerName;
 		}
+
+		OnArtReceived?.Invoke(cardId);
 	}
 
 	// Reads pixels back through a temporary RenderTexture instead of calling EncodeToPNG directly on

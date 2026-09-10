@@ -96,10 +96,36 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
 
     internal void Setup(CardBattleEngine.Minion minionData)
     {
-        CardImage.sprite = Common.Instance.CardManager.GetSpriteByCardID(minionData.OriginalCard.SpriteID);
-
         this.Data = minionData;
+        RefreshCardArt();
         RefreshData();
+    }
+
+    private void RefreshCardArt()
+    {
+        if (Data == null) return;
+        CardImage.sprite = Common.Instance.CardManager.GetSpriteByCardID(Data.OriginalCard.SpriteID);
+    }
+
+    // Setup() above only picks up art that had already arrived by the time it ran - if this minion
+    // was built from an unresolved custom CardId, the request is still in flight, so listen for the
+    // matching arrival and refresh once it lands instead of being stuck on the placeholder forever.
+    private void OnEnable()
+    {
+        CardArtNetworkService.OnArtReceived += HandleArtReceived;
+    }
+
+    private void OnDisable()
+    {
+        CardArtNetworkService.OnArtReceived -= HandleArtReceived;
+    }
+
+    private void HandleArtReceived(string cardId)
+    {
+        if (Data?.OriginalCard.SpriteID == cardId)
+        {
+            RefreshCardArt();
+        }
     }
 
     [ContextMenu("UpdateUI")]

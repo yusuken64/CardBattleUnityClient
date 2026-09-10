@@ -150,6 +150,15 @@ public class UI : MonoBehaviour
     {
         var card = hoverable.DisplayCard;
         if (card == null) { return; }
+        PreviewCard(card);
+    }
+
+    // Same as PreviewStart, but for callers with a raw CardBattleEngine.Card rather than an
+    // IHoverable Unity component - e.g. a synthesized SpellCard for a networked opponent's cast
+    // spell, which has no on-screen IHoverable of its own to read DisplayCard from.
+    internal void PreviewCard(CardBattleEngine.Card card)
+    {
+        if (card == null) { return; }
         CardPreview.Setup(card);
         //CardPreview.FlippableCard.SetToFront();
         CardPreview.CanPlayIndicator.gameObject.SetActive(false);

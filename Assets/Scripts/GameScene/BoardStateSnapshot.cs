@@ -94,14 +94,7 @@ public class BoardStateSnapshot
 
         if (view.EquippedWeapon != null)
         {
-            player.EquippedWeapon = new CardBattleEngine.Weapon(
-                view.EquippedWeapon.Name,
-                view.EquippedWeapon.Attack,
-                view.EquippedWeapon.Durability
-            )
-            {
-                Owner = player,
-            };
+            player.EquippedWeapon = WeaponBuilder.BuildWeapon(view.EquippedWeapon, player);
         }
 
         return player;

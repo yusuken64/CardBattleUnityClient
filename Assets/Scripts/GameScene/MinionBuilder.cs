@@ -15,9 +15,11 @@ public static class MinionBuilder
         {
             // CardId didn't resolve (null today until the server populates it, an
             // unrecognized id, or a definition that isn't actually a minion) - fall back
-            // to a minimal MinionCard so callers always get a usable Minion. Sprite will
-            // fall back to CardManager's DefaultMissingSprite since SpriteID stays null.
-            minionCard = new MinionCard(mv.Name, 0, mv.Attack, mv.Health);
+            // to a minimal MinionCard so callers always get a usable Minion. SpriteID is set
+            // to the requested CardId (matching how CardDefinition.CreateCard sets it for a
+            // recognized card) so GetSpriteByCardID can find the art once it arrives, instead
+            // of permanently missing the cache under a different key.
+            minionCard = new MinionCard(mv.Name, 0, mv.Attack, mv.Health) { SpriteID = mv.CardId };
             CardArtNetworkService.RequestArtIfNeeded(mv.CardId, owner.Name);
         }
 

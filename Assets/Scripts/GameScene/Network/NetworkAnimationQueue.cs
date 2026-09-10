@@ -108,7 +108,31 @@ public class NetworkAnimationQueue : MonoBehaviour
 			yield return StartCoroutine(PlayMinionSummon(view, entry.SummonedMinionId.Value));
 		}
 
+		// A cast spell has no persistent view of its own (unlike a minion landing on the board or
+		// a weapon staying equipped) - briefly preview its art here instead, using the same
+		// CardPreview slot PlayCardAnimation uses locally for the opponent's played cards. Only for
+		// the opponent's own casts - our own spell casts are something we already saw when we
+		// played them, no reveal needed.
+		if (entry.ActionType == "CastSpellAction" && entry.PlayerId != GameManager.LocalPlayerId)
+		{
+			yield return StartCoroutine(PlayOpponentSpellCast(entry));
+		}
+
 		// EndTurnAction, StartTurnAction, and other types: no animation, just continue
+	}
+
+	private IEnumerator PlayOpponentSpellCast(HistoryEntryView entry)
+	{
+		if (_ui == null || string.IsNullOrEmpty(entry.SourceCardId) || GameManager.Opponent == null)
+		{
+			yield break;
+		}
+
+		var spellCard = SpellBuilder.BuildSpell(entry, GameManager.Opponent.Data);
+
+		_ui.PreviewCard(spellCard);
+		yield return new WaitForSecondsRealtime(1.5f);
+		_ui.PreviewEnd();
 	}
 
 	private IEnumerator PlayAttackAnimation(Guid sourceId, Guid targetId)

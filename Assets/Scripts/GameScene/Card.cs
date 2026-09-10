@@ -132,11 +132,38 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             {
                 FlippableCard.SetToFront();
             }
-            var cardManager = Common.Instance.CardManager;
-            this.CardImage.sprite = cardManager.GetSpriteByCardID(cardData.SpriteID);
+            RefreshCardArt();
         }
 
         RefreshData();
+    }
+
+    private void RefreshCardArt()
+    {
+        if (Data == null || IsHiddenFromViewer) return;
+        var cardManager = Common.Instance.CardManager;
+        this.CardImage.sprite = cardManager.GetSpriteByCardID(Data.SpriteID);
+    }
+
+    // Setup() above only picks up art that had already arrived by the time it ran - if this card
+    // was built from an unresolved custom CardId, the request is still in flight, so listen for the
+    // matching arrival and refresh once it lands instead of being stuck on the placeholder forever.
+    private void OnEnable()
+    {
+        CardArtNetworkService.OnArtReceived += HandleArtReceived;
+    }
+
+    private void OnDisable()
+    {
+        CardArtNetworkService.OnArtReceived -= HandleArtReceived;
+    }
+
+    private void HandleArtReceived(string cardId)
+    {
+        if (Data?.SpriteID == cardId)
+        {
+            RefreshCardArt();
+        }
     }
 
     private void UpdateUI()
