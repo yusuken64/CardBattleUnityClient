@@ -2,8 +2,6 @@ using System.Linq;
 
 public static class DeckNetworkExtensions
 {
-	// The server's DecklistRequest only has Minions/Spells slots (see MatchRegistry.TryJoinMatch) -
-	// WeaponCardDefinition cards have nowhere to go yet and are silently skipped.
 	public static DecklistRequest ToDecklistRequest(this Deck deck, string playerName)
 	{
 		var request = new DecklistRequest { PlayerName = playerName };
@@ -23,6 +21,10 @@ public static class DeckNetworkExtensions
 			else if (entry.Definition is SpellCardDefinition)
 			{
 				request.Spells.Add(cardCount);
+			}
+			else if (entry.Definition is WeaponCardDefinition)
+			{
+				request.Weapons.Add(cardCount);
 			}
 		}
 

@@ -16,6 +16,7 @@ public class DecklistRequest
 	public string PlayerName = string.Empty;
 	public List<CardCount> Minions = new List<CardCount>();
 	public List<CardCount> Spells = new List<CardCount>();
+	public List<CardCount> Weapons = new List<CardCount>();
 }
 
 public class CardCount
