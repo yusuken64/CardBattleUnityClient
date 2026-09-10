@@ -7,12 +7,12 @@ public static class DeckNetworkExtensions
 		var request = new DecklistRequest { PlayerName = playerName };
 
 		var grouped = deck.Cards
-			.GroupBy(card => card.CardName)
+			.GroupBy(card => card.ID)
 			.Select(group => new { Definition = group.First(), Count = group.Count() });
 
 		foreach (var entry in grouped)
 		{
-			var cardCount = new CardCount { CardId = entry.Definition.CardName, Count = entry.Count };
+			var cardCount = new CardCount { CardId = entry.Definition.ID, Count = entry.Count };
 			var runtimeCard = entry.Definition.CreateCard();
 
 			if (entry.Definition is MinionCardDefinition)

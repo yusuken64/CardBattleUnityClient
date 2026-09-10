@@ -18,7 +18,7 @@ public static class MinionBuilder
             // to a minimal MinionCard so callers always get a usable Minion. Sprite will
             // fall back to CardManager's DefaultMissingSprite since SpriteID stays null.
             minionCard = new MinionCard(mv.Name, 0, mv.Attack, mv.Health);
-            CardArtNetworkService.RequestArtIfNeeded(mv.CardId);
+            CardArtNetworkService.RequestArtIfNeeded(mv.CardId, owner.Name);
         }
 
         var minion = new CardBattleEngine.Minion(minionCard, owner)

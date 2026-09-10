@@ -52,19 +52,38 @@ public class MiniSignalRClient
 	// receive loop once it's running.
 	public void On<T>(string target, Action<T> handler)
 	{
-		if (!_handlers.TryGetValue(target, out var list))
-		{
-			list = new List<Action<JArray>>();
-			_handlers[target] = list;
-		}
-
-		list.Add(arguments =>
+		AddHandler(target, arguments =>
 		{
 			T value = arguments.Count > 0
 				? arguments[0].ToObject<T>(JsonSerializer.Create(_jsonSettings))
 				: default;
 			handler(value);
 		});
+	}
+
+	// For server push methods with more than one parameter (e.g. OnCardArtRequested(Guid, string)) -
+	// SignalR's JSON protocol sends these as a positional arguments array, one element per parameter,
+	// not a single combined object, so each argument must be deserialized independently by position.
+	public void On<T1, T2>(string target, Action<T1, T2> handler)
+	{
+		AddHandler(target, arguments =>
+		{
+			var settings = JsonSerializer.Create(_jsonSettings);
+			T1 arg1 = arguments.Count > 0 ? arguments[0].ToObject<T1>(settings) : default;
+			T2 arg2 = arguments.Count > 1 ? arguments[1].ToObject<T2>(settings) : default;
+			handler(arg1, arg2);
+		});
+	}
+
+	private void AddHandler(string target, Action<JArray> handler)
+	{
+		if (!_handlers.TryGetValue(target, out var list))
+		{
+			list = new List<Action<JArray>>();
+			_handlers[target] = list;
+		}
+
+		list.Add(handler);
 	}
 
 	public void PumpMainThread()

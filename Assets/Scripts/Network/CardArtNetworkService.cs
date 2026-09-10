@@ -7,16 +7,20 @@ public static class CardArtNetworkService
 	private static MiniSignalRClient _client;
 	private static Guid _matchId;
 	private static readonly Dictionary<string, Sprite> _receivedArt = new Dictionary<string, Sprite>();
-	private static readonly HashSet<string> _requestedIds = new HashSet<string>();
+	private static readonly Dictionary<string, string> _receivedArtOwner = new Dictionary<string, string>();
+	private static readonly Dictionary<string, string> _requestedIds = new Dictionary<string, string>();
 
 	public static void Initialize(MiniSignalRClient client)
 	{
 		_client = client;
-		_receivedArt.Clear();
+		// _receivedArt is intentionally NOT cleared here - it persists for the app's lifetime so
+		// art already seen in a prior match against the same (or any) opponent is never re-requested.
+		// Only _requestedIds resets, so a request that went unanswered in a previous match gets
+		// retried rather than permanently suppressed.
 		_requestedIds.Clear();
 
-		_client.On<CardArtRequestedPayload>("OnCardArtRequested", OnCardArtRequested);
-		_client.On<CardArtReceivedPayload>("OnCardArtReceived", OnCardArtReceived);
+		_client.On<Guid, string>("OnCardArtRequested", OnCardArtRequested);
+		_client.On<string, byte[]>("OnCardArtReceived", OnCardArtReceived);
 	}
 
 	public static void SetMatchId(Guid matchId)
@@ -29,12 +33,25 @@ public static class CardArtNetworkService
 	// actually sends a request. If the request never gets answered, the caller keeps whatever
 	// placeholder sprite it already assigned; there is no timeout here by design, since a repeated
 	// call to GetSpriteByCardID naturally keeps returning the placeholder until this cache is filled.
-	public static async void RequestArtIfNeeded(string cardId)
+	//
+	// ownerName scopes the cache/in-flight-request bookkeeping: cardId alone (an author-typed mod id)
+	// is not guaranteed unique across different players' custom cards, so a cardId already cached or
+	// in-flight under a different owner is treated as stale and re-requested rather than trusted.
+	public static async void RequestArtIfNeeded(string cardId, string ownerName)
 	{
 		if (_client == null || string.IsNullOrEmpty(cardId)) return;
-		if (_receivedArt.ContainsKey(cardId) || _requestedIds.Contains(cardId)) return;
 
-		_requestedIds.Add(cardId);
+		if (_receivedArt.ContainsKey(cardId))
+		{
+			if (_receivedArtOwner.TryGetValue(cardId, out var cachedOwner) && cachedOwner == ownerName) return;
+
+			_receivedArt.Remove(cardId);
+			_receivedArtOwner.Remove(cardId);
+		}
+
+		if (_requestedIds.TryGetValue(cardId, out var pendingOwner) && pendingOwner == ownerName) return;
+
+		_requestedIds[cardId] = ownerName;
 
 		try
 		{
@@ -61,9 +78,9 @@ public static class CardArtNetworkService
 	// (built-in cards are looked up via CardManager the same way any other card id is resolved) and
 	// send back its Sprite as PNG bytes if we have one. Silently does nothing if we don't have it -
 	// the requester just keeps its placeholder.
-	private static async void OnCardArtRequested(CardArtRequestedPayload payload)
+	private static async void OnCardArtRequested(Guid matchId, string cardId)
 	{
-		var definition = Common.Instance != null ? Common.Instance.CardManager.GetCardByID(payload.CardId) : null;
+		var definition = Common.Instance != null ? Common.Instance.CardManager.GetCardByID(cardId) : null;
 		if (definition == null || definition.Sprite == null) return;
 
 		byte[] bytes = EncodeSpriteToPng(definition.Sprite);
@@ -71,27 +88,32 @@ public static class CardArtNetworkService
 
 		try
 		{
-			await _client.InvokeAsync<object>("SubmitCardArt", payload.MatchId, payload.CardId, bytes);
+			await _client.InvokeAsync<object>("SubmitCardArt", matchId, cardId, bytes);
 		}
 		catch (Exception ex)
 		{
-			Debug.LogWarning($"CardArtNetworkService: SubmitCardArt failed for '{payload.CardId}': {ex.Message}");
+			Debug.LogWarning($"CardArtNetworkService: SubmitCardArt failed for '{cardId}': {ex.Message}");
 		}
 	}
 
-	private static void OnCardArtReceived(CardArtReceivedPayload payload)
+	private static void OnCardArtReceived(string cardId, byte[] imageBytes)
 	{
-		if (payload.ImageBytes == null || payload.ImageBytes.Length == 0) return;
+		if (imageBytes == null || imageBytes.Length == 0) return;
 
 		var texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-		if (!texture.LoadImage(payload.ImageBytes))
+		if (!texture.LoadImage(imageBytes))
 		{
-			Debug.LogWarning($"CardArtNetworkService: failed to decode received art for '{payload.CardId}'.");
+			Debug.LogWarning($"CardArtNetworkService: failed to decode received art for '{cardId}'.");
 			return;
 		}
 
 		var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-		_receivedArt[payload.CardId] = sprite;
+		_receivedArt[cardId] = sprite;
+
+		if (_requestedIds.TryGetValue(cardId, out var ownerName))
+		{
+			_receivedArtOwner[cardId] = ownerName;
+		}
 	}
 
 	// Reads pixels back through a temporary RenderTexture instead of calling EncodeToPNG directly on
@@ -124,17 +146,5 @@ public static class CardArtNetworkService
 			RenderTexture.active = previous;
 			RenderTexture.ReleaseTemporary(renderTexture);
 		}
-	}
-
-	private class CardArtRequestedPayload
-	{
-		public Guid MatchId;
-		public string CardId;
-	}
-
-	private class CardArtReceivedPayload
-	{
-		public string CardId;
-		public byte[] ImageBytes;
 	}
 }

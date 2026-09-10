@@ -31,7 +31,7 @@ public static class CardBuilder
                     break;
             }
 
-            CardArtNetworkService.RequestArtIfNeeded(cv.CardId);
+            CardArtNetworkService.RequestArtIfNeeded(cv.CardId, owner.Name);
         }
         else
         {
