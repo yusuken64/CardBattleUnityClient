@@ -93,6 +93,11 @@ public class CardManager : MonoBehaviour
 
 	public Sprite GetSpriteByCardID(string id)
 	{
+		if (CardArtNetworkService.TryGetReceivedArt(id, out var receivedSprite))
+		{
+			return receivedSprite;
+		}
+
 		return GetCardByID(id)?.Sprite ?? DefaultMissingSprite;
 	}
 

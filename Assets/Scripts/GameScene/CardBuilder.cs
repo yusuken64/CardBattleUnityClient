@@ -30,6 +30,8 @@ public static class CardBuilder
                     card = new SpellCard(cv.Name, cv.ManaCost);
                     break;
             }
+
+            CardArtNetworkService.RequestArtIfNeeded(cv.CardId);
         }
         else
         {

@@ -252,6 +252,8 @@ public class GameManager : MonoBehaviour
 		_networkClient.On<Guid?>("OnMatchEnded", winnerId => Debug.Log($"Networked match ended. Winner: {winnerId}"));
 		_networkClient.On<Guid>("OnMatchFound", matchId => Debug.Log($"Match found: {matchId}"));
 
+		CardArtNetworkService.Initialize(_networkClient);
+
 		await _networkClient.ConnectAsync();
 
 		bool isHost = string.IsNullOrEmpty(args.MatchId);
@@ -260,11 +262,13 @@ public class GameManager : MonoBehaviour
 		if (isHost)
 		{
 			_networkMatchId = await _networkClient.InvokeAsync<Guid>("CreateMatch", decklist);
+			CardArtNetworkService.SetMatchId(_networkMatchId);
 			Debug.Log($"Created match {_networkMatchId}. Waiting for an opponent to join.");
 		}
 		else
 		{
 			_networkMatchId = Guid.Parse(args.MatchId);
+			CardArtNetworkService.SetMatchId(_networkMatchId);
 			JoinResult joinResult = await _networkClient.InvokeAsync<JoinResult>("JoinMatch", _networkMatchId, decklist);
 			if (!joinResult.Success)
 			{
