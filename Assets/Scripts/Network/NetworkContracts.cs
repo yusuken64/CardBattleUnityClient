@@ -17,6 +17,9 @@ public class DecklistRequest
 	public List<CardCount> Minions = new List<CardCount>();
 	public List<CardCount> Spells = new List<CardCount>();
 	public List<CardCount> Weapons = new List<CardCount>();
+	public List<string> CustomMinions = new List<string>();
+	public List<string> CustomSpells = new List<string>();
+	public List<string> CustomWeapons = new List<string>();
 }
 
 public class CardCount
