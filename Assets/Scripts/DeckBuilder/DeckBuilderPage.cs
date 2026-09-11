@@ -23,6 +23,7 @@ public class DeckBuilderPage : MonoBehaviour
 		ErrorMessageCanvas.gameObject.SetActive(false);
 
 		DeckPicker.DeckPickedAction = DeckPicker_DeckPicked;
+		DeckPicker.DeleteRequestedAction = DeckPicker_DeleteRequested;
 		DeckViewer.DeckClosedAction = DeckViewer_DeckSaved;
 		Collection.SetToCollectionView();
 	}
@@ -44,16 +45,53 @@ public class DeckBuilderPage : MonoBehaviour
 	{
 		if (deck != null)
 		{
-			//Update data?
-			Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas[0] = DeckSaveData.FromDeck(deck);
-			Common.Instance.SaveManager.Save();
-			var button = DeckPicker.DeckPickerButtons.FirstOrDefault(x => x.Deck == deck);
-			button.Setup(Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas[0]);
+			var deckSaveDatas = Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas;
+			int index = deckSaveDatas.FindIndex(x => x.ID == deck.ID);
+			if (index >= 0)
+			{
+				deckSaveDatas[index] = DeckSaveData.FromDeck(deck);
+				Common.Instance.SaveManager.Save();
+				var button = DeckPicker.DeckPickerButtons.FirstOrDefault(x => x.Deck == deck);
+				if (button != null)
+					button.Setup(deckSaveDatas[index]);
+			}
 		}
 		DeckPicker.gameObject.SetActive(true);
 		DeckPicker.UpdateUI();
 		DeckViewer.gameObject.SetActive(false);
 		Collection.SetToCollectionView();
+	}
+
+	public void DeckPicker_DeleteRequested(DeckPickerButton deckPickerButton)
+	{
+		var deckSaveDatas = Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas;
+		if (deckSaveDatas.Count <= 1)
+		{
+			ShowMessage("You need at least one deck");
+			return;
+		}
+
+		Common.Instance.YesNoConfirmation.Setup(
+			"Delete Deck?",
+			$"Delete '{deckPickerButton.Deck.Title}'? This can't be undone.",
+			"Delete",
+			() => DeleteDeck(deckPickerButton.DeckID),
+			"Cancel",
+			() => { });
+	}
+
+	private void DeleteDeck(string deckID)
+	{
+		var gameSaveData = Common.Instance.SaveManager.SaveData.GameSaveData;
+		gameSaveData.DeckSaveDatas.RemoveAll(d => d.ID == deckID);
+
+		if (gameSaveData.ActiveDeckID == deckID)
+		{
+			gameSaveData.ActiveDeckID = gameSaveData.DeckSaveDatas.FirstOrDefault()?.ID;
+		}
+
+		Common.Instance.SaveManager.Save();
+		DeckPicker.Rebuild();
 	}
 
 	public void ReturnToMain()
