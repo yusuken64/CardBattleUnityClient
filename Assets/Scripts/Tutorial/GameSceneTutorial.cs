@@ -94,6 +94,11 @@ public class GameSceneTutorial : MonoBehaviour
 		tutorial.Action = TutorialFinished;
 		tutorial.Show();
 
+		if (tutorialName == "Basic1")
+		{
+			FlipDisplayCard();
+		}
+
 		tutorial.transform.localScale = Vector3.zero;
 		TutorialCanvasBG.color = new Color(0, 0, 0, 0);
 
@@ -103,6 +108,18 @@ public class GameSceneTutorial : MonoBehaviour
 			.DOScale(Vector3.one, 0.5f)
 			.SetEase(Ease.OutBack)
 			.SetDelay(0.05f));
+	}
+
+	private void FlipDisplayCard()
+	{
+		// Popup_BattleIntro (this "Basic1" popup) starts inactive in the scene, so DisplayCard1's
+		// FlippableCard.Awake() doesn't run until tutorial.Show() activates it just above - only
+		// after that point does an explicit Flip() stick instead of getting reset by Awake().
+		var flippable = DisplayCard1.FlippableCard;
+		if (flippable == null) { return; }
+
+		flippable.CanFlip = true;
+		flippable.Flip();
 	}
 
 	public void TutorialFinished(string tutorialName)
