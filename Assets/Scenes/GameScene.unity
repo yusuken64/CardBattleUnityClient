@@ -3048,10 +3048,6 @@ PrefabInstance:
       propertyPath: ForceReveal
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5146108261924859069, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
-      propertyPath: FlippableCard
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5779,6 +5775,8 @@ MonoBehaviour:
   RandomSeed: 0
   BattleIntro: {fileID: 1320670705}
   ServerUrl: http://localhost:5299
+  NetworkAnimationQueue: {fileID: 0}
+  MulliganPrompt: {fileID: 0}
   BattleMusic: {fileID: 8300000, guid: dfdc01c6b60cbf244b5666f4039ef52b, type: 3}
 --- !u!1 &1191839122
 GameObject:
