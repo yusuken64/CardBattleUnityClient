@@ -23,7 +23,16 @@ public class FlippableCard : MonoBehaviour
 	public AudioClip FlipCard;
 	public AudioClip JumpCard;
 
-	private void Start()
+	// Whether Card.Setup() is allowed to flip this to the front as soon as it has data to show.
+	// False for reveal-ceremony flows (pack opening, story intro) that must stay closed until
+	// an explicit Flip() call, regardless of when/whether Setup() runs.
+	public bool RevealOnSetup = true;
+
+	// Runs synchronously during Instantiate(), before the instantiating caller's next line of
+	// code executes - unlike Start(), which is deferred and would otherwise run after (and clobber)
+	// a Setup() call made immediately following Instantiate(). This is what makes the default
+	// deterministic instead of racing against every caller's Instantiate()+Setup() pattern.
+	private void Awake()
 	{
 		SetToBack();
 	}

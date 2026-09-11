@@ -49,13 +49,25 @@ public class ModManager : MonoBehaviour
 	internal List<ModData> GetAllMods() =>
 		mods.OrderBy(m => m.modName, StringComparer.OrdinalIgnoreCase).ToList();
 
-	private void LoadMod(ModData mod) => LoadModCardData(mod, loadImages: true);
-
-	private void ScanMod(ModData mod) => LoadModCardData(mod, loadImages: false);
-
-	private void LoadModCardData(ModData mod, bool loadImages)
+	private void LoadMod(ModData mod)
     {
-        if (mod.loaded) { return; }
+        EnsureCardsScanned(mod);
+        EnsureImagesLoaded(mod);
+    }
+
+    private void ScanMod(ModData mod) => EnsureCardsScanned(mod);
+
+    // Called on-demand by the mod preview UI so it always shows real art,
+    // even for mods that were only json-scanned (disabled / not-yet-applied).
+    internal void EnsureFullyLoaded(ModData mod)
+    {
+        EnsureCardsScanned(mod);
+        EnsureImagesLoaded(mod);
+    }
+
+    private void EnsureCardsScanned(ModData mod)
+    {
+        if (mod.cardsScanned) { return; }
         mod.cards.Clear();
         mod.cachedDefinitions = null;
 
@@ -76,12 +88,7 @@ public class ModManager : MonoBehaviour
                 }
 
                 def.id = $"{mod.modName}::{fileName}";
-
-                if (loadImages)
-                {
-                    Texture2D tex = LoadCardTexture(Path.GetDirectoryName(file), fileName);
-                    def.loadedSprite = ToSprite(tex);
-                }
+                def.fileName = fileName;
 
                 mod.cards.Add(def);
             }
@@ -90,7 +97,20 @@ public class ModManager : MonoBehaviour
                 Debug.LogWarning($"Failed to load {file}: {e.Message}");
             }
         }
-        mod.loaded = true;
+        mod.cardsScanned = true;
+    }
+
+    private void EnsureImagesLoaded(ModData mod)
+    {
+        if (mod.imagesLoaded) { return; }
+        mod.cachedDefinitions = null;
+
+        foreach (var card in mod.cards)
+        {
+            Texture2D tex = LoadCardTexture(mod.folderPath, card.fileName);
+            card.loadedSprite = ToSprite(tex);
+        }
+        mod.imagesLoaded = true;
     }
 
     private static bool IsValidCardData(CardData data)
@@ -216,7 +236,8 @@ public class ModData
 
     public List<CardData> cards = new List<CardData>();
 	public List<CardDefinition> cachedDefinitions;
-	public bool loaded;
+	public bool cardsScanned;
+	public bool imagesLoaded;
 }
 
 public class CardData
@@ -228,5 +249,6 @@ public class CardData
 	public int cost;
 	public int attack;
 	public int health;
-	public Sprite loadedSprite;
+	[System.NonSerialized] public string fileName;
+	[System.NonSerialized] public Sprite loadedSprite;
 }

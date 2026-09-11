@@ -159,6 +159,7 @@ public class OpenPackScene : MonoBehaviour
 			card.transform.localRotation = Quaternion.identity;
 			card.transform.localScale = Vector3.one;
 			card.FlipComplete = FlipComplete;
+			card.RevealOnSetup = false;
 			card.Setup(cardDefinition);
 			card.CanFlip = false;
 
@@ -271,6 +272,7 @@ public class OpenPackScene : MonoBehaviour
 			card.transform.localScale = Vector3.one * scale;
 
 			card.FlipComplete = FlipComplete;
+			card.RevealOnSetup = false;
 			card.Setup(cardDefinitions[i]);
 			card.CanFlip = false;
 

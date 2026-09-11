@@ -43,8 +43,11 @@ public class ModMenu : MonoBehaviour
                 modItem.Setup(modData);
                 modItem.PreviewCallBack = (x) =>
                 {
+                    modManager.EnsureFullyLoaded(x.ModData);
+                    var previewCards = x.ModData.cards.Select(ModManager.AsCardDefinition).Where(c => c != null).ToList();
+                    Common.Instance.CardManager.RegisterPreviewCards(previewCards);
                     ModCardPreviews.gameObject.SetActive(true);
-                    ModCardPreviews.Setup(x.ModData.cards.Select(ModManager.AsCardDefinition).Where(c => c != null).ToList());
+                    ModCardPreviews.Setup(previewCards);
                 };
                 modItems.Add(modItem);
             }

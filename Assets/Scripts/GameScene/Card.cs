@@ -128,11 +128,13 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         }
         else
         {
-            if (FlippableCard != null)
+            // Art is always loaded so it's ready the moment the card is revealed, even if that
+            // reveal happens later via an explicit Flip() (see FlippableCard.RevealOnSetup).
+            RefreshCardArt();
+            if (FlippableCard != null && FlippableCard.RevealOnSetup)
             {
                 FlippableCard.SetToFront();
             }
-            RefreshCardArt();
         }
 
         RefreshData();

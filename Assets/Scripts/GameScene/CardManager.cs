@@ -49,6 +49,18 @@ public class CardManager : MonoBehaviour
 		}
 	}
 
+	// Lets not-yet-enabled/not-yet-applied mod cards resolve through GetCardByID/GetSpriteByCardID
+	// (e.g. for the mod preview UI) without waiting for a full ReloadCards().
+	public void RegisterPreviewCards(IEnumerable<CardDefinition> previewCards)
+	{
+		_cardLookup ??= new Dictionary<string, CardDefinition>();
+		foreach (var card in previewCards)
+		{
+			if (card == null || string.IsNullOrEmpty(card.ID)) { continue; }
+			_cardLookup[card.ID] = card;
+		}
+	}
+
 	public List<CardDefinition> CollectableCards()
 	{
 		return AllCards().Where(x => x.Collectable).ToList();
