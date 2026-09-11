@@ -5,6 +5,8 @@ using UnityEngine;
 [Serializable]
 public class Deck
 {
+	public string ID;
+
 	public string Title;
 
 	[SerializeReference]

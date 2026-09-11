@@ -64,6 +64,18 @@ public class GameSaveData
 
 	[SerializeReference]
 	public QuestSaveData QuestSaveData = new();
+
+	public string ActiveDeckID;
+
+	public DeckSaveData GetDeckByID(string id)
+	{
+		return DeckSaveDatas.FirstOrDefault(d => d.ID == id);
+	}
+
+	public DeckSaveData GetActiveDeck()
+	{
+		return GetDeckByID(ActiveDeckID) ?? DeckSaveDatas.FirstOrDefault();
+	}
 }
 
 [Serializable]
@@ -181,6 +193,7 @@ public class AdventureSaveData
 [Serializable]
 public class DeckSaveData
 {
+	public string ID;
 	public string Title;
 	public string HeroCard;
 	public List<string> CardIDs = new();
@@ -188,6 +201,7 @@ public class DeckSaveData
 	internal Deck ToDeck()
 	{
 		var deck = new Deck();
+		deck.ID = ID;
 		deck.Title = Title;
 		deck.HeroCard = Common.Instance.CardManager.GetCardByID(HeroCard);
 		deck.Cards = CardIDs.Select(x => Common.Instance.CardManager.GetCardByID(x))
@@ -201,6 +215,7 @@ public class DeckSaveData
 	{
 		return new DeckSaveData()
 		{
+			ID = deck.ID,
 			Title = deck.Title,
 			HeroCard = deck.HeroCard?.ID,
 			CardIDs = deck.Cards.Select(x => x.ID).ToList()
