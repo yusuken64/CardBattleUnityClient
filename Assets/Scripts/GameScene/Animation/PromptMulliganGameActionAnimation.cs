@@ -11,6 +11,10 @@ public class PromptMulliganGameActionAnimation : GameActionAnimation<PromptMulli
 			MulliganPrompt.gameObject.SetActive(true);
 			MulliganPrompt.Setup(GameManager.Player.Hand.Cards);
 		}
+		else
+		{
+			_ = GameManager.ProcessMoveAsync(GameManager._opponentAgent);
+		}
 
 		yield return null;
 	}
