@@ -35,12 +35,13 @@ public class FlippableCard : MonoBehaviour
 
 	public void SetToBack()
 	{
-		// Stop any in-flight flip animation without letting its OnComplete callbacks fire
-		// (DOKill's default 'complete: false' skips them), then snap to a clean flat state.
-		transform.DOKill();
-		transform.localRotation = Quaternion.identity;
-		//transform.localScale = Vector3.one;
-		animating = false;
+		if (animating || flipped)
+		{
+			transform.DOKill();
+			transform.localRotation = Quaternion.identity;
+			//transform.localScale = Vector3.one;
+			animating = false;
+		}
 
 		Back.SetActive(true);
 		Front.SetActive(false);
@@ -49,10 +50,13 @@ public class FlippableCard : MonoBehaviour
 
 	public void SetToFront()
 	{
-		transform.DOKill();
-		transform.localRotation = Quaternion.identity;
-		//transform.localScale = Vector3.one;
-		animating = false;
+		if (animating || !flipped)
+		{
+			transform.DOKill();
+			transform.localRotation = Quaternion.identity;
+			//transform.localScale = Vector3.one;
+			animating = false;
+		}
 
 		Back.SetActive(false);
 		Front.SetActive(true);
