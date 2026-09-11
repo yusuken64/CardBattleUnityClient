@@ -70,6 +70,11 @@ public class FlippableCard : MonoBehaviour
 		Back.SetActive(false);
 		Front.SetActive(true);
 		flipped = true;
+
+		// Front can itself be a self-contained Card that wraps its own FlippableCard (e.g. pack-opening
+		// and story-intro cards nest a full Card prefab as their Front). Cascade the reveal so that
+		// content is never left showing its own inner "back" once this outer card is revealed.
+		DisplayCard?.FlippableCard?.SetToFront();
 	}
 
 	public void Flip()
@@ -95,6 +100,9 @@ public class FlippableCard : MonoBehaviour
 			// Swap visible side at midpoint
 			Back.SetActive(false);
 			Front.SetActive(true);
+
+			// See SetToFront() - cascade the reveal to a nested Card's own FlippableCard, if any.
+			DisplayCard?.FlippableCard?.SetToFront();
 
 			// Second half: rotate back to 0
 			transform.DOLocalRotate(
@@ -127,11 +135,30 @@ public class FlippableCard : MonoBehaviour
 		if (hit == null)
 			return;
 
-		var flippable = hit.GetComponentInParent<FlippableCard>();
+		var flippable = GetOutermostFlippableCard(hit.transform);
 		if (flippable != null)
 		{
 			flippable.Flip();
 		}
+	}
+
+	// A hit collider can sit on a GameObject that has its own FlippableCard (e.g. the nested Card's
+	// BoxCollider2D, co-located with that Card's own self-contained FlippableCard) while ALSO being
+	// nested inside an outer, wrapping FlippableCard (e.g. a pack-opening chest card). Clicking should
+	// always flip the outermost one - that's the actual interactive reveal-ceremony affordance; any
+	// inner FlippableCard is just the wrapped content's own (here, unused) standalone flip capability.
+	private static FlippableCard GetOutermostFlippableCard(Transform start)
+	{
+		FlippableCard outermost = null;
+		for (var current = start; current != null; current = current.parent)
+		{
+			var candidate = current.GetComponent<FlippableCard>();
+			if (candidate != null)
+			{
+				outermost = candidate;
+			}
+		}
+		return outermost;
 	}
 
 	internal void Setup(CardDefinition cardDefinition)
