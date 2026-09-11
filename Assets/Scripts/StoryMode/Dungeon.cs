@@ -125,10 +125,10 @@ Acquired 1 Pack";
 		var encounter = currentDungeon.StoryModeDungeonEncounterDefinitions[UnityEngine.Random.Range(0, currentDungeon.StoryModeDungeonEncounterDefinitions.Count())];
 		//TODO handle boss, if defined and wins == maxwins - 1;
 
-		DeckSaveData firstDeck = gameSaveData.DeckSaveDatas[0];
+		DeckSaveData activeDeck = gameSaveData.GetActiveDeck();
 		GameStartParams gameStartParams = new()
 		{
-			CombatDeck = firstDeck.ToDeck(),
+			CombatDeck = activeDeck.ToDeck(),
 			Health = 30,
 			CombatDeckEnemy = encounter.Deck.ToDeck(),
 			OpponentHealth = encounter.Health,

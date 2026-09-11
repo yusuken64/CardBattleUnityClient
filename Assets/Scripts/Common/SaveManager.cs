@@ -68,8 +68,23 @@ public class SaveManager : MonoBehaviour
 			{
 				SaveData.GameSaveData.CardCollection.Add(card.ID, 1);
 			}
-			Save();
 		}
+
+		foreach (var deckSaveData in SaveData.GameSaveData.DeckSaveDatas)
+		{
+			if (string.IsNullOrEmpty(deckSaveData.ID))
+			{
+				deckSaveData.ID = Guid.NewGuid().ToString();
+			}
+		}
+
+		if (string.IsNullOrEmpty(SaveData.GameSaveData.ActiveDeckID) ||
+			SaveData.GameSaveData.GetDeckByID(SaveData.GameSaveData.ActiveDeckID) == null)
+		{
+			SaveData.GameSaveData.ActiveDeckID = SaveData.GameSaveData.DeckSaveDatas.FirstOrDefault()?.ID;
+		}
+
+		Save();
 	}
 
 	[ContextMenu("Reset Data")]
