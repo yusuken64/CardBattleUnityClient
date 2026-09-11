@@ -18,6 +18,10 @@ public class FatigueActionAnimation : GameActionAnimation<FatigueAction>
 			yield break;
 		}
 
+		// No real CardBattleEngine.Card behind this - Setup() is never called - so nothing else
+		// ever reveals it past its default (closed) FlippableCard state.
+		fatigueCard.FlippableCard?.SetToFront();
+
 		fatigueCard.DescriptionText.text = @$"No Cards Left in Deck.
 Take {playerData.Fatigue} Damage";
 
