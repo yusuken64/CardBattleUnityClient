@@ -24,7 +24,9 @@ public class SpellCardDefinition : CardDefinition
         var spellCard = new SpellCard(CardName, Cost);
         spellCard.SpriteID = ID;
         spellCard.SpellCastEffects.AddRange(SpellCastEffects.Select(x => x.Create()));
-        spellCard.Description = string.Join(Environment.NewLine, SpellCastEffects.Select(ToDescription));
+        spellCard.Description = !string.IsNullOrWhiteSpace(DescriptionOverride)
+            ? DescriptionOverride
+            : string.Join(Environment.NewLine, SpellCastEffects.Select(ToDescription));
         spellCard.CustomSFX = CustomSFX;
 
         spellCard.ValidTargetSelector = ValidTargetSelector?.Create();

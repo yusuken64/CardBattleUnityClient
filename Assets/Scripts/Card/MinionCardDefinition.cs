@@ -53,7 +53,9 @@ public class MinionCardDefinition : CardDefinition
 			var triggeredEffects = new List<TriggeredEffectWrapper>();
 			triggeredEffects.AddRange(TriggeredEffects);
 			triggeredEffects.AddRange(MinionTriggeredEffects);
-			card.Description = string.Join(Environment.NewLine, triggeredEffects.Select(ToDescription));
+			card.Description = !string.IsNullOrWhiteSpace(DescriptionOverride)
+				? DescriptionOverride
+				: string.Join(Environment.NewLine, triggeredEffects.Select(ToDescription));
 		}
 		catch (Exception)
 		{

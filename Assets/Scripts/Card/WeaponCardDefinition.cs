@@ -19,6 +19,7 @@ public class WeaponCardDefinition : CardDefinition
 	{
 		var weapon = new WeaponCard(WeaponName, Cost, Attack, Durability);
 		weapon.SpriteID = ID;
+		weapon.Description = DescriptionOverride;
 		if (WeaponTriggeredEffects != null)
 		{
 			weapon.TriggeredEffects.AddRange(WeaponTriggeredEffects.Select(x => x.CreateEffect()));

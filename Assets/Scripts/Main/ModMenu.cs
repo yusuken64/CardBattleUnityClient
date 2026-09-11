@@ -44,7 +44,7 @@ public class ModMenu : MonoBehaviour
                 modItem.PreviewCallBack = (x) =>
                 {
                     ModCardPreviews.gameObject.SetActive(true);
-                    ModCardPreviews.Setup(x.ModData.cards.Select(ModManager.AsCardDefinition).ToList());
+                    ModCardPreviews.Setup(x.ModData.cards.Select(ModManager.AsCardDefinition).Where(c => c != null).ToList());
                 };
                 modItems.Add(modItem);
             }
@@ -73,10 +73,28 @@ public class ModMenu : MonoBehaviour
         if (!File.Exists(readmePath))
         {
             string readmeContent = @"SlayQueen Gatekeeper mod format
-Each mod is contained in Mod/{ModName}
-The folder is used as the modname
-Each card is defined in {cardName}.json
-and the Image should be {cardName}.jpg
+================================
+Each mod lives in Mods/{ModName}/ - the folder name is the mod's name shown in-game.
+
+Each card is one {cardName}.json file directly inside your mod folder (not a subfolder),
+plus an optional matching image: {cardName}.jpg, {cardName}.jpeg, or {cardName}.png
+
+JSON fields:
+  cardType     ""minion"", ""weapon"", or ""spell""  (required - must be exactly one of these)
+  name         Card's display name               (required)
+  description  Flat text shown on the card         (optional)
+  cost         Mana cost                           (all types)
+  attack       Attack value                        (minion, weapon)
+  health       Minion Health for ""minion"" cards.
+               Weapon Durability for ""weapon"" cards (yes - ""health"" means durability here).
+               Ignored for ""spell"" cards.
+
+Notes:
+  - Unrecognized cardType values are skipped and logged - they will NOT become a minion.
+  - Card IDs are namespaced internally as ""{ModName}::{fileName}"" so two mods can each
+    ship a card with the same file name without colliding.
+  - Upgrading the game may orphan previously-owned modded cards saved under an older
+    version of this mod format.
 ";
             File.WriteAllText(readmePath, readmeContent);
         }
@@ -105,7 +123,7 @@ and the Image should be {cardName}.jpg
         };
         CreateFiles(defaultDir, fileNameWeapon, weaponData, WeaponImage);
 
-        if (Common.Instance.SaveManager.SaveData.ModSaveData.EnabledMods.Remove(defaultDir))
+        if (Common.Instance.SaveManager.SaveData.ModSaveData.EnabledMods.Remove(Path.GetFileName(defaultDir)))
         {
             Common.Instance.SaveManager.Save();
         }

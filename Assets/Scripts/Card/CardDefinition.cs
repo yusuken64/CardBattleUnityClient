@@ -13,6 +13,9 @@ public abstract class CardDefinition : ScriptableObject
 	public Sprite Sprite;
 	public int Cost = 1;
 
+	// Used by mod-loaded cards to supply a flat description string in place of generated effect text.
+	public string DescriptionOverride;
+
 	[SerializeReference]
 	public ICastRestrictionWrapperBase CastRestriction;
 	[SerializeReference]

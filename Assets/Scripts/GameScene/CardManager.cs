@@ -73,11 +73,18 @@ public class CardManager : MonoBehaviour
 			}
 		}
 
-		return cardsToAdd
-			.Where(x => x != null)
-			.GroupBy(c => c.ID)
-			.Select(g => g.First())
-			.ToList();
+		var grouped = cardsToAdd.Where(x => x != null).GroupBy(c => c.ID).ToList();
+		foreach (var g in grouped)
+		{
+			if (g.Count() > 1)
+			{
+				Debug.LogWarning(
+					$"CardManager: Duplicate card ID '{g.Key}' found across {g.Count()} sources. " +
+					$"Keeping the first one and ignoring the rest.");
+			}
+		}
+
+		return grouped.Select(g => g.First()).ToList();
 	}
 
 	private IEnumerable<CardDefinition> GetCustomCards()

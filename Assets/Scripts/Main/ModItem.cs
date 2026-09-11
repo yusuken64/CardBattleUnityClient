@@ -19,15 +19,12 @@ public class ModItem : MonoBehaviour
 		ModData = modData;
 		ModText.text = $"{ModData.modName} ({modData.cards.Count()} cards)";
 		Toggle.isOn = ModData.enabled;
-		UpdateUI();
+		RefreshPreviewInteractable(ModData.enabled);
 	}
 
-	private void UpdateUI()
+	private void RefreshPreviewInteractable(bool isEnabled)
 	{
-		var enabledMods = Common.Instance.SaveManager.SaveData.ModSaveData.EnabledMods;
-		var enabled = enabledMods.Contains(ModData.modName);
-
-		PreviewButton.interactable = enabled;
+		PreviewButton.interactable = isEnabled;
 	}
 
 	public bool IsModEnabled()
@@ -35,9 +32,9 @@ public class ModItem : MonoBehaviour
 		return Toggle.isOn;
 	}
 
-    public void Toggle_Change(bool change)
+    public void Toggle_Change(bool isOn)
 	{
-
+		RefreshPreviewInteractable(isOn);
 	}
 
 	public void PreviewCards_Clicked()
