@@ -12,6 +12,7 @@ public class PointerInput : MonoBehaviour
     public event Action<Vector2> OnDragStart;
     public event Action<Vector2> OnDrag;
     public event Action<Vector2> OnDragEnd;
+    public event Action<Vector2> OnRightClick;
 
     // -------- SETTINGS ----------
     public float clickTime = 0.2f;
@@ -103,6 +104,12 @@ public class PointerInput : MonoBehaviour
             }
         }
         
+        // ---------------- RIGHT CLICK ----------------
+        if (mouse.rightButton.wasPressedThisFrame)
+        {
+            OnRightClick?.Invoke(pos);
+        }
+
         // ---------------- HOVER END (mouse stopped / left area) ----------------
         if (hovering && moved)
         {

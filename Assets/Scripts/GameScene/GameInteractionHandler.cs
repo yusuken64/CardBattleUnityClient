@@ -33,6 +33,7 @@ public class GameInteractionHandler : MonoBehaviour
 	private void OnEnable()
 	{
 		PointerInput.OnClick += PointerInput_OnClick;
+		PointerInput.OnRightClick += PointerInput_OnRightClick;
 		PointerInput.OnHoverStart += PointerInput_OnHoldStart;
 		PointerInput.OnHoverEnd += PointerInput_OnHoldEnd;
 		PointerInput.OnHoverMove += PointerInput_OnHoldMove;
@@ -46,6 +47,7 @@ public class GameInteractionHandler : MonoBehaviour
 	private void OnDisable()
 	{
 		PointerInput.OnClick -= PointerInput_OnClick;
+		PointerInput.OnRightClick -= PointerInput_OnRightClick;
 		PointerInput.OnHoverStart -= PointerInput_OnHoldStart;
 		PointerInput.OnHoverEnd -= PointerInput_OnHoldEnd;
 		PointerInput.OnHoverMove -= PointerInput_OnHoldMove;
@@ -340,6 +342,14 @@ public class GameInteractionHandler : MonoBehaviour
 					StartLine(currentAimable.DragObject.transform.position);
 				}
 			}
+		}
+	}
+
+	private void PointerInput_OnRightClick(Vector2 obj)
+	{
+		if (currentAimable != null)
+		{
+			CancelAim();
 		}
 	}
 
