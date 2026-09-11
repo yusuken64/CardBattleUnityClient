@@ -6,6 +6,15 @@ public enum GameMode
 	Networked
 }
 
+// Networked mode: how InitializeNetworkedGameAsync should establish the match - mirrors the
+// Quick match (Q) / create (C) / join (J) choice in CardBattleEngine.GamePlayer's RemoteGameClient.
+public enum NetworkJoinMode
+{
+	Host,
+	Join,
+	QuickMatch
+}
+
 public class StartGameArgs
 {
 	public GameMode Mode = GameMode.LocalTest;
@@ -15,6 +24,9 @@ public class StartGameArgs
 
 	// Networked mode: identity/match info supplied by the server/matchmaking layer.
 	public Guid LocalPlayerId;
+	public NetworkJoinMode JoinMode = NetworkJoinMode.Host;
+
+	// Only meaningful when JoinMode == Join.
 	public string MatchId;
 
 	public static StartGameArgs LocalTestDefault()

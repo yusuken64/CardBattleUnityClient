@@ -15,6 +15,7 @@ public class StoryModeScene : MonoBehaviour
     public GameObject DataObject;
 
     public TutorialPopup TutorialPopup;
+    public NetworkGameDialog NetworkGameDialog;
 
     public AudioClip TownMusic;
 
@@ -24,6 +25,7 @@ public class StoryModeScene : MonoBehaviour
         Settings.gameObject.SetActive(false);
         DataObject.gameObject.SetActive(false);
         TutorialPopup.gameObject.SetActive(false);
+        NetworkGameDialog.gameObject.SetActive(false);
 
         ReloadDungeonState();
         ShowTutorial();
@@ -103,6 +105,11 @@ public class StoryModeScene : MonoBehaviour
     public void Back_Clicked()
     {
         Settings.gameObject.SetActive(true);
+    }
+
+    public void NetworkedGame_Click()
+    {
+        NetworkGameDialog.Show();
     }
 
     public void RefreshRedDots()

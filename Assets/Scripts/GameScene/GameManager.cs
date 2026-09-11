@@ -240,40 +240,54 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	// Connects to GameServer's MatchHub and either creates or joins a match. Note this only stands
-	// up the connection/submission channel - Player/Opponent/Board still expect live CardBattleEngine
-	// objects (see InitializeLocalTestGame), and nothing here renders from the PlayerGameView pushes
-	// yet. That's a separate rendering adapter, not part of this.
+	// Connects to GameServer's MatchHub and either creates, joins, or quick-matches into a match -
+	// the same three choices CardBattleEngine.GamePlayer's RemoteGameClient.CreateOrJoinMatch offers
+	// (Q/C/J), just driven by args.JoinMode instead of a console prompt. Note this only stands up the
+	// connection/submission channel - Player/Opponent/Board still expect live CardBattleEngine objects
+	// (see InitializeLocalTestGame), and nothing here renders from the PlayerGameView pushes yet.
+	// That's a separate rendering adapter, not part of this.
 	private async Task InitializeNetworkedGameAsync(StartGameArgs args)
 	{
+		var matchFound = new TaskCompletionSource<Guid>();
+
 		_networkClient = new MiniSignalRClient($"{ServerUrl}/hubs/match");
 		_networkClient.On<PlayerGameView>("OnStateUpdated", OnNetworkStateUpdated);
 		_networkClient.On<string>("OnActionRejected", reason => Debug.LogWarning($"Action rejected: {reason}"));
 		_networkClient.On<Guid?>("OnMatchEnded", winnerId => Debug.Log($"Networked match ended. Winner: {winnerId}"));
-		_networkClient.On<Guid>("OnMatchFound", matchId => Debug.Log($"Match found: {matchId}"));
+		_networkClient.On<Guid>("OnMatchFound", matchId => matchFound.TrySetResult(matchId));
 
 		CardArtNetworkService.Initialize(_networkClient);
 
 		await _networkClient.ConnectAsync();
 
-		bool isHost = string.IsNullOrEmpty(args.MatchId);
-		DecklistRequest decklist = TestDeck.ToDeck().ToDecklistRequest(isHost ? "Host" : "Joiner");
+		DecklistRequest decklist = TestDeck.ToDeck().ToDecklistRequest(args.JoinMode == NetworkJoinMode.Join ? "Joiner" : "Host");
 
-		if (isHost)
+		switch (args.JoinMode)
 		{
-			_networkMatchId = await _networkClient.InvokeAsync<Guid>("CreateMatch", decklist);
-			CardArtNetworkService.SetMatchId(_networkMatchId);
-			Debug.Log($"Created match {_networkMatchId}. Waiting for an opponent to join.");
-		}
-		else
-		{
-			_networkMatchId = Guid.Parse(args.MatchId);
-			CardArtNetworkService.SetMatchId(_networkMatchId);
-			JoinResult joinResult = await _networkClient.InvokeAsync<JoinResult>("JoinMatch", _networkMatchId, decklist);
-			if (!joinResult.Success)
-			{
-				Debug.LogError($"Failed to join match {_networkMatchId}: {joinResult.Error}");
-			}
+			case NetworkJoinMode.QuickMatch:
+				await JoinQueueAsync(decklist);
+				Debug.Log("Searching for an opponent...");
+				_networkMatchId = await matchFound.Task;
+				CardArtNetworkService.SetMatchId(_networkMatchId);
+				Debug.Log($"Match found: {_networkMatchId}");
+				break;
+
+			case NetworkJoinMode.Join:
+				_networkMatchId = Guid.Parse(args.MatchId);
+				CardArtNetworkService.SetMatchId(_networkMatchId);
+				JoinResult joinResult = await _networkClient.InvokeAsync<JoinResult>("JoinMatch", _networkMatchId, decklist);
+				if (!joinResult.Success)
+				{
+					Debug.LogError($"Failed to join match {_networkMatchId}: {joinResult.Error}");
+				}
+				break;
+
+			case NetworkJoinMode.Host:
+			default:
+				_networkMatchId = await _networkClient.InvokeAsync<Guid>("CreateMatch", decklist);
+				CardArtNetworkService.SetMatchId(_networkMatchId);
+				Debug.Log($"Created match {_networkMatchId}. Waiting for an opponent to join.");
+				break;
 		}
 	}
 
@@ -445,8 +459,8 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	// Matchmaking queue entry points. Not called anywhere yet - there is no lobby/matchmaking UI in
-	// this project; added so the hub's full RPC surface is available for whenever that UI exists.
+	// Matchmaking queue entry points. JoinQueueAsync backs NetworkJoinMode.QuickMatch above;
+	// LeaveQueueAsync isn't wired to any UI yet (no way to cancel a pending quick match).
 	private async Task JoinQueueAsync(DecklistRequest deck)
 	{
 		await _networkClient.InvokeAsync<object>("JoinQueue", deck);
