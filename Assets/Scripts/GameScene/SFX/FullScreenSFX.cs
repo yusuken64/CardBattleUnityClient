@@ -7,11 +7,11 @@ public class FullScreenSFX : CustomSFX
 {
     public GameObject FullScreenObject;
     public float AnimationTime;
-    public override IEnumerator Routine(IGameAction action, ActionContext context)
+    public override IEnumerator Routine(ActionPresentation context)
     {
         if (FullScreenObject != null)
         {
-            var muzzle = Instantiate(FullScreenObject, Vector3.zero, Quaternion.identity);
+            var muzzle = context.Own(Instantiate(FullScreenObject, Vector3.zero, Quaternion.identity));
             Destroy(muzzle, 1f);
         }
 

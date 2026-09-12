@@ -10,8 +10,8 @@ public class FatigueActionAnimation : GameActionAnimation<FatigueAction>
 
 	public override IEnumerator Play()
 	{
-		var fatigueCard = Instantiate(FatigueCardPrefab);
-		var playerData = ClonedState.GetEntityById(Context.SourcePlayer.Id) as CardBattleEngine.Player;
+		var fatigueCard = Presentation.Own(Instantiate(FatigueCardPrefab));
+		var playerData = Presentation.SourcePlayer;
 
 		if (playerData == null)
 		{
@@ -23,23 +23,23 @@ public class FatigueActionAnimation : GameActionAnimation<FatigueAction>
 		fatigueCard.FlippableCard?.SetToFront();
 
 		fatigueCard.DescriptionText.text = @$"No Cards Left in Deck.
-Take {playerData.Fatigue} Damage";
+Take {Presentation.Fatigue} Damage";
 
-		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
+		var player = GameManager.GetPlayerFor(Presentation.SourcePlayer);
 		var startPosition = player.DrawPile.transform.position;
 
 		fatigueCard.transform.position = startPosition;
 		fatigueCard.Dragging = true;
 
-		Sequence seq = DOTween.Sequence();
+		Sequence seq = DOTween.Sequence().SetId(Presentation);
 
 		// Move to center
 		seq.Append(
-			fatigueCard.transform.DOMove(Vector3.zero, 1f)
+			fatigueCard.transform.DOMove(Vector3.zero, 1f).SetId(Presentation)
 				.SetEase(Ease.OutCubic)
 		);
 		seq.Join(
-			fatigueCard.transform.DOScale(Vector3.one * 2, 1f)
+			fatigueCard.transform.DOScale(Vector3.one * 2, 1f).SetId(Presentation)
 				.SetEase(Ease.OutCubic)
 		);
 
@@ -49,10 +49,10 @@ Take {playerData.Fatigue} Damage";
 		// Spawn particles
 		seq.AppendCallback(() =>
 		{
-			var particles = Instantiate(FatigueParticlesPrefab, fatigueCard.transform.position, Quaternion.identity);
+			var particles = Presentation.Own(Instantiate(FatigueParticlesPrefab, fatigueCard.transform.position, Quaternion.identity));
 			particles.transform.localScale = Vector3.one * 2;
 		});
-		
+
 		seq.AppendInterval(0.3f);
 
 		// Destroy card

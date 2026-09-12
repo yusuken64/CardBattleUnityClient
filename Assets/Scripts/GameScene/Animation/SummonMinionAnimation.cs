@@ -12,17 +12,18 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 	{
 		Common.Instance.AudioManager.PlaySound(SummonMinionClip);
 
-		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
-		CardBattleEngine.Minion minionData = Context.SummonedMinion;
-		CardBattleEngine.Minion minionDataSnapShot = Context.SummonedMinionSnapShot;
+		var player = GameManager.GetPlayerFor(Presentation.SourcePlayer);
+		CardBattleEngine.Minion minionData = Presentation.SummonedMinion;
+        if (minionData == null) yield break;
 
-		Debug.Log($"{minionData} at {Context.PlayIndex}");
+
+		Debug.Log($"{minionData} at {Presentation.PlayIndex}");
 		var existingMinion = player.Board.Minions
-			.FirstOrDefault(minion => minion.SummonedCard == Context.SourceCard &&
-			Context.SourceCard != null);
+			.FirstOrDefault(minion => minion.SummonedCard?.Id == Presentation.SourceCard?.Id &&
+			Presentation.SourceCard != null);
 		if (existingMinion == null)
 		{
-			var index = Context.PlayIndex;
+			var index = Presentation.PlayIndex;
 
 			//play summon animation and set existingMinion
 			var minionPrefab = Object.FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
@@ -39,13 +40,13 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 		else
 		{
 			player.Board.Minions.Remove(existingMinion);
-			player.Board.Minions.Insert(Context.PlayIndex, existingMinion);
+			player.Board.Minions.Insert(Presentation.PlayIndex, existingMinion);
 			player.Board.UpdateMinionPositions();
 		}
 
 		if (existingMinion != null)
 		{
-			var particles = Instantiate(SummonParticlePrefab, existingMinion.transform);
+			var particles = Presentation.Own(Instantiate(SummonParticlePrefab, existingMinion.transform));
 			particles.transform.localPosition = Vector3.zero;
 			Destroy(particles.gameObject, 3f);
 		}
@@ -54,6 +55,12 @@ public class SummonMinionAnimation : GameActionAnimation<SummonMinionAction>
 		existingMinion.Setup(minionData);
 		//existingMinion.RefreshData(minionDataSnapShot);
 
-		yield return null;
+		var appearance = existingMinion.GetComponent<Animator>();
+        if (appearance != null)
+        {
+            yield return null;
+            while (appearance != null && appearance.GetCurrentAnimatorStateInfo(0).IsName("MinionAppear") &&
+                   appearance.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) yield return null;
+        }
 	}
 }

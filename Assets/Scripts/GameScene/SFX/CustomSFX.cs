@@ -5,5 +5,16 @@ using UnityEngine;
 
 public abstract class CustomSFX : ScriptableObject
 {
-	abstract public IEnumerator Routine(IGameAction action, ActionContext context);
+	public string PresentationEffectId
+	{
+		get
+		{
+#if UNITY_EDITOR
+			return UnityEditor.AssetDatabase.AssetPathToGUID(UnityEditor.AssetDatabase.GetAssetPath(this));
+#else
+			return PresentationEffectRegistry.IdFor(this);
+#endif
+		}
+	}
+	abstract public IEnumerator Routine(ActionPresentation context);
 }

@@ -13,7 +13,7 @@ public class ProjectileSFX : CustomSFX
     public GameObject ImpactObject;
     public float ProjectileDuration = 0.5f; // time for projectile to reach target
 
-    public override IEnumerator Routine(IGameAction action, ActionContext context)
+    public override IEnumerator Routine(ActionPresentation context)
     {
         var gameManager = FindFirstObjectByType<GameManager>();
         GameObject source = gameManager.GetObjectFor(context.Source);
@@ -37,22 +37,22 @@ public class ProjectileSFX : CustomSFX
 
             if (MuzzleObject != null && source != null)
             {
-                var muzzle = Instantiate(MuzzleObject, source.transform.position, Quaternion.identity);
+                var muzzle = context.Own(Instantiate(MuzzleObject, source.transform.position, Quaternion.identity));
                 Destroy(muzzle, 1f);
             }
 
-            if (ProjectileObject == null || target == null)
+            if (ProjectileObject == null || source == null || target == null)
                 yield break;
 
-            var projectileInstance = Instantiate(ProjectileObject, source.transform.position, Quaternion.identity);
+            var projectileInstance = context.Own(Instantiate(ProjectileObject, source.transform.position, Quaternion.identity));
 
-            Tween moveTween = projectileInstance.transform.DOMove(target.transform.position, ProjectileDuration)
+            Tween moveTween = projectileInstance.transform.DOMove(target.transform.position, ProjectileDuration).SetId(context)
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
                     if (ImpactObject != null)
                     {
-                        var impact = Instantiate(ImpactObject, target.transform.position, Quaternion.identity);
+                        var impact = context.Own(Instantiate(ImpactObject, target.transform.position, Quaternion.identity));
                         Destroy(impact, 1f);
                     }
 

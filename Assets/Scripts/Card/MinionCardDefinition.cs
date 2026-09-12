@@ -22,7 +22,7 @@ public class MinionCardDefinition : CardDefinition
     public bool HasLifeSteal;
     public bool HasReborn;
     public bool CannotAttack;
-    
+
     public List<TriggeredEffectWrapper> MinionTriggeredEffects = new List<TriggeredEffectWrapper>();
 
     // Creates a runtime MinionCard from this definition
@@ -30,8 +30,9 @@ public class MinionCardDefinition : CardDefinition
     {
         MinionCard card = new MinionCard(CardName, Cost, Attack, Health)
         {
+            CardId = ID,
             SpriteID = ID,
-            MinionTribes = new List<MinionTribe>(MinionTribes),
+            MinionTribes = MinionTribes.Where(x => x != MinionTribe.None).Select(x => x.ToString()).ToList(),
             IsStealth = this.IsStealth,
             HasCharge = this.HasCharge,
             HasDivineShield = this.HasDivineShield,
@@ -139,3 +140,6 @@ public class SequentialEffectWrapper
         };
     }
 }
+
+// Keep the numeric values serialized in existing Unity card assets. The engine now uses strings.
+public enum MinionTribe { None = 0, All = 1, Murloc = 2 }

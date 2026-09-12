@@ -6,11 +6,13 @@ public class UnsummonAnimation : GameActionAnimation<ReturnMinionToCard>
 {
 	public override IEnumerator Play()
 	{
-		var player = GameManager.GetPlayerFor(Context.Target.Owner);
+		if (Presentation.Target == null) yield break;
+		var player = GameManager.GetPlayerFor(Presentation.Target.Owner);
 
-		if (Context.Target is CardBattleEngine.Minion minion)
+		if (Presentation.Target is CardBattleEngine.Minion minion)
 		{
-			var minionObject = GameManager.GetObjectFor(minion).GetComponent<Minion>();
+			var minionObject = GameManager.GetObjectFor(minion)?.GetComponent<Minion>();
+			if (minionObject == null) yield break;
 			if (player.Board.Minions.Contains(minionObject))
 			{
 				player.Board.Minions.Remove(minionObject);

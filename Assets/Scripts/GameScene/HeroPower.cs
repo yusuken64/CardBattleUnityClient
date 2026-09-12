@@ -130,7 +130,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 
 		if (gameManager.Args?.Mode == GameMode.Networked)
 		{
-			return gameManager.HasNetworkAction(nameof(HeroPowerAction), Player.Data.Id);
+			return gameManager.HasNetworkAction(nameof(HeroPowerAction), Player.Data.Id, requireNoTarget: true);
 		}
 
 		return Player.Data.HeroPower != null &&

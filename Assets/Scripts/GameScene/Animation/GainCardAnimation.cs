@@ -6,12 +6,11 @@ public class GainCardAnimation : GameActionAnimation<GainCardAction>
 {
 	public override IEnumerator Play()
 	{
-		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
+		var player = GameManager.GetPlayerFor(Presentation.SourcePlayer);
 		var cardPrefab = Object.FindAnyObjectByType<GameInteractionHandler>().CardPrefab;
 		var newCard = Object.Instantiate(cardPrefab, player.Hand.transform);
-		var cardData = Context.CardGained;
-		cardData.Owner = Context.SourcePlayer;
-		newCard.Setup(cardData);
+		var cardData = Presentation.CardGained;
+        if (cardData != null) newCard.Setup(cardData);
 		player.Hand.AddCard(newCard);
 
 		Vector3 worldPos = player.DrawPile.transform.position;

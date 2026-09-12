@@ -18,6 +18,7 @@ public class WeaponCardDefinition : CardDefinition
 	public override CardBattleEngine.Card CreateCard()
 	{
 		var weapon = new WeaponCard(WeaponName, Cost, Attack, Durability);
+		weapon.CardId = ID;
 		weapon.SpriteID = ID;
 		weapon.Description = DescriptionOverride;
 		if (WeaponTriggeredEffects != null)

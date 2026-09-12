@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUnityGameEntity
 {
     public CardBattleEngine.Minion Data { get; private set; }
+    internal void BindData(CardBattleEngine.Minion data) => Data = data;
     public MinionCard SummonedCard { get; set; }
 
     public Image CardImage;

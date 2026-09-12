@@ -4,18 +4,6 @@ using System.Collections;
 public class PromptMulliganGameActionAnimation : GameActionAnimation<PromptMulliganGameAction>
 {
 	public MulliganPrompt MulliganPrompt;
-	public override IEnumerator Play()
-	{
-		if (Context.SourcePlayer == GameManager.Player.Data)
-		{
-			MulliganPrompt.gameObject.SetActive(true);
-			MulliganPrompt.Setup(GameManager.Player.Hand.Cards);
-		}
-		else
-		{
-			_ = GameManager.ProcessMoveAsync(GameManager._opponentAgent);
-		}
-
-		yield return null;
-	}
+    // The playback coordinator applies captured values and advances the game after the visuals.
+    public override IEnumerator Play() { yield break; }
 }

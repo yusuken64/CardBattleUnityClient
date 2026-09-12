@@ -6,12 +6,12 @@ public class EndTurnAnimation : GameActionAnimation<EndTurnAction>
 {
 	public override IEnumerator Play()
 	{
-		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
-		if (Context.SourcePlayer == GameManager.Opponent.Data)
+		var player = GameManager.GetPlayerFor(Presentation.SourcePlayer);
+		if (Presentation.SourcePlayer.Id == GameManager.Opponent.Data.Id)
 		{
 			yield return new WaitForSecondsRealtime(0.5f);
 
-			GameManager.OpponentTurn = false;
+
 			yield return new WaitForSecondsRealtime(1.0f);
 		}
 		else

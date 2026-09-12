@@ -36,38 +36,10 @@ public class HeroPowerDefinition : CardDefinition
 			UsedThisTurn = false
 		};
 	}
-	public static CardBattleEngine.HeroPower CreateHeroPowerFromHeroCard(MinionCardDefinition minionCard)
+	public static CardBattleEngine.HeroPower CreateHeroPowerFromHeroCard(MinionCardDefinition minionCard, CardBattleEngine.Player owner = null)
 	{
-		if (minionCard == null) { return null; }
-
-		List<TriggeredEffectWrapper> minionTriggeredEffects = minionCard.MinionTriggeredEffects;
-		if (minionTriggeredEffects != null &&
-			minionTriggeredEffects.Any() &&
-			minionTriggeredEffects[0].EffectTrigger == EffectTrigger.Battlecry)
-		{
-			TriggeredEffectWrapper triggeredEffectWrapper = minionTriggeredEffects[0];
-			IAffectedEntitySelector affectedEntitySelector = minionTriggeredEffects[0].AffectedEntitySelectorWrapper?.Create();
-			if (affectedEntitySelector is ContextSelector contextSelector)
-			{
-				if (contextSelector.IncludeSummonedMinion)
-				{
-					contextSelector.IncludeSourcePlayer = true;
-				}
-			}
-
-			return new CardBattleEngine.HeroPower()
-			{
-				Name = $"Invoke {minionCard.CardName}",
-				ValidTargetSelector = minionCard.ValidTargetSelector?.Create(),
-				CastRestriction = minionCard.CastRestriction?.Create(),
-				AffectedEntitySelector = affectedEntitySelector,
-				GameActions = minionTriggeredEffects[0].GameActions.Select(x => x.Create()).ToList(),
-				ManaCost = minionCard.Cost,
-				UsedThisTurn = false
-			};
-		}
-
-		return null;
+		var leader = minionCard?.CreateCard() as MinionCard;
+		if (leader != null) leader.Owner = owner;
+		return CardBattleEngine.HeroPower.FromLeader(leader);
 	}
 }
-

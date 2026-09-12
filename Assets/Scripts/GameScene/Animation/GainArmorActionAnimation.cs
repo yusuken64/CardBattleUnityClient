@@ -3,13 +3,6 @@ using System.Collections;
 
 public class GainArmorActionAnimation : GameActionAnimation<GainArmorAction>
 {
-	public override IEnumerator Play()
-	{
-		var player = GameManager.GetPlayerFor(Context.Target as CardBattleEngine.Player);
-		if (player == null) { yield break; }
-		player.Armor += Context.ArmorGained;
-		player.UpdateUI();
-
-		yield return null;
-	}
+    // The playback coordinator applies captured values and advances the game after the visuals.
+    public override IEnumerator Play() { yield break; }
 }

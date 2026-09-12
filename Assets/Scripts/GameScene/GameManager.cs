@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public partial class GameManager : MonoBehaviour
 {
 	public static string ReturnScreenName;
 	public static Func<bool, IEnumerator> GameResultRoutine;
@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
 
 	void OnDestroy()
 	{
+        AnimationQueue?.Cancel(this);
 		_isDestroying = true;
 		if (_networkSession != null)
 		{
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
 	{
 		FindFirstObjectByType<ScrollingBackground>(FindObjectsInactive.Include)?
 			.ActivateBackgroundByName(GameStartParams?.BackgroundName);
-		
+
 		_engine = new GameEngine();
 
 		StartGameArgs args = PendingStartArgs ?? StartGameArgs.LocalTestDefault();
@@ -318,71 +319,24 @@ public class GameManager : MonoBehaviour
 		GameInitialized?.Invoke(this._engine);
 	}
 
-	private void OnNetworkStateUpdated(PlayerGameView view)
-	{
-		ResolveNetworkSceneReferences();
-		_lastNetworkView = view;
-		_networkSubmissionPending = false;
-		_networkUnavailable = false;
-
-		if (LocalPlayerId == null)
-		{
-			LocalPlayerId = view.ViewerPlayerId;
-		}
-
-		RequestArtForRevealedOpponentCards(view);
-
-		bool hasAnimationEntries = view.NewHistory != null && view.NewHistory.Count > 0;
-		if (NetworkAnimationQueue != null && (hasAnimationEntries || NetworkAnimationQueue.IsProcessing))
-		{
-			NetworkAnimationQueue.Enqueue(view);
-		}
-		else
-		{
-			ApplyBoardState(BoardStateSnapshot.FromPlayerGameView(view));
-		}
-
-		// (c) Mulligan trigger: show screen exactly once per match when hand becomes non-empty
-		if (!_mulliganHandled && view.Self?.Hand != null && view.Self.Hand.Count > 0)
-		{
-			var hand = view.Self.Hand.Select(cv => CardBuilder.BuildCard(cv, null)).ToList();
-			MulliganPrompt?.SetupNetworked(hand);
-			_mulliganHandled = true;
-		}
-
-		if (view.PendingChoice != null)
-		{
-			MulliganPrompt?.TryHandlePendingChoice(view.PendingChoice);
-		}
-
-		if (_mulliganHandled && (view.LegalActions?.Count ?? 0) > 0 && view.PendingChoice == null &&
-			view.CurrentPlayerId == LocalPlayerId && MulliganPrompt != null && MulliganPrompt.gameObject.activeSelf)
-		{
-			MulliganPrompt.gameObject.SetActive(false);
-		}
-
-		ActivePlayerTurn = !_networkSubmissionPending && !_networkUnavailable &&
-			view.PromptVersion.HasValue && (view.LegalActions?.Count ?? 0) > 0;
-		OpponentTurn = view.CurrentPlayerId != LocalPlayerId;
-		UpdateNetworkInteractionState(view);
-
-		if (view.IsGameOver)
-		{
-			Debug.Log($"Networked match over. Winner: {view.WinnerPlayerId}");
-
-			if (GameResultRoutine != null)
-			{
-				bool didWin = view.WinnerPlayerId == LocalPlayerId;
-				StartCoroutine(GameResultRoutine(didWin));
-			}
-		}
-	}
+    private void OnNetworkStateUpdated(PlayerGameView view)
+    {
+        if (view == null || (_lastNetworkView != null && view.StateRevision <= _lastNetworkView.StateRevision)) return;
+        ResolveNetworkSceneReferences();
+        _lastNetworkView = view;
+        _networkSubmissionPending = false;
+        if (LocalPlayerId == null) LocalPlayerId = view.ViewerPlayerId;
+        ActivePlayerTurn = false;
+        UpdateNetworkInteractionState(view);
+        RequestArtForRevealedOpponentCards(view);
+        NetworkAnimationQueue.Enqueue(view);
+    }
 
 	private void ResolveNetworkSceneReferences()
 	{
 		if (NetworkAnimationQueue == null)
 		{
-			NetworkAnimationQueue = FindFirstObjectByType<NetworkAnimationQueue>(FindObjectsInactive.Include);
+			NetworkAnimationQueue = FindFirstObjectByType<NetworkAnimationQueue>(FindObjectsInactive.Include) ?? gameObject.AddComponent<NetworkAnimationQueue>();
 		}
 		if (NetworkAnimationQueue != null && NetworkAnimationQueue.GameManager == null)
 		{
@@ -400,6 +354,11 @@ public class GameManager : MonoBehaviour
 
 	private void UpdateNetworkInteractionState(PlayerGameView view)
 	{
+		if (MulliganPrompt != null && MulliganPrompt.CanvasGroup != null)
+		{
+			MulliganPrompt.CanvasGroup.interactable = CanSubmitNetworkAction;
+			MulliganPrompt.CanvasGroup.blocksRaycasts = CanSubmitNetworkAction;
+		}
 		Player?.UpdatePlayableActions(ActivePlayerTurn);
 		Opponent?.UpdatePlayableActions(false);
 
@@ -424,16 +383,19 @@ public class GameManager : MonoBehaviour
 		_networkSubmissionPending = false;
 		if (_lastNetworkView != null)
 		{
-			OnNetworkStateUpdated(_lastNetworkView);
+			OnPresentationQueueDrained();
 		}
 	}
 
 	private void OnNetworkMatchEnded(Guid? winnerId)
 	{
 		Debug.Log($"Networked match ended. Winner: {winnerId}");
+        _networkEnded = true;
+        _networkWinner = winnerId;
 		ActivePlayerTurn = false;
 		_networkUnavailable = true;
 		UpdateNetworkInteractionState(_lastNetworkView);
+        OnPresentationQueueDrained();
 	}
 
 	private void OnNetworkDisconnected()
@@ -487,7 +449,7 @@ public class GameManager : MonoBehaviour
 	// rendering adapter's job, not this method's - callers just hand over the chosen entry.
 	public void SubmitLocalAction(LegalActionView chosen)
 	{
-		if (_networkClient == null || _lastNetworkView?.PromptVersion == null || _networkSubmissionPending)
+		if (!CanSubmitNetworkAction)
 		{
 			Debug.LogError("No active network prompt to submit an action against.");
 			return;
@@ -506,7 +468,7 @@ public class GameManager : MonoBehaviour
 		{
 			Debug.LogWarning($"Server rejected action: {result.Error}");
 			_networkSubmissionPending = false;
-			UpdateNetworkInteractionState(_lastNetworkView);
+			OnPresentationQueueDrained();
 		}
 	}
 
@@ -514,7 +476,7 @@ public class GameManager : MonoBehaviour
 	{
 		chosen = null;
 		if (Args?.Mode != GameMode.Networked || _lastNetworkView?.LegalActions == null ||
-			_lastNetworkView.PromptVersion == null || _networkSubmissionPending || _networkUnavailable)
+			_lastNetworkView.PromptVersion == null || !CanSubmitNetworkAction)
 		{
 			return false;
 		}
@@ -535,10 +497,10 @@ public class GameManager : MonoBehaviour
 		return chosen != null;
 	}
 
-	public bool HasNetworkAction(string actionType, Guid? sourceId = null, bool requireTarget = false)
+	public bool HasNetworkAction(string actionType, Guid? sourceId = null, bool requireTarget = false, bool requireNoTarget = false)
 	{
 		if (Args?.Mode != GameMode.Networked || _lastNetworkView?.LegalActions == null ||
-			_lastNetworkView.PromptVersion == null || _networkSubmissionPending || _networkUnavailable)
+			_lastNetworkView.PromptVersion == null || !CanSubmitNetworkAction)
 		{
 			return false;
 		}
@@ -546,7 +508,8 @@ public class GameManager : MonoBehaviour
 		return _lastNetworkView.LegalActions.Any(action =>
 			action.ActionType == actionType &&
 			(!sourceId.HasValue || action.SourceEntityId == sourceId) &&
-			(!requireTarget || action.TargetEntityId.HasValue));
+			(!requireTarget || action.TargetEntityId.HasValue) &&
+            (!requireNoTarget || !action.TargetEntityId.HasValue));
 	}
 
 	// Pull-based state fetch for the caller's own seat. Not called anywhere yet - added so the hub's
@@ -568,7 +531,11 @@ public class GameManager : MonoBehaviour
 		}
 
 		PlayerGameView view = await GetStateAsync(_networkMatchId);
-		ApplyBoardState(BoardStateSnapshot.FromPlayerGameView(view));
+        if (this == null || _isDestroying) return;
+        // A push may have arrived while GetState was in flight; use the newest baseline.
+        if (_lastNetworkView != null && (_lastNetworkView.StateRevision > (view?.StateRevision ?? 0))) view = _lastNetworkView;
+        _lastNetworkView = view;
+        NetworkAnimationQueue.ResetTo(view);
 	}
 
 	// Instant snap (no animation) of both players' hand/board/health/mana to match snapshot.
@@ -611,7 +578,7 @@ public class GameManager : MonoBehaviour
 		var minionPrefab = FindFirstObjectByType<GameInteractionHandler>().MinionPrefab;
 		for (int i = 0; i < snapshot.Data.Board.Count; i++)
 		{
-			var minionData = snapshot.Data.Board[i];
+			var minionData = snapshot.Data.Board[i] as CardBattleEngine.Minion;
 			var newMinion = Instantiate(minionPrefab, player.Board.transform);
 			newMinion.Setup(minionData);
 			player.Board.Minions.Add(newMinion);
@@ -667,7 +634,8 @@ public class GameManager : MonoBehaviour
 	{
 		player.Data = data;
 		player.HeroImage.sprite = deck.HeroCard.Sprite;
-		player.HeroPower.OriginalCard = deck.HeroCard.CreateCard();
+		player.HeroPower.OriginalCard = data.HeroPower?.LeaderCard ?? deck.HeroCard.CreateCard();
+		player.HeroPower.OriginalCard.Owner = data;
 		player.HeroPower.Data = player.Data.HeroPower;
 		player.RefreshData();
 	}
@@ -677,12 +645,12 @@ public class GameManager : MonoBehaviour
 		CardBattleEngine.Player p1 = new CardBattleEngine.Player("Alice");
 		p1.Deck.AddRange(playerDeck.Cards.Select(x => x.CreateCard()).ToList());
 		p1.Deck.ForEach(x => x.Owner = p1);
-		p1.HeroPower = HeroPowerDefinition.CreateHeroPowerFromHeroCard(playerDeck.HeroCard as MinionCardDefinition);
+		p1.HeroPower = HeroPowerDefinition.CreateHeroPowerFromHeroCard(playerDeck.HeroCard as MinionCardDefinition, p1);
 
 		CardBattleEngine.Player p2 = new CardBattleEngine.Player("Bob");
 		p2.Deck.AddRange(enemyDeck.Cards.Select(x => x.CreateCard()).ToList());
 		p2.Deck.ForEach(x => x.Owner = p2);
-		p2.HeroPower = HeroPowerDefinition.CreateHeroPowerFromHeroCard(enemyDeck.HeroCard as MinionCardDefinition);
+		p2.HeroPower = HeroPowerDefinition.CreateHeroPowerFromHeroCard(enemyDeck.HeroCard as MinionCardDefinition, p2);
 
 		List<CardBattleEngine.Card> cardDB = Common.Instance.CardManager.AllCards()
 			.Select(x => x.CreateCard()).ToList();
@@ -802,7 +770,9 @@ public class GameManager : MonoBehaviour
 	private void ActionPlaybackCallback(GameState state, (IGameAction action, ActionContext context) current)
 	{
 		//Debug.Log(current);
-		AnimationQueue.EnqueueAnimation(this, state, current);
+		_localResolutionPending = true;
+        ActivePlayerTurn = false;
+        AnimationQueue.EnqueueAnimation(this, state, current);
 
 		if (state.CurrentPlayer == Player.Data)
 		{
@@ -821,29 +791,11 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private void ActionResolvedCallback(GameState state)
-	{
-		IGameAgent agent = null;
-		if (!OpponentTurn &&
-			_gameState.CurrentPlayer.Id == Player.Data.Id &&
-			_playerAgent != null)
-		{
-			agent = _playerAgent;
-		}
-		else if (
-			OpponentTurn &&
-			_gameState.CurrentPlayer.Id == Opponent.Data.Id)
-		{
-			agent = _opponentAgent;
-		}
-
-		_ = ProcessMoveAsync(agent);
-
-		Opponent.UpdatePlayableActions(false);
-		Player.UpdatePlayableActions(
-			ActivePlayerTurn &&
-			state.CurrentPlayer == Player.Data);
-	}
+    private void ActionResolvedCallback(GameState state)
+    {
+        // Engine resolution may finish well before its presentation. Never request the next move here.
+        _localResolutionPending = true;
+    }
 
 	public async Task ProcessMoveAsync(IGameAgent gameAgent)
 	{
@@ -852,6 +804,7 @@ public class GameManager : MonoBehaviour
 
 		var nextAction = await Task.Run(() =>
 			gameAgent.GetNextAction(_gameState));
+		if (this == null || _isDestroying) return;
 
 		if (TryResolveAction(nextAction))
 			return;

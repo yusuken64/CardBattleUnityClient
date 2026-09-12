@@ -25,6 +25,8 @@ public static class CardDefinitionNetworkExtensions
 		if (wireDefinition == null) return null;
 		var serializer = JsonSerializer.Create(WireSettings);
 		var payload = JObject.FromObject(wireDefinition, serializer);
+		if (runtimeCard is CardBattleEngine.SpellCard spell && spell.CustomSFX is CustomSFX effect)
+			payload[nameof(CardBattleEngine.SpellCard.PresentationEffectId)] = effect.PresentationEffectId;
 		if (runtimeCard is CardBattleEngine.MinionCard minion)
 		{
 			// The bundled engine DLL predates this server definition field.
@@ -38,6 +40,8 @@ public static class CardDefinitionNetworkExtensions
 		protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
 		{
 			var property = base.CreateProperty(member, memberSerialization);
+			if (member.Name == nameof(CardBattleEngine.IGameAction.PresentationEffectId))
+				property.ValueProvider = new EffectIdProvider(property.ValueProvider);
 			if (member.Name == nameof(CardBattleEngine.IGameAction.CustomSFX) &&
 				(typeof(CardBattleEngine.IGameAction).IsAssignableFrom(member.DeclaringType) ||
 				 typeof(CardBattleEngine.SpellCard).IsAssignableFrom(member.DeclaringType)))
@@ -57,5 +61,18 @@ public static class CardDefinitionNetworkExtensions
 			}
 			return property;
 		}
+	}
+
+	private sealed class EffectIdProvider : IValueProvider
+	{
+		private readonly IValueProvider _inner;
+		public EffectIdProvider(IValueProvider inner) { _inner = inner; }
+		public object GetValue(object target)
+		{
+			var effect = (target as CardBattleEngine.IGameAction)?.CustomSFX as CustomSFX
+				?? (target as CardBattleEngine.SpellCard)?.CustomSFX as CustomSFX;
+			return effect != null ? effect.PresentationEffectId : _inner.GetValue(target);
+		}
+		public void SetValue(object target, object value) => _inner.SetValue(target, value);
 	}
 }

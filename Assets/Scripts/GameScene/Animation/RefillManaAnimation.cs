@@ -3,11 +3,6 @@ using System.Collections;
 
 public class RefillManaAnimation : GameActionAnimation<RefillManaAction>
 {
-	public override IEnumerator Play()
-	{
-		var player = this.GameManager.GetPlayerFor(Context.SourcePlayer);
-		player.Mana = Context.SourcePlayer.MaxMana;
-		player.UpdateUI();
-		yield return null;
-	}
+    // The playback coordinator applies captured values and advances the game after the visuals.
+    public override IEnumerator Play() { yield break; }
 }

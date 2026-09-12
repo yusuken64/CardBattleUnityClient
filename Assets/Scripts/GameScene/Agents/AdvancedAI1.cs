@@ -252,8 +252,8 @@ public class AdvancedAI1 : IGameAgent
 		// 2) Board presence (stats on board)
 		// --------------------------------------------------
 
-		float myBoardStats = me.Board.Sum(MinionValue);
-		float enemyBoardStats = enemy.Board.Sum(MinionValue);
+		float myBoardStats = me.Board.OfType<CardBattleEngine.Minion>().Sum(MinionValue);
+		float enemyBoardStats = enemy.Board.OfType<CardBattleEngine.Minion>().Sum(MinionValue);
 
 		score += myBoardStats;
 		score -= enemyBoardStats;
@@ -288,8 +288,8 @@ public class AdvancedAI1 : IGameAgent
 		// 5) Taunts (board locking is valuable)
 		// --------------------------------------------------
 
-		float enemyTauntHealth = enemy.Board.Where(m => m.Taunt).Sum(m => m.Health);
-		float myTauntHealth = me.Board.Where(m => m.Taunt).Sum(m => m.Health);
+		float enemyTauntHealth = enemy.Board.OfType<CardBattleEngine.Minion>().Where(m => m.Taunt).Sum(m => m.Health);
+		float myTauntHealth = me.Board.OfType<CardBattleEngine.Minion>().Where(m => m.Taunt).Sum(m => m.Health);
 
 		score -= enemyTauntHealth * 1.5f;
 		score += myTauntHealth * 1.5f;

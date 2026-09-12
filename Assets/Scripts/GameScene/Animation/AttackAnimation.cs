@@ -16,55 +16,38 @@ public class AttackAnimation : GameActionAnimation<AttackAction>
 
 	public override IEnumerator Play()
 	{
-		Transform attacker = GameManager.GetObjectFor(Context.Source).transform;
-		Transform target = GameManager.GetObjectFor(Context.Target).transform;
+		var sourceObject = GameManager.GetObjectFor(Presentation.Source);
+        var targetObject = GameManager.GetObjectFor(Presentation.Target);
+        if (sourceObject == null || targetObject == null) yield break;
+        Transform attacker = sourceObject.transform;
+		Transform target = targetObject.transform;
+		var movingMinion = sourceObject.GetComponent<Minion>();
+		if (movingMinion != null) movingMinion.Moving = false;
 
-		Vector3 startPos = attacker.position + new Vector3(0, 0, -0.5f);
-		attacker.transform.position = startPos;
+		Vector3 startPos = attacker.position;
 		Vector3 dir = (target.position - attacker.position).normalized;
 		Vector3 bumpPos = target.position - (dir * 0.4f) + new Vector3(0, 0, -0.1f); // distance of bump
 
 		// forward bump
-		Tween forward = attacker.DOMove(bumpPos, Duration).SetEase(AttackCurve)
+		Tween forward = attacker.DOMove(bumpPos, Duration).SetId(Presentation).SetEase(AttackCurve)
 			.OnComplete(() =>
 			{
 				Vector3 dir = (target.position - attacker.position).normalized;
 				Quaternion rotation = Quaternion.LookRotation(dir);
 
-				var attackParticle = Instantiate(AttackParticlePrefab, attacker.position, rotation);
+				var attackParticle = Presentation.Own(Instantiate(AttackParticlePrefab, attacker.position, rotation));
 				Destroy(attackParticle, 3f);
 
-				int attack = Context.Source.Attack;
 			});
 
 		// wait
 		yield return forward.WaitForCompletion();
 
-		if (Context.Source is CardBattleEngine.Player player &&
-			player.EquippedWeapon != null)
-		{
-			var gamePlayer = GameManager.GetObjectFor(Context.Source).GetComponentInParent<Player>();
-			gamePlayer.Weapon.Durability--;
-			gamePlayer.Weapon.UpdateUI();
-		}
-
 		// backward bump
-		Tween back = attacker.DOMove(startPos, 0.15f).SetEase(Ease.Linear);
+		Tween back = attacker.DOMove(startPos, 0.15f).SetId(Presentation).SetEase(Ease.Linear);
 
 		yield return back.WaitForCompletion();
 
-		var heroPortrait = attacker.gameObject.GetComponent<HeroPortrait>();
-		var minion = attacker.gameObject.GetComponent<Minion>();
-		if (heroPortrait != null)
-		{
-			heroPortrait.Player.CanAttack = (Context.Source as CardBattleEngine.Player).CanAttack();
-			heroPortrait.Player.UpdateUI();
-		}
-		else if (minion != null)
-		{
-			minion.CanAttack = (Context.Source as CardBattleEngine.Minion).CanAttack();
-			minion.UpdateUI();
-		}
 	}
 }
 
@@ -78,7 +61,7 @@ public class AttackTier
 	public float ShakeDuration = 0.08f;
 
 	public AudioClip AttackSound;
-	
+
 	public bool Matches(int attack)
 	{
 		return attack >= MinAttack &&

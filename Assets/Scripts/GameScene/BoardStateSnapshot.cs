@@ -88,6 +88,7 @@ public class BoardStateSnapshot
         {
             player.HeroPower = new CardBattleEngine.HeroPower
             {
+                LeaderCard = view.HeroPower.LeaderCard == null ? null : CardBuilder.BuildCard(view.HeroPower.LeaderCard, player) as MinionCard,
                 Name = view.HeroPower.Name,
                 ManaCost = view.HeroPower.ManaCost,
                 UsedThisTurn = view.HeroPower.UsedThisTurn,

@@ -65,7 +65,7 @@ public static class BoardStateFile
             IsFrozen = player.IsFrozen,
             IsStealth = player.IsStealth,
             Hand = player.Hand.Select(ToCardView).ToList(),
-            Board = player.Board.Select(ToMinionView).ToList(),
+            Board = player.Board.OfType<CardBattleEngine.Minion>().Select(ToMinionView).ToList(),
         };
     }
 

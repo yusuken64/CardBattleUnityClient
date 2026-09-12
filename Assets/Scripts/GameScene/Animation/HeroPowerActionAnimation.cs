@@ -10,10 +10,10 @@ public class HeroPowerActionAnimation : GameActionAnimation<HeroPowerAction>
 	{
 		Common.Instance.AudioManager.PlaySound(TriggerSound);
 		var ui = Object.FindFirstObjectByType<UI>();
-		var triggerParticle = Object.Instantiate(ui.TriggeredEffectParticlePrefab); ;
+		var triggerParticle = Presentation.Own(Object.Instantiate(ui.TriggeredEffectParticlePrefab)); ;
 		//entity could be card, hero or minion, or secret
 
-		var owningPlayer = GameManager.GetPlayerFor(Context.SourcePlayer);
+		var owningPlayer = GameManager.GetPlayerFor(Presentation.SourcePlayer);
 		triggerParticle.transform.position = owningPlayer.HeroPower.transform.position;
 		owningPlayer.HeroPower.RefreshData();
 

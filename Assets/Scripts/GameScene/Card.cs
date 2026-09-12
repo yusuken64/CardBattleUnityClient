@@ -15,6 +15,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
     public Image CardImage;
 
     public CardBattleEngine.Card Data { get; private set; }
+    internal void BindData(CardBattleEngine.Card data) => Data = data;
 
     #region Display
     public int Cost;

@@ -13,6 +13,7 @@ using CardBattleEngine;
 
 public class DecklistRequest
 {
+    public string LeaderDefinition;
 	public string PlayerName = string.Empty;
 	public List<CardCount> Minions = new List<CardCount>();
 	public List<CardCount> Spells = new List<CardCount>();
@@ -96,6 +97,7 @@ public class WeaponView
 
 public class HeroPowerView
 {
+    public CardView LeaderCard;
 	public string Name;
 	public int ManaCost;
 	public bool UsedThisTurn;
@@ -115,6 +117,7 @@ public class PublicPlayerView
 	public int Health;
 	public int MaxHealth;
 	public int Armor;
+	public int Fatigue;
 	public int Mana;
 	public int MaxMana;
 	public int Attack;
@@ -165,6 +168,9 @@ public class HistoryEntryView
 
 public class PlayerGameView
 {
+	public long StateRevision;
+	public long PlaybackSequence;
+	public List<PlaybackEventView> PlaybackEvents = new();
 	public Guid ViewerPlayerId;
 	public int Turn;
 	public Guid CurrentPlayerId;

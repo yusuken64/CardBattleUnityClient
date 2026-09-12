@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class EndGameActionAnimation : GameActionAnimation<EndGameAction>
 {
-	public override IEnumerator Play()
-	{
-		var ui = Object.FindFirstObjectByType<UI>();
-		var gameManager = Object.FindFirstObjectByType<GameManager>();
-		var isWin = gameManager.Player.Data == Context.SourcePlayer;
-		yield return ui.StartCoroutine(ui.DoGameEndRoutine(isWin));
-	}
+    // The playback coordinator applies captured values and advances the game after the visuals.
+    public override IEnumerator Play() { yield break; }
 }

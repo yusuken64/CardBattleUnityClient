@@ -7,13 +7,13 @@ using CardBattleEngine;
 [Serializable]
 public class TribeOperationWrapper : ITargetOperationWrapperBase
 {
-    public CardBattleEngine.MinionTribe Tribe;
+    public MinionTribe Tribe;
     public System.Boolean ExcludeSelf;
 
     public override CardBattleEngine.ITargetOperation Create()
     {
         var instance = new CardBattleEngine.TribeOperation();
-        instance.Tribe = this.Tribe;
+        instance.Tribe = this.Tribe == MinionTribe.None ? null : this.Tribe.ToString();
         instance.ExcludeSelf = this.ExcludeSelf;
         return instance;
     }

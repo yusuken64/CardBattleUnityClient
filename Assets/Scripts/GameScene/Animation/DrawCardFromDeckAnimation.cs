@@ -3,12 +3,6 @@ using System.Collections;
 
 public class DrawCardFromDeckAnimation : GameActionAnimation<DrawCardFromDeckAction>
 {
-	public override IEnumerator Play()
-	{
-		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
-		player.CardsLeftInDeck = Context.CardsLeftInDeck;
-		player.UpdateUI();
-
-		yield return null;
-	}
+    // The playback coordinator applies captured values and advances the game after the visuals.
+    public override IEnumerator Play() { yield break; }
 }

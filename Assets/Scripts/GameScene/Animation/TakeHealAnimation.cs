@@ -9,14 +9,14 @@ public class TakeHealAnimation : GameActionAnimation<HealAction>
 	public override IEnumerator Play()
 	{
 		List<(IGameEntity, int)> targets;
-		if (Context.AffectedEntities != null &
-			Context.AffectedEntities.Count() > 0)
+		if (Presentation.AffectedEntities != null &
+			Presentation.AffectedEntities.Count() > 0)
 		{
-			targets = Context.AffectedEntities.ToList();
+			targets = Presentation.AffectedEntities.ToList();
 		}
 		else
 		{
-			targets = new() { (Context.Target, Context.DamageDealt) };
+			targets = new() { (Presentation.Target, Presentation.HealedAmount) };
 		}
 
 		foreach (var target in targets)
@@ -25,21 +25,21 @@ public class TakeHealAnimation : GameActionAnimation<HealAction>
 			if (gameObject == null) { yield break; }
 			Transform targetTransforms = gameObject.transform;
 
-			Object.FindFirstObjectByType<UI>().ShowHeal(target.Item2, targetTransforms);
+			Object.FindFirstObjectByType<UI>().ShowHeal(target.Item2, targetTransforms, Presentation);
 
 			//var portrait = gameObject.GetComponent<HeroPortrait>();
 			//var minion = gameObject.GetComponent<Minion>();
 			//if (portrait != null)
 			//{
-			//	portrait.Player.Health += Context.HealedAmount;
+			//	portrait.Player.Health += Presentation.HealedAmount;
 			//	portrait.Player.UpdateUI();
 			//}
 			//else if (minion != null)
 			//{
-			//	minion.Health += Context.HealedAmount;
+			//	minion.Health += Presentation.HealedAmount;
 			//	minion.UpdateUI();
 			//}
 		}
-		yield return null;
+		yield return new WaitForSecondsRealtime(0.75f);
 	}
 }

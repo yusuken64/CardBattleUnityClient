@@ -14,14 +14,14 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 	public override IEnumerator Play()
 	{
 		List<(IGameEntity, int)> targets;
-		if (Context.AffectedEntities != null &
-			Context.AffectedEntities.Count() > 0)
+		if (Presentation.AffectedEntities != null &
+			Presentation.AffectedEntities.Count() > 0)
 		{
-			targets = Context.AffectedEntities.ToList();
+			targets = Presentation.AffectedEntities.ToList();
 		}
 		else
 		{
-			targets = new() { (Context.Target, Context.DamageDealt) };
+			targets = new() { (Presentation.Target, Presentation.DamageDealt) };
 		}
 
 		foreach (var target in targets)
@@ -30,12 +30,15 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 
 			if (gameObject is null)
 			{
-				throw new System.Exception("No damage object");
+				continue;
 			}
 
 			Transform targetTransform = gameObject.transform;
+			var movingMinion = gameObject.GetComponent<Minion>();
+			if (movingMinion != null) movingMinion.Moving = false;
 
-			var particles = Instantiate(DamageParticles, targetTransform.transform.position, Quaternion.identity);
+			var particles = Presentation.Own(Instantiate(DamageParticles, targetTransform.transform.position, Quaternion.identity));
+			Destroy(particles, 3f);
 
 			// simple shake: short, small, no fancy stuff
 			Tween shake = targetTransform.DOShakePosition(
@@ -44,11 +47,11 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 				vibrato: 20,       // how fast it vibrates
 				randomness: 90f,   // random direction
 				fadeOut: true
-			);
+			).SetId(Presentation);
 
 			Common.Instance.AudioManager.PlaySound(DamageSound);
-			Object.FindFirstObjectByType<UI>().ShowDamage(target.Item2, targetTransform);
-			if (Context.IsAttack)
+			Object.FindFirstObjectByType<UI>().ShowDamage(target.Item2, targetTransform, Presentation);
+			if (Presentation.IsAttack)
 			{
 				PlayAttackEffects(target.Item2);
 			}
@@ -104,7 +107,7 @@ public class TakeDamageAnimation : GameActionAnimation<DamageAction>
 			vibrato: 20,
 			randomness: 90,
 			fadeOut: true
-		)
+		).SetId(Presentation)
 		.OnComplete(() =>
 		{
 			cam.localPosition = cameraOriginalLocalPos;

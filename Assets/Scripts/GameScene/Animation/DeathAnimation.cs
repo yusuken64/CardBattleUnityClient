@@ -11,14 +11,16 @@ public class DeathAnimation : GameActionAnimation<DeathAction>
 
 	public override IEnumerator Play()
 	{
-		var owner = GameManager.GetPlayerFor(Context.Target.Owner);
+		if (Presentation.Target == null) yield break;
+		var owner = GameManager.GetPlayerFor(Presentation.Target.Owner);
 
-		if (Context.Target is CardBattleEngine.Minion minion)
+		if (Presentation.Target is CardBattleEngine.Minion minion)
 		{
-			var deadMinion = GameManager.GetObjectFor(Context.Target)
-				.GetComponent<Minion>();
+			var deadMinion = GameManager.GetObjectFor(Presentation.Target)?.GetComponent<Minion>();
+			if (deadMinion == null) yield break;
 
-			var particles = Instantiate(MinionDieParticles, deadMinion.transform.position, Quaternion.identity);
+			var particles = Presentation.Own(Instantiate(MinionDieParticles, deadMinion.transform.position, Quaternion.identity));
+			Destroy(particles, 3f);
 
 			if (owner.Board.Minions.Contains(deadMinion))
 			{
@@ -32,19 +34,19 @@ public class DeathAnimation : GameActionAnimation<DeathAction>
 			Transform t = deadMinion.transform;
 
 			// Animate: scale down + move down + fade out
-			var seq = DOTween.Sequence();
+			var seq = DOTween.Sequence().SetId(Presentation);
 
 			// Try to fetch optional CanvasGroup or SpriteRenderer for fading
 			CanvasGroup cg = deadMinion.GetComponent<CanvasGroup>();
 			SpriteRenderer sr = deadMinion.GetComponentInChildren<SpriteRenderer>();
 
-			seq.Append(t.DOScale(0f, 0.25f).SetEase(Ease.InBack))
-			   .Join(t.DOMoveY(t.position.y - 0.3f, 0.25f));
+			seq.Append(t.DOScale(0f, 0.25f).SetId(Presentation).SetEase(Ease.InBack))
+			   .Join(t.DOMoveY(t.position.y - 0.3f, 0.25f).SetId(Presentation));
 
 			if (cg != null)
-				seq.Join(cg.DOFade(0f, 0.25f));
+				seq.Join(cg.DOFade(0f, 0.25f).SetId(Presentation));
 			else if (sr != null)
-				seq.Join(sr.DOFade(0f, 0.25f));
+				seq.Join(sr.DOFade(0f, 0.25f).SetId(Presentation));
 
 			seq.OnComplete(() =>
 			{
@@ -55,9 +57,9 @@ public class DeathAnimation : GameActionAnimation<DeathAction>
 
 			yield return seq.WaitForCompletion();
 		}
-		else if (Context.Target is CardBattleEngine.Player player)
+		else if (Presentation.Target is CardBattleEngine.Player player)
 		{
-			yield return owner.DoDeathRoutine();
+			yield return owner.DoDeathRoutine(Presentation);
 		}
 	}
 }

@@ -5,6 +5,8 @@ public static class DeckNetworkExtensions
 	public static DecklistRequest ToDecklistRequest(this Deck deck, string playerName)
 	{
 		var request = new DecklistRequest { PlayerName = playerName };
+        if (deck.HeroCard is MinionCardDefinition leader)
+            request.LeaderDefinition = leader.ToWireDefinitionJson(leader.CreateCard());
 
 		var grouped = deck.Cards
 			.GroupBy(card => card.ID)

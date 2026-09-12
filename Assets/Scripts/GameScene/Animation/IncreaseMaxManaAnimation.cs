@@ -3,11 +3,6 @@ using System.Collections;
 
 public class IncreaseMaxManaAnimation : GameActionAnimation<IncreaseMaxManaAction>
 {
-	public override IEnumerator Play()
-	{
-		var player = this.GameManager.GetPlayerFor(Context.SourcePlayer);
-		player.MaxMana = Context.SourcePlayer.MaxMana;
-		player.UpdateUI();
-		yield return null;
-	}
+    // The playback coordinator applies captured values and advances the game after the visuals.
+    public override IEnumerator Play() { yield break; }
 }

@@ -10,8 +10,8 @@ public class TriggerEffectActionAnimation : GameActionAnimation<TriggerEffectAct
 	{
 		Common.Instance.AudioManager.PlaySound(TriggerSound);
 		var ui = Object.FindFirstObjectByType<UI>();
-		var triggerParticle = Object.Instantiate(ui.TriggeredEffectParticlePrefab);
-		var entity = Action.TriggerSource.Entity;
+		var triggerParticle = Presentation.Own(Object.Instantiate(ui.TriggeredEffectParticlePrefab));
+		var entity = Presentation.TriggerSource;
 		//entity could be card, hero or minion, or secret
 		var gameObject = GameManager.GetObjectFor(entity);
 
@@ -21,7 +21,7 @@ public class TriggerEffectActionAnimation : GameActionAnimation<TriggerEffectAct
 		}
 		else
 		{
-			var owningPlayer = GameManager.GetPlayerFor(entity.Owner);
+			var owningPlayer = GameManager.GetPlayerFor(entity?.Owner ?? Presentation.SourcePlayer);
 			triggerParticle.transform.position = owningPlayer.transform.position;
 		}
 

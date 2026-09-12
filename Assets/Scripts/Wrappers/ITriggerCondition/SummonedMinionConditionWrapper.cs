@@ -8,14 +8,14 @@ using CardBattleEngine;
 public class SummonedMinionConditionWrapper : ITriggerConditionWrapperBase
 {
     public CardBattleEngine.TeamRelationship MinionToMinionRelationship;
-    public CardBattleEngine.MinionTribe MinionTribe;
+    public MinionTribe MinionTribe;
     public System.Boolean ExcludeSelf;
 
     public override CardBattleEngine.ITriggerCondition Create()
     {
         var instance = new CardBattleEngine.SummonedMinionCondition();
         instance.MinionToMinionRelationship = this.MinionToMinionRelationship;
-        instance.MinionTribe = this.MinionTribe;
+        instance.MinionTribe = this.MinionTribe == MinionTribe.None ? null : this.MinionTribe.ToString();
         instance.ExcludeSelf = this.ExcludeSelf;
         return instance;
     }

@@ -22,6 +22,7 @@ public class SpellCardDefinition : CardDefinition
     public override CardBattleEngine.Card CreateCard()
 	{
         var spellCard = new SpellCard(CardName, Cost);
+        spellCard.CardId = ID;
         spellCard.SpriteID = ID;
         spellCard.SpellCastEffects.AddRange(SpellCastEffects.Select(x => x.Create()));
         spellCard.Description = !string.IsNullOrWhiteSpace(DescriptionOverride)

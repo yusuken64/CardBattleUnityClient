@@ -116,7 +116,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 
 		if (HeroPower != null)
 		{
-			//HeroPower.data = data.HeroPower;
+			HeroPower.Data = data.HeroPower;
 			HeroPower.RefreshData();
 		}
 
@@ -148,13 +148,13 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		StartCoroutine(DoDeathRoutine());
 	}
 
-	internal IEnumerator DoDeathRoutine()
+	internal IEnumerator DoDeathRoutine(ActionPresentation presentation = null)
 	{
 		CanAttackIndicator.gameObject.SetActive(false);
 		Common.Instance.AudioManager.PlaySound(HeroDieStart);
-		var shake = HeroPortrait.transform.DOShakePosition(1.7f, 1f, 30);
+		var shake = HeroPortrait.transform.DOShakePosition(1.7f, 1f, 30).SetId(presentation);
 
-		var sequence = DOTween.Sequence();
+		var sequence = DOTween.Sequence().SetId(presentation);
 		sequence.Append(HeroImage.DOColor(Color.yellow, 0.8f));
 		sequence.Append(HeroImage.DOFade(0, 1.4f));
 		//sequence.Append(cardMaterial.DOFloat(0.237f, "_OverlayBlend", 0.8f));
@@ -165,6 +165,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 
 		Common.Instance.AudioManager.PlaySound(HeroDieExplode);
 		var explode = Instantiate(ExplodeParticlePrefab, this.transform);
+        presentation?.Own(explode);
 		explode.transform.position = HeroPortrait.transform.position;
 		//Common.Instance.AudioManager.PlayClip(Common.Instance.AudioManager.Explosion);
 		Destroy(explode.gameObject, 3f);

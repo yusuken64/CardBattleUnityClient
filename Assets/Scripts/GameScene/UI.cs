@@ -84,9 +84,10 @@ public class UI : MonoBehaviour
         messageCoroutine = null;
     }
 
-	internal void ShowDamage(int damage, Transform target)
+	internal void ShowDamage(int damage, Transform target, ActionPresentation presentation = null)
 	{
         var damageNumber = Instantiate(DamageNumberPrefab);
+        presentation?.Own(damageNumber);
         damageNumber.DamageText.text= $"{damage}";
         damageNumber.transform.position = target.transform.position;
 
@@ -96,7 +97,7 @@ public class UI : MonoBehaviour
         t.localScale = Vector3.zero;
 
         // Build the sequence
-        var seq = DOTween.Sequence();
+        var seq = DOTween.Sequence().SetId(presentation);
 
         seq.Append(t.DOScale(1f, 0.15f))               // pop in
            .Join(t.DOMoveY(t.position.y + 0.5f, 0.6f)) // float upward
@@ -108,9 +109,10 @@ public class UI : MonoBehaviour
            });
     }
 
-    public void ShowHeal(int heal, Transform target)
+    public void ShowHeal(int heal, Transform target, ActionPresentation presentation = null)
     {
         var healNumber = Instantiate(HealNumberPrefab);
+        presentation?.Own(healNumber);
         healNumber.DamageText.text = $"{heal}";
         healNumber.transform.position = target.transform.position;
 
@@ -120,7 +122,7 @@ public class UI : MonoBehaviour
         t.localScale = Vector3.zero;
 
         // Build the sequence
-        var seq = DOTween.Sequence();
+        var seq = DOTween.Sequence().SetId(presentation);
 
         seq.Append(t.DOScale(1f, 0.15f))               // pop in
            .Join(t.DOMoveY(t.position.y + 0.5f, 0.6f)) // float upward

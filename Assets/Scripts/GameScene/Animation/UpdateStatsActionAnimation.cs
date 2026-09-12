@@ -4,15 +4,6 @@ using System.Linq;
 
 public class UpdateStatsActionAnimation : GameActionAnimation<AddStatModifierAction>
 {
-	public override IEnumerator Play()
-	{
-		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
-		var minion = player.Board.Minions.FirstOrDefault(x => x.Data == Context.Target);
-		if (minion != null)
-		{
-			minion.RefreshData();
-		}
-
-		yield return null;
-	}
+    // The playback coordinator applies captured values and advances the game after the visuals.
+    public override IEnumerator Play() { yield break; }
 }

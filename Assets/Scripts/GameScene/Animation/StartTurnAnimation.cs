@@ -12,10 +12,10 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 	public override IEnumerator Play()
 	{
 		yield return new WaitForSecondsRealtime(0.5f);
-		var player = GameManager.GetPlayerFor(Context.SourcePlayer);
-		var opponent = GameManager.GetPlayerFor(ClonedState.OpponentOf(Context.SourcePlayer));
+		var player = GameManager.GetPlayerFor(Presentation.SourcePlayer);
 
-		if (Context.SourcePlayer.Id == GameManager.Player.Data.Id)
+
+		if (Presentation.SourcePlayer.Id == GameManager.Player.Data.Id)
 		{
 			//player.RefreshData();
 			Common.Instance.AudioManager.PlaySound(StartTurnSound);
@@ -31,7 +31,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			cg.alpha = 1f;
 
 			// 1. Punch scale for a quick pop
-			Tween punch = turnStartObject.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0), 0.3f, 1, 1f);
+			Tween punch = turnStartObject.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0), 0.3f, 1, 1f).SetId(Presentation);
 
 			// Wait for the punch to finish
 			yield return punch.WaitForCompletion();
@@ -39,7 +39,7 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 			yield return new WaitForSecondsRealtime(0.5f);
 
 			// 2. Fast fadeout
-			Tween fade = cg.DOFade(0f, 0.2f).SetEase(Ease.InSine);
+			Tween fade = cg.DOFade(0f, 0.2f).SetId(Presentation).SetEase(Ease.InSine);
 			yield return fade.WaitForCompletion();
 
 			// Hide the UI
@@ -50,20 +50,11 @@ public class StartTurnAnimation : GameActionAnimation<StartTurnAction>
 
 			yield return new WaitForSecondsRealtime(0.3f);
 
-			FindFirstObjectByType<UI>().EndTurnButton.SetToReady();
-			GameManager.ActivePlayerTurn = true;
-			player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
-
-			_ = GameManager.ProcessMoveAsync(GameManager._playerAgent);
 		}
 		else
 		{
-			GameManager.OpponentTurn = true;
-			GameManager.ActivePlayerTurn = false;
-			GameManager.Player.UpdatePlayableActions(GameManager.ActivePlayerTurn);
 			yield return new WaitForSecondsRealtime(1.0f);
 
-			_ = GameManager.ProcessMoveAsync(GameManager._opponentAgent);
 		}
 	}
 }
