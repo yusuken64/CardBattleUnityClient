@@ -9,14 +9,16 @@ public class DeckPicker : MonoBehaviour
 	public DeckPickerButton DeckPickerButtonPrefab;
 	public Transform DeckPickerButtonContainer;
 	public List<DeckPickerButton> DeckPickerButtons;
-	public Button AddDeckButton;
+	public Button AddDeckButtonPrefab;
 
 	public Action<DeckPickerButton> DeckPickedAction { get; internal set; }
 	public Action<DeckPickerButton> DeckSelectedAction { get; internal set; }
 	public Action<DeckPickerButton> DeleteRequestedAction { get; internal set; }
 	public bool SelectMode;
+	public int DeckCountMax;
 
-	private void Start()
+
+    private void Start()
 	{
 		Rebuild();
 	}
@@ -44,8 +46,16 @@ public class DeckPicker : MonoBehaviour
 			DeckPickerButtons.Add(deckPickerButton);
 		}
 
-		if (AddDeckButton != null)
-			AddDeckButton.gameObject.SetActive(!SelectMode);
+		var deckCount = Common.Instance.SaveManager.SaveData.GameSaveData.DeckSaveDatas.Count();
+
+        if (!SelectMode && deckCount < DeckCountMax)
+		{
+			var addDeckButton = Instantiate(AddDeckButtonPrefab, DeckPickerButtonContainer);
+			addDeckButton.GetComponent<Button>().onClick.AddListener(() => 
+			{
+				AddDeck_Clicked();
+            });
+		}
 
 		UpdateUI();
 	}
@@ -64,9 +74,9 @@ public class DeckPicker : MonoBehaviour
 
 		Rebuild();
 
-		var newButton = DeckPickerButtons.FirstOrDefault(b => b.DeckID == newDeckData.ID);
-		if (newButton != null)
-			DeckPickedAction?.Invoke(newButton);
+		//var newButton = DeckPickerButtons.FirstOrDefault(b => b.DeckID == newDeckData.ID);
+		//if (newButton != null)
+		//	DeckPickedAction?.Invoke(newButton);
 	}
 
 	public void UpdateUI()

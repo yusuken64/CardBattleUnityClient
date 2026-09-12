@@ -11,8 +11,6 @@ public class MainMenu : MonoBehaviour
 	public GameObject SettingsObject;
 	public GameObject DataObject;
 	public ModMenu ModMenu;
-	public GameObject MyDeckObject;
-	public DeckPicker MyDeckPicker;
 
 	public DeckDefinition TutorialPlayerDeck;
 	public DeckDefinition TutorialOpponentDeck;
@@ -29,7 +27,7 @@ public class MainMenu : MonoBehaviour
 		SettingsObject.gameObject.SetActive(false);
 		DataObject.gameObject.SetActive(false);
 		ModMenu.gameObject.SetActive(false);
-		MyDeckObject.gameObject.SetActive(false);
+		//MyDeckObject.gameObject.SetActive(false);
 
 		AudioManager.Instance.PlayMusic(MainMenuMusic);
 	}
@@ -159,26 +157,6 @@ public class MainMenu : MonoBehaviour
 	{
 		ModMenu.gameObject.SetActive(true);
 		ModMenu.Setup();
-	}
-
-	public void MyDeck_Click()
-	{
-		MyDeckObject.gameObject.SetActive(true);
-		MyDeckPicker.SelectMode = true;
-		MyDeckPicker.DeckSelectedAction = MyDeckPicker_DeckSelected;
-		MyDeckPicker.Rebuild();
-	}
-
-	private void MyDeckPicker_DeckSelected(DeckPickerButton deckPickerButton)
-	{
-		Common.Instance.SaveManager.SaveData.GameSaveData.ActiveDeckID = deckPickerButton.DeckID;
-		Common.Instance.SaveManager.Save();
-		MyDeckPicker.Rebuild();
-	}
-
-	public void MyDeckClose_Click()
-	{
-		MyDeckObject.gameObject.SetActive(false);
 	}
 
 	public void Reset_Click()

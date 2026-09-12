@@ -14,6 +14,8 @@ public class StoryModeScene : MonoBehaviour
     public GameObject Settings;
     public GameObject DataObject;
 
+    public DeckPickerButton MyDeckObject;
+    public DeckPicker MyDeckPicker;
     public TutorialPopup TutorialPopup;
     public NetworkGameDialog NetworkGameDialog;
 
@@ -25,13 +27,22 @@ public class StoryModeScene : MonoBehaviour
         Settings.gameObject.SetActive(false);
         DataObject.gameObject.SetActive(false);
         TutorialPopup.gameObject.SetActive(false);
-        NetworkGameDialog.gameObject.SetActive(false);
+        //NetworkGameDialog.gameObject.SetActive(false);
+        MyDeckPicker.gameObject.SetActive(false);
+
+        ReloadActiveDeck();
 
         ReloadDungeonState();
         ShowTutorial();
     }
 
-	private void ShowTutorial()
+    private void ReloadActiveDeck()
+    {
+        var activeDeck = Common.Instance.SaveManager.SaveData.GameSaveData.GetActiveDeck();
+        MyDeckObject.Setup(activeDeck);
+    }
+
+    private void ShowTutorial()
     {
         if (Common.Instance.SaveManager.SaveData.GameSaveData.TutorialSaveData.HomeTutorialCompleted == false)
         {
@@ -156,4 +167,27 @@ public class StoryModeScene : MonoBehaviour
         Common.Instance.SaveManager.SaveData.GameSaveData.PackCount += 10;
         SceneManager.LoadScene("StoryMode");
     }
+
+    public void MyDeck_Click()
+    {
+        MyDeckObject.gameObject.SetActive(true);
+        MyDeckPicker.SelectMode = true;
+        MyDeckPicker.DeckSelectedAction = MyDeckPicker_DeckSelected;
+        MyDeckPicker.Rebuild();
+        MyDeckPicker.gameObject.SetActive(true);
+    }
+
+    private void MyDeckPicker_DeckSelected(DeckPickerButton deckPickerButton)
+    {
+        Common.Instance.SaveManager.SaveData.GameSaveData.ActiveDeckID = deckPickerButton.DeckID;
+        Common.Instance.SaveManager.Save();
+        MyDeckPicker.Rebuild();
+        ReloadActiveDeck();
+    }
+
+    public void MyDeckClose_Click()
+    {
+        MyDeckPicker.gameObject.SetActive(false);
+    }
+
 }
