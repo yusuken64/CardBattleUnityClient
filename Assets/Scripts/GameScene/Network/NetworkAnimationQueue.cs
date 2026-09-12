@@ -22,6 +22,7 @@ public class NetworkAnimationQueue : MonoBehaviour
 		new Queue<(PlayerGameView View, HistoryEntryView Entry)>();
 
 	private bool _isProcessing = false;
+	public bool IsProcessing => _isProcessing;
 	private UI _ui;
 
 	private void Start()

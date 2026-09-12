@@ -330,23 +330,38 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public bool CanStartDrag()
     {
+        if (Data == null)
+        {
+            return false;
+        }
+
         var gameManager = FindFirstObjectByType<GameManager>();
         return this.Data.Owner == gameManager.Player.Data;
     }
 
     public bool RequiresTarget()
     {
+        if (Data == null)
+        {
+            return false;
+        }
+
         return RequiresTarget(this.Data);
     }
 
     public static bool RequiresTarget(CardBattleEngine.Card data)
     {
+        var gameManager = FindFirstObjectByType<GameManager>();
+        if (gameManager.Args?.Mode == GameMode.Networked)
+        {
+            return gameManager.HasNetworkAction(nameof(PlayCardAction), data?.Id, requireTarget: true);
+        }
+
         if (data.ValidTargetSelector == null)
         {
             return false;
         }
 
-        var gameManager = FindFirstObjectByType<GameManager>();
         var player = gameManager.GetPlayerFor(data.Owner);
 
         var validTargets = data.ValidTargetSelector.Select(gameManager._gameState, player.Data, data);
@@ -540,6 +555,10 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         {
             return true;
         }
+        else if (_gameManager.Args?.Mode == GameMode.Networked)
+        {
+            return !_gameManager.HasNetworkAction(nameof(PlayCardAction), Data.Id);
+        }
         else if (Data.Owner.Mana < Data.ManaCost)
         {
             return true;
@@ -560,6 +579,16 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         {
             _ui.WarnEnemyTurn();
             return false;
+        }
+        else if (_gameManager.Args?.Mode == GameMode.Networked)
+        {
+            if (!_gameManager.HasNetworkAction(nameof(PlayCardAction), Data.Id))
+            {
+                _ui.ShowWarningMessage("That card cannot be played right now");
+                return false;
+            }
+
+            return true;
         }
         else if (Data.Owner.Mana < Data.ManaCost)
         {
@@ -629,6 +658,11 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public void HoverStart()
     {
+        if (DisplayCard == null)
+        {
+            return;
+        }
+
         _ui.HoverPreviewStart(this);
     }
 

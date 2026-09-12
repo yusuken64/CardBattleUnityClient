@@ -59,12 +59,11 @@ public class NetworkGameDialog : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private async void QuickMatch_Click() =>
-        await RunFlow(QuickMatchFlow, "Searching for an opponent...");
+    private void QuickMatch_Click() =>
+        StartNetworkedGame(NetworkJoinMode.QuickMatch, null);
 
-    private async void Host_Click() { 
-        //await RunFlow(HostFlow, "Creating match...");
-    }
+    private void Host_Click() =>
+        StartNetworkedGame(NetworkJoinMode.Host, null);
 
     private void Join_Click()
     {
@@ -76,7 +75,7 @@ public class NetworkGameDialog : MonoBehaviour
         MatchIdInput.ActivateInputField();
     }
 
-    private async void JoinConfirm_Click()
+    private void JoinConfirm_Click()
     {
         string matchIdText = MatchIdInput.text.Trim();
         if (!Guid.TryParse(matchIdText, out var matchGuid))
@@ -86,7 +85,27 @@ public class NetworkGameDialog : MonoBehaviour
             return;
         }
 
-        await RunFlow(() => JoinFlow(matchGuid), "Joining match...");
+        StartNetworkedGame(NetworkJoinMode.Join, matchGuid);
+    }
+
+    private void StartNetworkedGame(NetworkJoinMode joinMode, Guid? matchId)
+    {
+        var activeDeck = Common.Instance.SaveManager.SaveData.GameSaveData.GetActiveDeck();
+        GameManager.GameStartParams = new GameStartParams
+        {
+            CombatDeck = activeDeck?.ToDeck()
+        };
+        GameManager.PendingStartArgs = new StartGameArgs
+        {
+            Mode = GameMode.Networked,
+            JoinMode = joinMode,
+            MatchId = matchId?.ToString()
+        };
+
+        Common.Instance.SceneTransition.DoTransition(() =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
     }
 
     // Shared connect + run + cleanup wrapper. `flow` does the actual JoinQueue/CreateMatch/JoinMatch

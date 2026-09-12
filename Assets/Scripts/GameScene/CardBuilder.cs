@@ -34,7 +34,7 @@ public static class CardBuilder
             // it for a recognized card) so GetSpriteByCardID can find the art once it arrives,
             // instead of permanently missing the cache under a different key.
             card.SpriteID = cv.CardId;
-            CardArtNetworkService.RequestArtIfNeeded(cv.CardId, owner.Name);
+            CardArtNetworkService.RequestArtIfNeeded(cv.CardId, owner?.Name);
         }
         else
         {

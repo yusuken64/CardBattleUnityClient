@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
 	private Guid _networkMatchId;
 	private GameState _snapshotForDebug;
 	private bool _mulliganHandled;
+	private bool _networkSubmissionPending;
+	private bool _networkUnavailable;
+	private bool _isDestroying;
 
 	public Action<GameEngine> GameInitialized;
 
@@ -69,6 +72,7 @@ public class GameManager : MonoBehaviour
 
 	void OnDestroy()
 	{
+		_isDestroying = true;
 		if (_networkClient != null)
 		{
 			_ = _networkClient.DisconnectAsync();
@@ -240,27 +244,25 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	// Connects to GameServer's MatchHub and either creates, joins, or quick-matches into a match -
-	// the same three choices CardBattleEngine.GamePlayer's RemoteGameClient.CreateOrJoinMatch offers
-	// (Q/C/J), just driven by args.JoinMode instead of a console prompt. Note this only stands up the
-	// connection/submission channel - Player/Opponent/Board still expect live CardBattleEngine objects
-	// (see InitializeLocalTestGame), and nothing here renders from the PlayerGameView pushes yet.
-	// That's a separate rendering adapter, not part of this.
 	private async Task InitializeNetworkedGameAsync(StartGameArgs args)
 	{
 		var matchFound = new TaskCompletionSource<Guid>();
+		ResolveNetworkSceneReferences();
 
 		_networkClient = new MiniSignalRClient($"{ServerUrl}/hubs/match");
 		_networkClient.On<PlayerGameView>("OnStateUpdated", OnNetworkStateUpdated);
-		_networkClient.On<string>("OnActionRejected", reason => Debug.LogWarning($"Action rejected: {reason}"));
-		_networkClient.On<Guid?>("OnMatchEnded", winnerId => Debug.Log($"Networked match ended. Winner: {winnerId}"));
+		_networkClient.On<string>("OnActionRejected", OnNetworkActionRejected);
+		_networkClient.On<Guid?>("OnMatchEnded", OnNetworkMatchEnded);
 		_networkClient.On<Guid>("OnMatchFound", matchId => matchFound.TrySetResult(matchId));
+		_networkClient.OnDisconnected += OnNetworkDisconnected;
 
 		CardArtNetworkService.Initialize(_networkClient);
 
 		await _networkClient.ConnectAsync();
 
-		DecklistRequest decklist = TestDeck.ToDeck().ToDecklistRequest(args.JoinMode == NetworkJoinMode.Join ? "Joiner" : "Host");
+		Deck networkDeck = GameStartParams?.CombatDeck ?? TestDeck.ToDeck();
+		GameStartParams = null;
+		DecklistRequest decklist = networkDeck.ToDecklistRequest(args.JoinMode == NetworkJoinMode.Join ? "Joiner" : "Host");
 
 		switch (args.JoinMode)
 		{
@@ -273,12 +275,17 @@ public class GameManager : MonoBehaviour
 				break;
 
 			case NetworkJoinMode.Join:
-				_networkMatchId = Guid.Parse(args.MatchId);
+				if (!Guid.TryParse(args.MatchId, out _networkMatchId))
+				{
+					HandleNetworkFailure($"Invalid match id: {args.MatchId}");
+					return;
+				}
 				CardArtNetworkService.SetMatchId(_networkMatchId);
 				JoinResult joinResult = await _networkClient.InvokeAsync<JoinResult>("JoinMatch", _networkMatchId, decklist);
 				if (!joinResult.Success)
 				{
-					Debug.LogError($"Failed to join match {_networkMatchId}: {joinResult.Error}");
+					HandleNetworkFailure($"Failed to join match {_networkMatchId}: {joinResult.Error}");
+					return;
 				}
 				break;
 
@@ -289,46 +296,58 @@ public class GameManager : MonoBehaviour
 				Debug.Log($"Created match {_networkMatchId}. Waiting for an opponent to join.");
 				break;
 		}
+
+		GameInitialized?.Invoke(this._engine);
 	}
 
 	private void OnNetworkStateUpdated(PlayerGameView view)
 	{
-		// (a) Keep existing behavior: set _lastNetworkView and resolve LocalPlayerId
+		ResolveNetworkSceneReferences();
 		_lastNetworkView = view;
+		_networkSubmissionPending = false;
+		_networkUnavailable = false;
 
 		if (LocalPlayerId == null)
 		{
 			LocalPlayerId = view.ViewerPlayerId;
 		}
 
-		// (b) Enqueue animation batch - this triggers animate-then-resnap sequence
-		NetworkAnimationQueue.Enqueue(view);
+		RequestArtForRevealedOpponentCards(view);
+
+		bool hasAnimationEntries = view.NewHistory != null && view.NewHistory.Count > 0;
+		if (NetworkAnimationQueue != null && (hasAnimationEntries || NetworkAnimationQueue.IsProcessing))
+		{
+			NetworkAnimationQueue.Enqueue(view);
+		}
+		else
+		{
+			ApplyBoardState(BoardStateSnapshot.FromPlayerGameView(view));
+		}
 
 		// (c) Mulligan trigger: show screen exactly once per match when hand becomes non-empty
 		if (!_mulliganHandled && view.Self?.Hand != null && view.Self.Hand.Count > 0)
 		{
 			var hand = view.Self.Hand.Select(cv => CardBuilder.BuildCard(cv, null)).ToList();
-			MulliganPrompt.SetupNetworked(hand);
+			MulliganPrompt?.SetupNetworked(hand);
 			_mulliganHandled = true;
 		}
 
-		// (d) If pending choice exists, try to handle it (safe no-op if nothing staged or kind doesn't match)
 		if (view.PendingChoice != null)
 		{
-			MulliganPrompt.TryHandlePendingChoice(view.PendingChoice);
+			MulliganPrompt?.TryHandlePendingChoice(view.PendingChoice);
 		}
 
-		// (e) Safety net: if mulligan screen is still visible but we're in a real turn, hide it
-		if (_mulliganHandled && view.LegalActions.Count > 0 && view.PendingChoice == null &&
-			view.CurrentPlayerId == LocalPlayerId && MulliganPrompt.gameObject.activeSelf)
+		if (_mulliganHandled && (view.LegalActions?.Count ?? 0) > 0 && view.PendingChoice == null &&
+			view.CurrentPlayerId == LocalPlayerId && MulliganPrompt != null && MulliganPrompt.gameObject.activeSelf)
 		{
 			MulliganPrompt.gameObject.SetActive(false);
 		}
 
-		// (f) Turn gating: set ActivePlayerTurn based on whether there's a prompt to submit
-		ActivePlayerTurn = view.PromptVersion.HasValue;
+		ActivePlayerTurn = !_networkSubmissionPending && !_networkUnavailable &&
+			view.PromptVersion.HasValue && (view.LegalActions?.Count ?? 0) > 0;
+		OpponentTurn = view.CurrentPlayerId != LocalPlayerId;
+		UpdateNetworkInteractionState(view);
 
-		// (g) Game over: keep existing Debug.Log and invoke result-screen flow
 		if (view.IsGameOver)
 		{
 			Debug.Log($"Networked match over. Winner: {view.WinnerPlayerId}");
@@ -341,17 +360,124 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	private void ResolveNetworkSceneReferences()
+	{
+		if (NetworkAnimationQueue == null)
+		{
+			NetworkAnimationQueue = FindFirstObjectByType<NetworkAnimationQueue>(FindObjectsInactive.Include);
+		}
+		if (NetworkAnimationQueue != null && NetworkAnimationQueue.GameManager == null)
+		{
+			NetworkAnimationQueue.GameManager = this;
+		}
+		if (MulliganPrompt == null)
+		{
+			MulliganPrompt = FindFirstObjectByType<MulliganPrompt>(FindObjectsInactive.Include);
+		}
+		if (MulliganPrompt != null && MulliganPrompt.GameManager == null)
+		{
+			MulliganPrompt.GameManager = this;
+		}
+	}
+
+	private void UpdateNetworkInteractionState(PlayerGameView view)
+	{
+		Player?.UpdatePlayableActions(ActivePlayerTurn);
+		Opponent?.UpdatePlayableActions(false);
+
+		var endTurnButton = FindFirstObjectByType<UI>()?.EndTurnButton;
+		if (endTurnButton != null)
+		{
+			if (ActivePlayerTurn && view?.LegalActions != null &&
+				view.LegalActions.Any(a => a.ActionType == nameof(EndTurnAction)))
+			{
+				endTurnButton.SetToReady();
+			}
+			else
+			{
+				endTurnButton.SetToEnemyTurn();
+			}
+		}
+	}
+
+	private void OnNetworkActionRejected(string reason)
+	{
+		Debug.LogWarning($"Action rejected: {reason}");
+		_networkSubmissionPending = false;
+		if (_lastNetworkView != null)
+		{
+			OnNetworkStateUpdated(_lastNetworkView);
+		}
+	}
+
+	private void OnNetworkMatchEnded(Guid? winnerId)
+	{
+		Debug.Log($"Networked match ended. Winner: {winnerId}");
+		ActivePlayerTurn = false;
+		_networkUnavailable = true;
+		UpdateNetworkInteractionState(_lastNetworkView);
+	}
+
+	private void OnNetworkDisconnected()
+	{
+		if (this == null || _networkClient == null || _isDestroying)
+		{
+			return;
+		}
+
+		HandleNetworkFailure("Disconnected from the match server.");
+	}
+
+	private void HandleNetworkFailure(string message)
+	{
+		Debug.LogError(message);
+		_networkUnavailable = true;
+		ActivePlayerTurn = false;
+		UpdateNetworkInteractionState(_lastNetworkView);
+	}
+
+	private void RequestArtForRevealedOpponentCards(PlayerGameView view)
+	{
+		if (view?.Opponent == null)
+		{
+			return;
+		}
+
+		foreach (var minion in view.Opponent.Board ?? new List<MinionView>())
+		{
+			CardArtNetworkService.RequestArtIfNeeded(minion.CardId, view.Opponent.Name);
+		}
+
+		foreach (var minion in view.Opponent.Graveyard ?? new List<MinionView>())
+		{
+			CardArtNetworkService.RequestArtIfNeeded(minion.CardId, view.Opponent.Name);
+		}
+
+		CardArtNetworkService.RequestArtIfNeeded(view.Opponent.EquippedWeapon?.CardId, view.Opponent.Name);
+
+		foreach (var entry in view.NewHistory ?? new List<HistoryEntryView>())
+		{
+			if (entry.ActionType == nameof(CastSpellAction) && entry.PlayerId != LocalPlayerId)
+			{
+				CardArtNetworkService.RequestArtIfNeeded(entry.SourceCardId, view.Opponent.Name);
+			}
+		}
+	}
+
 	// Submits one of the options offered in _lastNetworkView.LegalActions back to the server.
 	// Matching a board click (which card/minion was targeted) to the right LegalActionView is the
 	// rendering adapter's job, not this method's - callers just hand over the chosen entry.
 	public void SubmitLocalAction(LegalActionView chosen)
 	{
-		if (_networkClient == null || _lastNetworkView?.PromptVersion == null)
+		if (_networkClient == null || _lastNetworkView?.PromptVersion == null || _networkSubmissionPending)
 		{
 			Debug.LogError("No active network prompt to submit an action against.");
 			return;
 		}
 
+		_networkSubmissionPending = true;
+		ActivePlayerTurn = false;
+		UpdateNetworkInteractionState(_lastNetworkView);
 		_ = SubmitLocalActionAsync(chosen, _networkMatchId, _lastNetworkView.PromptVersion.Value);
 	}
 
@@ -361,7 +487,44 @@ public class GameManager : MonoBehaviour
 		if (!result.Success)
 		{
 			Debug.LogWarning($"Server rejected action: {result.Error}");
+			_networkSubmissionPending = false;
+			UpdateNetworkInteractionState(_lastNetworkView);
 		}
+	}
+
+	public bool TryFindNetworkAction(IGameAction action, ActionContext context, out LegalActionView chosen)
+	{
+		chosen = null;
+		if (Args?.Mode != GameMode.Networked || _lastNetworkView?.LegalActions == null ||
+			_lastNetworkView.PromptVersion == null || _networkSubmissionPending || _networkUnavailable)
+		{
+			return false;
+		}
+
+		string actionType = action.GetType().Name;
+		Guid? sourceId = context.Source?.Id ?? context.SourceCard?.Id;
+		Guid? targetId = context.Target?.Id;
+
+		chosen = _lastNetworkView.LegalActions.FirstOrDefault(legalAction =>
+			legalAction.ActionType == actionType &&
+			legalAction.SourceEntityId == sourceId &&
+			legalAction.TargetEntityId == targetId);
+
+		return chosen != null;
+	}
+
+	public bool HasNetworkAction(string actionType, Guid? sourceId = null, bool requireTarget = false)
+	{
+		if (Args?.Mode != GameMode.Networked || _lastNetworkView?.LegalActions == null ||
+			_lastNetworkView.PromptVersion == null || _networkSubmissionPending || _networkUnavailable)
+		{
+			return false;
+		}
+
+		return _lastNetworkView.LegalActions.Any(action =>
+			action.ActionType == actionType &&
+			(!sourceId.HasValue || action.SourceEntityId == sourceId) &&
+			(!requireTarget || action.TargetEntityId.HasValue));
 	}
 
 	// Pull-based state fetch for the caller's own seat. Not called anywhere yet - added so the hub's
@@ -398,6 +561,7 @@ public class GameManager : MonoBehaviour
 		ApplyPlayerBoardState(Opponent, snapshot.Opponent, snapshot.IsFromNetwork);
 
 		LocalPlayerId = snapshot.LocalPlayerId;
+		UpdateNetworkInteractionState(_lastNetworkView);
 	}
 
 	private void ApplyPlayerBoardState(Player player, PlayerBoardSnapshot snapshot, bool isFromNetwork)
@@ -439,12 +603,15 @@ public class GameManager : MonoBehaviour
 				var mv = snapshot.SourceMinionViews[i];
 				newMinion.HasDeathRattle = mv.HasDeathRattle;
 				newMinion.HasTrigger = mv.HasTrigger;
+				newMinion.CanAttack = mv.CanAttack;
 				newMinion.UpdateUI();
 			}
 		}
 
 		player.Board.UpdateMinionPositions();
 		player.RefreshData();
+		player.CardsLeftInDeck = snapshot.DeckCount;
+		player.UpdateUI();
 
 		// Snap instantly instead of letting Card/Minion.Update() lerp toward TargetPosition.
 		foreach (var card in player.Hand.Cards)
@@ -568,6 +735,18 @@ public class GameManager : MonoBehaviour
 		if (!ActivePlayerTurn)
 		{
 			reason = "Not your Turn";
+			return false;
+		}
+
+		if (Args?.Mode == GameMode.Networked)
+		{
+			if (TryFindNetworkAction(action, context, out _))
+			{
+				reason = null;
+				return true;
+			}
+
+			reason = "That action is not available.";
 			return false;
 		}
 

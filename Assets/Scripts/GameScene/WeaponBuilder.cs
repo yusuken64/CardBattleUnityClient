@@ -19,7 +19,7 @@ public static class WeaponBuilder
             // to the requested CardId (matching how CardDefinition.CreateCard sets it for a
             // recognized card) so GetSpriteByCardID can find the art once it arrives.
             weaponCard = new WeaponCard(wv.Name, 0, wv.Attack, wv.Durability) { SpriteID = wv.CardId };
-            CardArtNetworkService.RequestArtIfNeeded(wv.CardId, owner.Name);
+            CardArtNetworkService.RequestArtIfNeeded(wv.CardId, owner?.Name);
         }
 
         // CreateWeapon() links OriginalCard back to weaponCard - required for Weapon.Setup() to

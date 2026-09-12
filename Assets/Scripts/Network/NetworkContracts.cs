@@ -153,6 +153,7 @@ public class HistoryEntryView
 	public Guid? TargetId;
 	public string SourceName;
 	public string SourceCardId;
+	public string TargetName;
 	public int? DamageDealt;
 	public int? HealedAmount;
 	public Guid? SummonedMinionId;

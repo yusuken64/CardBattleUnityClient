@@ -20,8 +20,8 @@ public class BoardStateSnapshot
         {
             LocalPlayerId = localPlayerId,
             IsFromNetwork = false,
-            Self = new PlayerBoardSnapshot { Data = selfData, HiddenHandCount = 0, SourceMinionViews = null },
-            Opponent = new PlayerBoardSnapshot { Data = opponentData, HiddenHandCount = 0, SourceMinionViews = null },
+            Self = new PlayerBoardSnapshot { Data = selfData, HiddenHandCount = 0, DeckCount = selfData.Deck.Count, SourceMinionViews = null },
+            Opponent = new PlayerBoardSnapshot { Data = opponentData, HiddenHandCount = 0, DeckCount = opponentData.Deck.Count, SourceMinionViews = null },
         };
     }
 
@@ -38,12 +38,14 @@ public class BoardStateSnapshot
             {
                 Data = selfPlayer,
                 HiddenHandCount = 0,
+                DeckCount = view.Self.DeckCount,
                 SourceMinionViews = view.Self.Board,
             },
             Opponent = new PlayerBoardSnapshot
             {
                 Data = opponentPlayer,
                 HiddenHandCount = view.Opponent.HandCount,
+                DeckCount = view.Opponent.DeckCount,
                 SourceMinionViews = view.Opponent.Board,
             },
         };
@@ -105,5 +107,6 @@ public class PlayerBoardSnapshot
 {
     public CardBattleEngine.Player Data;
     public int HiddenHandCount;
+    public int DeckCount;
     public List<MinionView> SourceMinionViews; // null when IsFromNetwork is false; otherwise aligned index-for-index with Data.Board - Data.Board[i] corresponds to SourceMinionViews[i]
 }

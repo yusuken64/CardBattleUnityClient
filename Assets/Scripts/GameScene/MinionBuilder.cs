@@ -20,7 +20,7 @@ public static class MinionBuilder
             // recognized card) so GetSpriteByCardID can find the art once it arrives, instead
             // of permanently missing the cache under a different key.
             minionCard = new MinionCard(mv.Name, 0, mv.Attack, mv.Health) { SpriteID = mv.CardId };
-            CardArtNetworkService.RequestArtIfNeeded(mv.CardId, owner.Name);
+            CardArtNetworkService.RequestArtIfNeeded(mv.CardId, owner?.Name);
         }
 
         var minion = new CardBattleEngine.Minion(minionCard, owner)

@@ -65,7 +65,7 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 		Health = Data.Health;
 		MaxHealth = Data.MaxHealth;
 		Attack = Data.Attack;
-		//Armor = Data.Armor;
+		Armor = Data.Armor;
 		Mana = Data.Mana;
 		MaxMana = Data.MaxMana;
 		CanAttack = Data.CanAttack();
@@ -174,6 +174,12 @@ public class Player : MonoBehaviour, ITargetable, IUnityGameEntity
 
 	internal void UpdatePlayableActions(bool isActivePlayer)
 	{
+		if (Data == null)
+		{
+			CanAttackIndicator.gameObject.SetActive(false);
+			return;
+		}
+
 		var gameManager = FindFirstObjectByType<GameManager>();
 		var activePlayer = this.Data.Owner == gameManager.Player.Data;
 

@@ -50,6 +50,7 @@ public class EndTurnButton : MonoBehaviour
 	{
 		ButtonImage.color = EnemyColor;
 		ButtonText.text = "Enemy Turn";
+		this.Button.interactable = false;
 		OnlyActionIndicator.gameObject.SetActive(false);
 		OnlyActionIndicator2.gameObject.SetActive(false);
 	}

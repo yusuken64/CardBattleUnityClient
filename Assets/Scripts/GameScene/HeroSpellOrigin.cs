@@ -27,7 +27,7 @@ public class HeroSpellOrigin : MonoBehaviour, ITargetOrigin
 	public void ResolveAim((IGameAction action, ActionContext context) current, GameObject dragObject)
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
-		gameManager.ResolveAction(current.action, current.context);
+		GameActionSubmitter.Submit(gameManager, current.action, current.context);
 
 		if (dragObject != null)
 		{

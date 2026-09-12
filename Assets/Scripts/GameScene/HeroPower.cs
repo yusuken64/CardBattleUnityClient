@@ -61,6 +61,11 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 			return false;
 		}
 
+		if (gameManager.Args?.Mode == GameMode.Networked)
+		{
+			return gameManager.HasNetworkAction(nameof(HeroPowerAction), Player.Data.Id, requireTarget: true);
+		}
+
 		var validTargets = Data.ValidTargetSelector?
 			.Select(gameManager._gameState, Player.Data, OriginalCard)
 			?.ToList();
@@ -121,6 +126,11 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		if (Player.Data.Id != gameManager.Player.Data.Id)
 		{
 			return false;
+		}
+
+		if (gameManager.Args?.Mode == GameMode.Networked)
+		{
+			return gameManager.HasNetworkAction(nameof(HeroPowerAction), Player.Data.Id);
 		}
 
 		return Player.Data.HeroPower != null &&
