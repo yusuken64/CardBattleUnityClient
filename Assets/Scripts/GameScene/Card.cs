@@ -260,6 +260,13 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     internal void RefreshData()
     {
+        // Network opponent hands contain count-only placeholders without card data.
+        if (Data == null)
+        {
+            CanPlay = false;
+            return;
+        }
+
         Cost = this.Data.ManaCost;
         if (Data.Owner == null)
         {
@@ -354,6 +361,8 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         var gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager.Args?.Mode == GameMode.Networked)
         {
+            // The server's weapon target is the owner, not a manual target choice.
+            if (data is WeaponCard) return false;
             return gameManager.HasNetworkAction(nameof(PlayCardAction), data?.Id, requireTarget: true);
         }
 

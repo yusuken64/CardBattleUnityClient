@@ -44,7 +44,10 @@ public class MulliganPrompt : MonoBehaviour
 
 	public void SetupNetworked(List<CardBattleEngine.Card> cards)
 	{
+		gameObject.SetActive(true);
 		_isNetworked = true;
+		_hasStaged = false;
+		_stagedSelection = null;
 		ClearItems();
 
 		var cardPrefab = FindFirstObjectByType<GameInteractionHandler>().CardPrefab;
@@ -156,27 +159,12 @@ public class MulliganPrompt : MonoBehaviour
 
 	private void PerformVisualCleanup()
 	{
-		foreach (var item in Items)
-		{
-			if (item.Keep)
-			{
-				//reparent to hand
-				item.Card.Dragging = false;
-				item.Card.transform.parent = this.GameManager.Player.Hand.transform;
-				item.Card.GetComponent<BoxCollider2D>().enabled = true;
-			}
-			else
-			{
-				this.GameManager.Player.Hand.Cards.Remove(item.Card);
-				Destroy(item.gameObject);
-			}
-		}
-
+		// Network cards here are previews; server snapshots own the actual hand.
+		// Leave every preview under Container so ClearItems destroys kept cards too.
 		SubmitButton.gameObject.SetActive(false);
 		CanvasGroup.DOFade(0, 0.5f)
 			.OnComplete(() =>
 			{
-				this.GameManager.Player.Hand.UpdateCardPositions();
 				ClearItems();
 				this.gameObject.SetActive(false);
 			});

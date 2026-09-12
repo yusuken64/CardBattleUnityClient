@@ -167,7 +167,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         if (Data == null) { return; }
 
         Attack = Data.Attack;
-        Attack = Data.Attack;
+        Health = Data.Health;
         MaxHealth = Data.MaxHealth;
         CanAttack = Data.CanAttack();
         HasDivineShield = Data.HasDivineShield;

@@ -96,9 +96,9 @@ public class MiniSignalRClient
 
 	public async Task ConnectAsync()
 	{
-		string connectionId = await NegotiateAsync();
+		string connectionToken = await NegotiateAsync();
 
-		string wsUrl = ToWebSocketUrl(_hubUrl) + "?id=" + connectionId;
+		string wsUrl = ToWebSocketUrl(_hubUrl) + "?id=" + Uri.EscapeDataString(connectionToken);
 
 		_socket = new ClientWebSocket();
 		_cts = new CancellationTokenSource();
@@ -176,7 +176,13 @@ public class MiniSignalRClient
 		}
 
 		var response = JObject.Parse(request.downloadHandler.text);
-		return (string)response["connectionId"];
+		// Negotiation version 1 uses the connection token for transport requests.
+		string connectionToken = (string)response["connectionToken"];
+		if (string.IsNullOrEmpty(connectionToken))
+		{
+			throw new Exception("SignalR negotiate response did not include a connection token.");
+		}
+		return connectionToken;
 	}
 
 	private static string ToWebSocketUrl(string httpUrl)

@@ -504,6 +504,10 @@ public class GameManager : MonoBehaviour
 		string actionType = action.GetType().Name;
 		Guid? sourceId = context.Source?.Id ?? context.SourceCard?.Id;
 		Guid? targetId = context.Target?.Id;
+		if (!targetId.HasValue && action is PlayCardAction play && play.Card is WeaponCard)
+		{
+			targetId = play.Card.Owner?.Id;
+		}
 
 		chosen = _lastNetworkView.LegalActions.FirstOrDefault(legalAction =>
 			legalAction.ActionType == actionType &&
@@ -593,13 +597,18 @@ public class GameManager : MonoBehaviour
 			var newMinion = Instantiate(minionPrefab, player.Board.transform);
 			newMinion.Setup(minionData);
 			player.Board.Minions.Add(newMinion);
+		}
 
-			if (isFromNetwork && snapshot.SourceMinionViews != null && i < snapshot.SourceMinionViews.Count)
+		player.Board.UpdateMinionPositions();
+		player.RefreshData();
+
+		// RefreshData derives flags from reconstructed entities without attack history.
+		// Apply authoritative network flags last so they survive that refresh.
+		if (isFromNetwork && snapshot.SourceMinionViews != null)
+		{
+			for (int i = 0; i < player.Board.Minions.Count && i < snapshot.SourceMinionViews.Count; i++)
 			{
-				// HasDeathRattle/HasTrigger can't be trusted from the reconstructed
-				// CardBattleEngine.Minion (its TriggeredEffects only reflect the base card,
-				// not any ability granted/removed at runtime) - the server-computed values on
-				// the view are authoritative, so they overwrite whatever Setup() just derived.
+				var newMinion = player.Board.Minions[i];
 				var mv = snapshot.SourceMinionViews[i];
 				newMinion.HasDeathRattle = mv.HasDeathRattle;
 				newMinion.HasTrigger = mv.HasTrigger;
@@ -608,8 +617,6 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		player.Board.UpdateMinionPositions();
-		player.RefreshData();
 		player.CardsLeftInDeck = snapshot.DeckCount;
 		player.UpdateUI();
 
