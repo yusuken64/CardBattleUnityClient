@@ -26,7 +26,7 @@ public class StartGameArgs
 	public Guid LocalPlayerId;
 	public NetworkJoinMode JoinMode = NetworkJoinMode.Host;
 
-	// Only meaningful when JoinMode == Join.
+	// Resolved match id for the active session in Common, or the id to join.
 	public string MatchId;
 
 	public static StartGameArgs LocalTestDefault()

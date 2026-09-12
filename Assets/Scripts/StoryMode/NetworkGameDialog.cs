@@ -1,8 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-//using GameServer.Contracts;
-//using Microsoft.AspNetCore.SignalR.Client;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,10 +22,16 @@ public class NetworkGameDialog : MonoBehaviour
     public Button JoinBackButton;
 
     public GameObject NetworkLoadingOverlay;
-    public TextMeshProUGUI NetworkMessage;
+    public TMP_InputField NetworkMessage;
+    public Button CancelWaitingButton;
+    public Button CopyMatchCodeButton;
 
-    //private HubConnection _connection;
+    public string ServerUrl = "http://localhost:5299";
+
+    private NetworkGameSession _session;
+    private bool _transitioning;
     private CancellationTokenSource _cts;
+    private string _hostedMatchCode;
 
     void Awake()
     {
@@ -38,6 +42,11 @@ public class NetworkGameDialog : MonoBehaviour
 
         JoinConfirmButton.onClick.AddListener(JoinConfirm_Click);
         JoinBackButton.onClick.AddListener(ShowPicker);
+
+        CancelWaitingButton.onClick.AddListener(CancelWaiting);
+        CancelWaitingButton.gameObject.SetActive(false);
+        CopyMatchCodeButton.onClick.AddListener(CopyMatchCode);
+        SetCopyCode(null);
     }
 
     public void Show()
@@ -50,13 +59,28 @@ public class NetworkGameDialog : MonoBehaviour
     {
         PickerPanel.SetActive(true);
         JoinPanel.SetActive(false);
-        NetworkLoadingOverlay.SetActive(false);
+        SetBusy(_cts != null, "Connecting to server...");
     }
 
     private void Close()
     {
+        if (_transitioning) return;
         _cts?.Cancel();
         gameObject.SetActive(false);
+    }
+
+    private void CancelWaiting()
+    {
+        if (_transitioning || _cts == null || _cts.IsCancellationRequested) return;
+        CancelWaitingButton.interactable = false;
+        SetCopyCode(null);
+        NetworkMessage.text = "Cancelling...";
+        _cts.Cancel();
+        if (_session != null)
+        {
+            if (Common.Instance != null) _ = Common.Instance.EndNetworkSessionAsync(_session);
+            else _ = _session.StopAsync();
+        }
     }
 
     private void QuickMatch_Click() =>
@@ -77,128 +101,150 @@ public class NetworkGameDialog : MonoBehaviour
 
     private void JoinConfirm_Click()
     {
-        string matchIdText = MatchIdInput.text.Trim();
-        if (!Guid.TryParse(matchIdText, out var matchGuid))
+        string joinCode = System.Text.RegularExpressions.Regex.Replace(MatchIdInput.text, @"[\s-]", "").ToUpperInvariant();
+        if (!System.Text.RegularExpressions.Regex.IsMatch(joinCode, "^[A-HJ-NP-Z2-9]{6}$"))
         {
-            JoinErrorText.text = "Invalid match id.";
+            JoinErrorText.text = "Enter a six-character join code, such as K7MP-4X.";
             JoinErrorText.gameObject.SetActive(true);
             return;
         }
 
-        StartNetworkedGame(NetworkJoinMode.Join, matchGuid);
+        StartNetworkedGame(NetworkJoinMode.Join, joinCode);
     }
 
-    private void StartNetworkedGame(NetworkJoinMode joinMode, Guid? matchId)
+    private async void StartNetworkedGame(NetworkJoinMode joinMode, string joinCode)
     {
-        var activeDeck = Common.Instance.SaveManager.SaveData.GameSaveData.GetActiveDeck();
-        GameManager.GameStartParams = new GameStartParams
-        {
-            CombatDeck = activeDeck?.ToDeck()
-        };
-        GameManager.PendingStartArgs = new StartGameArgs
-        {
-            Mode = GameMode.Networked,
-            JoinMode = joinMode,
-            MatchId = matchId?.ToString()
-        };
+        if (_cts != null || _transitioning) return;
 
-        Common.Instance.SceneTransition.DoTransition(() =>
-        {
-            SceneManager.LoadScene("GameScene");
-        });
-    }
-
-    // Shared connect + run + cleanup wrapper. `flow` does the actual JoinQueue/CreateMatch/JoinMatch
-    // call and returns the resolved matchId (or throws on failure).
-    private async Task RunFlow(Func<Task<Guid>> flow, string waitingMessage)
-    {
-        SetBusy(true, waitingMessage);
-        _cts = new CancellationTokenSource();
+        var cts = new CancellationTokenSource();
+        _cts = cts;
+        NetworkGameSession session = null;
+        bool enteredGame = false;
+        var common = Common.Instance;
+        SetBusy(true, "Connecting to server...");
+        foreach (var label in CancelWaitingButton.GetComponentsInChildren<TMP_Text>(true))
+            label.text = joinMode == NetworkJoinMode.Host ? "Stop Hosting" :
+                joinMode == NetworkJoinMode.QuickMatch ? "Cancel Search" : "Cancel";
+        JoinErrorText.gameObject.SetActive(false);
 
         try
         {
-            //_connection = new HubConnectionBuilder()
-            //    .WithUrl($"{GameConfig.ServerUrl}/hubs/match")
-            //    .Build();
+            var activeDeck = Common.Instance.SaveManager.SaveData.GameSaveData.GetActiveDeck();
+            if (activeDeck == null)
+                throw new InvalidOperationException("Select a deck before starting a network game.");
 
-            //await _connection.StartAsync(_cts.Token);
+            var decklist = activeDeck.ToDeck().ToDecklistRequest(
+                joinMode == NetworkJoinMode.Join ? "Joiner" : "Host");
+            session = common.CreateNetworkSession(ServerUrl);
+            _session = session;
+            await session.ConnectAsync();
+            cts.Token.ThrowIfCancellationRequested();
 
-            //var matchId = await flow();
+            switch (joinMode)
+            {
+                case NetworkJoinMode.QuickMatch:
+                    NetworkMessage.text = "Searching for an opponent...";
+                    await session.Client.InvokeAsync<object>("JoinQueue", decklist);
+                    break;
+                case NetworkJoinMode.Host:
+                    session.MatchId = await session.Client.InvokeAsync<string>("CreateMatch", decklist);
+                    cts.Token.ThrowIfCancellationRequested();
+                    if (!IsValidMatchCode(session.MatchId))
+                        throw new InvalidOperationException("The server returned an unsupported match ID. Restart the server with the updated short-code build.");
+                    NetworkMessage.text = $"Join code: {session.MatchId}\nWaiting for an opponent...";
+                    SetCopyCode(session.MatchId);
+                    break;
+                case NetworkJoinMode.Join:
+                    var result = await session.Client.InvokeAsync<JoinResult>("JoinMatch", joinCode, decklist);
+                    cts.Token.ThrowIfCancellationRequested();
+                    if (result == null || !result.Success)
+                        throw new InvalidOperationException(result?.Error ?? "Unable to join this match.");
+                    if (!IsValidMatchCode(result.MatchId))
+                        throw new InvalidOperationException("The server returned an invalid match.");
+                    session.MatchId = result.MatchId;
+                    NetworkMessage.text = "Waiting for the game to start...";
+                    break;
+            }
 
-            //GameManager.PendingStartArgs = new StartGameArgs
-            //{
-            //    Mode = GameMode.Networked,
-            //    MatchId = matchId.ToString(),
-            //    Connection = _connection, // hand the live connection off to GameScene
-            //};
+            // A queue acknowledgement or hosted match id does not mean the game has started.
+            while (true)
+            {
+                cts.Token.ThrowIfCancellationRequested();
+                if (session.Disconnected || !session.Client.IsConnected)
+                    throw new InvalidOperationException("Disconnected from the server before the game started.");
+                if (session.HasEnded || session.LatestView?.IsGameOver == true)
+                    throw new InvalidOperationException("The match ended before the game could start.");
+                if (session.IsReady && !Common.Instance.SceneTransition.transitionInProgress) break;
+                await Task.Delay(50, cts.Token);
+            }
 
+            _transitioning = true;
+            CloseButton.interactable = false;
+            CancelWaitingButton.interactable = false;
+            CopyMatchCodeButton.interactable = false;
+            var transitionComplete = new TaskCompletionSource<bool>();
             Common.Instance.SceneTransition.DoTransition(() =>
             {
+                // Recheck after the fade: cancellation or server failure must not load GameScene.
+                if (cts.IsCancellationRequested || !session.IsReady)
+                {
+                    transitionComplete.TrySetResult(false);
+                    return;
+                }
+                GameManager.GameStartParams = null;
+                GameManager.PendingStartArgs = new StartGameArgs
+                {
+                    Mode = GameMode.Networked,
+                    JoinMode = joinMode,
+                    MatchId = session.MatchId
+                };
+                enteredGame = true;
+                _session = null;
                 SceneManager.LoadScene("GameScene");
+                transitionComplete.TrySetResult(true);
             });
-            // Deliberately not calling SetBusy(false)/disposing _connection here — the scene
-            // transition takes over and GameScene owns the connection from this point on.
+            if (!await transitionComplete.Task)
+            {
+                cts.Token.ThrowIfCancellationRequested();
+                throw new InvalidOperationException("The server game is no longer available.");
+            }
         }
-        catch (OperationCanceledException)
-        {
-            await DisposeConnection();
-        }
+        catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            ShowError(ex.Message);
-            await DisposeConnection();
+            if (!cts.IsCancellationRequested && this != null && gameObject.activeSelf)
+                ShowError(ex.Message);
         }
         finally
         {
-            if (this != null && gameObject.activeSelf)
+            if (!enteredGame && session != null)
+            {
+                if (common != null) await common.EndNetworkSessionAsync(session);
+                else await session.StopAsync();
+            }
+            _session = null;
+            _cts = null;
+            bool cancelled = cts.IsCancellationRequested;
+            cts.Dispose();
+            if (this != null && !enteredGame)
+            {
+                _transitioning = false;
+                CloseButton.interactable = true;
                 SetBusy(false, null);
+                if (cancelled && gameObject.activeSelf) ShowPicker();
+            }
         }
     }
 
-    private async Task<Guid> QuickMatchFlow()
-    {
-        var matchFound = new TaskCompletionSource<Guid>();
-        //_connection.On<Guid>("OnMatchFound", id => matchFound.TrySetResult(id));
-
-        var activeDeck = Common.Instance.SaveManager.SaveData.GameSaveData.GetActiveDeck();
-        //await _connection.InvokeAsync("JoinQueue", activeDeck, _cts.Token);
-
-        using (_cts.Token.Register(() => matchFound.TrySetCanceled()))
-        {
-            return await matchFound.Task;
-        }
-    }
-
-    //private async Task<Guid> HostFlow()
-    //{
-    //    var activeDeck = Common.Instance.SaveManager.SaveData.GameSaveData.GetActiveDeck();
-    //    return await _connection.InvokeAsync<Guid>("CreateMatch", activeDeck, _cts.Token);
-    //}
-
-    private async Task<Guid> JoinFlow(Guid matchId)
-    {
-        var activeDeck = Common.Instance.SaveManager.SaveData.GameSaveData.GetActiveDeck();
-        //var result = await _connection.InvokeAsync<JoinResult>("JoinMatch", matchId, activeDeck, _cts.Token);
-        //if (!result.Success)
-        //{
-        //    throw new InvalidOperationException(result.Error);
-        //}
-        return matchId;
-    }
-
-    private async Task DisposeConnection()
-    {
-        //if (_connection != null)
-        //{
-        //    await _connection.StopAsync();
-        //    await _connection.DisposeAsync();
-        //    _connection = null;
-        //}
-    }
+    private static bool IsValidMatchCode(string matchId) =>
+        matchId != null && System.Text.RegularExpressions.Regex.IsMatch(matchId, "^[A-HJ-NP-Z2-9]{4}-[A-HJ-NP-Z2-9]{2}$");
 
     private void SetBusy(bool busy, string message)
     {
+        SetCopyCode(null);
         NetworkLoadingOverlay.SetActive(busy);
+        CancelWaitingButton.gameObject.SetActive(busy);
+        CancelWaitingButton.interactable = busy && !_transitioning && _cts?.IsCancellationRequested != true;
         if (busy) NetworkMessage.text = message;
 
         QuickMatchButton.interactable = !busy;
@@ -206,6 +252,24 @@ public class NetworkGameDialog : MonoBehaviour
         JoinButton.interactable = !busy;
         JoinConfirmButton.interactable = !busy;
         JoinBackButton.interactable = !busy;
+    }
+
+    private void SetCopyCode(string code)
+    {
+        _hostedMatchCode = code;
+        CopyMatchCodeButton.gameObject.SetActive(!string.IsNullOrEmpty(code));
+        CopyMatchCodeButton.interactable = !string.IsNullOrEmpty(code);
+        foreach (var label in CopyMatchCodeButton.GetComponentsInChildren<TMP_Text>(true))
+            label.text = "Copy Code";
+    }
+
+    private void CopyMatchCode()
+    {
+        if (string.IsNullOrEmpty(_hostedMatchCode) || _transitioning || _cts?.IsCancellationRequested != false)
+            return;
+        GUIUtility.systemCopyBuffer = _hostedMatchCode;
+        foreach (var label in CopyMatchCodeButton.GetComponentsInChildren<TMP_Text>(true))
+            label.text = "Copied!";
     }
 
     private void ShowError(string message)
@@ -218,6 +282,10 @@ public class NetworkGameDialog : MonoBehaviour
 
     private void OnDisable()
     {
+        // Loading GameScene keeps Common's session alive; closing matchmaking ends it.
+        if (_session == null) return;
         _cts?.Cancel();
+        if (Common.Instance != null) _ = Common.Instance.EndNetworkSessionAsync(_session);
+        else _ = _session.StopAsync();
     }
 }

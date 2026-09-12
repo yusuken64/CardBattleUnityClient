@@ -32,6 +32,7 @@ public class JoinResult
 {
 	public bool Success;
 	public string Error;
+	public string MatchId;
 }
 
 public class ActionResult

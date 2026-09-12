@@ -61,7 +61,7 @@ public class MiniSignalRClient
 		});
 	}
 
-	// For server push methods with more than one parameter (e.g. OnCardArtRequested(Guid, string)) -
+	// For server push methods with more than one parameter (e.g. OnCardArtRequested(string, string)) -
 	// SignalR's JSON protocol sends these as a positional arguments array, one element per parameter,
 	// not a single combined object, so each argument must be deserialized independently by position.
 	public void On<T1, T2>(string target, Action<T1, T2> handler)
@@ -94,14 +94,15 @@ public class MiniSignalRClient
 		}
 	}
 
-	public async Task ConnectAsync()
+	public async Task ConnectAsync(CancellationToken cancellationToken = default)
 	{
-		string connectionToken = await NegotiateAsync();
+		string connectionToken = await NegotiateAsync(cancellationToken);
+		cancellationToken.ThrowIfCancellationRequested();
 
 		string wsUrl = ToWebSocketUrl(_hubUrl) + "?id=" + Uri.EscapeDataString(connectionToken);
 
 		_socket = new ClientWebSocket();
-		_cts = new CancellationTokenSource();
+		_cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 		await _socket.ConnectAsync(new Uri(wsUrl), _cts.Token);
 
 		await SendFrame(new JObject { ["protocol"] = "json", ["version"] = 1 }.ToString(Formatting.None));
@@ -147,14 +148,29 @@ public class MiniSignalRClient
 
 	public async Task DisconnectAsync()
 	{
-		_cts?.Cancel();
-		if (_socket != null && _socket.State == WebSocketState.Open)
+		// Release callers immediately, including a JoinQueue/CreateMatch still awaiting a reply.
+		foreach (var invocation in _pendingInvocations)
 		{
-			await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client disconnect", CancellationToken.None);
+			if (_pendingInvocations.TryRemove(invocation.Key, out var pending))
+				pending.TrySetCanceled();
+		}
+		try
+		{
+			if (_socket != null && _socket.State == WebSocketState.Open)
+			{
+				using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+				await _socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Client disconnect", timeout.Token);
+			}
+		}
+		finally
+		{
+			_cts?.Cancel();
+			_socket?.Abort();
+			_socket?.Dispose();
 		}
 	}
 
-	private async Task<string> NegotiateAsync()
+	private async Task<string> NegotiateAsync(CancellationToken cancellationToken)
 	{
 		string negotiateUrl = _hubUrl + "/negotiate?negotiateVersion=1";
 
@@ -167,6 +183,7 @@ public class MiniSignalRClient
 		UnityWebRequestAsyncOperation operation = request.SendWebRequest();
 		while (!operation.isDone)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			await Task.Yield();
 		}
 

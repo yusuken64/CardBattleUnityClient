@@ -45,9 +45,10 @@ public class GameManager : MonoBehaviour
 	public MulliganPrompt MulliganPrompt;
 
 	private MiniSignalRClient _networkClient;
+	private NetworkGameSession _networkSession;
 	private PlayerGameView _lastNetworkView;
 	public PlayerGameView LastNetworkView => _lastNetworkView;
-	private Guid _networkMatchId;
+	private string _networkMatchId;
 	private GameState _snapshotForDebug;
 	private bool _mulliganHandled;
 	private bool _networkSubmissionPending;
@@ -65,17 +66,14 @@ public class GameManager : MonoBehaviour
 		InitializeGame();
 	}
 
-	void Update()
-	{
-		_networkClient?.PumpMainThread();
-	}
-
 	void OnDestroy()
 	{
 		_isDestroying = true;
-		if (_networkClient != null)
+		if (_networkSession != null)
 		{
-			_ = _networkClient.DisconnectAsync();
+			_networkSession.Detach();
+			if (Common.Instance != null) _ = Common.Instance.EndNetworkSessionAsync(_networkSession);
+			else _ = _networkSession.StopAsync();
 		}
 	}
 
@@ -246,19 +244,29 @@ public class GameManager : MonoBehaviour
 
 	private async Task InitializeNetworkedGameAsync(StartGameArgs args)
 	{
-		var matchFound = new TaskCompletionSource<Guid>();
+		if (Common.Instance.NetworkSession != null)
+		{
+			ResolveNetworkSceneReferences();
+			var session = Common.Instance.NetworkSession;
+			_networkSession = session;
+			_networkClient = session.Client;
+			_networkMatchId = session.MatchId;
+			GameStartParams = null;
+			CardArtNetworkService.SetMatchId(_networkMatchId);
+			session.Attach(OnNetworkStateUpdated, OnNetworkActionRejected,
+				OnNetworkMatchEnded, OnNetworkDisconnected);
+			GameInitialized?.Invoke(this._engine);
+			return;
+		}
+
 		ResolveNetworkSceneReferences();
 
-		_networkClient = new MiniSignalRClient($"{ServerUrl}/hubs/match");
-		_networkClient.On<PlayerGameView>("OnStateUpdated", OnNetworkStateUpdated);
-		_networkClient.On<string>("OnActionRejected", OnNetworkActionRejected);
-		_networkClient.On<Guid?>("OnMatchEnded", OnNetworkMatchEnded);
-		_networkClient.On<Guid>("OnMatchFound", matchId => matchFound.TrySetResult(matchId));
-		_networkClient.OnDisconnected += OnNetworkDisconnected;
-
-		CardArtNetworkService.Initialize(_networkClient);
-
-		await _networkClient.ConnectAsync();
+		_networkSession = Common.Instance.CreateNetworkSession(ServerUrl);
+		_networkClient = _networkSession.Client;
+		_networkSession.Attach(OnNetworkStateUpdated, OnNetworkActionRejected,
+			OnNetworkMatchEnded, OnNetworkDisconnected);
+		await _networkSession.ConnectAsync();
+		_networkSession.CancellationToken.ThrowIfCancellationRequested();
 
 		Deck networkDeck = GameStartParams?.CombatDeck ?? TestDeck.ToDeck();
 		GameStartParams = null;
@@ -269,34 +277,44 @@ public class GameManager : MonoBehaviour
 			case NetworkJoinMode.QuickMatch:
 				await JoinQueueAsync(decklist);
 				Debug.Log("Searching for an opponent...");
-				_networkMatchId = await matchFound.Task;
+				while (string.IsNullOrEmpty(_networkSession.MatchId))
+				{
+					if (_networkSession.Disconnected)
+						throw new InvalidOperationException("Disconnected while waiting for a match.");
+					await Task.Delay(50, _networkSession.CancellationToken);
+				}
+				_networkMatchId = _networkSession.MatchId;
 				CardArtNetworkService.SetMatchId(_networkMatchId);
 				Debug.Log($"Match found: {_networkMatchId}");
 				break;
 
 			case NetworkJoinMode.Join:
-				if (!Guid.TryParse(args.MatchId, out _networkMatchId))
+				_networkMatchId = args.MatchId;
+				if (string.IsNullOrWhiteSpace(_networkMatchId))
 				{
 					HandleNetworkFailure($"Invalid match id: {args.MatchId}");
 					return;
 				}
 				CardArtNetworkService.SetMatchId(_networkMatchId);
 				JoinResult joinResult = await _networkClient.InvokeAsync<JoinResult>("JoinMatch", _networkMatchId, decklist);
-				if (!joinResult.Success)
+				if (joinResult == null || !joinResult.Success)
 				{
-					HandleNetworkFailure($"Failed to join match {_networkMatchId}: {joinResult.Error}");
+					HandleNetworkFailure($"Failed to join match {_networkMatchId}: {joinResult?.Error}");
 					return;
 				}
+				_networkMatchId = joinResult.MatchId;
+				CardArtNetworkService.SetMatchId(_networkMatchId);
 				break;
 
 			case NetworkJoinMode.Host:
 			default:
-				_networkMatchId = await _networkClient.InvokeAsync<Guid>("CreateMatch", decklist);
+				_networkMatchId = await _networkClient.InvokeAsync<string>("CreateMatch", decklist);
 				CardArtNetworkService.SetMatchId(_networkMatchId);
 				Debug.Log($"Created match {_networkMatchId}. Waiting for an opponent to join.");
 				break;
 		}
 
+		_networkSession.MatchId = _networkMatchId;
 		GameInitialized?.Invoke(this._engine);
 	}
 
@@ -481,7 +499,7 @@ public class GameManager : MonoBehaviour
 		_ = SubmitLocalActionAsync(chosen, _networkMatchId, _lastNetworkView.PromptVersion.Value);
 	}
 
-	private async Task SubmitLocalActionAsync(LegalActionView chosen, Guid matchId, int promptVersion)
+	private async Task SubmitLocalActionAsync(LegalActionView chosen, string matchId, int promptVersion)
 	{
 		ActionResult result = await _networkClient.InvokeAsync<ActionResult>("SubmitAction", matchId, chosen.Index, promptVersion);
 		if (!result.Success)
@@ -533,7 +551,7 @@ public class GameManager : MonoBehaviour
 
 	// Pull-based state fetch for the caller's own seat. Not called anywhere yet - added so the hub's
 	// full RPC surface is available once a rendering adapter or reconnect flow needs it.
-	private async Task<PlayerGameView> GetStateAsync(Guid matchId)
+	private async Task<PlayerGameView> GetStateAsync(string matchId)
 	{
 		return await _networkClient.InvokeAsync<PlayerGameView>("GetState", matchId);
 	}

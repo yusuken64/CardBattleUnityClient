@@ -5,7 +5,7 @@ using UnityEngine;
 public static class CardArtNetworkService
 {
 	private static MiniSignalRClient _client;
-	private static Guid _matchId;
+	private static string _matchId;
 	private static readonly Dictionary<string, Sprite> _receivedArt = new Dictionary<string, Sprite>();
 	private static readonly Dictionary<string, string> _receivedArtOwner = new Dictionary<string, string>();
 	private static readonly Dictionary<string, string> _requestedIds = new Dictionary<string, string>();
@@ -19,11 +19,11 @@ public static class CardArtNetworkService
 		// retried rather than permanently suppressed.
 		_requestedIds.Clear();
 
-		_client.On<Guid, string>("OnCardArtRequested", OnCardArtRequested);
+		_client.On<string, string>("OnCardArtRequested", OnCardArtRequested);
 		_client.On<string, byte[]>("OnCardArtReceived", OnCardArtReceived);
 	}
 
-	public static void SetMatchId(Guid matchId)
+	public static void SetMatchId(string matchId)
 	{
 		_matchId = matchId;
 	}
@@ -78,7 +78,7 @@ public static class CardArtNetworkService
 	// (built-in cards are looked up via CardManager the same way any other card id is resolved) and
 	// send back its Sprite as PNG bytes if we have one. Silently does nothing if we don't have it -
 	// the requester just keeps its placeholder.
-	private static async void OnCardArtRequested(Guid matchId, string cardId)
+	private static async void OnCardArtRequested(string matchId, string cardId)
 	{
 		var definition = Common.Instance != null ? Common.Instance.CardManager.GetCardByID(cardId) : null;
 		if (definition == null || definition.Sprite == null) return;

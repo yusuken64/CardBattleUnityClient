@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,34 @@ public class Common : MonoBehaviour
 	public ModManager ModManager;
 
 	public DeckDefinition StartingDeck;
+	public NetworkGameSession NetworkSession { get; private set; }
+
+	public NetworkGameSession CreateNetworkSession(string serverUrl)
+	{
+		if (NetworkSession != null)
+			throw new System.InvalidOperationException("A network session is already active.");
+		return NetworkSession = new NetworkGameSession(serverUrl);
+	}
+
+	public async Task EndNetworkSessionAsync(NetworkGameSession session)
+	{
+		if (session == null) return;
+		// Cleanup from an old scene must never clear a newer session.
+		if (NetworkSession == session) NetworkSession = null;
+		await session.StopAsync();
+	}
+
+	private void Update()
+	{
+		if (Instance == this) NetworkSession?.Client.PumpMainThread();
+	}
+
+	private void OnDestroy()
+	{
+		if (Instance != this) return;
+		_ = EndNetworkSessionAsync(NetworkSession);
+		Instance = null;
+	}
 
 	private void Awake()
 	{
