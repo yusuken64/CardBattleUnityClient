@@ -27,7 +27,7 @@ public class StoryModeScene : MonoBehaviour
         Settings.gameObject.SetActive(false);
         DataObject.gameObject.SetActive(false);
         TutorialPopup.gameObject.SetActive(false);
-        //NetworkGameDialog.gameObject.SetActive(false);
+        NetworkGameDialog.gameObject.SetActive(false);
         MyDeckPicker.gameObject.SetActive(false);
 
         ReloadActiveDeck();
