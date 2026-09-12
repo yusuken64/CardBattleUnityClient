@@ -8040,7 +8040,6 @@ MonoBehaviour:
   NetworkMessage: {fileID: 1801822377}
   CancelWaitingButton: {fileID: 1097639611}
   CopyMatchCodeButton: {fileID: 553194221}
-  ServerUrl: http://localhost:5299
 --- !u!1001 &762281573
 PrefabInstance:
   m_ObjectHideFlags: 0

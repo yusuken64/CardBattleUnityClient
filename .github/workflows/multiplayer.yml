@@ -1,0 +1,130 @@
+name: Build and Deploy Multiplayer Server
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - .github/workflows/multiplayer.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Test and publish GameServer
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout server repository
+        uses: actions/checkout@v4
+        with:
+          repository: yusuken64/CardBattleEngine
+          ref: ${{ vars.MULTIPLAYER_SERVER_REF || 'main' }}
+          token: ${{ secrets.CARD_BATTLE_ENGINE_READ_TOKEN || github.token }}
+          persist-credentials: false
+
+      - name: Record server revision
+        run: git rev-parse HEAD >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Run multiplayer integration tests
+        run: dotnet test GameServer.Test/GameServer.Test.csproj --configuration Release --logger trx --results-directory test-results
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplayer-test-results
+          path: test-results/*.trx
+          if-no-files-found: ignore
+
+      - name: Publish server
+        run: dotnet publish GameServer/GameServer.csproj --configuration Release --output publish /p:UseAppHost=false
+
+      - name: Verify deployment package
+        run: |
+          test -f publish/GameServer.dll
+          test -f publish/GameServer.runtimeconfig.json
+          test -d publish/Data
+          git rev-parse HEAD > publish/server-revision.txt
+
+      - name: Upload server package
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplayer-server
+          path: publish/
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy GameServer to Azure
+    needs: build
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.event_name != 'pull_request' &&
+      vars.AZURE_MULTIPLAYER_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: multiplayer-production
+    concurrency:
+      group: multiplayer-production
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AZURE_WEBAPP_NAME: ${{ vars.AZURE_MULTIPLAYER_APP_NAME }}
+      AZURE_RESOURCE_GROUP: ${{ vars.AZURE_MULTIPLAYER_RESOURCE_GROUP }}
+    steps:
+      - name: Validate configuration
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          for setting in AZURE_WEBAPP_NAME AZURE_RESOURCE_GROUP AZURE_CLIENT_ID AZURE_TENANT_ID AZURE_SUBSCRIPTION_ID; do
+            if [ -z "${!setting}" ]; then
+              echo "::error::Missing $setting. See docs/azure-multiplayer-ci.md."
+              exit 1
+            fi
+          done
+
+      - name: Download server package
+        uses: actions/download-artifact@v4
+        with:
+          name: multiplayer-server
+          path: publish
+
+      - name: Sign in to Azure with OpenID Connect
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Configure App Service
+        run: |
+          az webapp config set --resource-group "$AZURE_RESOURCE_GROUP" --name "$AZURE_WEBAPP_NAME" \
+            --always-on true --web-sockets-enabled true --startup-file "dotnet GameServer.dll" --output none
+          az webapp update --resource-group "$AZURE_RESOURCE_GROUP" --name "$AZURE_WEBAPP_NAME" \
+            --https-only true --output none
+
+      - name: Deploy server package
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: publish
+
+      - name: Check SignalR negotiation
+        run: |
+          hostname=$(az webapp show --resource-group "$AZURE_RESOURCE_GROUP" --name "$AZURE_WEBAPP_NAME" --query defaultHostName --output tsv)
+          curl --fail --silent --show-error --retry 12 --retry-all-errors --retry-delay 10 \
+            --connect-timeout 10 --max-time 30 --request POST \
+            "https://$hostname/hubs/match/negotiate?negotiateVersion=1" --output negotiate.json
+          jq -e '.connectionToken | type == "string" and length > 0' negotiate.json > /dev/null
+          echo "Multiplayer server: https://$hostname" >> "$GITHUB_STEP_SUMMARY"

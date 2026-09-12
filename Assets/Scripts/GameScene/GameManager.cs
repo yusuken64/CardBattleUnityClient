@@ -39,8 +39,6 @@ public partial class GameManager : MonoBehaviour
 	public int RandomSeed;
 	public BattleIntro BattleIntro;
 
-	public string ServerUrl = "http://localhost:5299";
-
 	public NetworkAnimationQueue NetworkAnimationQueue;
 	public MulliganPrompt MulliganPrompt;
 
@@ -73,7 +71,7 @@ public partial class GameManager : MonoBehaviour
 		if (_networkSession != null)
 		{
 			_networkSession.Detach();
-			if (Common.Instance != null) _ = Common.Instance.EndNetworkSessionAsync(_networkSession);
+			if (Common.Instance != null) _ = Common.Instance.NetworkManager.EndSessionAsync(_networkSession);
 			else _ = _networkSession.StopAsync();
 		}
 	}
@@ -245,10 +243,10 @@ public partial class GameManager : MonoBehaviour
 
 	private async Task InitializeNetworkedGameAsync(StartGameArgs args)
 	{
-		if (Common.Instance.NetworkSession != null)
+		if (Common.Instance.NetworkManager.Session != null)
 		{
 			ResolveNetworkSceneReferences();
-			var session = Common.Instance.NetworkSession;
+			var session = Common.Instance.NetworkManager.Session;
 			_networkSession = session;
 			_networkClient = session.Client;
 			_networkMatchId = session.MatchId;
@@ -262,7 +260,7 @@ public partial class GameManager : MonoBehaviour
 
 		ResolveNetworkSceneReferences();
 
-		if (!Common.Instance.TryCreateNetworkSession(ServerUrl, out _networkSession)) return;
+		if (!Common.Instance.NetworkManager.TryCreateSession(out _networkSession)) return;
 		_networkClient = _networkSession.Client;
 		_networkSession.Attach(OnNetworkStateUpdated, OnNetworkActionRejected,
 			OnNetworkMatchEnded, OnNetworkDisconnected);

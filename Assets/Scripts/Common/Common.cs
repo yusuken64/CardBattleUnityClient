@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,39 +17,11 @@ public class Common : MonoBehaviour
 	public ModManager ModManager;
 
 	public DeckDefinition StartingDeck;
-	public NetworkGameSession NetworkSession { get; private set; }
-	private double _nextNetworkRequestTime;
-	public bool CanStartNetworkSession => NetworkSession == null &&
-		Time.realtimeSinceStartupAsDouble >= _nextNetworkRequestTime;
-
-	public bool TryCreateNetworkSession(string serverUrl, out NetworkGameSession session)
-	{
-		session = null;
-		if (!CanStartNetworkSession) return false;
-		// Shared across dialogs and scenes; cancellation and failures do not reset it.
-		_nextNetworkRequestTime = Time.realtimeSinceStartupAsDouble + 5;
-		session = NetworkSession = new NetworkGameSession(serverUrl);
-		return true;
-	}
-
-	public async Task EndNetworkSessionAsync(NetworkGameSession session)
-	{
-		if (session == null) return;
-		// Cleanup from an old scene must never clear a newer session.
-		if (NetworkSession == session) NetworkSession = null;
-		await session.StopAsync();
-	}
-
-	private void Update()
-	{
-		if (Instance == this) NetworkSession?.Client.PumpMainThread();
-	}
+	public NetworkManager NetworkManager;
 
 	private void OnDestroy()
 	{
-		if (Instance != this) return;
-		_ = EndNetworkSessionAsync(NetworkSession);
-		Instance = null;
+		if (Instance == this) Instance = null;
 	}
 
 	private void Awake()
@@ -59,6 +30,7 @@ public class Common : MonoBehaviour
 		if (Instance == null)
 		{
 			Instance = this;
+			NetworkManager.Initialize();
 			DontDestroyOnLoad(this.transform);
 		}
 		else

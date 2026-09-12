@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-// Owned and pumped by Common. Buffers server events until the game scene subscribes.
+// Owned and pumped by NetworkManager. Buffers events until the game scene subscribes.
 public sealed class NetworkGameSession
 {
 	public MiniSignalRClient Client { get; }

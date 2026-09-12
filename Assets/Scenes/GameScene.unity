@@ -5774,7 +5774,6 @@ MonoBehaviour:
   UseSeed: 1
   RandomSeed: 0
   BattleIntro: {fileID: 1320670705}
-  ServerUrl: http://localhost:5299
   NetworkAnimationQueue: {fileID: 0}
   MulliganPrompt: {fileID: 0}
   BattleMusic: {fileID: 8300000, guid: dfdc01c6b60cbf244b5666f4039ef52b, type: 3}

@@ -26,8 +26,6 @@ public class NetworkGameDialog : MonoBehaviour
     public Button CancelWaitingButton;
     public Button CopyMatchCodeButton;
 
-    public string ServerUrl = "http://localhost:5299";
-
     private NetworkGameSession _session;
     private bool _transitioning;
     private CancellationTokenSource _cts;
@@ -80,7 +78,7 @@ public class NetworkGameDialog : MonoBehaviour
         _cts.Cancel();
         if (_session != null)
         {
-            if (Common.Instance != null) _ = Common.Instance.EndNetworkSessionAsync(_session);
+            if (Common.Instance != null) _ = Common.Instance.NetworkManager.EndSessionAsync(_session);
             else _ = _session.StopAsync();
         }
     }
@@ -116,7 +114,7 @@ public class NetworkGameDialog : MonoBehaviour
 
     private async void StartNetworkedGame(NetworkJoinMode joinMode, string joinCode)
     {
-        if (_cts != null || _transitioning || !Common.Instance.CanStartNetworkSession) return;
+        if (_cts != null || _transitioning || !Common.Instance.NetworkManager.CanStartSession) return;
 
         var cts = new CancellationTokenSource();
         _cts = cts;
@@ -137,7 +135,7 @@ public class NetworkGameDialog : MonoBehaviour
 
             var decklist = activeDeck.ToDeck().ToDecklistRequest(
                 joinMode == NetworkJoinMode.Join ? "Joiner" : "Host");
-            if (!common.TryCreateNetworkSession(ServerUrl, out session)) return;
+            if (!common.NetworkManager.TryCreateSession(out session)) return;
             _session = session;
             await session.ConnectAsync();
             cts.Token.ThrowIfCancellationRequested();
@@ -221,7 +219,7 @@ public class NetworkGameDialog : MonoBehaviour
         {
             if (!enteredGame && session != null)
             {
-                if (common != null) await common.EndNetworkSessionAsync(session);
+                if (common != null) await common.NetworkManager.EndSessionAsync(session);
                 else await session.StopAsync();
             }
             _session = null;
@@ -261,7 +259,7 @@ public class NetworkGameDialog : MonoBehaviour
     {
         bool busy = _cts != null || _transitioning;
         bool available = !busy && Common.Instance != null &&
-            Common.Instance.CanStartNetworkSession;
+            Common.Instance.NetworkManager.CanStartSession;
         QuickMatchButton.interactable = available;
         HostButton.interactable = available;
         JoinButton.interactable = available;
@@ -305,7 +303,7 @@ public class NetworkGameDialog : MonoBehaviour
         // Loading GameScene keeps Common's session alive; closing matchmaking ends it.
         if (_session == null) return;
         _cts?.Cancel();
-        if (Common.Instance != null) _ = Common.Instance.EndNetworkSessionAsync(_session);
+        if (Common.Instance != null) _ = Common.Instance.NetworkManager.EndSessionAsync(_session);
         else _ = _session.StopAsync();
     }
 }
