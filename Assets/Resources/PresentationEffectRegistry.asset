@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eee018590ffe4594b1c9321ad642e056, type: 3}
   m_Name: PresentationEffectRegistry
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   Entries:
   - Id: 0164ffbc10db0fd4790dde01eef409f8
     Effect: {fileID: 11400000, guid: 0164ffbc10db0fd4790dde01eef409f8, type: 2}
