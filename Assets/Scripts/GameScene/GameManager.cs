@@ -261,7 +261,7 @@ public class GameManager : MonoBehaviour
 
 		ResolveNetworkSceneReferences();
 
-		_networkSession = Common.Instance.CreateNetworkSession(ServerUrl);
+		if (!Common.Instance.TryCreateNetworkSession(ServerUrl, out _networkSession)) return;
 		_networkClient = _networkSession.Client;
 		_networkSession.Attach(OnNetworkStateUpdated, OnNetworkActionRejected,
 			OnNetworkMatchEnded, OnNetworkDisconnected);

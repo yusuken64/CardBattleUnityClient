@@ -32,9 +32,11 @@ public class NetworkGameDialog : MonoBehaviour
     private bool _transitioning;
     private CancellationTokenSource _cts;
     private string _hostedMatchCode;
+    private Image _networkLoadingBackground;
 
     void Awake()
     {
+        _networkLoadingBackground = NetworkLoadingOverlay.GetComponent<Image>();
         QuickMatchButton.onClick.AddListener(QuickMatch_Click);
         HostButton.onClick.AddListener(Host_Click);
         JoinButton.onClick.AddListener(Join_Click);
@@ -114,7 +116,7 @@ public class NetworkGameDialog : MonoBehaviour
 
     private async void StartNetworkedGame(NetworkJoinMode joinMode, string joinCode)
     {
-        if (_cts != null || _transitioning) return;
+        if (_cts != null || _transitioning || !Common.Instance.CanStartNetworkSession) return;
 
         var cts = new CancellationTokenSource();
         _cts = cts;
@@ -135,7 +137,7 @@ public class NetworkGameDialog : MonoBehaviour
 
             var decklist = activeDeck.ToDeck().ToDecklistRequest(
                 joinMode == NetworkJoinMode.Join ? "Joiner" : "Host");
-            session = common.CreateNetworkSession(ServerUrl);
+            if (!common.TryCreateNetworkSession(ServerUrl, out session)) return;
             _session = session;
             await session.ConnectAsync();
             cts.Token.ThrowIfCancellationRequested();
@@ -242,16 +244,34 @@ public class NetworkGameDialog : MonoBehaviour
     private void SetBusy(bool busy, string message)
     {
         SetCopyCode(null);
-        NetworkLoadingOverlay.SetActive(busy);
         CancelWaitingButton.gameObject.SetActive(busy);
         CancelWaitingButton.interactable = busy && !_transitioning && _cts?.IsCancellationRequested != true;
         if (busy) NetworkMessage.text = message;
 
-        QuickMatchButton.interactable = !busy;
-        HostButton.interactable = !busy;
-        JoinButton.interactable = !busy;
-        JoinConfirmButton.interactable = !busy;
+        RefreshRequestButtons();
         JoinBackButton.interactable = !busy;
+    }
+
+    private void Update()
+    {
+        RefreshRequestButtons();
+    }
+
+    private void RefreshRequestButtons()
+    {
+        bool busy = _cts != null || _transitioning;
+        bool available = !busy && Common.Instance != null &&
+            Common.Instance.CanStartNetworkSession;
+        QuickMatchButton.interactable = available;
+        HostButton.interactable = available;
+        JoinButton.interactable = available;
+        JoinConfirmButton.interactable = available;
+
+        // During the cooldown show only the existing spinner, leaving navigation accessible.
+        // The full loading overlay and message are reserved for an active network attempt.
+        NetworkLoadingOverlay.SetActive(busy || (Common.Instance != null && !available));
+        NetworkMessage.gameObject.SetActive(busy);
+        if (_networkLoadingBackground != null) _networkLoadingBackground.enabled = busy;
     }
 
     private void SetCopyCode(string code)

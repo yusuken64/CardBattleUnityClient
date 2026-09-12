@@ -19,12 +19,18 @@ public class Common : MonoBehaviour
 
 	public DeckDefinition StartingDeck;
 	public NetworkGameSession NetworkSession { get; private set; }
+	private double _nextNetworkRequestTime;
+	public bool CanStartNetworkSession => NetworkSession == null &&
+		Time.realtimeSinceStartupAsDouble >= _nextNetworkRequestTime;
 
-	public NetworkGameSession CreateNetworkSession(string serverUrl)
+	public bool TryCreateNetworkSession(string serverUrl, out NetworkGameSession session)
 	{
-		if (NetworkSession != null)
-			throw new System.InvalidOperationException("A network session is already active.");
-		return NetworkSession = new NetworkGameSession(serverUrl);
+		session = null;
+		if (!CanStartNetworkSession) return false;
+		// Shared across dialogs and scenes; cancellation and failures do not reset it.
+		_nextNetworkRequestTime = Time.realtimeSinceStartupAsDouble + 5;
+		session = NetworkSession = new NetworkGameSession(serverUrl);
+		return true;
 	}
 
 	public async Task EndNetworkSessionAsync(NetworkGameSession session)
