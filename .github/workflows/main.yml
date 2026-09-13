@@ -1,5 +1,11 @@
-name: Build and Upload to Itch.io
-on: [push, pull_request]
+name: Build and Publish Client
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   buildForAllSupportedPlatforms:
@@ -37,6 +43,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: .
           buildsPath: ./build
+          buildName: SlayQueenTheGateKeeper
           customParameters: -defineSymbols ODIN_INSPECTOR_DISABLED
 
       - name: Upload build output
@@ -69,3 +76,69 @@ jobs:
           project: juicychicken/slayqueen-the-gatekeeper
           channel: ${{ matrix.targetPlatform }}
           api-key: ${{ secrets.ITCHIO_API_KEY }}
+
+  uploadToSteam:
+    name: Upload Windows client to Steam beta
+    needs: buildForAllSupportedPlatforms
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.event_name != 'pull_request' &&
+      vars.STEAM_BETA_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: steam-beta
+    concurrency:
+      group: steam-beta
+      cancel-in-progress: false
+    steps:
+      - name: Download Windows build
+        uses: actions/download-artifact@v4
+        with:
+          name: Build-StandaloneWindows64
+          path: build/StandaloneWindows64
+
+      - name: Validate Steam package and credentials
+        env:
+          STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+          STEAM_CONFIG_VDF: ${{ secrets.STEAM_CONFIG_VDF }}
+        run: |
+          test -n "$STEAM_USERNAME" || { echo "::error::Missing STEAM_USERNAME in steam-beta."; exit 1; }
+          test -n "$STEAM_CONFIG_VDF" || { echo "::error::Missing STEAM_CONFIG_VDF in steam-beta."; exit 1; }
+          test -f build/StandaloneWindows64/SlayQueenTheGateKeeper.exe
+          test -f build/StandaloneWindows64/SlayQueenTheGateKeeper_Data/Managed/Assembly-CSharp.dll
+          jq -e '.serverUrl | type == "string" and startswith("https://")' build/StandaloneWindows64/client-config.json > /dev/null
+
+      - name: Check this is still the latest main build
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          latest=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          if [ "$latest" = "$GITHUB_SHA" ]; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Skipped Steam upload: main has a newer commit." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload and activate Steam beta
+        if: steps.release.outputs.current == 'true'
+        id: steam
+        # game-ci/steam-deploy v3; pinned because this action receives Steam credentials.
+        uses: game-ci/steam-deploy@50f6b29fc64922e19a16d202a88fe199d394b536
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          configVdf: ${{ secrets.STEAM_CONFIG_VDF }}
+          appId: 4345100
+          firstDepotIdOverride: 4345101
+          buildDescription: main-${{ github.sha }}-run-${{ github.run_number }}
+          rootPath: build
+          depot1Path: StandaloneWindows64
+          releaseBranch: beta
+
+      - name: Record Steam build
+        if: steps.steam.outcome == 'success'
+        env:
+          STEAM_BUILD_ID: ${{ steps.steam.outputs.buildId }}
+        run: |
+          echo "Steam app 4345100, depot 4345101, branch beta" >> "$GITHUB_STEP_SUMMARY"
+          echo "Build ID: $STEAM_BUILD_ID" >> "$GITHUB_STEP_SUMMARY"
