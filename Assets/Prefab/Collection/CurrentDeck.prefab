@@ -2230,6 +2230,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: VerticalDeckViewer, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.40721378
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.40721378
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.40721378
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1131
+      objectReference: {fileID: 0}
+    - target: {fileID: 2274666132204028570, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

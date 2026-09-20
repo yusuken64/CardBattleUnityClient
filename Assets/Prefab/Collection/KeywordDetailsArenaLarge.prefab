@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5679549278295389669}
   - component: {fileID: 8425679968006240589}
   m_Layer: 5
-  m_Name: KeywordDetails
+  m_Name: KeywordDetailsArenaLarge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 92.8613621}
+  m_SizeDelta: {x: 0, y: 147.006322}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1366303672433314516
 MonoBehaviour:
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.54903186
+  m_PixelsPerUnitMultiplier: 0.978496745
 --- !u!114 &8425679968006240589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.2}
-  m_EffectDistance: {x: 0, y: -11.207}
+  m_EffectDistance: {x: 0, y: -17.7415}
   m_UseGraphicAlpha: 1
 --- !u!1 &5871109297161548058
 GameObject:
@@ -143,8 +143,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20.707017}
-  m_SizeDelta: {x: -23.3746304, y: -41.4140276}
+  m_AnchoredPosition: {x: 0, y: -32.7807212}
+  m_SizeDelta: {x: -37.0037482, y: -65.5614322}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3693886272229499117
 CanvasRenderer:
@@ -201,12 +201,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.8918
-  m_fontSizeBase: 18.8918
+  m_fontSize: 29.9071
+  m_fontSizeBase: 29.9071
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 28.818
-  m_fontSizeMax: 115.272
+  m_fontSizeMin: 45.621
+  m_fontSizeMax: 182.484
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -279,8 +279,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.8436524, y: 19.6117697}
-  m_SizeDelta: {x: -11.6873, y: -39.2233793}
+  m_AnchoredPosition: {x: 9.2509288, y: 31.0468646}
+  m_SizeDelta: {x: -18.50185, y: -62.0934759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6867692668999738983
 CanvasRenderer:
@@ -337,12 +337,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.8649
-  m_fontSizeBase: 39.8649
+  m_fontSize: 63.10905
+  m_fontSizeBase: 63.10905
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 28.818
-  m_fontSizeMax: 115.272
+  m_fontSizeMin: 45.621
+  m_fontSizeMax: 182.484
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -417,7 +417,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.005}
   m_AnchorMax: {x: 1, y: 0.995}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -6.404, y: 0}
+  m_SizeDelta: {x: -10.138, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &508570732608083274
 CanvasRenderer:
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.56467864
+  m_PixelsPerUnitMultiplier: 0.98838055
 --- !u!114 &7400000000000000000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,4 +472,4 @@ MonoBehaviour:
   mirrorHorizontally: 0
   horizontalBorderScale: 1.01010101
   overridePreferredSize: 0
-  preferredSizeScale: {x: 1.601, y: 1.58499}
+  preferredSizeScale: {x: 2.5345, y: 2.509155}

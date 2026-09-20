@@ -11801,7 +11801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7b72822e1ef6c4db6773c3bbda6b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModMenu
-  ModItemPrefab: {fileID: 744315190404634713, guid: dce44b07aacf5436a5338ace4578bc05, type: 3}
+  ModItemPrefab: {fileID: 744315190404634713, guid: 47ac34c86387e64459ec706a9b605ea2, type: 3}
   ModContainer: {fileID: 170161599}
   DefaultImage: {fileID: 2800000, guid: 0c419c94aad155f4c9acb27660dcdb3f, type: 3}
   WeaponImage: {fileID: 2800000, guid: 94e167a933ffccf409cc1378d8df1487, type: 3}

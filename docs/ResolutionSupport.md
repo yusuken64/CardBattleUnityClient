@@ -2,7 +2,7 @@
 
 The authored game area is 1920 × 1080. Screen-space canvases use Scale With Screen Size and Expand. `GameCanvasViewport` maps their direct children's anchors into a centered 16:9 viewport without adding a layout wrapper. `GameViewportController` uses that same viewport for game cameras and draws input-blocking bars outside it.
 
-Ordinary screen-space UI has its scale baked into rectangle dimensions, text, image metrics, and layout settings. World-space cards and animated card actors retain their intentional scales. Normalized runtime prefab variants preserve the sizes previously supplied by scaled spawning containers. Intro timeline scale curves are adjusted to the normalized base sizes.
+Ordinary screen-space UI has its scale baked into rectangle dimensions, text, image metrics, and layout settings. World-space cards and animated card actors retain their intentional scales. The main prefabs contain the normalized layouts; there are no separate normalized prefab folders. KeywordDetailsArenaCompact and KeywordDetailsArenaLarge retain the two Arena-specific sizes alongside the standard KeywordDetails prefab. Existing placed instances retain their appearance through prefab overrides. Intro timeline scale curves are adjusted to the normalized base sizes.
 
 Resolution settings save width and height rather than a dropdown index. Windowed mode supports common window sizes; exclusive fullscreen chooses a reported monitor mode; borderless follows the desktop. Pointer handling rejects interactions beginning outside the game area, cancels drops in the bars, and scales its drag threshold. Popup bounds use their actual screen-space dimensions.
 

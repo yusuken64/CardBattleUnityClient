@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 2817078436319717934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.1622777, y: 3.1622777, z: 3.1622777}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6029298350323279600}
@@ -38,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 3642.9438, y: -1166.8804}
+  m_AnchoredPosition: {x: 1151.99998, y: -368.999982}
   m_SizeDelta: {x: 398.4, y: 162.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2785820786524805471
@@ -59,8 +59,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.2509804}
   m_EffectDistance: {x: 0, y: -7}
   m_UseGraphicAlpha: 1
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e72f5f5edf90264cabb2ef0afd40848, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::DeckPickerButton
   DeckImage: {fileID: 9197657787962915408}
   TitleText: {fileID: 9173737438437648977}
@@ -165,8 +165,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -195,7 +195,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 935995472198294014, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
       propertyPath: ActiveIndicator
-      value: 
+      value:
       objectReference: {fileID: 4712861515031440271}
     - target: {fileID: 2268178507341714075, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
       propertyPath: m_fontSize
@@ -203,7 +203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3088835725065883339, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000061035156
+      value: 6.1035156e-05
       objectReference: {fileID: 0}
     - target: {fileID: 3333684789469170697, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
       propertyPath: m_Name
@@ -211,7 +211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4884235574216147515, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000061035156
+      value: -6.1035156e-05
       objectReference: {fileID: 0}
     - target: {fileID: 5401151528649696914, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
       propertyPath: m_Enabled
@@ -303,11 +303,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6779740603033333613, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+      value:
       objectReference: {fileID: 0}
     - target: {fileID: 8422458627143205585, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.2999878
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 325.771024
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 460.558785
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087223264444971402, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2274666132204028570, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 2.45571257
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 935995472198294014, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
@@ -324,7 +348,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cca43c3284a5b74bae4d834a8494832, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::HoldClickableButton
 --- !u!224 &4456134257840550888 stripped
 RectTransform:
@@ -340,8 +364,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!114 &9197657787962915408 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2274666132204028570, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
@@ -351,5 +375,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image

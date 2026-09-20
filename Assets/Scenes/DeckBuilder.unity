@@ -3627,7 +3627,7 @@ PrefabInstance:
     - target: {fileID: 8550783190056606422, guid: 928e7efb8a7b89e45896cab3a86b37ed, type: 3}
       propertyPath: KeywordDetailPrefab
       value:
-      objectReference: {fileID: 1366303672433314516, guid: 814994f7eb715f4e9150111b35dcd8b3, type: 3}
+      objectReference: {fileID: 1366303672433314516, guid: ea01e449df340da4d90d44c4f79a8b3b, type: 3}
     - target: {fileID: 523837163039928849, guid: 928e7efb8a7b89e45896cab3a86b37ed, type: 3}
       propertyPath: m_Spacing
       value: 12.264
@@ -5440,10 +5440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94352107f196f4c4ebf6cdb9961e8d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckPicker
-  DeckPickerButtonPrefab: {fileID: 935995472198294014, guid: 1c5e74f61a055f4b8f7ef641c7a739b6, type: 3}
+  DeckPickerButtonPrefab: {fileID: 935995472198294014, guid: 9cfa7288ee903854097c9d269f71ce6b, type: 3}
   DeckPickerButtonContainer: {fileID: 1129075208}
   DeckPickerButtons: []
-  AddDeckButtonPrefab: {fileID: 9149095865573742520, guid: 1150883b8e585d43ba77a3c2b1df3dfb, type: 3}
+  AddDeckButtonPrefab: {fileID: 9149095865573742520, guid: 23e6e9066ed8c9a4a90dda94f52b59bc, type: 3}
   SelectMode: 0
   DeckCountMax: 9
 --- !u!1 &1485912951
@@ -9554,7 +9554,7 @@ PrefabInstance:
     - target: {fileID: 8550783190056606422, guid: 928e7efb8a7b89e45896cab3a86b37ed, type: 3}
       propertyPath: KeywordDetailPrefab
       value:
-      objectReference: {fileID: 1366303672433314516, guid: 814994f7eb715f4e9150111b35dcd8b3, type: 3}
+      objectReference: {fileID: 1366303672433314516, guid: ea01e449df340da4d90d44c4f79a8b3b, type: 3}
     - target: {fileID: 523837163039928849, guid: 928e7efb8a7b89e45896cab3a86b37ed, type: 3}
       propertyPath: m_Spacing
       value: 12.264
