@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class CardArtNetworkService
 {
+	// PNG expands by 4/3 in the JSON protocol. Leave ample room below the server's
+	// 1 MiB message limit for the invocation envelope and identifiers.
+	private const int MaxArtBytes = 512 * 1024;
+	private const int MaxArtDimension = 512;
 	private static MiniSignalRClient _client;
 	private static string _matchId;
 	private static readonly Dictionary<string, Sprite> _receivedArt = new Dictionary<string, Sprite>();
@@ -132,26 +136,39 @@ public static class CardArtNetworkService
 		if (sprite == null || sprite.texture == null) return null;
 
 		var sourceTexture = sprite.texture;
-		var renderTexture = RenderTexture.GetTemporary(sourceTexture.width, sourceTexture.height, 0, RenderTextureFormat.ARGB32);
-		var previous = RenderTexture.active;
-
-		try
+		float scale = Mathf.Min(1f, (float)MaxArtDimension / Mathf.Max(sourceTexture.width, sourceTexture.height));
+		int width = Mathf.Max(1, Mathf.FloorToInt(sourceTexture.width * scale));
+		int height = Mathf.Max(1, Mathf.FloorToInt(sourceTexture.height * scale));
+		while (true)
 		{
-			Graphics.Blit(sourceTexture, renderTexture);
-			RenderTexture.active = renderTexture;
-
-			var readableTexture = new Texture2D(sourceTexture.width, sourceTexture.height, TextureFormat.RGBA32, false);
-			readableTexture.ReadPixels(new Rect(0, 0, sourceTexture.width, sourceTexture.height), 0, 0);
-			readableTexture.Apply();
-
-			byte[] bytes = readableTexture.EncodeToPNG();
-			UnityEngine.Object.Destroy(readableTexture);
-			return bytes;
-		}
-		finally
-		{
-			RenderTexture.active = previous;
-			RenderTexture.ReleaseTemporary(renderTexture);
+			var renderTexture = RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat.ARGB32);
+			var previous = RenderTexture.active;
+			Texture2D readableTexture = null;
+			byte[] bytes;
+			try
+			{
+				Graphics.Blit(sourceTexture, renderTexture);
+				RenderTexture.active = renderTexture;
+				readableTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+				readableTexture.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+				readableTexture.Apply();
+				bytes = readableTexture.EncodeToPNG();
+			}
+			finally
+			{
+				if (readableTexture != null)
+				{
+					if (Application.isPlaying) UnityEngine.Object.Destroy(readableTexture);
+					else UnityEngine.Object.DestroyImmediate(readableTexture);
+				}
+				RenderTexture.active = previous;
+				RenderTexture.ReleaseTemporary(renderTexture);
+			}
+			if (bytes.Length <= MaxArtBytes) return bytes;
+			// Noisy/modded artwork can compress poorly even at the dimension cap.
+			if (width == 1 && height == 1) return null;
+			width = Mathf.Max(1, width / 2);
+			height = Mathf.Max(1, height / 2);
 		}
 	}
 }

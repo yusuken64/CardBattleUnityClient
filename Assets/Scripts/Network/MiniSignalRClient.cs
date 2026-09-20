@@ -133,17 +133,19 @@ public class MiniSignalRClient
 		var tcs = new TaskCompletionSource<JToken>(TaskCreationOptions.RunContinuationsAsynchronously);
 		_pendingInvocations[invocationId] = tcs;
 
-		await SendFrame(message.ToString(Formatting.None));
-
-		Task completedTask = await Task.WhenAny(tcs.Task, Task.Delay(InvokeTimeout));
-		if (completedTask != tcs.Task)
+		try
+		{
+			await SendFrame(message.ToString(Formatting.None));
+			Task completedTask = await Task.WhenAny(tcs.Task, Task.Delay(InvokeTimeout));
+			if (completedTask != tcs.Task)
+				throw new TimeoutException($"InvokeAsync timed out for target '{target}'");
+			JToken result = await tcs.Task;
+			return result == null ? default : result.ToObject<TResult>(JsonSerializer.Create(_jsonSettings));
+		}
+		finally
 		{
 			_pendingInvocations.TryRemove(invocationId, out _);
-			throw new TimeoutException($"InvokeAsync timed out for target '{target}'");
 		}
-
-		JToken result = await tcs.Task;
-		return result == null ? default : result.ToObject<TResult>(JsonSerializer.Create(_jsonSettings));
 	}
 
 	public async Task DisconnectAsync()
@@ -212,6 +214,8 @@ public class MiniSignalRClient
 	private async Task SendFrame(string json)
 	{
 		byte[] payload = Encoding.UTF8.GetBytes(json + (char)RecordSeparator);
+		if (payload.Length > 1024 * 1024)
+			throw new InvalidOperationException($"SignalR message is {payload.Length} bytes; the server limit is 1048576 bytes. Message was not sent.");
 		await _socket.SendAsync(payload, WebSocketMessageType.Text, true, _cts?.Token ?? CancellationToken.None);
 	}
 
@@ -319,6 +323,10 @@ public class MiniSignalRClient
 				break;
 
 			// case 6 (ping): no response required, just proof of life - nothing to do.
+			case 7:
+				string closeReason = (string)message["error"] ?? "Server closed the connection.";
+				_mainThreadQueue.Enqueue(() => Debug.LogWarning($"SignalR server close: {closeReason}"));
+				break;
 		}
 	}
 
