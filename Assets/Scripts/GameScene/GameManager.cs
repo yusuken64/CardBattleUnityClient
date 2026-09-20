@@ -354,8 +354,7 @@ public partial class GameManager : MonoBehaviour
 	{
 		if (MulliganPrompt != null && MulliganPrompt.CanvasGroup != null)
 		{
-			MulliganPrompt.CanvasGroup.interactable = CanSubmitNetworkAction;
-			MulliganPrompt.CanvasGroup.blocksRaycasts = CanSubmitNetworkAction;
+			MulliganPrompt.SetNetworkInteractionState(CanChooseNetworkMulligan);
 		}
 		Player?.UpdatePlayableActions(ActivePlayerTurn);
 		Opponent?.UpdatePlayableActions(false);

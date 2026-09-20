@@ -56,10 +56,14 @@ public partial class GameManager
         yield return ui.DoGameEndRoutine(false);
     }
 
-    private bool CanSubmitNetworkAction => _networkClient != null && !_networkSubmissionPending && !_networkUnavailable &&
+    internal bool CanSubmitNetworkAction => _networkClient != null && !_networkSubmissionPending && !_networkUnavailable &&
         !_networkEnded && _lastNetworkView?.IsGameOver == false && _lastNetworkView.PromptVersion != null &&
         NetworkAnimationQueue != null && !NetworkAnimationQueue.IsProcessing &&
         NetworkAnimationQueue.DisplayedRevision == _lastNetworkView.StateRevision;
+
+    // Choosing an opening hand is local UI work and does not require our turn or a prompt version.
+    internal bool CanChooseNetworkMulligan => _networkClient != null && !_networkUnavailable &&
+        !_networkEnded && !_resultPresented && !_networkSubmissionPending && _lastNetworkView?.IsGameOver == false;
 
     internal void OnNetworkViewDisplayed(PlayerGameView view) => _displayedNetworkView = view;
 

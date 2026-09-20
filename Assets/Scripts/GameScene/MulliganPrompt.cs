@@ -22,9 +22,14 @@ public class MulliganPrompt : MonoBehaviour
 	private bool _isNetworked = false;
 	private List<CardBattleEngine.Card> _stagedSelection;
 	private bool _hasStaged = false;
+	private bool _submitted;
 
 	public void Setup(List<Card> cards)
 	{
+		_isNetworked = false;
+		_hasStaged = false;
+		_submitted = false;
+		CanvasGroup.interactable = CanvasGroup.blocksRaycasts = true;
 		ClearItems();
 
 		foreach (var card in cards)
@@ -48,6 +53,8 @@ public class MulliganPrompt : MonoBehaviour
 		_isNetworked = true;
 		_hasStaged = false;
 		_stagedSelection = null;
+		_submitted = false;
+		SetNetworkInteractionState(GameManager.CanChooseNetworkMulligan);
 		ClearItems();
 
 		var cardPrefab = FindFirstObjectByType<GameInteractionHandler>().CardPrefab;
@@ -111,50 +118,50 @@ public class MulliganPrompt : MonoBehaviour
 		return options.FirstOrDefault(action => action.DisplayName == expectedDisplayName);
 	}
 
-	private void TrySubmitNetworked(List<CardBattleEngine.Card> cardsToMulligen)
+	public void SetNetworkInteractionState(bool canChoose)
 	{
-		// Check if the real PendingChoice already matches this player
-		if (GameManager.LastNetworkView?.PendingChoice != null
-			&& GameManager.LastNetworkView.PendingChoice.SourcePlayerId == GameManager.LocalPlayerId
-			&& GameManager.LastNetworkView.PendingChoice.ChoiceKind == "MulliganChoce")
-		{
-			// Immediate submit - find and submit matching action
-			LegalActionView match = FindMatchingLegalAction(cardsToMulligen, GameManager.LastNetworkView.PendingChoice.Options);
-			if (match != null)
-			{
-				GameManager.SubmitLocalAction(match);
-				PerformVisualCleanup();
-			}
-		}
-		else
-		{
-			// Stage the selection for later
-			_stagedSelection = cardsToMulligen;
-			_hasStaged = true;
+		CanvasGroup.interactable = canChoose && !_hasStaged && !_submitted;
+		// A confirmed choice still covers the board while waiting for its turn.
+		CanvasGroup.blocksRaycasts = true;
+	}
 
-			// Lock UI - hide submit button and disable further interaction
-			SubmitButton.gameObject.SetActive(false);
-			// Keep CanvasGroup visible, just disable button
-		}
+	private void TrySubmitNetworked(List<CardBattleEngine.Card> cardsToMulligan)
+	{
+		if (_hasStaged || _submitted || !GameManager.CanChooseNetworkMulligan) return;
+		_stagedSelection = cardsToMulligan.ToList();
+		_hasStaged = true;
+		SubmitButton.SetActive(false);
+		SetNetworkInteractionState(false);
+		TryHandlePendingChoice(GameManager.LastNetworkView?.PendingChoice);
+	}
+
+	public static bool CanSubmitStagedChoice(bool staged, bool submitted, PendingChoiceView choice,
+		Guid? localPlayerId, bool canSubmitAction)
+	{
+		return staged && !submitted && canSubmitAction && choice != null &&
+			choice.ChoiceKind == "MulliganChoce" && choice.SourcePlayerId == localPlayerId;
 	}
 
 	public void TryHandlePendingChoice(PendingChoiceView pendingChoice)
 	{
-		if (_hasStaged && pendingChoice != null && pendingChoice.ChoiceKind == "MulliganChoce")
+		if (!CanSubmitStagedChoice(_hasStaged, _submitted, pendingChoice,
+			GameManager.LocalPlayerId, GameManager.CanSubmitNetworkAction)) return;
+		// Never submit an option from an older displayed snapshot.
+		if (!ReferenceEquals(pendingChoice, GameManager.LastNetworkView?.PendingChoice)) return;
+		var match = FindMatchingLegalAction(_stagedSelection, pendingChoice.Options);
+		if (match == null)
 		{
-			// Find matching action for staged selection
-			LegalActionView match = FindMatchingLegalAction(_stagedSelection, pendingChoice.Options);
-			if (match != null)
-			{
-				GameManager.SubmitLocalAction(match);
-				PerformVisualCleanup();
-				_hasStaged = false;
-			}
-			else
-			{
-				Debug.LogError("No matching LegalActionView found for staged mulligan selection");
-			}
+			// Leave the prompt usable if the server no longer offers this selection.
+			_hasStaged = false;
+			_stagedSelection = null;
+			SubmitButton.SetActive(true);
+			SetNetworkInteractionState(GameManager.CanChooseNetworkMulligan);
+			Debug.LogWarning("The queued mulligan selection is no longer available. Please choose again.");
+			return;
 		}
+		_submitted = true;
+		GameManager.SubmitLocalAction(match);
+		PerformVisualCleanup();
 	}
 
 	private void PerformVisualCleanup()
