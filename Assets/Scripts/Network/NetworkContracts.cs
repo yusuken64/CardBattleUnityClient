@@ -15,6 +15,7 @@ public class DecklistRequest
 {
     public string LeaderDefinition;
 	public string PlayerName = string.Empty;
+	public string DeckTitle = string.Empty;
 	public List<CardCount> Minions = new List<CardCount>();
 	public List<CardCount> Spells = new List<CardCount>();
 	public List<CardCount> Weapons = new List<CardCount>();
@@ -114,6 +115,7 @@ public class PublicPlayerView
 {
 	public Guid PlayerId;
 	public string Name;
+	public string DeckTitle = string.Empty;
 	public int Health;
 	public int MaxHealth;
 	public int Armor;

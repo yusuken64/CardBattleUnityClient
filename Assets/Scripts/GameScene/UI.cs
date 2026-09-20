@@ -11,6 +11,10 @@ public class UI : MonoBehaviour
 	public EndTurnButton EndTurnButton;
 
 	public TextMeshProUGUI Message;
+    public TextMeshProUGUI PlayerNameLabel;
+    public TextMeshProUGUI PlayerDeckLabel;
+    public TextMeshProUGUI OtherNameLabel;
+    public TextMeshProUGUI OtherDeckLabel;
     private Coroutine messageCoroutine;
 
     public DamageNumber DamageNumberPrefab;
@@ -40,6 +44,14 @@ public class UI : MonoBehaviour
         CardPreview.ForceReveal = true;
         HoverCardPreview.ForceReveal = true;
         HoverCardPreviewObject.gameObject.SetActive(false);
+    }
+
+    public void SetBattleLabels(string playerName, string playerDeck, string otherName, string otherDeck)
+    {
+        if (PlayerNameLabel != null) PlayerNameLabel.text = playerName ?? "";
+        if (PlayerDeckLabel != null) PlayerDeckLabel.text = playerDeck ?? "";
+        if (OtherNameLabel != null) OtherNameLabel.text = otherName ?? "";
+        if (OtherDeckLabel != null) OtherDeckLabel.text = otherDeck ?? "";
     }
 
 	public void ShowMessage(string message)

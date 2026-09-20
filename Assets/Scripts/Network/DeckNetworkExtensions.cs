@@ -4,7 +4,7 @@ public static class DeckNetworkExtensions
 {
 	public static DecklistRequest ToDecklistRequest(this Deck deck, string playerName)
 	{
-		var request = new DecklistRequest { PlayerName = playerName };
+		var request = new DecklistRequest { PlayerName = playerName, DeckTitle = deck.Title ?? string.Empty };
         if (deck.HeroCard is MinionCardDefinition leader)
             request.LeaderDefinition = leader.ToWireDefinitionJson(leader.CreateCard());
 

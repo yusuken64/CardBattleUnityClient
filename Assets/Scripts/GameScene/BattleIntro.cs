@@ -35,6 +35,8 @@ public class BattleIntro : MonoBehaviour
         HeroPortrait2.sprite = enemyDeck.HeroCard.Sprite;
         Hero2NameText.text = "Opponent";
         Hero2DeckText.text = enemyDeck.Title;
+        FindFirstObjectByType<UI>()?.SetBattleLabels(
+            Hero1NameText.text, Hero1DeckText.text, Hero2NameText.text, Hero2DeckText.text);
     }
 
     internal void DoIntro(Action startGameCallback)

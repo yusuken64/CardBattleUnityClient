@@ -65,7 +65,15 @@ public partial class GameManager
     internal bool CanChooseNetworkMulligan => _networkClient != null && !_networkUnavailable &&
         !_networkEnded && !_resultPresented && !_networkSubmissionPending && _lastNetworkView?.IsGameOver == false;
 
-    internal void OnNetworkViewDisplayed(PlayerGameView view) => _displayedNetworkView = view;
+    internal void OnNetworkViewDisplayed(PlayerGameView view)
+    {
+        _displayedNetworkView = view;
+        // Prefer match metadata over the deck currently selected in the local save.
+        var deck = Common.Instance?.SaveManager?.SaveData?.GameSaveData?.GetActiveDeck();
+        FindFirstObjectByType<UI>()?.SetBattleLabels(
+            view.Self?.Name, string.IsNullOrEmpty(view.Self?.DeckTitle) ? deck?.Title : view.Self.DeckTitle,
+            view.Opponent?.Name, view.Opponent?.DeckTitle);
+    }
 
     internal void ApplyPresentationStatus(ActionPresentation presentation)
     {

@@ -31,6 +31,7 @@ public class NetworkGameDialog : MonoBehaviour
     private CancellationTokenSource _cts;
     private string _hostedMatchCode;
     private Image _networkLoadingBackground;
+    private TextMeshProUGUI _hostingStatus;
 
     void Awake()
     {
@@ -41,11 +42,25 @@ public class NetworkGameDialog : MonoBehaviour
         CloseButton.onClick.AddListener(Close);
 
         JoinConfirmButton.onClick.AddListener(JoinConfirm_Click);
+        MatchIdInput.lineType = TMP_InputField.LineType.SingleLine;
+        MatchIdInput.onSubmit.AddListener(JoinCode_Submitted);
         JoinBackButton.onClick.AddListener(ShowPicker);
 
         CancelWaitingButton.onClick.AddListener(CancelWaiting);
         CancelWaitingButton.gameObject.SetActive(false);
         CopyMatchCodeButton.onClick.AddListener(CopyMatchCode);
+        var statusObject = new GameObject("Hosting Status", typeof(RectTransform));
+        statusObject.transform.SetParent(NetworkLoadingOverlay.transform, false);
+        _hostingStatus = statusObject.AddComponent<TextMeshProUGUI>();
+        _hostingStatus.font = NetworkMessage.textComponent.font;
+        _hostingStatus.fontSize = 42;
+        _hostingStatus.alignment = TextAlignmentOptions.Center;
+        _hostingStatus.color = Color.white;
+        _hostingStatus.raycastTarget = false;
+        _hostingStatus.text = "Share this code to invite a friend\nWaiting for an opponent...";
+        _hostingStatus.rectTransform.anchorMin = _hostingStatus.rectTransform.anchorMax = new Vector2(.5f, .5f);
+        _hostingStatus.rectTransform.sizeDelta = new Vector2(1200, 140);
+        _hostingStatus.rectTransform.anchoredPosition = new Vector2(0, 320);
         SetCopyCode(null);
     }
 
@@ -99,8 +114,14 @@ public class NetworkGameDialog : MonoBehaviour
         MatchIdInput.ActivateInputField();
     }
 
+    private void JoinCode_Submitted(string value)
+    {
+        if (!MatchIdInput.wasCanceled) JoinConfirm_Click();
+    }
+
     private void JoinConfirm_Click()
     {
+        if (!JoinPanel.activeInHierarchy || !JoinConfirmButton.interactable || _cts != null || _transitioning) return;
         string joinCode = System.Text.RegularExpressions.Regex.Replace(MatchIdInput.text, @"[\s-]", "").ToUpperInvariant();
         if (!System.Text.RegularExpressions.Regex.IsMatch(joinCode, "^[A-HJ-NP-Z2-9]{6}$"))
         {
@@ -151,7 +172,8 @@ public class NetworkGameDialog : MonoBehaviour
                     cts.Token.ThrowIfCancellationRequested();
                     if (!IsValidMatchCode(session.MatchId))
                         throw new InvalidOperationException("The server returned an unsupported match ID. Restart the server with the updated short-code build.");
-                    NetworkMessage.text = $"Join code: {session.MatchId}\nWaiting for an opponent...";
+                    // The selectable field contains only the code, so Ctrl+C copies a usable invitation.
+                    NetworkMessage.text = session.MatchId;
                     SetCopyCode(session.MatchId);
                     break;
                 case NetworkJoinMode.Join:
@@ -245,6 +267,13 @@ public class NetworkGameDialog : MonoBehaviour
         CancelWaitingButton.gameObject.SetActive(busy);
         CancelWaitingButton.interactable = busy && !_transitioning && _cts?.IsCancellationRequested != true;
         if (busy) NetworkMessage.text = message;
+        if (busy)
+        {
+            PickerPanel.SetActive(false);
+            JoinPanel.SetActive(false);
+        }
+        else if (!PickerPanel.activeSelf && !JoinPanel.activeSelf)
+            PickerPanel.SetActive(true);
 
         RefreshRequestButtons();
         JoinBackButton.interactable = !busy;
@@ -275,6 +304,10 @@ public class NetworkGameDialog : MonoBehaviour
     private void SetCopyCode(string code)
     {
         _hostedMatchCode = code;
+        bool hosting = !string.IsNullOrEmpty(code);
+        _hostingStatus.gameObject.SetActive(hosting);
+        NetworkMessage.textComponent.fontSize = hosting ? 96 : 52;
+        NetworkMessage.textComponent.enableAutoSizing = false;
         CopyMatchCodeButton.gameObject.SetActive(!string.IsNullOrEmpty(code));
         CopyMatchCodeButton.interactable = !string.IsNullOrEmpty(code);
         foreach (var label in CopyMatchCodeButton.GetComponentsInChildren<TMP_Text>(true))
