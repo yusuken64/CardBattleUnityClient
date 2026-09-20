@@ -1261,6 +1261,7 @@ GameObject:
   - component: {fileID: 934190894}
   - component: {fileID: 934190893}
   - component: {fileID: 934190892}
+  - component: {fileID: 7200000000000000100}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1323,8 +1324,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2727,3 +2728,15 @@ SceneRoots:
   - {fileID: 331921177}
   - {fileID: 1764027782}
   - {fileID: 1587541212}
+--- !u!114 &7200000000000000100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934190891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0bf55a44488547798e44c35627eb6d9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::GameCanvasViewport

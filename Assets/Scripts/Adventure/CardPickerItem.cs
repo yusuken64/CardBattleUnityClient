@@ -46,7 +46,10 @@ public class CardPickerItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public Vector3 GetPosition()
 	{
-		return this.transform.position + ToolTipOffset;
+		var canvas = GetComponentInParent<Canvas>();
+		float scale = canvas != null && canvas.rootCanvas.renderMode != RenderMode.WorldSpace
+			? canvas.rootCanvas.scaleFactor : 1f;
+		return transform.position + ToolTipOffset * scale;
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)

@@ -1,51 +1,69 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class KeepInScreen : MonoBehaviour
 {
     public RectTransform rect;
+    private readonly Vector3[] corners = new Vector3[4];
+    private bool positioned;
 
-	private Vector3 topLeft;
-	private Vector3 bottomRight;
-	private float halfWidth;
-	private float halfHeight;
-	private float minX;
-	private float minY;
-	private float maxX;
-	private float maxY;
-
-	private void Start()
-	{
-        rect = GetComponent<RectTransform>();
-        RecalculateBounds();
+    private void Awake()
+    {
+        if (rect == null) rect = GetComponent<RectTransform>();
     }
 
-    void OnRectTransformDimensionsChange()
+    private Camera RenderCamera()
     {
-        RecalculateBounds();
-    }
-
-	private void RecalculateBounds()
-    {
-        topLeft = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
-        bottomRight = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-
-        halfWidth = rect.rect.width / 2;
-        halfHeight = rect.rect.height / 2;
-
-        minX = topLeft.x + halfWidth;
-        minY = topLeft.y + halfHeight;
-
-        maxX = bottomRight.x - halfWidth;
-        maxY = bottomRight.y - halfHeight;
+        var canvas = GetComponentInParent<Canvas>();
+        if (canvas != null && canvas.rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay) return null;
+        return (canvas != null ? canvas.rootCanvas.worldCamera : null) ?? Camera.main;
     }
 
     internal void SetPosition(Vector3 world)
     {
-        var world2 = new Vector3(Mathf.Clamp(world.x, minX, maxX),
-            Mathf.Clamp(world.y, minY, maxY));
+        if (rect == null) rect = GetComponent<RectTransform>();
+        var camera = RenderCamera();
+        world.z = rect.position.z;
+        if (camera == null && Camera.main != null)
+        {
+            var screen = Camera.main.WorldToScreenPoint(world);
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rect, screen, null, out var position))
+                world = position;
+        }
+        rect.position = world;
+        positioned = true;
+        ClampToViewport(camera);
+    }
 
-        this.transform.position = world2;
+    private void LateUpdate()
+    {
+        if (positioned && rect != null) ClampToViewport(RenderCamera());
+    }
+
+    private void ClampToViewport(Camera camera)
+    {
+        rect.GetWorldCorners(corners);
+        Vector2 min = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
+        Vector2 max = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
+        foreach (var corner in corners)
+        {
+            var screen = RectTransformUtility.WorldToScreenPoint(camera, corner);
+            min = Vector2.Min(min, screen);
+            max = Vector2.Max(max, screen);
+        }
+        var viewport = GameViewport.Pixels;
+        var shift = new Vector2(Correction(min.x, max.x, viewport.xMin, viewport.xMax),
+            Correction(min.y, max.y, viewport.yMin, viewport.yMax));
+        if (shift.sqrMagnitude < 0.0001f) return;
+        var pivot = RectTransformUtility.WorldToScreenPoint(camera, rect.position);
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rect, pivot + shift, camera, out var clamped))
+            rect.position = clamped;
+    }
+
+    public static float Correction(float min, float max, float viewportMin, float viewportMax)
+    {
+        if (max - min > viewportMax - viewportMin) return (viewportMin + viewportMax - min - max) / 2f;
+        if (min < viewportMin) return viewportMin - min;
+        if (max > viewportMax) return viewportMax - max;
+        return 0f;
     }
 }

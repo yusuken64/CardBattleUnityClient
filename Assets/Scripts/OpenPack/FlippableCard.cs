@@ -127,6 +127,7 @@ public class FlippableCard : MonoBehaviour
 			return;
 
 		Vector3 screenPos = mouse.position.ReadValue();
+		if (!GameViewport.Contains(screenPos)) return;
 		screenPos.z = Mathf.Abs(Camera.main.transform.position.z);
 
 		Vector2 worldPos = Camera.main.ScreenToWorldPoint(screenPos);

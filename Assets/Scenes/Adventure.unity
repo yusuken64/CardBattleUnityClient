@@ -1022,6 +1022,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeckSlot (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1122,6 +1126,10 @@ PrefabInstance:
     - target: {fileID: 1886784726462714553, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1942,6 +1950,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeckSlot (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2222,7 +2234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000045776367, y: 0.0000038147}
+  m_AnchoredPosition: {x: -4.5776367e-05, y: 3.8147e-06}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.49999762, y: 0.5}
 --- !u!114 &365570781
@@ -2555,6 +2567,7 @@ GameObject:
   - component: {fileID: 460611218}
   - component: {fileID: 460611217}
   - component: {fileID: 460611216}
+  - component: {fileID: 7200000000000000100}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2591,12 +2604,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3239,15 +3252,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 167.87428
+      value: 402.898272
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 167.87428
+      value: 402.898272
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 167.87428
+      value: 402.898272
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3279,11 +3292,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 21.986
+      value: 52.7664
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 18
+      value: 43.2
       objectReference: {fileID: 0}
     - target: {fileID: 5938115691348185652, guid: 37800b8019e5c714fa73d9b37817ccf5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3401,6 +3414,10 @@ PrefabInstance:
     - target: {fileID: 1886784726462714553, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3835,6 +3852,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeckSlot (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4177,6 +4198,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4216,7 +4241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000091552734, y: 0}
+  m_AnchoredPosition: {x: -9.1552734e-05, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &810825545
@@ -4285,7 +4310,7 @@ RectTransform:
   m_GameObject: {fileID: 861283443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6677, y: 0.6677, z: 0.6677}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2745826518513704257}
@@ -4293,7 +4318,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -5.6, y: 0.4}
-  m_SizeDelta: {x: 67.478, y: 82}
+  m_SizeDelta: {x: 45.0550606, y: 54.7514}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &861283445
 MonoBehaviour:
@@ -4308,7 +4333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.3019608}
-  m_EffectDistance: {x: 0, y: -3}
+  m_EffectDistance: {x: 0, y: -2.0031}
   m_UseGraphicAlpha: 1
 --- !u!114 &861283446
 MonoBehaviour:
@@ -4339,7 +4364,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.4976786
 --- !u!222 &861283447
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4472,7 +4497,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.416666667
 --- !u!222 &885768156
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4572,6 +4597,10 @@ PrefabInstance:
     - target: {fileID: 1886784726462714553, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
       propertyPath: m_Name
       value: DeckSlot (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4991,6 +5020,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeckSlot (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5159,7 +5192,7 @@ RectTransform:
   m_GameObject: {fileID: 930050490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.41303, y: 0.41303, z: 0.41303}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 483463915}
@@ -5167,7 +5200,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 154}
-  m_SizeDelta: {x: 800, y: 1131}
+  m_SizeDelta: {x: 330.424, y: 467.13693}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &930050492
 MonoBehaviour:
@@ -5198,7 +5231,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2.42113164
 --- !u!222 &930050493
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5610,6 +5643,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeckSlot (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5719,6 +5756,7 @@ GameObject:
   - component: {fileID: 996228380}
   - component: {fileID: 996228379}
   - component: {fileID: 996228378}
+  - component: {fileID: 7200000000000000101}
   m_Layer: 5
   m_Name: CollectionUI
   m_TagString: Untagged
@@ -5758,9 +5796,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -5857,7 +5895,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000045776367, y: 0.0000038147}
+  m_AnchoredPosition: {x: -4.5776367e-05, y: 3.8147e-06}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.49999762, y: 0.5}
 --- !u!114 &1012768355
@@ -6182,7 +6220,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000045776367, y: 0.0000038147}
+  m_AnchoredPosition: {x: -4.5776367e-05, y: 3.8147e-06}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.49999762, y: 0.5}
 --- !u!114 &1111323970
@@ -6547,6 +6585,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeckSlot (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6647,6 +6689,10 @@ PrefabInstance:
     - target: {fileID: 1886784726462714553, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7008,7 +7054,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 6.1035156e-05, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1199686196
@@ -7709,6 +7755,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeckSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8206,7 +8256,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000045776367, y: 0.0000038147}
+  m_AnchoredPosition: {x: -4.5776367e-05, y: 3.8147e-06}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.49999762, y: 0.5}
 --- !u!114 &1478349377
@@ -9229,6 +9279,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9660,6 +9714,10 @@ PrefabInstance:
     - target: {fileID: 1886784726462714553, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025052454195524264, guid: bdaa7186ef16de947891e7aa5ec873c1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.1035156e-05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10690,7 +10748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000051498413, y: 0}
+  m_AnchoredPosition: {x: -5.1498413e-05, y: 0}
   m_SizeDelta: {x: 120, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4603619280352717405
@@ -10872,3 +10930,27 @@ SceneRoots:
   - {fileID: 911929535}
   - {fileID: 1437798043}
   - {fileID: 996228382}
+--- !u!114 &7200000000000000100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460611215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0bf55a44488547798e44c35627eb6d9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::GameCanvasViewport
+--- !u!114 &7200000000000000101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996228377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0bf55a44488547798e44c35627eb6d9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::GameCanvasViewport

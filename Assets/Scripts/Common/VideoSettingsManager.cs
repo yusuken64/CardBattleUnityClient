@@ -1,253 +1,152 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class VideoSettingsManager : MonoBehaviour
 {
-	[Header("UI References")]
-	public TMP_Dropdown resolutionDropdown;
-	public TMP_Dropdown displayModeDropdown; // 0 = Fullscreen, 1 = Windowed, 2 = Borderless
+    public TMP_Dropdown resolutionDropdown;
+    public TMP_Dropdown displayModeDropdown;
+    public int defaultWidth = 1920;
+    public int defaultHeight = 1080;
+    private Vector2Int[] availableResolutions;
+    private bool initialized;
+    private bool updating;
 
-	private Resolution[] availableResolutions;
+    private void Awake()
+    {
+        var platform = Application.platform;
+        if (!Application.isEditor && platform != RuntimePlatform.WindowsPlayer &&
+            platform != RuntimePlatform.OSXPlayer && platform != RuntimePlatform.LinuxPlayer)
+            gameObject.SetActive(false);
+    }
 
-	public int defaultWidth = 1920;
-	public int defaultHeight = 1080;
+    private void OnEnable()
+    {
+        resolutionDropdown.onValueChanged.AddListener(Changed);
+        displayModeDropdown.onValueChanged.AddListener(Changed);
+        if (initialized) RefreshControls();
+    }
 
-	void Awake()
-	{
-		// Only show on standalone PC builds (Windows, macOS, Linux)
-		if (Application.platform != RuntimePlatform.WindowsPlayer &&
-			Application.platform != RuntimePlatform.OSXPlayer &&
-			Application.platform != RuntimePlatform.LinuxPlayer &&
-			Application.platform != RuntimePlatform.WindowsEditor &&
-			Application.platform != RuntimePlatform.OSXEditor)
-		{
-			gameObject.SetActive(false);
-		}
-	}
+    private void OnDisable()
+    {
+        resolutionDropdown.onValueChanged.RemoveListener(Changed);
+        displayModeDropdown.onValueChanged.RemoveListener(Changed);
+    }
 
-	private void OnEnable()
-	{
-		resolutionDropdown.onValueChanged.AddListener(Changed);
-		displayModeDropdown.onValueChanged.AddListener(Changed);
-	}
+    private void Start() => InitializeVideo();
+    private void Changed(int value)
+    {
+        if (!updating && initialized) ApplySettings();
+    }
 
-	private void OnDisable()
-	{
-		resolutionDropdown.onValueChanged.RemoveListener(Changed);
-		displayModeDropdown.onValueChanged.RemoveListener(Changed);
-	}
+    // Common.Start calls this even before the settings panel opens.
+    public void InitializeVideo()
+    {
+        if (initialized) return;
+        updating = true;
+        var desktop = Screen.currentResolution;
+        availableResolutions = BuildResolutionOptions(
+            Screen.resolutions.Select(r => new Vector2Int(r.width, r.height)),
+            new Vector2Int(desktop.width, desktop.height), new Vector2Int(Screen.width, Screen.height));
+        resolutionDropdown.ClearOptions();
+        resolutionDropdown.AddOptions(availableResolutions.Select(r =>
+            $"{r.x} x {r.y}" + (r.x == defaultWidth && r.y == defaultHeight ? " (Recommended)" : "")).ToList());
+        displayModeDropdown.ClearOptions();
+        displayModeDropdown.AddOptions(new List<string> { "Fullscreen", "Windowed", "Borderless" });
+        initialized = true;
+        LoadSettings(false);
+        updating = false;
+        ApplySettings();
+    }
 
-	private void Changed(int arg0)
-	{
-		ApplySettings();
-	}
+    public static Vector2Int[] BuildResolutionOptions(IEnumerable<Vector2Int> supported, Vector2Int desktop, Vector2Int current)
+    {
+        var sizes = supported.Where(r => r.x > 0 && r.y > 0).ToList();
+        if (desktop.x <= 0 || desktop.y <= 0) desktop = new Vector2Int(1920, 1080);
+        sizes.Add(desktop);
+        if (current.x > 0 && current.y > 0) sizes.Add(current);
+        // Window sizes need not appear in the monitor's exclusive-fullscreen list.
+        foreach (var size in new[] { new Vector2Int(1280, 720), new Vector2Int(1600, 900),
+            new Vector2Int(1920, 1080), new Vector2Int(2560, 1440), new Vector2Int(3840, 2160) })
+            if (size.x <= desktop.x && size.y <= desktop.y) sizes.Add(size);
+        return sizes.Distinct().OrderBy(r => r.x).ThenBy(r => r.y).ToArray();
+    }
 
-	private void Start()
-	{
-		resolutionDropdown.onValueChanged.RemoveListener(Changed);
-		displayModeDropdown.onValueChanged.RemoveListener(Changed);
+    public static int FindResolutionIndex(IReadOnlyList<Vector2Int> sizes, Vector2Int requested)
+    {
+        int best = 0;
+        long distance = long.MaxValue;
+        for (int i = 0; i < sizes.Count; i++)
+        {
+            long dx = (long)sizes[i].x - requested.x;
+            long dy = (long)sizes[i].y - requested.y;
+            long candidate = dx * dx + dy * dy;
+            if (candidate < distance) { best = i; distance = candidate; }
+        }
+        return best;
+    }
 
-		PopulateResolutionOptions();
-		PopulateDisplayModes();
-		InitializeVideo();
+    public void ApplySettings()
+    {
+        if (!initialized) { InitializeVideo(); return; }
+        var selected = availableResolutions[Mathf.Clamp(resolutionDropdown.value, 0, availableResolutions.Length - 1)];
+        var mode = Mathf.Clamp(displayModeDropdown.value, 0, 2);
+        if (mode == 0)
+        {
+            var exclusiveModes = Screen.resolutions.Select(r => new Vector2Int(r.width, r.height))
+                .Where(r => r.x > 0 && r.y > 0).Distinct().ToArray();
+            if (exclusiveModes.Length > 0)
+            {
+                selected = exclusiveModes[FindResolutionIndex(exclusiveModes, selected)];
+                resolutionDropdown.SetValueWithoutNotify(FindResolutionIndex(availableResolutions, selected));
+            }
+        }
+        var fullscreen = mode == 0 ? FullScreenMode.ExclusiveFullScreen :
+            mode == 2 ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        // Borderless follows the desktop; retain the user's size for other modes.
+        var desktop = Screen.currentResolution;
+        int width = mode == 2 && desktop.width > 0 ? desktop.width : selected.x;
+        int height = mode == 2 && desktop.height > 0 ? desktop.height : selected.y;
+        Screen.SetResolution(width, height, fullscreen);
+        RefreshControls();
+        SaveSettings();
+    }
 
-		resolutionDropdown.onValueChanged.AddListener(Changed);
-		displayModeDropdown.onValueChanged.AddListener(Changed);
-	}
+    private void RefreshControls()
+    {
+        resolutionDropdown.interactable = displayModeDropdown.value != 2;
+        resolutionDropdown.RefreshShownValue();
+        displayModeDropdown.RefreshShownValue();
+    }
 
-	public void InitializeVideo()
-	{
-		PopulateResolutionOptions();
-		if (HasSavedSettings())
-		{
-			LoadSettings(false);              // UI + Screen reflect player choice
-		}
-		else
-		{
-			DetectCurrentSystemState();  // UI reflects OS state
-		}
-	}
+    public void SaveSettings()
+    {
+        if (!initialized) return;
+        var size = availableResolutions[Mathf.Clamp(resolutionDropdown.value, 0, availableResolutions.Length - 1)];
+        PlayerPrefs.SetInt("ResolutionWidth", size.x);
+        PlayerPrefs.SetInt("ResolutionHeight", size.y);
+        PlayerPrefs.SetInt("DisplayMode", Mathf.Clamp(displayModeDropdown.value, 0, 2));
+        PlayerPrefs.Save();
+    }
 
-	bool HasSavedSettings()
-	{
-		return PlayerPrefs.HasKey("ResolutionIndex") &&
-			   PlayerPrefs.HasKey("DisplayMode");
-	}
+    public void LoadSettings(bool applySettings = true)
+    {
+        if (!initialized) { InitializeVideo(); return; }
+        // The old index referred to a 1080p-only list, not this resolution list.
+        var requested = new Vector2Int(PlayerPrefs.GetInt("ResolutionWidth", defaultWidth),
+            PlayerPrefs.GetInt("ResolutionHeight", defaultHeight));
+        resolutionDropdown.SetValueWithoutNotify(FindResolutionIndex(availableResolutions, requested));
+        displayModeDropdown.SetValueWithoutNotify(Mathf.Clamp(PlayerPrefs.GetInt("DisplayMode", 1), 0, 2));
+        RefreshControls();
+        if (applySettings) ApplySettings();
+    }
 
-	void DetectCurrentSystemState()
-	{
-		// Match current resolution
-		int resIndex = System.Array.FindIndex(
-			availableResolutions,
-			r => r.width == Screen.width &&
-				 r.height == Screen.height
-				// && r.refreshRate == Screen.currentResolution.refreshRate
-		);
-
-		if (resIndex < 0)
-		{
-			// Fallback: match by width/height only
-			resIndex = System.Array.FindIndex(
-				availableResolutions,
-				r => r.width == Screen.width && r.height == Screen.height
-			);
-		}
-
-		if (resIndex < 0)
-			resIndex = 0;
-
-		resolutionDropdown.SetValueWithoutNotify(resIndex);
-
-		// Match fullscreen mode
-		int modeIndex = Screen.fullScreenMode switch
-		{
-			FullScreenMode.ExclusiveFullScreen => 0,
-			FullScreenMode.Windowed => 1,
-			FullScreenMode.FullScreenWindow => 2,
-			_ => 0
-		};
-
-		displayModeDropdown.SetValueWithoutNotify(modeIndex);
-
-		resolutionDropdown.RefreshShownValue();
-		displayModeDropdown.RefreshShownValue();
-	}
-
-	void PopulateResolutionOptions()
-	{
-		//// Get valid system resolutions
-		availableResolutions = Screen.resolutions
-			.Where(r => r.width == defaultWidth && r.height == defaultHeight)
-			.OrderBy(r => r.width)
-			.ThenBy(r => r.height)
-			.ToArray();
-
-		//// Inject defaultWidthxdefaultHeight if missing
-		//bool hasBaseResolution = availableResolutions.Any(r => r.width == defaultWidth && r.height == defaultHeight);
-		//if (!hasBaseResolution)
-		//{
-		//	var customList = availableResolutions.ToList();
-		//	customList.Add(new Resolution { width = defaultWidth, height = defaultHeight, refreshRate = 60 });
-		//	availableResolutions = customList
-		//		.OrderBy(r => r.width)
-		//		.ThenBy(r => r.height)
-		//		.ToArray();
-		//}
-
-		resolutionDropdown.ClearOptions();
-
-		// Label the recommended one
-		var options = availableResolutions
-			.Select(r => (r.width == defaultWidth && r.height == defaultHeight)
-				? $"{r.width}x{r.height} (*)"
-				: $"{r.width}x{r.height}")
-			.Distinct()
-			.ToList();
-
-		resolutionDropdown.AddOptions(options);
-
-		// Get recommended resolution index
-		int recommendedIndex = availableResolutions.ToList()
-			.FindIndex(r => r.width == defaultWidth && r.height == defaultHeight);
-
-		// If user already has a saved preference, use that
-		bool hasSaved = PlayerPrefs.HasKey("ResolutionIndex");
-		int savedIndex = hasSaved
-			? PlayerPrefs.GetInt("ResolutionIndex")
-			: recommendedIndex;
-
-		resolutionDropdown.value = Mathf.Clamp(savedIndex, 0, options.Count - 1);
-		resolutionDropdown.RefreshShownValue();
-
-		// If no saved setting yet, apply the recommended one immediately
-		if (!hasSaved)
-		{
-			Resolution recommended = availableResolutions[recommendedIndex];
-			Screen.SetResolution(recommended.width, recommended.height, FullScreenMode.Windowed);
-			PlayerPrefs.SetInt("ResolutionIndex", recommendedIndex);
-			PlayerPrefs.Save();
-		}
-	}
-
-	void PopulateDisplayModes()
-	{
-		displayModeDropdown.ClearOptions();
-		displayModeDropdown.AddOptions(new System.Collections.Generic.List<string>
-		{
-			"Fullscreen",
-			"Windowed",
-			"Borderless"
-		});
-
-		displayModeDropdown.value = Screen.fullScreenMode switch
-		{
-			FullScreenMode.FullScreenWindow => 2,
-			FullScreenMode.Windowed => 1,
-			_ => 0
-		};
-		displayModeDropdown.RefreshShownValue();
-	}
-
-	public void ApplySettings()
-	{
-		int resIndex = resolutionDropdown.value;
-		Resolution selectedRes = availableResolutions[resIndex];
-
-		FullScreenMode mode = displayModeDropdown.value switch
-		{
-			0 => FullScreenMode.ExclusiveFullScreen,
-			1 => FullScreenMode.Windowed,
-			2 => FullScreenMode.FullScreenWindow,
-			_ => FullScreenMode.ExclusiveFullScreen
-		};
-
-		Screen.SetResolution(selectedRes.width, selectedRes.height, mode);
-
-		SaveSettings();
-	}
-
-	public void SaveSettings()
-	{
-		PlayerPrefs.SetInt("ResolutionIndex", resolutionDropdown.value);
-		PlayerPrefs.SetInt("DisplayMode", displayModeDropdown.value);
-		PlayerPrefs.Save();
-	}
-
-	public void LoadSettings(bool applySettings = true)
-	{
-		if (!PlayerPrefs.HasKey("ResolutionIndex") || !PlayerPrefs.HasKey("DisplayMode"))
-		{
-			ResetToDefaults();
-			return;
-		}
-
-		int resIndex = Mathf.Clamp(PlayerPrefs.GetInt("ResolutionIndex"), 0, resolutionDropdown.options.Count - 1);
-		int modeIndex = Mathf.Clamp(PlayerPrefs.GetInt("DisplayMode"), 0, displayModeDropdown.options.Count - 1);
-
-		resolutionDropdown.value = resIndex;
-		displayModeDropdown.value = modeIndex;
-
-		if (applySettings)
-		{
-			ApplySettings();
-		}
-	}
-
-	public void ResetToDefaults()
-	{
-		// Find the recommended defaultWidthxdefaultHeight resolution index
-		int recommendedIndex = availableResolutions
-			.ToList()
-			.FindIndex(r => r.width == defaultWidth && r.height == defaultHeight);
-
-		if (recommendedIndex < 0)
-			recommendedIndex = availableResolutions.Length - 1; // fallback safety
-
-		resolutionDropdown.SetValueWithoutNotify(recommendedIndex);
-		displayModeDropdown.SetValueWithoutNotify(1);
-
-		ApplySettings();
-	}
+    public void ResetToDefaults()
+    {
+        if (!initialized) InitializeVideo();
+        resolutionDropdown.SetValueWithoutNotify(FindResolutionIndex(availableResolutions, new Vector2Int(defaultWidth, defaultHeight)));
+        displayModeDropdown.SetValueWithoutNotify(1);
+        ApplySettings();
+    }
 }

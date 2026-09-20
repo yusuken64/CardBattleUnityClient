@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class GameResultScreen : MonoBehaviour
 {
+	// The old authored scale is now baked into the hero's rectangle dimensions.
+	// Preserve the reveal's growth relative to that normalized starting size.
+	private const float HeroRevealScale = 0.410736f / 0.24833286f;
+
 	public Image HeroImage;
 	public GameObject WinObject;
 	public GameObject LoseObject;
@@ -87,6 +91,7 @@ public class GameResultScreen : MonoBehaviour
 		OkButton.SetActive(false);
 
 		// Fade in hero image
+		HeroImage.transform.localScale = Vector3.one;
 		HeroImage.color = new Color(1, 1, 1, 0);
 		HeroImage.DOFade(1f, 0.5f);
 
@@ -99,7 +104,7 @@ public class GameResultScreen : MonoBehaviour
 
 		seq.Append(
 			HeroImage.transform
-				.DOScale(0.410736f, 0.4f)
+				.DOScale(HeroRevealScale, 0.4f)
 				.SetEase(Ease.OutBack)
 		);
 

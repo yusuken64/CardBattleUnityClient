@@ -132,9 +132,20 @@ public class GameInteractionHandler : MonoBehaviour
 		}
 	}
 
-	private void PointerInput_OnDragEnd(Vector2 obj)
+    private void PointerInput_OnDragEnd(Vector2 obj)
 	{
 		Common.Instance.AudioManager.ScheduledLoopController.StopLoop();
+		if (!GameViewport.Contains(obj))
+		{
+			if (currentDraggable != null)
+			{
+				currentDraggable.Dragging = false;
+				currentDraggable.CancelDrag();
+				currentDraggable = null;
+			}
+			CancelAim();
+			return;
+		}
 		var mousePos = GetMouseWorldPosition2D(obj);
 		if (currentDraggable != null)
 		{

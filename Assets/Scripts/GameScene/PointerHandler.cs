@@ -28,6 +28,7 @@ public class PointerInput : MonoBehaviour
     private Vector2 lastPos;
 
     private float hoverCooldown;
+    private bool pressedInViewport;
 
     void Update()
     {
@@ -35,10 +36,16 @@ public class PointerInput : MonoBehaviour
         if (mouse == null) return;
 
         Vector2 pos = mouse.position.ReadValue();
+        bool inside = GameViewport.Contains(pos);
+        if (!inside)
+        {
+            hoverCooldown = 0;
+            if (hovering) { hovering = false; OnHoverEnd?.Invoke(pos); }
+        }
         bool moved = (pos - lastPos).magnitude > moveThreshold;
 
         // ---------------- HOVER ----------------
-        if (!mouse.leftButton.isPressed)
+        if (inside && !mouse.leftButton.isPressed)
         {
             if (!moved && !hovering && !dragging)
             {
@@ -55,6 +62,7 @@ public class PointerInput : MonoBehaviour
         // ---------------- BUTTON DOWN ----------------
         if (mouse.leftButton.wasPressedThisFrame)
         {
+            pressedInViewport = inside;
             startPos = pos;
             downTime = Time.time;
             dragging = false;
@@ -68,10 +76,11 @@ public class PointerInput : MonoBehaviour
         }
 
         // ---------------- BUTTON HELD ----------------
-        if (mouse.leftButton.isPressed)
+        if (mouse.leftButton.isPressed && pressedInViewport)
         {
             // Drag start
-            if (!dragging && Vector2.Distance(pos, startPos) > dragThreshold)
+            float scaledDragThreshold = dragThreshold * GameViewport.Pixels.height / 1080f;
+            if (inside && !dragging && Vector2.Distance(pos, startPos) > scaledDragThreshold)
             {
                 dragging = true;
                 OnDragStart?.Invoke(pos);
@@ -85,7 +94,7 @@ public class PointerInput : MonoBehaviour
         }
 
         // ---------------- BUTTON UP ----------------
-        if (mouse.leftButton.wasReleasedThisFrame)
+        if (mouse.leftButton.wasReleasedThisFrame && pressedInViewport)
         {
             float heldTime = Time.time - downTime;
 
@@ -98,14 +107,15 @@ public class PointerInput : MonoBehaviour
             {
                 OnHoverEnd?.Invoke(pos);
             }
-            else if (heldTime < clickTime)
+            else if (inside && heldTime < clickTime)
             {
                 OnClick?.Invoke(pos);
             }
+            pressedInViewport = false;
         }
         
         // ---------------- RIGHT CLICK ----------------
-        if (mouse.rightButton.wasPressedThisFrame)
+        if (inside && mouse.rightButton.wasPressedThisFrame)
         {
             OnRightClick?.Invoke(pos);
         }
