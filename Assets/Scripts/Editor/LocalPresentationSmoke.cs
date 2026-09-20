@@ -17,6 +17,11 @@ public static class LocalPresentationSmoke
     private static double _deadline;
     private static bool _attached;
     private static bool _failed;
+    private static bool _forfeited;
+    private static double _forfeitStartedAt;
+    private static bool _sawHeroDeathBeforeResult;
+    private static bool _awaitingReturn;
+    private static string _completedActions;
     private static GameState _networkState;
     private static GameEngine _networkEngine;
     private static Action<PlayerGameView> _receive;
@@ -44,6 +49,12 @@ public static class LocalPresentationSmoke
     public static void Run()
         => Begin(-1);
 
+    [MenuItem("Tools/Network/Validate Local Forfeit %#F7")]
+    public static void RunLocalForfeit() => Begin(-2);
+
+    [MenuItem("Tools/Network/Validate Disconnected Network Forfeit %#F8")]
+    public static void RunDisconnectedForfeit() => Begin(-3);
+
     [MenuItem("Tools/Network/Validate Network Presentation Seat 1")]
     public static void RunNetworkFirst() => Begin(0);
     [MenuItem("Tools/Network/Validate Network Presentation Seat 2")]
@@ -67,6 +78,9 @@ public static class LocalPresentationSmoke
         Application.runInBackground = true;
         _deadline = EditorApplication.timeSinceStartup + 150;
         _failed = false;
+        _forfeited = false;
+        _sawHeroDeathBeforeResult = false;
+        _awaitingReturn = false;
         _attached = false;
         _networkState = null;
         _pendingNetworkToken = null;
@@ -79,6 +93,8 @@ public static class LocalPresentationSmoke
     {
         if (scene.name != "GameScene" || Common.Instance == null || Common.Instance.CardManager == null) return;
         SceneManager.sceneLoaded -= Configure;
+        GameManager.ReturnScreenName = "Main";
+        GameManager.GameResultRoutine = null;
         var gm = UnityEngine.Object.FindFirstObjectByType<GameManager>();
         var self = new Deck { Title = "Playback Self", HeroCard = gm.TestDeck.HeroCard };
         var opponent = new Deck { Title = "Playback Opponent", HeroCard = gm.TestDeck.HeroCard };
@@ -107,10 +123,15 @@ public static class LocalPresentationSmoke
         GameManager.GameStartParams = new GameStartParams
         {
             CombatDeck = self, CombatDeckEnemy = opponent, Health = 8, OpponentHealth = 8,
-            InitialCards = 2, SkipShuffle = true, SkipMulligan = false, AutoPlayer = true,
+            InitialCards = 2, SkipShuffle = true, SkipMulligan = false, AutoPlayer = _viewerSeat == -1,
             PlayerAgent = new SmokeAgent(),
         };
-        gm.GameInitialized += _ => gm._opponentAgent = new SmokeAgent();
+        gm.GameInitialized += _ =>
+        {
+            gm._opponentAgent = new SmokeAgent();
+            var result = UnityEngine.Object.FindFirstObjectByType<GameResultScreen>(FindObjectsInactive.Include);
+            typeof(GameResultScreen).GetMethod("SetAutoAdvance", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(result, new object[] { false });
+        };
     }
 
     private static void ConfigureNetwork(GameManager gm, MinionCardDefinition token)
@@ -168,6 +189,16 @@ public static class LocalPresentationSmoke
     private static void Tick()
     {
         if (!SessionState.GetBool(Key, false) || !EditorApplication.isPlaying || _deadline == 0) return;
+        if (_awaitingReturn)
+        {
+            if (!_failed && SceneManager.GetActiveScene().name != "Main" && EditorApplication.timeSinceStartup < _deadline) return;
+            Application.logMessageReceived -= OnLog;
+            bool returned = !_failed && SceneManager.GetActiveScene().name == "Main";
+            if (returned) Debug.Log($"COMBAT VALIDATION PASSED (mode {_viewerSeat}): result confirmed and returned to Main. {_completedActions}");
+            else Debug.LogError("COMBAT VALIDATION FAILED: could not return from the result screen.");
+            EditorApplication.isPlaying = false;
+            return;
+        }
         var gm = UnityEngine.Object.FindFirstObjectByType<GameManager>();
         if (_pendingNetworkToken != null && gm != null && Common.Instance?.CardManager != null &&
             typeof(CardManager).GetField("_cardLookup", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Common.Instance.CardManager) != null)
@@ -182,7 +213,34 @@ public static class LocalPresentationSmoke
             gm.AnimationQueue.PlaybackFailed += () => _failed = true;
         }
         var state = _networkState ?? gm?._gameState;
+        if (_viewerSeat <= -2 && !_forfeited && state?.PendingChoice != null && !gm.AnimationQueue.IsPlaying)
+        {
+            _forfeited = true;
+            _forfeitStartedAt = EditorApplication.timeSinceStartup;
+            // Exercise forfeit while a choice is pending and playback is paused.
+            gm.AnimationQueue.IsStopped = true;
+            if (_viewerSeat == -3)
+            {
+                gm.Args.Mode = GameMode.Networked;
+                typeof(GameManager).GetProperty("_gameState").GetSetMethod(true).Invoke(gm, new object[] { null });
+            }
+            gm.Forfeit();
+            gm.Forfeit(); // Repeated clicks must not start another result routine.
+        }
         bool completed = state != null && state.IsGameOver() && !gm.AnimationQueue.IsPlaying;
+        if (_viewerSeat <= -2)
+        {
+            var result = UnityEngine.Object.FindFirstObjectByType<GameResultScreen>();
+            if (_forfeited && result == null && !gm.Player.HeroPortrait.gameObject.activeInHierarchy)
+                _sawHeroDeathBeforeResult = true;
+            completed = _forfeited && result != null && result.LoseObject.activeInHierarchy &&
+                result.OkButton.activeInHierarchy && !gm.AnimationQueue.IsPlaying && !gm.ActivePlayerTurn;
+            if (completed && (!_sawHeroDeathBeforeResult || gm.Player.HeroPortrait.gameObject.activeInHierarchy ||
+                EditorApplication.timeSinceStartup - _forfeitStartedAt < 2.5))
+                _failed = true;
+            if (completed && _viewerSeat == -2 && (!state.IsGameOver() || state.Winner.Id == gm.LocalPlayerId || state.PendingChoice != null))
+                _failed = true;
+        }
         if (_networkState != null && gm != null && !_failed && !completed && !gm.NetworkAnimationQueue.IsProcessing)
         {
             try
@@ -208,16 +266,24 @@ public static class LocalPresentationSmoke
             }
             catch (Exception ex) { Debug.LogException(ex); _failed = true; }
         }
+        var resultScreen = UnityEngine.Object.FindFirstObjectByType<GameResultScreen>();
+        completed = completed && resultScreen != null && resultScreen.OkButton.activeInHierarchy;
         if (!completed && !_failed && EditorApplication.timeSinceStartup < _deadline) return;
-        Application.logMessageReceived -= OnLog;
         if (completed && !_failed)
         {
-            var actions = state.History.Select(x => x.Action.GetType().Name).Distinct().ToList();
-            bool covered = new[] { nameof(HeroPowerAction), nameof(SubmitMulliganAction), nameof(SummonMinionAction), nameof(AttackAction), nameof(DamageAction), nameof(DeathAction) }.All(actions.Contains);
-            if (covered) Debug.Log((_networkState == null ? "LOCAL" : $"NETWORK SEAT {_viewerSeat + 1}") + " PRESENTATION SMOKE PASSED: " + string.Join(", ", actions));
-            else Debug.LogError("LOCAL PRESENTATION SMOKE FAILED: missing coverage: " + string.Join(", ", actions));
+            var actions = state?.History.Select(x => x.Action.GetType().Name).Distinct().ToList() ?? new List<string>();
+            bool covered = _viewerSeat <= -2 || new[] { nameof(HeroPowerAction), nameof(SubmitMulliganAction), nameof(SummonMinionAction), nameof(AttackAction), nameof(DamageAction), nameof(DeathAction) }.All(actions.Contains);
+            if (covered)
+            {
+                _completedActions = string.Join(", ", actions);
+                _awaitingReturn = true;
+                resultScreen.Ok_Clicked();
+                return;
+            }
+            Debug.LogError("LOCAL PRESENTATION SMOKE FAILED: missing coverage: " + string.Join(", ", actions));
         }
         else Debug.LogError("LOCAL PRESENTATION SMOKE FAILED: playback error or timeout.");
+        Application.logMessageReceived -= OnLog;
         EditorApplication.isPlaying = false;
     }
 

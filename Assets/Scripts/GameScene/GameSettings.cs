@@ -22,13 +22,7 @@ public class GameSettings : MonoBehaviour
 
 		var gameManager =FindFirstObjectByType<GameManager>();
 
-		gameManager.ResolveAction(
-			new CardBattleEngine.DeathAction(),
-			new CardBattleEngine.ActionContext()
-			{
-				SourcePlayer = gameManager.Player.Data,
-				Target = gameManager.Player.Data
-			});
+		gameManager.Forfeit();
 	}
 
 	internal void Open()

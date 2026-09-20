@@ -319,7 +319,7 @@ public partial class GameManager : MonoBehaviour
 
     private void OnNetworkStateUpdated(PlayerGameView view)
     {
-        if (view == null || (_lastNetworkView != null && view.StateRevision <= _lastNetworkView.StateRevision)) return;
+        if (_resultPresented || view == null || (_lastNetworkView != null && view.StateRevision <= _lastNetworkView.StateRevision)) return;
         ResolveNetworkSceneReferences();
         _lastNetworkView = view;
         _networkSubmissionPending = false;
@@ -797,12 +797,12 @@ public partial class GameManager : MonoBehaviour
 
 	public async Task ProcessMoveAsync(IGameAgent gameAgent)
 	{
-		if (gameAgent == null)
+		if (gameAgent == null || _resultPresented || _gameState == null || _gameState.IsGameOver())
 			return;
 
 		var nextAction = await Task.Run(() =>
 			gameAgent.GetNextAction(_gameState));
-		if (this == null || _isDestroying) return;
+		if (this == null || _isDestroying || _resultPresented || _gameState.IsGameOver()) return;
 
 		if (TryResolveAction(nextAction))
 			return;

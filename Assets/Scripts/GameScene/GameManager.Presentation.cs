@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -10,6 +11,51 @@ public partial class GameManager
     private bool _resultPresented;
     private bool _localResolutionPending;
     private bool _localAgentPending;
+
+    public void Forfeit()
+    {
+        if (_resultPresented || _isDestroying) return;
+        if (Args?.Mode != GameMode.Networked && (_gameState == null || _gameState.IsGameOver())) return;
+
+        // Forfeit is terminal even during a choice, AI computation, or paused playback.
+        // DeathAction alone only changes IsAlive; IsGameOver checks health instead.
+        _resultPresented = true;
+        ActivePlayerTurn = false;
+        OpponentTurn = false;
+        _localResolutionPending = false;
+        AnimationQueue.Cancel(this);
+        MulliganPrompt?.gameObject.SetActive(false);
+
+        if (Args?.Mode == GameMode.Networked)
+        {
+            _networkEnded = true;
+            _networkUnavailable = true;
+            // The server treats disconnecting as abandoning the match.
+            // Presentation does not need a server response, even if already disconnected.
+            if (_networkSession != null)
+                _ = Common.Instance.NetworkManager.EndSessionAsync(_networkSession);
+        }
+        else
+        {
+            Player.Data.Health = 0;
+            Player.Data.IsAlive = false;
+            _gameState.PendingChoice = null;
+            _gameState.IsGameOver(); // Set the winner for result callbacks.
+        }
+
+        StartCoroutine(ForfeitPresentation());
+    }
+
+    private IEnumerator ForfeitPresentation()
+    {
+        var ui = FindFirstObjectByType<UI>();
+        ui.SettingsButton.SetActive(false);
+        // Use the same hero animation as DeathAnimation, independently of a paused
+        // action queue or a network match with no local engine state.
+        yield return Player.DoDeathRoutine();
+        yield return ui.DoGameEndRoutine(false);
+    }
+
     private bool CanSubmitNetworkAction => _networkClient != null && !_networkSubmissionPending && !_networkUnavailable &&
         !_networkEnded && _lastNetworkView?.IsGameOver == false && _lastNetworkView.PromptVersion != null &&
         NetworkAnimationQueue != null && !NetworkAnimationQueue.IsProcessing &&
@@ -31,6 +77,7 @@ public partial class GameManager
 
     internal void OnPresentationQueueDrained()
     {
+        if (_resultPresented) return;
         if (Args?.Mode != GameMode.Networked) { CompleteLocalPresentation(); return; }
         if (NetworkAnimationQueue == null || NetworkAnimationQueue.IsProcessing) return;
         var view = _displayedNetworkView;
