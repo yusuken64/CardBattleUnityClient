@@ -16,6 +16,7 @@ public sealed class GameCanvasViewport : MonoBehaviour
     private readonly List<Anchors> children = new List<Anchors>();
     private readonly Dictionary<Transform, Vector3> positionedChildren = new Dictionary<Transform, Vector3>();
     private Vector2 screenSize;
+    private bool childrenDirty;
 
     private void OnEnable()
     {
@@ -36,10 +37,9 @@ public sealed class GameCanvasViewport : MonoBehaviour
 
     private void OnTransformChildrenChanged()
     {
-        if (!isActiveAndEnabled) return;
-        Restore();
-        CaptureChildren();
-        Apply();
+        // Unity can invoke this while TMP is destroying its dropdown/blocker.
+        // Mutating anchors inside that native hierarchy operation can crash the player.
+        childrenDirty = true;
     }
 
     private void CaptureChildren()
@@ -47,26 +47,38 @@ public sealed class GameCanvasViewport : MonoBehaviour
         children.Clear();
         positionedChildren.Clear();
         foreach (Transform child in transform)
+        {
+            // Dropdowns position their temporary overlay canvases in screen space.
+            if (child.GetComponent<Canvas>() != null) continue;
             if (child is RectTransform rect)
                 children.Add(new Anchors { Rect = rect, Min = rect.anchorMin, Max = rect.anchorMax });
             else
                 positionedChildren.Add(child, child.localPosition);
+        }
+        childrenDirty = false;
     }
 
     private void Restore()
     {
         foreach (var child in children)
         {
-            if (child.Rect == null) continue;
+            if (child.Rect == null || child.Rect.parent != transform) continue;
             child.Rect.anchorMin = child.Min;
             child.Rect.anchorMax = child.Max;
         }
         foreach (var child in positionedChildren)
-            if (child.Key != null) child.Key.localPosition = child.Value;
+            if (child.Key != null && child.Key.parent == transform) child.Key.localPosition = child.Value;
     }
 
     private void Update()
     {
+        if (childrenDirty)
+        {
+            Restore();
+            CaptureChildren();
+            Apply();
+            return;
+        }
         if (screenSize != new Vector2(Screen.width, Screen.height)) Apply();
     }
 
@@ -76,7 +88,7 @@ public sealed class GameCanvasViewport : MonoBehaviour
         var viewport = GameViewport.Normalized;
         foreach (var child in children)
         {
-            if (child.Rect == null) continue;
+            if (child.Rect == null || child.Rect.parent != transform) continue;
             child.Rect.anchorMin = viewport.position + Vector2.Scale(child.Min, viewport.size);
             child.Rect.anchorMax = viewport.position + Vector2.Scale(child.Max, viewport.size);
         }
@@ -85,6 +97,6 @@ public sealed class GameCanvasViewport : MonoBehaviour
         Vector2 logicalScreen = screenSize / scale;
         Vector2 offset = Vector2.Scale(viewport.position + Vector2.Scale(viewport.size - Vector2.one, root.pivot), logicalScreen);
         foreach (var child in positionedChildren)
-            if (child.Key != null) child.Key.localPosition = child.Value + (Vector3)offset;
+            if (child.Key != null && child.Key.parent == transform) child.Key.localPosition = child.Value + (Vector3)offset;
     }
 }
