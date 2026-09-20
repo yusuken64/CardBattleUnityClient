@@ -52,6 +52,9 @@ public partial class GameManager : MonoBehaviour
 	private bool _networkSubmissionPending;
 	private bool _networkUnavailable;
 	private bool _isDestroying;
+	private bool _networkIntroStarted;
+	private bool _networkIntroPlaying;
+	private readonly Queue<PlayerGameView> _networkIntroViews = new();
 
 	public Action<GameEngine> GameInitialized;
 
@@ -327,8 +330,49 @@ public partial class GameManager : MonoBehaviour
         ActivePlayerTurn = false;
         UpdateNetworkInteractionState(view);
         RequestArtForRevealedOpponentCards(view);
+        if (!_networkIntroStarted && !view.IsGameOver && view.Self != null && view.Opponent != null)
+        {
+            _networkIntroStarted = true;
+            _networkIntroPlaying = true;
+            _networkIntroViews.Enqueue(view);
+            StartNetworkBattleIntro(view);
+            return;
+        }
+        if (_networkIntroPlaying)
+        {
+            _networkIntroViews.Enqueue(view);
+            return;
+        }
         NetworkAnimationQueue.Enqueue(view);
     }
+
+	private void StartNetworkBattleIntro(PlayerGameView view)
+	{
+		var cardManager = Common.Instance.CardManager;
+		var playerHeroId = view.Self.HeroPower?.LeaderCard?.CardId;
+		var opponentHeroId = view.Opponent.HeroPower?.LeaderCard?.CardId;
+		if (!string.IsNullOrEmpty(playerHeroId))
+			Player.HeroImage.sprite = cardManager.GetSpriteByCardID(playerHeroId);
+		if (!string.IsNullOrEmpty(opponentHeroId))
+			Opponent.HeroImage.sprite = cardManager.GetSpriteByCardID(opponentHeroId);
+		Player.HeroPortrait.gameObject.SetActive(false);
+		Opponent.HeroPortrait.gameObject.SetActive(false);
+		BattleIntro.Setup(Player.HeroImage.sprite, view.Self.Name, view.Self.DeckTitle,
+			Opponent.HeroImage.sprite, view.Opponent.Name, view.Opponent.DeckTitle);
+		BattleIntro.gameObject.SetActive(true);
+		UpdateNetworkInteractionState(view);
+		BattleIntro.DoIntro(() =>
+		{
+			if (_isDestroying || _resultPresented) return;
+			Player.HeroPortrait.gameObject.SetActive(true);
+			Opponent.HeroPortrait.gameObject.SetActive(true);
+			// Preserve every revision so actions received during the intro still animate in order.
+			while (_networkIntroViews.Count > 0)
+				NetworkAnimationQueue.Enqueue(_networkIntroViews.Dequeue());
+			_networkIntroPlaying = false;
+			OnPresentationQueueDrained();
+		});
+	}
 
 	private void ResolveNetworkSceneReferences()
 	{

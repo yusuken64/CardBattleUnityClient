@@ -28,13 +28,19 @@ public class BattleIntro : MonoBehaviour
 
     public void Setup(Deck playerDeck, Deck enemyDeck)
 	{
-        HeroPortrait1.sprite = playerDeck.HeroCard.Sprite;
-        Hero1NameText.text = "Player";
-        Hero1DeckText.text = playerDeck.Title;
+        Setup(playerDeck.HeroCard.Sprite, "Player", playerDeck.Title,
+            enemyDeck.HeroCard.Sprite, "Opponent", enemyDeck.Title);
+    }
 
-        HeroPortrait2.sprite = enemyDeck.HeroCard.Sprite;
-        Hero2NameText.text = "Opponent";
-        Hero2DeckText.text = enemyDeck.Title;
+    public void Setup(Sprite playerPortrait, string playerName, string playerDeck,
+        Sprite opponentPortrait, string opponentName, string opponentDeck)
+    {
+        HeroPortrait1.sprite = playerPortrait;
+        Hero1NameText.text = playerName;
+        Hero1DeckText.text = playerDeck;
+        HeroPortrait2.sprite = opponentPortrait;
+        Hero2NameText.text = opponentName;
+        Hero2DeckText.text = opponentDeck;
         FindFirstObjectByType<UI>()?.SetBattleLabels(
             Hero1NameText.text, Hero1DeckText.text, Hero2NameText.text, Hero2DeckText.text);
     }
