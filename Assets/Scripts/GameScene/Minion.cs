@@ -144,7 +144,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
         }
 
         var gameManager = FindFirstObjectByType<GameManager>();
-        var isActivePlayer = gameManager.ActivePlayerTurn &&
+        var isActivePlayer = gameManager.CanQueuePlayerAction &&
             this.Data != null &&
             this.Data.Owner == gameManager.Player.Data;
         AttackReadyIndicator.gameObject.SetActive(CanAttack && isActivePlayer && !IsFrozen);

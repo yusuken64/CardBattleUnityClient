@@ -44,7 +44,7 @@ public partial class GameManager
 
     public void QueuePlayerAction(IGameAction action, ActionContext context)
     {
-        if (!CanQueuePlayerAction || action == null || context == null) return;
+        if (!CanQueuePlayerAction || action == null || context?.SourcePlayer == null) return;
         if (_playerActions.Count >= 16)
         {
             FindFirstObjectByType<UI>()?.ShowMessage("Action queue is full.");
@@ -78,7 +78,8 @@ public partial class GameManager
 
     private bool DrainPlayerActions()
     {
-        if (_resultPresented || _isDestroying || _networkUnavailable || _networkEnded)
+        if (_resultPresented || _isDestroying || _networkUnavailable || _networkEnded ||
+            (Args?.Mode == GameMode.Networked ? _lastNetworkView?.IsGameOver == true : _gameState?.IsGameOver() == true))
         { ClearQueuedPlayerActions(); return false; }
         if (_playerActions.Count == 0) return false;
         bool network = Args?.Mode == GameMode.Networked;

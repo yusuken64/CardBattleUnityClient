@@ -241,7 +241,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
         if (_gameManager != null)
         {
             var activePlayer = Data.Owner == _gameManager.Player.Data;
-            CanPlayIndicator.gameObject.SetActive(_gameManager.ActivePlayerTurn && activePlayer && CanPlay);
+            CanPlayIndicator.gameObject.SetActive(_gameManager.CanQueuePlayerAction && activePlayer && CanPlay);
         }
         else
         {

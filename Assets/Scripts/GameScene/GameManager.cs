@@ -356,7 +356,7 @@ public partial class GameManager : MonoBehaviour
 		{
 			MulliganPrompt.SetNetworkInteractionState(CanChooseNetworkMulligan);
 		}
-		Player?.UpdatePlayableActions(ActivePlayerTurn);
+		Player?.UpdatePlayableActions(CanQueuePlayerAction);
 		Opponent?.UpdatePlayableActions(false);
 
 		var endTurnButton = FindFirstObjectByType<UI>()?.EndTurnButton;
