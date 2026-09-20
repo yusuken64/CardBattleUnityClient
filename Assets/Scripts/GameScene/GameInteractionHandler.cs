@@ -156,7 +156,13 @@ public class GameInteractionHandler : MonoBehaviour
 			{
 				if (currentDraggable.CanResolve(mousePos, out var current, out string reason))
 				{
-					currentDraggable.Resolve(mousePos, current);
+					var manager = FindFirstObjectByType<GameManager>();
+					if (manager.PlayerActionMustWait)
+					{
+						manager.QueuePlayerAction(current.Item1, current.Item2);
+						currentDraggable.CancelDrag();
+					}
+					else currentDraggable.Resolve(mousePos, current);
 				}
 				else
 				{
@@ -211,6 +217,13 @@ public class GameInteractionHandler : MonoBehaviour
 		{
 			if (currentAimable.WillResolveSuccessfully(target, pendingDraggable?.DragObject, out var current, mousePos, out string reason))
 			{
+				var manager = FindFirstObjectByType<GameManager>();
+				if (manager.PlayerActionMustWait)
+				{
+					manager.QueuePlayerAction(current.Item1, current.Item2);
+					CancelAim();
+					return;
+				}
 				currentAimable.ResolveAim(current, pendingDraggable?.DragObject);
 				EndAim(true);
 			}

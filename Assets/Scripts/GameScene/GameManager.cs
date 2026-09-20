@@ -362,7 +362,7 @@ public partial class GameManager : MonoBehaviour
 		var endTurnButton = FindFirstObjectByType<UI>()?.EndTurnButton;
 		if (endTurnButton != null)
 		{
-			if (ActivePlayerTurn && view?.LegalActions != null &&
+			if (CanQueuePlayerAction && view?.LegalActions != null &&
 				view.LegalActions.Any(a => a.ActionType == nameof(EndTurnAction)))
 			{
 				endTurnButton.SetToReady();
@@ -377,6 +377,7 @@ public partial class GameManager : MonoBehaviour
 	private void OnNetworkActionRejected(string reason)
 	{
 		Debug.LogWarning($"Action rejected: {reason}");
+		ClearQueuedPlayerActions();
 		_networkSubmissionPending = false;
 		if (_lastNetworkView != null)
 		{
@@ -407,6 +408,7 @@ public partial class GameManager : MonoBehaviour
 
 	private void HandleNetworkFailure(string message)
 	{
+		ClearQueuedPlayerActions();
 		Debug.LogError(message);
 		_networkUnavailable = true;
 		ActivePlayerTurn = false;
@@ -464,6 +466,7 @@ public partial class GameManager : MonoBehaviour
 		if (!result.Success)
 		{
 			Debug.LogWarning($"Server rejected action: {result.Error}");
+			ClearQueuedPlayerActions();
 			_networkSubmissionPending = false;
 			OnPresentationQueueDrained();
 		}
@@ -473,7 +476,7 @@ public partial class GameManager : MonoBehaviour
 	{
 		chosen = null;
 		if (Args?.Mode != GameMode.Networked || _lastNetworkView?.LegalActions == null ||
-			_lastNetworkView.PromptVersion == null || !CanSubmitNetworkAction)
+			_lastNetworkView.PromptVersion == null || !CanQueuePlayerAction)
 		{
 			return false;
 		}
@@ -497,7 +500,7 @@ public partial class GameManager : MonoBehaviour
 	public bool HasNetworkAction(string actionType, Guid? sourceId = null, bool requireTarget = false, bool requireNoTarget = false)
 	{
 		if (Args?.Mode != GameMode.Networked || _lastNetworkView?.LegalActions == null ||
-			_lastNetworkView.PromptVersion == null || !CanSubmitNetworkAction)
+			_lastNetworkView.PromptVersion == null || !CanQueuePlayerAction)
 		{
 			return false;
 		}
@@ -722,7 +725,7 @@ public partial class GameManager : MonoBehaviour
 
 	public bool CheckIsValid(IGameAction action, ActionContext context, out string reason)
 	{
-		if (!ActivePlayerTurn)
+		if (!CanQueuePlayerAction)
 		{
 			reason = "Not your Turn";
 			return false;

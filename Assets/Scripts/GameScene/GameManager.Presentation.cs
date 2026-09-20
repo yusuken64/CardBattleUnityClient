@@ -20,6 +20,7 @@ public partial class GameManager
         // Forfeit is terminal even during a choice, AI computation, or paused playback.
         // DeathAction alone only changes IsAlive; IsGameOver checks health instead.
         _resultPresented = true;
+        ClearQueuedPlayerActions();
         ActivePlayerTurn = false;
         OpponentTurn = false;
         _localResolutionPending = false;
@@ -98,6 +99,7 @@ public partial class GameManager
         OpponentTurn = view.CurrentPlayerId != LocalPlayerId;
         UpdateNetworkInteractionState(view);
         ShowDisplayedNetworkPrompt(view);
+        DrainPlayerActions();
         if (!_resultPresented && (view.IsGameOver || _networkEnded))
         {
             _resultPresented = true;
@@ -137,6 +139,7 @@ public partial class GameManager
             prompt.gameObject.SetActive(true);
             prompt.Setup(Player.Hand.Cards);
         }
+        if (DrainPlayerActions()) return;
         var agent = ActivePlayerTurn ? _playerAgent : _opponentAgent;
         if (agent != null && !_localAgentPending) RequestLocalMove(agent);
     }

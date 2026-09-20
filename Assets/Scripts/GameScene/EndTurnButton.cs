@@ -57,7 +57,7 @@ public class EndTurnButton : MonoBehaviour
 
 	public void OnClick()
 	{
-		if (_gameManager.ActivePlayerTurn)
+		if (_gameManager.CanQueuePlayerAction)
 		{
 			SetToUnclickable();
 			_gameManager.ActivePlayerTurn = false;

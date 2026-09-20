@@ -214,6 +214,8 @@ public class NetworkGameDialog : MonoBehaviour
                     return;
                 }
                 GameManager.GameStartParams = null;
+                GameManager.ReturnScreenName = "StoryMode";
+                GameManager.GameResultRoutine = null;
                 GameManager.PendingStartArgs = new StartGameArgs
                 {
                     Mode = GameMode.Networked,

@@ -561,7 +561,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
             }
         }
 
-        if (!_gameManager.ActivePlayerTurn)
+        if (!_gameManager.CanQueuePlayerAction)
         {
             return true;
         }
@@ -585,7 +585,7 @@ public class Card : MonoBehaviour, IDraggable, IHoverable, IUnityGameEntity
 
     public bool CanPreviewPlayOverBoard()
     {
-        if (!_gameManager.ActivePlayerTurn)
+        if (!_gameManager.CanQueuePlayerAction)
         {
             _ui.WarnEnemyTurn();
             return false;

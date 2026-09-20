@@ -269,7 +269,7 @@ public class Minion : MonoBehaviour, ITargetOrigin, ITargetable, IHoverable, IUn
     {
         var gameManager = FindFirstObjectByType<GameManager>();
 
-        if (!gameManager.ActivePlayerTurn)
+        if (!gameManager.CanQueuePlayerAction)
         {
             _ui.WarnEnemyTurn();
             return false;

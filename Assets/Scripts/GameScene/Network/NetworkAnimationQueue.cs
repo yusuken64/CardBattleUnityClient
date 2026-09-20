@@ -47,6 +47,7 @@ public class NetworkAnimationQueue : MonoBehaviour
     public void ResetTo(PlayerGameView view)
     {
         if (view == null) throw new InvalidOperationException("Server returned no snapshot.");
+        GameManager.ClearQueuedPlayerActions();
         GameManager.AnimationQueue.Cancel(GameManager);
         _sequence = view.PlaybackSequence;
         _revision = DisplayedRevision = view.StateRevision;
@@ -60,6 +61,7 @@ public class NetworkAnimationQueue : MonoBehaviour
     {
         if (_resyncing) return;
         _resyncing = true;
+        GameManager.ClearQueuedPlayerActions();
         GameManager.AnimationQueue.Cancel(GameManager);
         GameManager.ActivePlayerTurn = false;
         try { await GameManager.ResyncFromServer(); }

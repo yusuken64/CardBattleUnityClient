@@ -47,7 +47,7 @@ public class HeroPortrait : MonoBehaviour, ITargetOrigin, ITargetable
 	public bool CanStartAiming()
 	{
 		var gameManager = FindFirstObjectByType<GameManager>();
-		if (!gameManager.ActivePlayerTurn)
+		if (!gameManager.CanQueuePlayerAction)
 		{
 			var ui = FindFirstObjectByType<UI>();
 			ui.WarnEnemyTurn();

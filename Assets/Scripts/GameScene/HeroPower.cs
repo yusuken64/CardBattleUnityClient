@@ -44,7 +44,7 @@ public class HeroPower : MonoBehaviour, ITargetOrigin, IHoverable, IClickable
 		}
 
 		var ui = FindFirstObjectByType<UI>();
-		if (!gameManager.ActivePlayerTurn)
+		if (!gameManager.CanQueuePlayerAction)
 		{
 			ui.WarnEnemyTurn();
 			return false;
