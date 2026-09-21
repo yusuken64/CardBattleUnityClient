@@ -45,11 +45,7 @@ public partial class GameManager
     public void QueuePlayerAction(IGameAction action, ActionContext context)
     {
         if (!CanQueuePlayerAction || action == null || context?.SourcePlayer == null) return;
-        if (_playerActions.Count >= 16)
-        {
-            FindFirstObjectByType<UI>()?.ShowMessage("Action queue is full.");
-            return;
-        }
+        if (_playerActions.Count >= 16) return;
         _playerActions.Enqueue(new PlayerActionIntent {
             Action = action,
             Context = new ActionContext(context) { PlayIndex = context.PlayIndex,
@@ -57,7 +53,6 @@ public partial class GameManager
             Turn = Args?.Mode == GameMode.Networked ? _lastNetworkView.Turn : _gameState.turn
         });
         if (action is EndTurnAction) _endTurnQueued = true;
-        if (PlayerActionMustWait) FindFirstObjectByType<UI>()?.ShowMessage("Action queued");
         DrainPlayerActions();
     }
 

@@ -105,10 +105,24 @@ public partial class GameManager
             _resultPresented = true;
             ActivePlayerTurn = false;
             UpdateNetworkInteractionState(view);
-            bool won = (view.WinnerPlayerId ?? _networkWinner) == LocalPlayerId;
-            var routine = FindFirstObjectByType<UI>()?.DoGameEndRoutine(won);
-            if (routine != null) StartCoroutine(routine);
+            StartCoroutine(NetworkEndPresentation(view.WinnerPlayerId ?? _networkWinner));
         }
+    }
+
+    private IEnumerator NetworkEndPresentation(Guid? winnerId)
+    {
+        var ui = FindFirstObjectByType<UI>();
+        if (ui != null) ui.SettingsButton.SetActive(false);
+        bool won = winnerId == LocalPlayerId;
+        // Abandoning a match sends a winner notification without a DeathAction.
+        // Playback has drained, so a hidden portrait means combat already played death.
+        if (winnerId.HasValue)
+        {
+            var loser = won ? Opponent : Player;
+            if (loser != null && loser.HeroPortrait.gameObject.activeSelf)
+                yield return loser.DoDeathRoutine();
+        }
+        if (ui != null) yield return ui.DoGameEndRoutine(won);
     }
 
     private void CompleteLocalPresentation()
